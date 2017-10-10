@@ -1,0 +1,221 @@
+<div id="content" class="content content-full-width">
+    <div class="p-20">
+    <!-- begin row -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="email-btn-row hidden-xs f-s-15">
+                <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题 </a>
+                <!-- <span class="dropdown">
+                    <a href="email_inbox.html#" class="email-header-link btn btn-sm btn-inverse" data-toggle="dropdown">View All <i class="fa fa-angle-down m-l-5"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="active"><a href="email_inbox.html#">All</a></li>
+                        <li><a href="email_inbox.html#">Unread</a></li>
+                        <li><a href="email_inbox.html#">Contacts</a></li>
+                        <li><a href="email_inbox.html#">Groups</a></li>
+                        <li><a href="email_inbox.html#">Newsletters</a></li>
+                        <li><a href="email_inbox.html#">Social updates</a></li>
+                        <li><a href="email_inbox.html#">Everything else</a></li>
+                    </ul>
+                </span>
+                <span class="dropdown">
+                    <a href="email_inbox.html#" class="email-header-link btn btn-sm btn-inverse" data-toggle="dropdown">Arrange by <i class="fa fa-angle-down m-l-5"></i></a>
+                    <ul class="dropdown-menu">
+                        <li class="active"><a href="email_inbox.html#">Date</a></li>
+                        <li><a href="email_inbox.html#">From</a></li>
+                        <li><a href="email_inbox.html#">Subject</a></li>
+                        <li><a href="email_inbox.html#">Size</a></li>
+                        <li><a href="email_inbox.html#">Conversation</a></li>
+                    </ul>
+                </span>
+                <span style="position: absolute; right:10px; width: 20%">
+                    <form class="pull-right">
+                        <div class="input-group m-b-15">
+                            <input type="text" class="form-control input-sm input-white" placeholder="搜索话题" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-inverse" type="button"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </span> -->
+            </div>
+            <div class="email-content">
+                <table class="table table-email f-s-14">
+                    <thead>
+                        <tr>
+                            <th ng-show = "false">ID</th>
+                            <th>话题名称</th>
+                            <th>查询关键字</th>
+                            <th>爬取站点</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="topicItem in pageData">
+                            <td style="width: 10%" ng-show = "false">{{topicItem.topicId}}</td>
+                            <td style="width: 15%">{{topicItem.topicName}}</td>
+                            <td style="width: 30%">{{toStr(topicItem.topicKeywords)}}</td>
+                            <td style="width: 35%">{{topicItem.sitesStr}}</td>
+                            <td style="width: 10%"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="email-footer clearfix">
+                    {{topicCount}}个话题
+                    <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
+                        <li ng-class="{disabled:page <= 0}" ng-click="getDataByPage(page-1)"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+                        <li ng-class="{disabled:page <= 0}"><a href="javascript:;" ng-click="getDataByPage(page-1)"><i class="fa fa-angle-left"></i></a></li>
+                        <li ng-class="{disabled:page >= maxPage}"><a href="javascript:;" ng-click="getDataByPage(page+1)"><i class="fa fa-angle-right"></i></a></li>
+                        <li ng-class="{disabled:page >= maxPage}"><a href="javascript:;" ng-click="getDataByPage(page+1)"><i class="fa fa-angle-double-right"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end col-10 -->
+    <!-- 模态框（Modal） -->
+<div class="modal fade col-lg-10 col-lg-offset-1" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 100%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    {{modelName}}
+                </h4>
+            </div>
+            <div class="modal-body" style="background: #f3f3f3">
+                <div id="content" class="content-full-width">
+                    <!-- begin vertical-box -->
+                    <div class="vertical-box">
+                        <!-- begin vertical-box-column -->
+                        <div class="vertical-box-column width-250">
+                            <div class="wrapper">
+                                <p><b>全部站点</b></p>
+                                <ul class="nav nav-pills nav-stacked nav-sm">
+                                    <li ng-repeat="oneTypeSite in allsites"><a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}copy" ng-drag="true" ng-drag-data="{{oneTypeSite}}" ng-drag-success="onAllDrag($data,$event)"><i class="fa fa-inbox fa-fw m-r-5"></i> {{ oneTypeSite.siteTypeName }}</a>
+                                    <ul id="{{oneTypeSite.siteTypeId}}copy" class="collapse nav">
+                                        <li class="text-center" ng-repeat="node in oneTypeSite.detail_sites" ng-drag="true" ng-drag-data="{{node}}" ng-drag-success="onDragComplete($data,$event)" ng-center-anchor="true">
+                                            <a href="javascript::void">{{node.siteName}}</a>
+                                        </li>
+                                    </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end wrapper -->
+                        </div>
+                        <!-- end vertical-box-column -->
+                        <!-- begin vertical-box-column -->
+                        <div class="vertical-box-column">
+                            <div class="wrapper">
+                                <div class="p-30 bg-white">
+                                    <!-- begin email form -->
+                                    <form method="POST" name="topicForm" ng-submit="save()" novalidate="false">
+                                        <!-- begin email to -->
+                                        <label class="control-label">话题名称:</label>
+                                        <div class="m-b-15">
+                                            <input type="text" name="topicname" class="form-control" ng-model="topic.topicName" ng-disabled="topicNameEnable == true" nameexist-check required/>
+                                            <span class="pull-right text-danger" ng-show="topicForm.topicname.$error.required&&topicForm.topicname.$dirty">
+                                                话题名称不能为空
+                                            </span>
+                                            <span class="pull-right text-danger" ng-show="topicForm.topicname.$error.exist">
+                                                话题名称已存在
+                                            </span>
+                                        </div>
+                                        <!-- end email to -->
+                                        <!-- begin email subject -->
+                                        <label class="control-label">查询关键字:</label>
+                                        <!-- end email subject -->
+                                        <!-- begin email content -->
+
+                                        <div class="m-b-15" style="border: 1px solid #ccd0d4;  border-radius: 5px; padding: 10px 5px">
+                                            <div style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px;padding: 5px;background-color: rgba(250, 240, 210, 0.5); width: 100%" ng-repeat="(i,andkeywords) in topic.topicKeywords">
+                                                <div style="display: inline-block; width: 25%">
+                                                    <select class="form-control">
+                                                        <option value="and" selected>AND</option>
+                                                    </select>
+                                                </div>
+                                                <div style="display: inline-block; width: 60%; vertical-align: middle;">
+                                                    <input type="text" name="keywords_{{i}}" class="form-control" class="form-control" ng-model="andkeywords.str" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" required/>
+                                                </div>
+                                                <div class="f-s-20" style="display: inline-block; width: 14%; vertical-align: middle;">
+                                                    <i class="btn btn-xs fa fa-plus-circle text-success" ng-click="addAndKeywords()" title="添加关键词组"></i>
+                                                    <i class="btn btn-xs fa fa-minus-circle text-danger" ng-click="delAndKeywords(i)" ng-show="topic.topicKeywords.length>1" title="删除关键词组"></i>
+                                                    <span class="btn btn-xs text-info fa fa-adn" ng-click="openBatchPage()" title="添加关键词组合">
+                                                    </span>
+                                                </div>
+                                                <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.required
+                                                &&topicForm.keywords_{{i}}.$dirty" style="position: relative; left: 80%">
+                                                关键词组不能为空   
+                                                </span>
+                                                <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.pattern" style="position: relative; left: 70%">
+                                                    含有非法字符，关键字需以,隔开
+                                                </span>
+                                            </div>
+                                            <!-- <div style="width: 100%;" class="m-b-15"> 
+                                                <i class="" style="width: 4%; display: inline-block;">
+                                                    AND: 
+                                                </i>
+                                                <textarea type="text" name="andkeywords" class="form-control" ng-model="topic.topicKeywords._and" required="" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" style="width: 95%; display: inline-block; vertical-align: middle;"/>
+                                                </textarea>
+                                                <span class="pull-right text-danger" ng-show="topicForm.andkeywords.$error.require
+                                                &&topicForm.andkeywords.$dirty">
+                                                必须含有一个关键词   
+                                                </span>
+                                                <span class="pull-right text-danger" ng-show="topicForm.andkeywords.$error.pattern">
+                                                    含有非法字符，关键字需以,隔开
+                                                </span>
+                                            </div>
+                                            <div style="width: 100%;" class="m-b-15"> 
+                                                <i class="" style="width: 4%; display: inline-block;">
+                                                    OR: 
+                                                </i>
+                                                <textarea type="text" name="orkeywords" class="form-control" ng-model="topic.topicKeywords._or" required="" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" style="width: 95%; display: inline-block; vertical-align: middle;"/>
+                                                </textarea>
+                                                <span class="pull-right text-danger" ng-show="topicForm.orkeywords.$error.require
+                                                &&topicForm.orkeywords.$dirty">
+                                                必须含有一个关键词   
+                                                </span>   
+                                                <span class="pull-right text-danger" ng-show="topicForm.orkeywords.$error.pattern">
+                                                    含有非法字符，关键字需以,隔开
+                                                </span>
+                                            </div> -->
+                                        </div>
+
+                                        <label class="control-label">站点信息:</label>
+                                        <div class="m-b-15">
+                                            <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+                                                <ul class="nav nav-pills nav-stacked nav-sm panel-body">
+                                                    <li ng-repeat="oneTypeSite in allsites">
+                                                    <span><input type="checkbox" ng-model="oneTypeSite.selected" ng-click="onAllSelected(oneTypeSite)"/></span>
+                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                                                    {{ oneTypeSite.siteTypeName }}</a>
+                                                    <ul id="{{oneTypeSite.siteTypeId}}" class="collapse list-inline in">
+                                                        <li ng-repeat="node in oneTypeSite.detail_sites">
+                                                            <span><input type="checkbox" ng-model="node.selected" ng-click="checkBoxChange(node,oneTypeSite)"/></span>
+                                                            <a href="javascript::void">{{node.siteName}}</a>
+                                                        </li>
+                                                    </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <!-- end email content -->
+                                        <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">提交</button>
+                                    </form>
+                                    <!-- end email form -->
+                                </div>
+                            </div>
+                            <!-- end wrapper -->
+                        </div>
+                        <!-- end vertical-box-column -->
+                    </div>
+                    <!-- end vertical-box -->
+                    </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+            </div>
+            <!-- end row -->
+            </div>
+        </div>
+</div>

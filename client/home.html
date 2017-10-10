@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>舆情系统</title>
+    <meta name="keywords" content="朝前科技HIS Bootstrap3 Theme" />
+    <meta name="author" content="朝前科技">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/static/assets/img/logos/logo24.png">
+    <!-- dataTables css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/datatables/media/css/dataTables.bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/datatables/extensions/Editor/css/dataTables.editor.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/datatables/extensions/ColReorder/css/dataTables.colReorder.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/dataTables/css/angular-datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/ngDialog/css/ngDialog.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/ngDialog/css/ngDialog-theme-default.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/tree-control/css/tree-control.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/tree-control/css/tree-control-attribute.css">
+    <!-- autocomplete css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/jquery/jquery.autocomplete.css">
+    <!-- ag-grid css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/aggrid/ag-grid.css">
+    <!-- icons css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/fonts/glyphicons-pro/glyphicons-pro.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/fonts/icomoon/icomoon.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/fonts/iconsweets/iconsweets.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/fonts/octicons/octicons.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/fonts/stateface/stateface.css">
+    <!-- Fancytree CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/fancytree/skin-win8/ui.fancytree.min.css">
+    <!-- popdlg css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/magnific/magnific-popup.css">
+    <!-- loadstyle css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/loadstyle/css/waitMe.css">
+    <!-- rangeslide css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/rangeslide/css/classic-min.css">
+<!-- <link rel="stylesheet" type="text/css" href="assets/vendor/plugins/rangeslide/css/iThing-min.css"> -->
+    <!-- basic css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/fullcalendar/fullcalendar.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/fullcalendar/scheduler.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/skin/default_skin/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/admin-tools/admin-forms/css/admin-forms.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/bootstrap/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/js/angularjs/angular-scrollable/ng-scrollable.min.css">
+    <!-- custom css -->
+    <link rel="stylesheet" type="text/css" href="/static/assets/skin/default_skin/css/adminui.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/dc/dc.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/d3/bullet.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/vendor/plugins/c3/c3.css">
+
+</head>
+
+<body ng-controller="mainController" data-spy="scroll" data-target="#nav-spy" data-offset="300">
+    <!-- infoAndErrorMessages -->
+    <div id="infoAndErrorMessages" ng-include="'/static/commons/template/infoAndErrorMessages.tpl.html'" ng-controller="infoAndErrorMessagesController"></div>
+    <!-- toolbox -->
+    <div id="skin-toolbox" ng-include="'/static/modules/home/pages/toolbox.html'" ng-controller="toolboxController"></div>
+    <div id="main">
+        <!-- header -->
+        <header class="navbar navbar-fixed-top navbar-shadow" ng-include="'/static/modules/home/pages/header.html'" ng-controller="headerController">
+        </header>
+        <!-- sidebar_left -->
+        <aside id="sidebar_left" class="nano nano-light affix" ng-include="'/static/modules/home/pages/sidebarleft.html'" ng-controller="sidebarleftController">
+        </aside>
+        <!-- content -->
+        <section id="content_wrapper">
+            <!-- topbar -->
+            <div id="topbar-dropmenu" class="alt" ng-include="'/static/modules/home/pages/topbar.html'" ng-controller="topbarController"></div>
+            <!-- navbar -->
+            <header id="topbar" class="alt" ng-include="'/static/modules/home/pages/navbar.html'" ng-controller="navbarController"></header>
+            <!-- main view -->
+            <section id="content" class="table-layout animated fadeIn">
+                <div ui-view class="pn"></div>
+            </section>
+            <!-- footer -->
+            <div ng-include="'/static/modules/home/pages/footer.html'"></div>
+        </section>
+    </div>
+    <!-- javascripts includes files -->
+    <!-- jquery -->
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery-migrate-1.1.0.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery.autocomplete.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery.jqprint-0.3.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery.base64.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/bootstrap/js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/jquery/jquery_ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/jquery-ui-monthpicker.min.js"></script>
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"></script>
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/validate_messages_zh.js"></script>
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/jquery.metadata.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/fullcalendar/lib/moment.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/fullcalendar/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/fullcalendar/fullcalendar-lang-zh-cn.js"></script>
+    <!--Table Export JS-->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/js-xlsx/xlsx.core.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/FileSaver/FileSaver.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/jsPDF/jspdf.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/html2canvas/html2canvas.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/pdfmaker/pdfmake.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/pdfmaker/vfs_fonts.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/tableexport/libs/tableExport.js"></script>
+    <!--Colorbrewer JS-->
+    <script type="text/javascript" src="/static/assets/js/colorbrewer.js"></script>
+    <!-- Cropper Image Plugin -->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/cropper/cropper.min.js"></script>
+    <!--Colorbrewer JS-->
+    <script type="text/javascript" src="/static/assets/js/colorbrewer.js"></script>
+    <!--Chart JS-->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/d3/d3.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/c3/c3.min.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/crossfilter/crossfilter.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/dc/dc.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/d3/bullet.js"></script>
+    <!-- datepicker js -->
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/jquery-ui-monthpicker.min.js"></script>
+    <script type="text/javascript" src="/static/assets/admin-tools/admin-forms/js/jquery-ui-datepicker.min.js"></script>
+    <!-- loadstyle js -->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/loadstyle/js/waitMe.min.js"></script>
+    <!-- rangeslide js -->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/rangeslide/jQAllRangeSliders-withRuler-min.js"></script>
+    <!-- globle js -->
+    <script type="text/javascript" src="/static/modules/utils.js"></script>
+    <script type="text/javascript" src="/static/commons/utils/publicFunc.js"></script>
+    <!-- infoAndErrorMessages pop dialog -->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/pnotify/pnotify.js"></script>
+    <script type="text/javascript" src="/static/assets/vendor/plugins/magnific/jquery.magnific-popup.js"></script>
+    <script type="text/javascript" src="/static/commons/utils/infoAndErrorMessages.js"></script>
+    <!-- angular common -->
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs-ui/ui-bootstrap-tpls-0.13.0.min.js"></script>
+    <script type="text/javascript" src="/static/commons/utils/angular-common.js"></script>
+    <script type="text/javascript" src="/static/commons/services/commonService.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-scrollable/ng-scrollable.min.js"></script>
+    <!-- angularjs plugins -->
+    <script type="text/javascript" src="/static/commons/plugins/tink-popover/tink-popover-angular.min.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/tree-control/angular-tree-control.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/ngDialog/js/ngDialog.min.js"></script>
+    <script type="text/javascript" src="/static/commons/directives/calendar.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/ngfileupload/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/ngfileupload/ng-file-upload.min.js"></script>
+    <!-- filters -->
+    <script type="text/javascript" src="/static/commons/filters/display.js"></script>
+    <script type="text/javascript" src="/static/commons/filters/serverDate.js"></script>
+    <!-- directives -->
+    <script type="text/javascript" src="/static/commons/directives/html-directive.js"></script>
+    <script type="text/javascript" src="/static/commons/directives/time-format.js"></script>
+    <script type="text/javascript" src="/static/commons/directives/angular-pagination.js"></script>
+    <!-- basicc ui -->
+    <script type="text/javascript" src="/static/assets/js/utility/utility.js"></script>
+    <script type="text/javascript" src="/static/assets/js/utility/scroller.js"></script>
+    <script type="text/javascript" src="/static/assets/js/demo/demo.js"></script>
+    <script type="text/javascript" src="/static/assets/js/main.js"></script>
+    <script type="text/javascript" src="/static/modules/app.js"></script>
+    <!-- ag-grid -->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/aggrid/ag-grid-enterprise.js"></script>
+    <!-- Fancytree Plugin -->
+    <script type="text/javascript" src="/static/assets/vendor/plugins/fancytree/jquery.fancytree-all.min.js"></script>
+    <!-- highcharts -->
+    <script type="text/javascript" src="/static/assets/js/demo/charts/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="/static/assets/js/demo/charts/highcharts/exporting.js"></script>
+    <!-- home -->
+    <script type="text/javascript" src="/static/modules/home/homeController.js"></script>
+    <!-- index -->
+    <script type="text/javascript" src="/static/modules/index/indexController.js"></script>
+    <!-- chart -->
+    <script type="text/javascript" src="/static/modules/chart/controllers/timeline.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/chartSingleton.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/chartController.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/dashboardController.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item1Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item2Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item3Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item8Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item4Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item5Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item6Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/item7Controller.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/services/chartService.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/chart.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/dashboardchart.js"></script>
+    <script type="text/javascript" src="/static/modules/chart/controllers/dynamicChart.js"></script>
+
+    <!-- 系统设置 -->
+    <script type="text/javascript" src="/static/modules/manageSettings/manageSettings.js"></script>
+    <script type="text/javascript" src="/static/modules/manageSettings/controllers/profilesController.js"></script>
+    <script type="text/javascript" src="/static/modules/manageSettings/controllers/usersController.js"></script>
+    <script type="text/javascript" src="/static/modules/manageSettings/controllers/privilegesController.js"></script>
+    <script type="text/javascript" src = "/static/modules/manageSettings/controllers/logsController.js"></script>
+    <script type="text/javascript" src="/static/modules/manageSettings/services/privilegeService.js"></script>
+    <script type="text/javascript" src="/static/modules/manageSettings/services/userService.js"></script>
+    <script type="text/javascript" src="/static/modules/manageSettings/services/logService.js"></script>
+    <script type="text/javascript" src="/static/commons/utils/privileges.js"></script>
+</body>
+
+</html>

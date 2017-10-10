@@ -1,0 +1,37 @@
+<div id="content" class="content">
+	<!-- begin row -->
+	<div class="row">
+	    <!-- begin col-12 -->
+	    <div class="col-md-12 ui-sortable">
+	        <!-- begin panel -->
+            <div class="panel panel-primary" data-sortable-id="table-basic-5">
+                <div class="panel-heading">
+                    <h4 class="panel-title">历史案例</h4>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>事件</th>
+                                <th>时间</th>
+                                <th>所属话题</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="(i, case) in cases">
+                                <td>{{i+1}}</td>
+                                <td><a ui-sref="displayDetailController({case:case})">{{case.title}}</a></td>
+                                <td>{{case.date}}</td>
+                                <td>{{case.topic_name}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- end panel -->
+	    </div>
+	    <!-- end col-12 -->
+	</div>
+	<!-- end row -->
+</div>

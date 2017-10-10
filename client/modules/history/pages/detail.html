@@ -1,0 +1,372 @@
+<style>
+    .container{
+        position: relative;
+        width: 90%;
+        margin: auto;
+        min-height: 500px;
+        height: auto;
+    }
+    .container-left:hover
+    {
+        background: rgba(200,200,200,0.5);
+        transition: 0.5s;
+    }
+    .container-left{
+        position: absolute;
+        bottom: 0;
+        left: 10px;
+        top: 0;
+        width: 100px;
+        z-index: 10;
+        background: rgba(14,14,14,0);
+    }
+    .container-right:hover{
+        background: rgba(200,200,200,0.5);
+        transition: 0.5s;
+    }
+    .container-right{
+        position: absolute;
+        z-index: 10;
+        bottom: 0;
+        right: 0;
+        top: 0;
+        width: 100px;
+        background: rgba(200,200,200,0);
+    }
+    .showstep{
+        position: relative;
+        width: 100%;
+    }
+    #steps{
+        position: relative;
+        left:0;
+    }
+    #steps>li{
+        position: relative;
+    }
+    .index{
+        position: fixed;
+        top: 120px;
+        left: 220px;
+        z-index: 10;
+        text-align: center;
+    }
+    .index div{
+        text-align: center;
+        width: 80px;
+    }
+    .index div>p{
+        margin: auto;
+        border-radius: 50%;
+        display: block;
+        position: relative;
+        padding-top: 0px;
+        width: 20px;
+        height: 20px;
+        background: #348fe2;
+        text-align: center;
+        border: 1px solid #182;
+    }
+    .all .indexi{
+        margin: auto;
+        border-radius: 50%;
+        display: block !important;
+        padding-top: 0px;
+        position: relative;
+        left:-50%;
+        top: 0px;
+        width: 20px;
+        height: 20px;
+        background: #348fe2;
+        text-align: center;
+        color: #ffffff;
+        border: 1px solid #182;
+    }
+    .all #line{
+        display: block !important;
+    }
+    .index div>p>a{
+        color: #ffffff;
+        text-decoration: none;
+    }
+    .stepindex_after{
+        min-height: 10px;
+        width: 1px;
+        background: #1e3;
+        position: relative;
+        left: 50%;
+        border: 1px solid #1e3;
+        display: block;
+    }
+    div.index > div:nth-child(4):after{
+        display: none !important;
+    }
+    .index div.active>p{
+        padding-top: 5px;
+        width: 30px;
+        height: 30px;
+    }
+    .index div.active:after{
+        height: 9999px;
+        width: 2px;
+        background: #000;
+        content: "";
+        display: block;
+    }
+    .pre{
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    #steps img{
+        width: 100%;
+        min-height:300px;
+    }
+    .all #steps img{
+        margin-bottom: 10px !important;
+    }
+    #steps li{
+        text-align: center;
+        margin: 0 0;
+        padding: 0;
+    }
+    .all #steps li{
+        text-align: left !important;
+        margin: 10px 0 !important;
+    }
+    #steps li>ul>li>div,#steps li>ul>li>h5{
+        display: block;
+    }
+    .all #steps li>ul>li>div,.all #steps li>ul>li>h5{
+        display: none !important;
+    }
+    .all #steps li>div,.all #steps li>h5{
+        display: block !important;
+    }
+</style>
+<div id="content" class="content">
+    <div class="row">
+        <ol class="breadcrumb pull-right p-r-10" ng-show="!show_search">
+            <li class="fa fa-arrow-circle-left"><a href="javascript:;" ng-click="back()">返回</a></li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-primary" id="detail_panel">
+                <div class="panel-heading">
+                    <h4 class="panel-title">历史案例</h4>
+                </div>
+                <div class="panel-body">
+                    <h5 id="pagetype" ng-show="false">
+                        <span>正在查看全文,你可以</span>
+                        <a href="javascript::void">分步查看</a>
+                    </h5>
+                    <p class="page-header text-center">{{case.title}}</p>
+                    <div class="container">
+                        <div class="container-left">
+                            <div style="position: absolute; top:200px; right: 20px;height: 100px">
+                                <i class="fa fa-angle-left" style="font-size: 100px"></i>
+                            </div>
+                        </div>
+                        <div class="showstep">
+                            <ul id="steps" class="list-inline">
+                                <div id="line" style="position:absolute;width: 5px; height: 100%;border-left: 1px solid #1e3;border-top: 1px solid #1e3; top: 10px; left: -30px;"></div>
+                                <li id="step1">
+                                    <div style="position: absolute; left:-30px; top:0;">
+                                        <div class="indexi" style="display: none">1</div>
+                                    </div>
+                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[0].day}}</div>
+                                    <!-- <h5>{{case.date}}年，舆情系统检测到{{case.title}}相关信息</h5> -->
+                                    <ul class="media-list media-list-with-divider media-messaging pre" style="padding-bottom: 0">
+                                        <li class="media meida-sm" ng-repeat="(i, post) in postslist" style="padding: 15px">
+                                            <h4 class="media-heading"><a href={{post.url}} target="_blank" style="color: black;">{{post.title}}</a></h4>
+                                            <p>{{post.content}}</p>
+                                            <i class="text-muted">{{post.post_time}},{{post.board}}</i>
+                                        </li>
+                                        <div class="btn btn-info" style="text-align: center;width: 100%;" ng-click="showAllPosts()" ng-show="showMoreBtn">查看全部</div>
+                                    </ul>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="(i, img) in case.img1">
+                                            <div class="page-header" style="font-size: 1.5em">全网监控</div>
+                                            <h5>{{case.date}}年，舆情系统检测到{{case.title}}相关信息</h5>
+                                            <img src="{{img}}" style="width: 100%"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="step2">
+                                    <div style="position: absolute; left:-30px; top:0;">
+                                        <div class="indexi" style="display: none">2</div>
+                                    </div>
+                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[0].nextday(1)}}</div>
+                                    <h5>舆情监控人员通过系统发现这些信息，并将其标注为敏感信息,随后，查看原帖子，考证其是否有违法违纪行为，如有，将其迅速取证并上报有关部门</h5>
+                                    <img src="/static/assets/img/history/legoo.png" ng-show="case.img2.length == 0" style="width: 100%">
+                                    <ul class="list-inline">
+                                        <li ng-repeat="(i, img) in case.img2">
+                                            <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[0].nextday(1)}}</div>
+                                            <h5>舆情监控人员通过系统发现这些信息，并将其标注为敏感信息,随后，查看原帖子，考证其是否有违法违纪行为，如有，将其迅速取证并上报有关部门</h5>
+                                            <img src="{{img}}" style="width: 100%" />
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="step3" ng-show="false">
+                                    <div style="position: absolute; left:-30px; top:0;">
+                                        <div class="indexi" style="display: none">3</div>
+                                    </div>
+                                    <div class="page-header" style="font-size: 1.5em">及时上报</div>
+                                    <h5>随后，查看原帖子，考证其是否有违法违纪行为，如有，将其迅速取证并上报有关部门</h5>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="(i, img) in case.img3">
+                                            <div class="page-header" style="font-size: 1.5em">及时上报</div>
+                                            <h5>随后，查看原帖子，考证其是否有违法违纪行为，如有，将其迅速取证并上报有关部门</h5>
+                                            <img src="{{img}}" style="width: 100%"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="step4">
+                                    <div style="position: absolute; left:-30px; top:0;">
+                                        <div class="indexi" style="display: none">3</div>
+                                    </div>
+                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[posts.length-1].nextday(1)}}</div>
+                                    <h5>有关部门迅速相应，对相关问题进行了处理</h5>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="(i, img) in case.img4">
+                                            <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[posts.length-1].nextday(1)}}</div>
+                                            <h5>有关部门迅速相应，对相关问题进行了处理</h5>
+                                            <img src="{{img}}" style="width: 100%"/>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div style="position: absolute; left:-35px; bottom: 0;">
+                                    <div class="indexi" style="display: none">end</div>
+                            </div>
+                        </div>
+                        <div class="container-right">
+                            <div style="position: absolute; top:200px; left: 20px; height: 100px">
+                                <i class="fa fa-angle-right" style="font-size: 100px"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-primary" id="chart1" style="height: 300px;">
+                <div class="panel-heading">
+                    <h4 class="panel-title">相关帖子随站点分布</h4>
+                </div>
+                <div class="panel-body" id="siteDist">   
+                </div>
+            </div>
+            <div class="panel panel-primary" id="chart2" style="height: 300px">
+                <div class="panel-heading">
+                    <h4 class="panel-title">相关帖子随时间分布</h4>
+                </div>
+                <div class="panel-body" id="dayDist">   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        var i = 0;
+        var readType = 0;
+        $(".container-left").hide();
+        $(".index").hide();
+        $("#steps").css({left:0});
+        // $("#line").height($("#line").height()-$("#step4").height());
+        $(".showstep").css({overflow:"visible"});
+        $(".showstep").addClass("all");
+        $(".container-right").hide();
+        $(".container-left").hide();
+        readType = 1;
+        $(".index").show();
+        // setTimeout(stepShow,500);
+        $(".container-left").click(function(event) {
+            i--;
+            $("#steps").animate({left:-i*$(".container").width()},500);
+            if(i <= 0)
+            {
+                $(".container-left").hide();
+            }
+            $(".container-right").show();
+        });
+        $(".container-right").click(function(event) {
+            i++;
+            $("#steps").animate({left:-i*$(".container").width()},500);
+            if((i+2)*$(".container").width() >= $("#steps").width())
+            {
+                $(".container-right").hide();
+            }
+            $(".container-left").show();
+        });
+        $("#pagetype>a").click(function(ev){
+            if(readType == 0)
+            {
+                $("#steps").css({left:0});
+                $("#steps>li>ul>li").width($(".container").width());
+                $("#steps>li>ul").width($(".container").width());
+                $("#steps").width($(".container").width());
+                // $("#line").height($("#line").height()-$("#step4").height());
+                $(".showstep").css({overflow:"visible"});
+                $(".showstep").addClass("all");
+                $(".container-right").hide();
+                $(".container-left").hide();
+                readType = 1;
+                $(".index").show();
+                $(this).parent().find("span").text('正在查看全文,你可以');
+                $(this).text('分步查看');
+                i = 0;
+            }
+            else
+            {
+                stepShow();
+                $(".showstep").removeClass("all");
+                i = 0;
+                $(".showstep").css({overflow:"hidden"});
+                $(".container-right").show();
+                readType = 0;
+                $(".index").hide();
+                $(this).parent().find("span").text('正在分步查看,你可以');
+                $(this).text('查看全文');
+            }
+        });
+        function stepShow(){
+            $("#steps>li>div").width($(".container").width());
+            $("#steps>li>h5").width($(".container").width());
+            $("#steps>li>ul>li").width($(".container").width());
+            $("#step1>ul").width($("#step1>ul>li").width()*$("#step1>ul>li").length);
+            $("#step2>ul").width($("#step2>ul>li").width()*$("#step2>ul>li").length);
+            $("#step3>ul").width($("#step3>ul>li").width()*$("#step3>ul>li").length);
+            $("#step4>ul").width($("#step4>ul>li").width()*$("#step4>ul>li").length);
+            $("#steps").width($("#step1").outerWidth()+$("#step2").outerWidth()+$("#step3").outerWidth()+$("#step4").outerWidth()+100);
+            console.log($("#step1>ul>li").length);
+            $("#steps>li>div").hide();
+            $("#steps>li>h5").hide();
+            if($("#step1>ul>li").length == 0)
+            {
+                $("#step1>div").show();
+                $("#step1>h5").show();
+            }
+            if($("#step2>ul>li").length == 0)
+            {
+                $("#step2>div").show();
+                $("#step2>h5").show();
+            }
+            if($("#step3>ul>li").length == 0)
+            {
+                $("#step3>div").show();
+                $("#step3>h5").show();
+            }
+            if($("#step4>ul>li").length == 0)
+            {
+                $("#step4>div").show();
+                $("#step4>h5").show();
+            }
+        }
+    });
+</script>

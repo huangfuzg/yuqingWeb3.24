@@ -1,0 +1,53 @@
+<style>
+    @media (min-width: 992px)
+    {
+        .row-md-400 {
+            height: 400px;
+        }
+    }
+</style>
+<div id="content" class="content" ng-resize="drawClouds()">
+    <div class='row'>
+        <div class="col-md-6 ui-sortable" ng-repeat="item in data">
+            <!-- begin panel -->
+            <div class="panel panel-primary" data-sortable-id="ui-media-object-3">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                    <img src = "/static/assets/img/topic.svg">
+                    <a href="javascript::void();" ng-click="searchPostByTopic(item.topicId)" style="display: inline-block;">{{item.topicName}}</a></h4>
+                </div>
+                <div class="panel-body row-md-400">
+                   <div class="col-md-12" ng-if="item.summary != null">
+                        <!-- <div class = "" > -->
+                            <!-- <p class="lead" ng-if="item.summary == null">
+                                    摘要： 2016年6.7，全国考生陆续开始高考。
+                            </p> -->
+                            <p class="lead width-full" style="overflow-y: hidden; height: 63px">
+                                    摘要： {{item.summary}}
+                            </p>
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-md-12">
+                        <!-- 轮播图 -->
+                        <div class='col-md-6'>
+                            <carousel interval=5000 >
+                                <slide ng-repeat="slide in item.imgs" >
+                                <img ng-src="{{slide}}" class = "height-sm width-full">
+                                </slide>
+                            </carousel>
+                        </div>
+                        <div class="col-md-6" style="min-height: 300px !important">
+                            <div id = "wordsCloud_{{item.topicId}}" class = "width-full height-sm">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class='text-right p-b-10 '>
+                    <a href="javascript:;" class="btn btn-primary btn-xs m-r-10 f-s-15 fa-bar-chart-o fa" ng-click="openModal(item.topicId)">话题分析</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

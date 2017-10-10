@@ -1,0 +1,61 @@
+
+<div id="sidebar" class="sidebar">
+	<!-- begin sidebar scrollbar -->
+	<div data-scrollbar="true" data-height="100%">
+		<!-- begin sidebar user -->
+		<ul class="nav">
+			<li class="nav-profile">
+				<div class="image">
+					<a href="javascript:;"><img src="/static/assets/img/user-13.jpg" alt="" /></a>
+				</div>
+				<div class="info f-s-15" style="margin-top: 10px">
+					admin
+					<!-- <small>西安交通大学</small> -->
+				</div>
+			</li>
+		</ul>
+		<!-- end sidebar user -->
+		<!-- begin sidebar nav -->
+		<ul class="nav f-s-15">
+			<li class = "has-sub {{it.isActive}}" ng-repeat = "(index,it) in allLinks" ng-click="moduleHomelinkclick(it)">
+				<a href = "{{it.link}}" ng-if = "it.link && it.link!='#/yuqingTrends'">
+					<b class="caret pull-right" ng-if = 'it.items'></b>
+					<i class="{{it.icon}}"></i>
+					<span ng-bind = "it.label"></span>
+				</a>
+				<a ui-sref="yuqingTrendsController({poster:null,topicIds:null,keywords:null,start_time:null,end_time:null,sites:null})" ng-if = "it.link=='#/yuqingTrends'">
+					<b class="caret pull-right" ng-if = 'it.items'></b>
+					<i class="{{it.icon}}"></i>
+					<span ng-bind = "it.label"></span>
+				</a>
+				<ul class="sub-menu" ng-if = "it.items">
+					<li class ="has-sub" ng-repeat = "(index1,item) in it.items">
+						<a href = "{{item.link}}" ng-if="item.link!='#/yuqingTrends'">
+							<b class="caret pull-right" ng-if = 'item.items'></b>
+							<i class="{{item.icon}}"></i>
+							<span ng-bind = "item.label"></span>
+						</a>
+						<a ui-sref="yuqingTrendsController({poster:null,topicIds:null,keywords:null,start_time:null,end_time:null,sites:null})" ng-if = "item.link=='#/yuqingTrends'">
+							<b class="caret pull-right" ng-if = 'item.items'></b>
+							<i class="{{item.icon}}"></i>
+							<span ng-bind = "item.label"></span>
+						</a>
+						<ul class = "sub-menu">
+							<li class = "has-sub" ng-repeat = "(index2,itt) in item.items">
+								<a href = "{{itt.link}}" ng-if = "itt.link">
+								<b class="caret pull-right" ng-if = 'itt.items'></b>
+								<i class="{{itt.icon}}"></i>
+								<span ng-bind = "itt.label"></span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+		</ul>
+	</div>
+	<!-- end sidebar scrollbar -->
+</div>
+<div class="sidebar-bg"></div>
+<!-- end #sidebar

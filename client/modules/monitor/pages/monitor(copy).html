@@ -1,0 +1,334 @@
+<style type="text/css">
+    .fl {
+        float: left;
+    }
+    .poab {
+        position: absolute;
+    }
+    .pore {
+        position: relative;
+    }
+    .monitorContents {
+        position: absolute;
+        top:50;
+        left: 220;
+        overflow-y: hidden;
+        overflow-x: auto;
+    }
+    .b-r-1{
+        border-right: 1px solid #575d63 ;
+    }
+    .b-1{
+        border: 1px solid #575d63 ;
+    }
+    .post_loading{
+        border: 2px solid rgba(0, 0, 0, .05);
+        border-top: 2px solid #24B498;
+        height: 20px;
+        width: 20px;
+        margin: -15px -15px 0 0;
+       /* position: absolute;
+        top: 10;
+        left: 50%;*/
+        margin: -20px -20px 0 0;
+        border: 2px solid #fff;
+        border-top: 2px solid #24B498;
+        border-radius: 100%;
+        animation: rotation .6s infinite linear;
+    }
+
+</style>
+<!-- begin #content -->
+<div id = "content" class = "content">
+    <div id="topics" class="m-b-5 col-md-12 bg-silver animated">
+        <div class="btn-group m-r-5 m-b-5 m-t-5 " id = "monitortopic_1">
+            <a href="javascript:;" ng-click = "movePosition('topic_1')" class="btn btn-primary btn-lg">考研答案</a>
+            <a href="javascript:;" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" aria-expanded="false">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right f-s-14">
+                <li><a href="javascript:;" ng-click = "pauseTop('topic_1','monitortopic_1')" class = "stop">暂停</a></li>
+                <li><a href="javascript:;" ng-click = "startTop('topic_1','monitortopic_1')" class = "hidden start">启动</a></li>
+                <li><a href="javascript:;" ng-click = "openDia('topic_1')" >修改关键词</a></li>
+            </ul>
+        </div>
+        <div class="btn-group m-r-5 m-b-5 m-t-5" id = "monitortopic_2">
+            <a href="javascript:;" ng-click = "movePosition('topic_2')" class="btn btn-primary btn-lg">作弊</a>
+            <a href="javascript:;" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" aria-expanded="false">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right f-s-14">
+                <li><a href="javascript:;" ng-click = "pauseTop('topic_2','monitortopic_2')" class = "stop">暂停</a></li>
+                <li><a href="javascript:;" ng-click = "startTop('topic_2','monitortopic_2')" class = "hidden start">启动</a></li>
+                <li><a href="javascript:;" ng-click = "openDia('topic_2')" >修改关键词</a></li>
+            </ul>
+        </div>
+        <div class="btn-group m-r-5 m-b-5 m-t-5" id = "monitortopic_3">
+            <a href="javascript:;" ng-click = "movePosition('topic_3')" class="btn btn-primary btn-lg">考研政治</a>
+            <a href="javascript:;" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" aria-expanded="false">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right f-s-14">
+                <li><a href="javascript:;" ng-click = "pauseTop('topic_3','monitortopic_3')" class = "stop">暂停</a></li>
+                <li><a href="javascript:;" ng-click = "startTop('topic_3','monitortopic_3')" class = "hidden start">启动</a></li>
+                <li><a href="javascript:;" ng-click = "openDia('topic_3')" >修改关键词</a></li>
+            </ul>
+        </div>
+         <div class="btn-group m-r-5 m-b-5 m-t-5" id = "monitortopic_4">
+            <a href="javascript:;" ng-click = "movePosition('topic_4')" class="btn btn-primary btn-lg">考研数学</a>
+            <a href="javascript:;" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" aria-expanded="false">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right f-s-14">
+                <li><a href="javascript:;" ng-click = "pauseTop('topic_4','monitortopic_4')" class = "stop">暂停</a></li>
+                <li><a href="javascript:;" ng-click = "startTop('topic_4','monitortopic_4')" class = "hidden start">启动</a></li>
+                <li><a href="javascript:;" ng-click = "openDia('topic_4')" >修改关键词</a></li>
+            </ul>
+        </div>
+         <div class="btn-group m-r-5 m-b-5 m-t-5" id = "monitortopic_5">
+            <a href="javascript:;" ng-click = "movePosition('topic_5')" class="btn btn-primary btn-lg">考研英语</a>
+            <a href="javascript:;" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" aria-expanded="false">
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu pull-right f-s-14">
+                <li><a href="javascript:;" ng-click = "pauseTop('topic_5','monitortopic_5')" class = "stop">暂停</a></li>
+                <li><a href="javascript:;" ng-click = "startTop('topic_5','monitortopic_5')" class = "hidden start">启动</a></li>
+                <li><a href="javascript:;" ng-click = "openDia('topic_5')" >修改关键词</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <!-- begin moitor content-->
+        <div class = "col-md-12 bg-black-lighter animated fadeInUp" id = "topicLists">
+                  <!-- begin panel -->
+                <div id = "topic_1" class="panel panel-inverse col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        </div>
+                        <h4 class="panel-title">考研答案</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="800px">
+                            <ul class="media-list media-list-with-divider">
+                                <div class = "width-full m-t-20 hidden loads">
+                                    <p class = "text-center">
+                                        <i class = "fa post_loading">
+                                        </i>
+                                    </p>
+                                </div>
+                                <li class="media media-sm">
+                                    <a href="javascript:;" class="pull-left">
+                                        <img src="/static/assets/img/user-2.jpg" alt="" class="media-object rounded-corner">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;"><h4 class="media-heading">高考答案</h4></a>
+                                        <p class="m-b-5">
+                                            网上卖答案的都是假的，不可信。
+                                        </p>
+                                        <i class="text-muted">2016-12-28, 百度贴吧</i>
+                                        <div class = "pull-right p-t-10 p-r-5 width-full f-s-14 text-right ">
+                                            <a title = "帖子分析"
+                                            ng-click = "OpenAnaly('analy_1')">
+                                            <img src = "/static/assets/img/analy.svg">
+                                            </a>
+                                            <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage('post_id')">
+                                                <img src = "/static/assets/img/add.svg">
+                                            </a>
+                                            <a class = "save" title = "标记为已读" ng-click = "MarkRead('topic_1')">
+                                                <img src = "/static/assets/img/save.svg">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="media media-sm">
+                                    <a href="javascript:;" class="pull-left">
+                                        <img src="/static/assets/img/user-3.jpg" alt="" class="media-object rounded-corner">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;"><h4 class="media-heading">Ut mi eros, varius nec mi vel, consectetur convallis diam.</h4></a>
+                                        <p class="m-b-5">
+                                            Ut mi eros, varius nec mi vel, consectetur convallis diam. Nullam eget hendrerit eros. Duis lacinia condimentum justo at ultrices. Phasellus sapien arcu, fringilla eu pulvinar id, mattis quis mauris.
+                                        </p>
+                                        <i class="text-muted">Received on 04/16/2013, 12.39pm</i>
+                                    </div>
+                                </li>
+                                <li class="media media-sm">
+                                    <a href="javascript:;" class="pull-left">
+                                        <img src="/static/assets/img/user-4.jpg" alt="" class="media-object rounded-corner">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;"><h4 class="media-heading">Aliquam nec dolor vel nisl dictum ullamcorper.</h4></a>
+                                        <p class="m-b-5">
+                                            Aliquam nec dolor vel nisl dictum ullamcorper. Duis vel magna enim. Aenean volutpat a dui vitae pulvinar. Nullam ligula mauris, dictum eu ullamcorper quis, lacinia nec mauris.
+                                        </p>
+                                        <i class="text-muted">Received on 04/16/2013, 12.39pm</i>
+                                    </div>
+                                </li>
+                                <li class="media media-sm">
+                                    <a href="javascript:;" class="pull-left">
+                                        <img src="/static/assets/img/user-4.jpg" alt="" class="media-object rounded-corner">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;"><h4 class="media-heading">Aliquam nec dolor vel nisl dictum ullamcorper.</h4></a>
+                                        <p class="m-b-5">
+                                            Aliquam nec dolor vel nisl dictum ullamcorper. Duis vel magna enim. Aenean volutpat a dui vitae pulvinar. Nullam ligula mauris, dictum eu ullamcorper quis, lacinia nec mauris.
+                                        </p>
+                                        <i class="text-muted">Received on 04/16/2013, 12.39pm</i>
+                                    </div>
+                                </li>
+                                <li class="media media-sm">
+                                    <a href="javascript:;" class="pull-left">
+                                        <img src="/static/assets/img/user-4.jpg" alt="" class="media-object rounded-corner">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;"><h4 class="media-heading">Aliquam nec dolor vel nisl dictum ullamcorper.</h4></a>
+                                        <p class="m-b-5">
+                                            Aliquam nec dolor vel nisl dictum ullamcorper. Duis vel magna enim. Aenean volutpat a dui vitae pulvinar. Nullam ligula mauris, dictum eu ullamcorper quis, lacinia nec mauris.
+                                        </p>
+                                        <i class="text-muted">Received on 04/16/2013, 12.39pm</i>
+                                    </div>
+                                </li>
+                                <li class="media media-sm">
+                                    <a href="javascript:;" class="pull-left">
+                                        <img src="/static/assets/img/user-4.jpg" alt="" class="media-object rounded-corner">
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;"><h4 class="media-heading">Aliquam nec dolor vel nisl dictum ullamcorper.</h4></a>
+                                        <p class="m-b-5">
+                                            Aliquam nec dolor vel nisl dictum ullamcorper. Duis vel magna enim. Aenean volutpat a dui vitae pulvinar. Nullam ligula mauris, dictum eu ullamcorper quis, lacinia nec mauris.
+                                        </p>
+                                        <i class="text-muted">Received on 04/16/2013, 12.39pm</i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+                <!-- begin panel -->
+                <div id = "analy_1" class="panel panel-inverse col-md-3 p-r-0 p-l-0 b-r-1 analy hidden animate fadeIn" data-sortable-id="ui-widget-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" ng-click = "stopAnaly('analy_1')"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">话题分析</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="800px">
+                            <div class = "width-full height-sm m-b-20">
+                                <h4>帖子时序分析</h4>
+                                <div class = "" id = "timeAna">
+
+                                </div>
+                            </div>
+                            <hr>
+                            <div class = "width-full height-sm">
+                                <h4>博主分析</h4>
+                                <div id = "posterAna">
+
+                                </div>
+                            </div>
+                             <hr>
+                            <div class = "width-full height-sm">
+                                <h4>传播路径分析</h4>
+                                <div id = "broadcastAna">
+
+                                </div>
+                            </div>
+                             <hr>
+                            <div class = "width-full height-sm">
+                                <h4>关键词云分析</h4>
+                                <div id = "keywordsAna">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+
+                <!-- begin panel -->
+                <div id = "topic_2" class="panel panel-inverse col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">作弊</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="800px">
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+            
+
+      
+                  <!-- begin panel -->
+                <div id = "topic_3" class="panel panel-inverse col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">考研政治</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="800px">
+                           
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+            
+
+  
+                <!-- begin panel -->
+                <div id = "topic_4" class="panel panel-inverse col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">考研数学</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="800px">
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+
+                 <!-- begin panel -->
+                <div id = "topic_5" class="panel panel-inverse col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">考研英语</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="800px">
+                           
+                        </div>
+                    </div>
+                </div>
+                <!-- end panel -->
+        </div>
+        <!-- end monitor content-->
+    </div>
+</div>

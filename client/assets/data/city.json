@@ -1,0 +1,14 @@
+{
+    "name": "中国",
+    "provinces":
+    [
+        {"name": "北京", "value": 16    },
+        {"name": "天津", "value": 20},
+        {"name": "河北", "value": 2},
+        {"name": "山西", "value": 5},
+        {"name":"湖北","value":15},
+        {"name":"黑龙江","value":9},
+        {"name":"青海","value":12}
+
+    ]
+}

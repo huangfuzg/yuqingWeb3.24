@@ -1,0 +1,143 @@
+<style>
+.sen-h-34{
+    height: 34px;
+    
+}
+</style>
+<div id="content" class="content">
+    <div class="panel panel-primary">
+            <!-- begin row -->
+            <div class="row">
+                <!-- begin col-10 -->
+                <div class="col-md-12">
+                    <!-- begin panel -->
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                            </div>
+                            <h4 class="panel-title f-s-15">敏感信息列表</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <div class="dataTables_length" id="data-table_length">
+                                <!-- <label class = "pull-right">每页 <select name="data-table_length"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> 条</label> -->
+                                <span class="pull-left m-b-10 f-s-14">
+                                    <select name="senmes_state" class="" ng-model="dataObj.is_report" ng-options="item.value as item.name for item in state">
+                                    </select>
+                                     <select name="senmes_topic" class="" ng-model="dataObj.topicId" ng-options="item.value as item.name for item in topic">
+                                    </select>
+                                     <select name="senmes_source" class="" ng-model="dataObj.dataType">
+                                        <option value="-1">--所有数据源--</option>
+                                        <option value="0">新闻</option>
+                                        <option value="1">论坛</option>
+                                        <option value="2">微博</option>
+                                        <option value="3">贴吧</option>
+                                        <option value="4">微信</option>
+                                        <option value="5">全网搜索</option>
+                                    </select>
+                                    <input type="text" id="datepicker-start" placeholder="选择起始时间" class = "sen-h-34"
+                                       ng-model = "dataObj.startDate" /> 至
+                                    <input type="text" id="datepicker-end" placeholder="选择结束日期" class = "sen-h-34" ng-model = "dataObj.endDate"/>
+                                    <button type="button" class="btn btn-md btn-primary m-l-5" ng-click="search()"><i class="fa fa-search"></i>搜索</button>
+                                </span>
+                                </div>
+                                <table id="data-table" class="table table-striped table-bordered nowrap f-s-14" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th><input class="m-r-2" type="checkbox" ng-model="allselected" ng-click="selectAll()">标题</th>
+                                            <th>发布时间</th>
+                                            <th>添加时间</th>
+                                            <th>状态</th>
+                                            <th style="width:100px">操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="odd gradeX" ng-repeat="item in sendata">
+                                            <td class="width-lg" ng-if = "item.board != 'Sina'">
+                                                <input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">
+                                                <a ng-href = {{item.url}} target= "_blank" >{{item.title}}</a>
+                                            </td>
+                                            <td class="width-lg" ng-if = "item.data_type == 2">
+                                                <input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">
+                                                <a ng-href = {{item.url}} target= "_blank" >{{item.content}}</a>
+                                            </td>
+    
+                                            </td>
+                                            <td class="width-200">{{item.pt_time}}</td>
+                                            <td class="width-200">{{item.add_time}}</td>
+                                            <td class="width-100" ng-if="item.is_report == 0">未上报</td>
+                                            <td class="width-100" ng-if="item.is_report == 1">上报未处理</td>
+                                            <td class="width-100" ng-if="item.is_report == 2">已处理</td>
+                                            <!-- <td class="width-100"><a style="line-height:normal " class="btn btn-xs" ng-click=""><i class="fa fa-lg fa-envelope"></i></a>
+                                            <a style="line-height:normal" class="btn btn-xs" ng-click=""><i class="fa fa-lg fa-navicon"></i></a>
+                                             <a style="line-height:normal" class="btn btn-xs" ng-click=""><i class="fa fa-lg fa-minus-square"></i></a>
+                                             <a style="line-height:normal" class="btn btn-xs" ng-click=""><i class="fa fa-lg fa-caret-square-o-down"></i></a></td> -->
+                                             <td><a class="glyphicon glyphicon-list-alt p-r-2" style="cursor: pointer" title="查看元数据" ng-click = "getMetaData(item.id)"></a>|<a class="glyphicon glyphicon-transfer p-r-2" style="cursor: pointer" title="撤销可疑" ng-click="revoke(item.id)"></a>|<a class="glyphicon glyphicon-import" style="cursor: pointer" title="取证" ng-click="forensics(item.id)"></a>  </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav>
+                                
+                                <div class="btn-group m-b-10 f-s-14">
+                                    <button type="button" class="btn btn-white" ng-click="Previous()">上一页</button>
+                                    <button type="button" class="btn btn-white {{isActivePage(page)}}" ng-repeat="page in pageList"
+                                     ng-click = "selectPage(page)">
+                                        {{page}}
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-white" ng-click="Next()">下一页</button>
+                                </div>
+
+
+
+                               <ul class="list-inline f-s-14 pull-right">
+                                    <li>
+                                        <a class="btn btn-sm btn-primary" href="javascript:void;" ng-click="markReport()">
+                                            标为上报
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-sm btn-primary" href="javascript:void;" ng-click="changeState(2)">
+                                            标为已处理
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-sm btn-primary" href="javascript:void;" ng-click="revoke()">
+                                            撤销可疑
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown" ng-click="exportPage()">
+                                        <a class="btn btn-sm btn-primary" href="javascript:void;" data-toggle="dropdown">
+                                            导出下载 <i class="fa fa-angle-down m-l-5" ng-show = "false"></i>
+                                        </a>
+                                        <!-- <ul class="dropdown-menu" style="float: right; margin-top: -10px">
+                                            <li>
+                                                <a href="javascript:void;" ng-click="export('data-table','json')">json</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void;" ng-click="export('data-table','csv')">csv</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:void;" ng-click="export('data-table','pdf')">pdf</a>
+                                            </li>
+                                        </ul> -->
+                                        </div>
+                                    </li>
+                                </ul>
+
+
+
+                            </nav>
+                        </div>
+                    </div>
+                    <!-- end panel -->
+                </div>
+                <!-- end col-10 -->
+            </div>
+            <!-- end row -->
+    </div>
+    <canvas id="screenshot" width="1280px" height="720px" style="display: none"></canvas>
+</div>
+

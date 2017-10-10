@@ -1,0 +1,75 @@
+<style>
+.dia_warning{
+    color: #f59c1a;
+}
+
+.ngdialog.ngdialog-theme-details {
+    padding: 5% !important;
+}
+
+.ngdialog.ngdialog-theme-details .ngdialog-content {
+    width: 700px !important;
+}
+</style>
+<div class="panel panel-primary" data-sortable-id="ui-buttons-3">
+    <div class="panel-heading">
+        <h4 class="panel-title f-s-15">敏感信息</h4>
+    </div>
+    <div class="panel-body">
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">标题：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " readonly="readonly" placeholder="帖子标题" rows="1" ng-bind = "detailData.title"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">内容：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14"  readonly="readonly" rows="4" ng-bind = "detailData.content" 
+                placeholder="帖子内容"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">敏感词：</label>
+            <div class="col-md-10">
+                <input class="form-control f-s-14"  readonly="readonly" ng-model = "detailData.senwords" 
+                placeholder="敏感词">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">站点：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14" readonly="readonly" placeholder="站点" ng-model = "detailData.board">
+            </div>
+            <label class="col-md-2 control-label f-s-14">发帖时间：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14" readonly="readonly" placeholder="发帖时间" ng-model = "detailData.pt_time">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label p-r-10 f-s-14">发帖人：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14" readonly="readonly" placeholder="发帖人" ng-model = "detailData.poster.name">
+            </div>
+            <label class="col-md-2 control-label p-r-10 f-s-14">QQ号：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14" placeholder="qq" readonly="readonly" ng-model = "detailData.QQ">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">IP地址：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14" placeholder="IP地址" readonly="readonly" ng-model = "detailData.Ip">
+            </div>
+            <label class="col-md-2 control-label f-s-14">手机号：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14" placeholder="手机号" readonly="readonly" g-model = "detailData.cellphone">
+            </div>
+        </div>
+        <!-- <div class="form-group col-md-12">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-sm btn-success pull-right f-s-14" ng-click = "DoaddSen()">确认提交</button>
+            </div>
+        </div> -->
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<style>
+    .ngdialog.ngdialog-theme-form
+    {
+        padding: 5% !important;
+    }
+    .ngdialog.ngdialog-theme-form .ngdialog-content
+    {
+        width: 1000px !important;
+    }
+</style>
+<div class="panel panel-primary">
+	<h4 class="panel-heading">
+		添加关键词组合
+	</h4>
+	<form class="panel-body" name="combinationForm">
+		<div class="row" style="margin-bottom: 15px;">
+			<div class="col-md-2 text-right">
+				关键词组1：
+			</div>
+			<div class="col-md-6">
+				<textarea class="form-control" name="comb_kw1" cols="2" ng-model="must_keywords.keywords" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" required></textarea>
+			</div>
+			<div class="col-md-4 text-info" ng-show="!combinationForm.comb_kw1.$dirty">
+				{{must_keywords.info}}
+			</div>
+			<div class="col-md-4 text-danger" ng-show="combinationForm.comb_kw1.$error.required&&combinationForm.comb_kw1.$dirty">
+				{{must_keywords.error.null}}
+			</div>
+			<div class="col-md-4 text-danger" ng-show="combinationForm.comb_kw1.$error.pattern">
+				{{must_keywords.error.pattern}}
+			</div>
+		</div>
+		<div class="row" style="margin-bottom: 15px;">
+			<div class="col-md-2 text-right">
+				关键词组2：
+			</div>
+			<div class="col-md-6">
+				<textarea class="form-control" cols="2" name="comb_kw2" ng-model="should_keywords.keywords" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" required></textarea>
+			</div>
+			<div class="col-md-4 text-info" ng-show="!combinationForm.comb_kw2.$dirty">
+				{{should_keywords.info}}
+			</div>
+			<div class="col-md-4 text-danger" ng-show="combinationForm.comb_kw2.$error.required&&combinationForm.comb_kw2.$dirty">
+				{{should_keywords.error.null}}
+			</div>
+			<div class="col-md-4 text-danger" ng-show="combinationForm.comb_kw2.$error.pattern">
+				{{should_keywords.error.pattern}}
+			</div>
+		</div>
+	</form>
+	<div class="panel-footer text-right">
+		<a class="btn btn-primary" href="javascript:;" ng-click="combination()">确定</a>
+		<a class="btn btn-primary" href="javascript:;" ng-click="closeThisDialog()">取消</a>
+	</div>
+</div>

@@ -1,0 +1,185 @@
+
+ul.ivh-treeview {
+    background-image: none;
+}
+
+
+ul.ivh-treeview li {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    -moz-background-clip: border;
+    -moz-background-inline-policy: continuous;
+    -moz-background-origin: padding;
+    background-attachment: scroll;
+    background-color: transparent;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    background-image: none;
+    margin: 0;
+    padding: 1px 0 0;
+}
+ul.ivh-treeview li {
+    padding: 2px 0;
+}
+ul.ivh-treeview {
+    font-family: tahoma,arial,helvetica;
+    font-size: 10pt;
+    white-space: nowrap;
+    padding: 3px;
+    margin: 0;
+    background-color: #fff;
+    border: 1px dotted gray;
+    overflow: auto;
+    min-height: 0;
+    position: relative;
+}
+ul.ivh-treeview {
+    color: #999;
+    font-size: 14px;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+}
+.ivh-treeview-node-content.fancytree-active:hover, .ivh-treeview-node-content.fancytree-selected:hover {
+    background-color: #EEE;
+    border-color: #CCC;
+}
+.ivh-treeview.fancytree-treefocus .ivh-treeview-node-content.fancytree-active, .ivh-treeview.fancytree-treefocus span.ivh-treeview-node-content.fancytree-selected, span.ivh-treeview-node-content.fancytree-active:hover, span.ivh-treeview-node-content.fancytree-selected:hover {
+    background-color: #CBE8F6;
+    border-color: #26A0DA;
+}
+.ivh-treeview-node-content.fancytree-active, .ivh-treeview-node-content.fancytree-selected {
+    background-color: #EEE;
+    border-color: #CCC;
+}
+.ivh-treeview-node-content:hover {
+    background-color: #EEE;
+    border-color: #CCC;
+}
+.ivh-treeview-node-content.fancytree-active, .ivh-treeview-node-content.fancytree-selected {
+    background-color: #F7F7F7;
+    border-color: #DEDEDE;
+}
+.ivh-treeview-node-content:hover {
+    background-color: #E5F3FB;
+    border-color: #70C0E7;
+}
+.ivh-treeview-node-content {
+    padding: 4px 0;
+}
+.ivh-treeview-node-content {
+    border: 1px solid transparent;
+}
+.ivh-treeview-node-content {
+    display: inherit;
+    width: 100%;
+}
+.fancytree-exp-n span.ivh-treeview-twistie-collapsed, .fancytree-exp-n span.ivh-treeview-twistie-collapsed:hover {
+    background-position: 0 -64px;
+}
+.fancytree-exp-n span.ivh-treeview-twistie-collapsed, .fancytree-exp-nl span.ivh-treeview-twistie-collapsed {
+    background-image: none;
+    cursor: default;
+}
+span.ivh-treeview-twistie-collapsed {
+    cursor: pointer;
+}
+
+#fancytree-drop-marker, span.ivh-treeview-checkbox-wrapper, span.fancytree-drag-helper-img, span.fancytree-empty, span.ivh-treeview-twistie-collapsed, span.fancytree-icon, span.fancytree-radio, span.fancytree-vline {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: top;
+    background-repeat: no-repeat;
+    background-image: url(images/icons.gif);
+    background-position: 0 0;
+}
+span.ivh-tree-icon {
+    position: relative;
+}
+span.ivh-tree-icon {
+    margin-left: 3px;
+    background-position: 0 0;
+}
+span.ivh-treeview-checkbox-wrapper, span.fancytree-custom-icon, span.ivh-tree-icon, span.fancytree-radio {
+    margin-top: 1px;
+}
+span.ivh-treeview-checkbox-wrapper:hover {
+    background-position: -16px -32px;
+}
+span.ivh-treeview-checkbox-wrapper {
+    margin-left: 3px;
+    background-position: 0 -32px;
+}
+span.ivh-treeview-checkbox-wrapper, span.fancytree-custom-icon, span.ivh-tree-icon, span.fancytree-radio {
+    margin-top: 1px;
+}
+
+
+span.fancytree-title {
+    color: #666;
+}
+span.fancytree-title {
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    color: #000;
+    vertical-align: top;
+    margin: 0;
+    margin-left: 3px;
+    cursor: pointer;
+}
+span.ivh-treeview-node-content {
+    padding: 4px 0;
+}
+span.ivh-treeview-node-content {
+    border: 1px solid transparent;
+}
+
+span.ivh-treeview-node-content {
+    display: inherit;
+    width: 100%;
+}
+span.ivh-treeview-twistie-collapsed:hover {
+    background-position: -48px -96px;
+}
+span.ivh-treeview-twistie-collapsed {
+    background-position: -32px -96px;
+}
+span.ivh-treeview-twistie-collapsed {
+    cursor: pointer;
+}
+.fancytree-ico-ef span.ivh-tree-icon {
+    background-position: -64px -16px;
+}
+span.fancytree-icon {
+    position: relative;
+}
+span.fancytree-icon {
+    margin-left: 3px;
+    background-position: 0 0;
+}
+span.ivh-treeview-checkbox-wrapper, span.fancytree-custom-icon, span.fancytree-icon, span.fancytree-radio {
+    margin-top: 1px;
+}
+
+
+
+
+
+
+ul.ivh-treeview {
+  list-style-type: none;
+  padding-left: 0;
+}
+ul.ivh-treeview ul.ivh-treeview {
+  padding-left: 15px;
+}
+ul.ivh-treeview .ivh-treeview-toggle {
+  cursor: pointer;
+}
+ul.ivh-treeview .ivh-treeview-node-leaf .ivh-treeview-toggle {
+  cursor: auto;
+}

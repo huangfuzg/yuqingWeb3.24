@@ -1,0 +1,30 @@
+{
+  "name": "srs-vte-research-system",
+  "version": "0.0.1",
+  "description": "set up server for srs vte research system by nodejs",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chaoqiankeji",
+  "dependencies": {
+    "bcrypt": "^0.8.7",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-alpha.1",
+    "crypto": "0.0.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "http-poster": "^1.0.3",
+    "logger": "0.0.1",
+    "method-override": "^2.3.6",
+    "node-uuid": "^1.4.7",
+    "open": "0.0.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "request": "^2.75.0",
+    "serve-favicon": "^2.3.0"
+  }
+}

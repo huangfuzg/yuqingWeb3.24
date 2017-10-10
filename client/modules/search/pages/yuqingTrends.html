@@ -1,0 +1,188 @@
+<style>
+</style>
+<div id="content" class="content">
+    <!-- begin breadcrumb -->
+    <div class="row">
+        <ol class="breadcrumb pull-right p-r-10" ng-show="!show_search">
+            <li class="fa fa-arrow-circle-left"><a href="javascript:;" ng-click="back()">返回</a></li>
+        </ol>
+    </div>
+    <div class="panel panel-primary" style="margin-bottom: 8px" ng-show="show_search">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-md" placeholder="输入关键字..." ng-focus="setrule()" ng-model="searchStr">
+                        <span class="input-group-btn">
+                            <button class="btn btn-md btn-primary" type="button" ng-click="onSearch()"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="ruleset">
+                <div class="alert alert-info alert-dismissible m-t-15" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                  输入单个关键字或形如 <code>topics=校庆,高考&keywords=高考,作弊&sites=新浪微博</code> 的简单搜索规则搜索，复杂规则请在下方设置
+                </div>
+                <div class="col-md-12">
+                    <a class="pull-right m-b-10" style="padding: 2px 5px; text-decoration: none; cursor: pointer;" data-toggle="collapse" ng-click="toggleMenu()"><span ng-if="setIsExtend">收起 <span class="fa fa-angle-down"></span></span>
+                    <span ng-if="!setIsExtend">展开 <span class="fa fa-angle-right"></span></span>
+                    </a>
+                    <p>搜索规则设置</p>
+                    <div class="panel-collapse collapse"  ng-class="{'in':setIsExtend}">
+                        <div class="m-t-5" id="builder">
+                        </div>
+                        <div class="row text-center m-t-5">
+                        <button class="btn btn-primary btn-sm reset" style="margin-right: 50px">重置规则</button>
+                        <button class="btn btn-primary btn-sm parse-mongo" style="margin-left: 50px" ng-click="onAdvance()">高级搜索</button>
+                        </div>
+                    </div>
+                    <div id="result" class="hide">
+                      <h3>Output</h3>
+                      <pre></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end page-header -->
+    <div class="panel panel-primary" ng-show="postLists != null">
+        <div class="panel-heading">
+            <!-- <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+            </div> -->
+            <h4 class="panel-title">搜索结果 <small style="color: white;">(共找到{{post_count}}条帖子)</small></h4>
+        </div>
+        <div class="panel-body">
+            <div class="" style="margin: 0 0 15px 15px; padding-bottom:5px; border-bottom: solid 1px #eee;">帖子排序: 
+                <label>
+                    <select class="form-control" ng-model="sort" ng-change="onChange()">
+                        <option value={{i}} ng-repeat="(i, item) in sortlist">{{item}}</option>
+                    </select>
+                </label>
+                <label style="margin-left: 20px">
+                    <label>数据数量：</label>
+                    <input type="number" ng-model="page_num" placeholder="每页显示数据数量。。。" ng-blur="onblur()"/>
+                </label>
+                <span class="btn btn-primary pull-right" data-toggle="modal" data-target="#visuleSet">舆情分析</span>
+            </div>
+            <ul class="media-list media-list-with-divider media-messaging">
+            <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in postLists" 
+                 ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)">
+                    <a href = "{{it.url}}" target = "_blank" class="pull-left">
+                    <img ng-src="{{pics[it.data_type]}}" ng-else = "it.poster" class="media-object rounded-corner w-32">
+                    <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url != ''" class="media-object rounded-corner w-32">
+                    </a>
+                    <div class="media-body">
+                        <a class = "m-b-10 h-32">
+                            <!-- <h4 class="media-heading" ng-if = "it.board != 'Sina'">{{it.title}}</h4> -->
+                            <h4 class="media-heading f-s-16" ng-if = "it.poster.name != ''"
+                            >
+                                 {{it.poster.name}}
+                            </h4>
+                        </a>
+                        <a  ng-if = "it.url != ''" ng-href = "{{it.url}}" target="_blank" class = "m-b-5 m-t-5 f-s-14">
+                            <h4 class="media-heading f-s-15" ng-if = "it.title"
+                         ng-show = "it.board != 'Sina'" style="color: #707478">标题:{{it.title}}</h4>
+                            <p>{{it.content.trim()}}</p>
+                        </a>
+                        <i class="text-muted">{{it.pt_time}}, {{it.board}}</i>
+                        <div>
+                            <p ng-if = "it.data_type == 2" >
+                                评论(
+                                 <a href="javascript:;">
+                                    {{it.comm_num || 0}}
+                                 </a>
+                                )
+                                 回帖(
+                                 <a href="javascript:;">
+                                    {{it.repost_num || 0}}
+                                 </a>
+                                ) 
+                                点赞(
+                                <a href="javascript:;">
+                                    {{it.read_num || 0}}
+                                 </a>
+                                )
+                            </p>
+                        </div>
+                    </div>
+                    <div class = "p-t-1 p-r-5 width-full f-s-14 text-right iconslists"
+                    ng-show = "false">
+                            <a title = "帖子分析"
+                            ng-click = "OpenAnaly('analy_1',items.topicId)">
+                            <img src = "/static/assets/img/analy.svg">
+                            </a>
+                            <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it.t_id)">
+                                <img src = "/static/assets/img/add.svg">
+                            </a>
+                            <a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">
+                                <img src = "/static/assets/img/save.svg">
+                            </a>
+                    </div>
+                </li>
+            </ul>
+            <ul class="pagination pagination-sm pull-right">
+                <li ng-click="prepage()"><a class="btn btn-primary">上一页</a></li>
+                <li ng-repeat="(i, item) in pagelists" ng-class="{'active':(item == page)}"><a ng-click="gopage(item)">{{item}}</a></li>
+                <li><a class="btn btn-primary" ng-click="nextpage()">下一页</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal fade" id="visuleSet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog"  style="width: 80%; height: 100%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">舆情分析</h4>
+                </div>
+                <div class="modal-body" style="padding: 10px 30px">
+                    <form role="form" class="form-horizontal">
+                       <h4>数据源</h4>
+                      <div class="form-group">
+                      <span>从文件中选择：</span>
+                        <span><input type="file" id="inputfile" style="display: inline-block;"></span>
+                        <span><button id="filebtn" class="btn btn-sm btn-primary" ng-click="updatePost()">确定</button></span>
+                        <span style="margin-left: 100px;">数据源导出：</span>
+                        <span><button id="dataexport" class="btn btn-sm btn-primary" ng-click="export()">导出</button></span>
+                      </div>
+                      <h4>数据分析</h4>
+                      <div class="form-group" style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px; padding: 5px 2px; background-color: rgba(250, 240, 210, 0.5)" ng-repeat="(i, chart) in charts">
+                        <div class="col-xs-2">
+                            <select class="form-control" ng-model="chart.layouttype" ng-change="selectLayout(chart)">
+                                <option value={{layout.type}} ng-repeat="(index, layout) in layouts">{{layout.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2" ng-if="chart.layout.keys.length != 0">
+                            <select class="form-control" ng-model="chart.key">
+                                <option value={{Key.id}} ng-repeat="(index,Key) in chart.layout.keys">{{Key.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2" ng-if="chart.layout.keys.length != 0">                
+                            <select class="form-control" value="-1" ng-model="chart.value">
+                                <option value=-1>--value--</option>
+                                <option value=1>帖子数目</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-5">
+                            <textarea class="form-control" rows="1" ng-model="chart.code" ng-blur="parseFun(chart)"></textarea> 
+                        </div>
+                        <div class="col-xs-1" style="padding-top: 8px">
+                            <a class="btn-success text-center" style="border-radius: 50%;width:20px;height: 20px; cursor: pointer; font-size: 15px; display: inline-block" ng-click="addchart()">+</a>
+                            <a class="btn-danger text-center" style="border-radius: 50%;width: 20px; height: 20px; cursor: pointer; font-size: 15px; display: inline-block" ng-click="removechart(i)">-</a>
+                        </div>
+                      </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" ng-click="analy()">开始分析</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</div>
