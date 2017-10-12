@@ -384,6 +384,15 @@ angular.module('settingservice',[])
                 items: ""
             }
         ];
+        var zhishiku = [
+            {
+                label:"知识库",
+                link:"#/zhishiku",
+                hasShow:true,
+                icon:"",
+                items:""
+            }
+        ]
         factories.allLinks = [
             {
                 label:"主页",
@@ -433,6 +442,13 @@ angular.module('settingservice',[])
                 hasShow: true,
                 icon: "fa fa-star",
                 items: historys
+            },
+            {
+                label:"知识库",
+                link:"#/zhishiku",
+                hasShow:true,
+                icon:"fa fa-database",
+                items:zhishiku
             },
             {
                 label:"友情链接",

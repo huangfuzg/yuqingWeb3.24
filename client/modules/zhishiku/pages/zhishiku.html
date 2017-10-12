@@ -1,0 +1,155 @@
+<style>
+    .align-center{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+    ul.subject{
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* justify-content: space-around; */
+        width: 100%;
+    }
+    ul.subject>li{
+        border: 2px solid rgb(207, 219, 230);
+        width: 45%;
+        box-sizing: border-box;
+        margin: 0.5%;
+    }
+    .img-box{
+        position: relative;
+        cursor: pointer;
+    }
+    .img-shield{
+        position: absolute;
+        display: none;
+        left: 50%;
+        top: 50%;
+        /*z-index: 50;*/
+        background: rgba(31, 30, 30, 0.38);
+        width: 0;
+        height: 0;
+    }
+    .description{
+        display: flex;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+    }
+    .description>div{
+        width: 100%;
+        height:80px;
+        text-align: center;
+        background: rgba(12, 12, 12, 0.6);
+        color: white;
+        overflow: hidden;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center
+    }
+    .description>div>h3{
+        font-size:2.2em;
+        color: white;
+    }
+</style>
+<div id="content" class="content" style="padding: 0">
+    <div class="align-center" style="display: none">
+    	<h2 class="text-center m-b-20" width="100%">知识主题</h2>
+        <ul id="subject" class="subject">
+            <li>
+                <a href="javascript:console.log('click')">
+                    <div class="img-box">
+                        <img src="/static/assets/img/zhishiku/zhongyin.jpg" style="width:100%"/>
+                        <div class="img-shield"></div>
+                        <div class="description">
+                            <div>
+                                <h3>中印对峙</h3>
+                                <p>2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。</p>
+                                <p>点击查看详细分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:console.log('click')">
+                    <div class="img-box">
+                        <img src="/static/assets/img/zhishiku/sade.jpg" style="width:100%"/>
+                        <div class="img-shield"></div>
+                        <div class="description">
+                            <div>
+                                <h3>香港占中</h3>
+                                <p>2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。</p>
+                                <p>点击查看详细分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:console.log('click')">
+                    <div class="img-box">
+                        <img src="/static/assets/img/zhishiku/sade.jpg" style="width:100%" />
+                        <div class="img-shield"></div>
+                        <div class="description">
+                            <div>
+                                <h3>萨德部署</h3>
+                                <p>2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。</p>
+                                <p>点击查看详细分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- <h3 style="margin-left: 40px;" class="m-b-10">知识库</h3> -->
+    <div class="navbar bg-silver-lighter">
+        <span class="navbar-brand">知识库</span>
+        <ul class="nav navbar-nav">
+            <li><a ui-sref="zhishiku.eventdetail">事件详情</a></li>
+            <li><a ui-sref="zhishiku.community">社团演化</a></li>
+            <li><a ui-sref="zhishiku.behavioural">行为分析</a></li>
+            <li><a ui-sref="zhishiku.sentiment">情感分析</a></li>
+            <li><a ui-sref="zhishiku.viewpoint">观点挖掘</a></li>
+            <li><a ui-sref="zhishiku.evolutionary">事件演化</a></li>
+            <li><a ui-sref="zhishiku.guidance">舆情引导</a></li>
+        </ul>
+    </div>
+    <div class="col-xs-2">
+        <div class="wrapper">
+            <p><b>主题</b></p>
+            <ul class="nav nav-pills nav-stacked nav-sm" id="subject">
+                <li>
+                    <a href="#collapseOne" data-toggle="collapse" data-parent="#subject">中印对峙</a>
+                    <ul class="panel-collapse collapse nav" role="menu" id="collapseOne" style="position: relative;">
+                        <li><a href="javascript:console.log('click')">&nbsp;&nbsp;中印士兵班公湖冲突</a></li>
+                        <li><a href="javascript:console.log('click')">&nbsp;&nbsp;事件2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#collapseTwo" data-toggle="collapse" data-parent="#subject">香港占中</a>
+                    <ul class="panel-collapse collapse nav" role="menu" id="collapseTwo">
+                        <li><a href="javascript:console.log('click')">&nbsp;&nbsp;事件1</a></li>
+                        <li><a href="javascript:console.log('click')">&nbsp;&nbsp;事件2</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#collapseThree" data-toggle="collapse" data-parent="#subject">萨德部署</a>
+                    <ul class="panel-collapse collapse nav" role="menu" id="collapseThree">
+                        <li><a href="javascript:console.log('click')">&nbsp;&nbsp;事件1</a></li>
+                        <li><a href="javascript:console.log('click')">&nbsp;&nbsp;事件2</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-10" ui-view></div>
+</div>
