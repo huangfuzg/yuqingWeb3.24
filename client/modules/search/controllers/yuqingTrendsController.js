@@ -22,6 +22,7 @@ CQ.mainApp.searchController
                 page_num = 10,
                 max_size = 5;//最大显示页面
                 $scope.charts = [];
+                $scope.page_num = page_num;
                 var topicKey = function(){this.id="topic_id",this.name="话题";},
                 baseKey = function(id,name){this.id=id,this.name=name;},
                 siteKey = function(){this.id="board",this.name="站点";},
@@ -158,7 +159,7 @@ CQ.mainApp.searchController
                     });
                     searchSet($scope.sites, $scope.topic, $scope.keyWords);
                 });
-                searchSet();
+                //searchSet();
                 if(!($stateParams.poster == null && $stateParams.topicIds == null && $stateParams.keywords == null && $stateParams.start_time == null && $stateParams.end_time == null && $stateParams.sites == null))
                 {
                   console.log($stateParams);
@@ -341,25 +342,25 @@ CQ.mainApp.searchController
                     if($scope.searchKeywords.length == 0&&$scope.searchSites.length == 0&&$scope.poster.length == 0&&$scope.searchTopicids.length == 0 && $scope.searchStr != "")
                     {
                       $scope.searchState = 2;
-                      var searchStrlist = $scope.searchStr.split(',');
-                      searchStrlist.tostring = function()
-                      {
-                        var temp = '[';
-                        this.forEach(function(str,i){
-                          if(i == 0)
-                          {
-                            temp = temp + '"' + str + '"';
-                          }
-                          else
-                          {
-                            temp = temp + ',' + '"' + str + '"';
-                          }
-                        });
-                        temp += ']';
-                        return temp;
-                      }
-                      console.log(searchStrlist.tostring());
-                      var elastic = '{"bool": {"should": [{"terms": {"content": '+ searchStrlist.tostring() + '}},{"terms": {"title": ' + searchStrlist.tostring() + '}}]}}';
+                      // var searchStrlist = $scope.searchStr.split(',');
+                      // searchStrlist.tostring = function()
+                      // {
+                      //   var temp = '[';
+                      //   this.forEach(function(str,i){
+                      //     if(i == 0)
+                      //     {
+                      //       temp = temp + '"' + str + '"';
+                      //     }
+                      //     else
+                      //     {
+                      //       temp = temp + ',' + '"' + str + '"';
+                      //     }
+                      //   });
+                      //   temp += ']';
+                      //   return temp;
+                      // }
+                      // console.log(searchStrlist.tostring());
+                      var elastic = '{"bool": {"should": [{"match": {"content":{"operator":"and","query":"'+ $scope.searchStr + '"}}},{"match": {"content":{"operator":"and","query":"' + $scope.searchStr + '"}}}]}}';
                       $scope.elastic = elastic;
                     }
                   }
@@ -396,6 +397,8 @@ CQ.mainApp.searchController
                 }
                 $scope.onblur = function()
                 {
+                  if($scope.page_num<0)
+                    $scope.page_num = 0
                   page_num = $scope.page_num;
                   $scope.page = 1;
                   var data = {
@@ -451,7 +454,7 @@ CQ.mainApp.searchController
                   if(data.elastic)//高级检索
                   {
                     SearchFacService.advanceSearch(data).then(function(data){
-                      $("#ruleset").addClass('hide');
+                      // $("#ruleset").addClass('hide');
                       if(data.success)
                       {
                         $scope.postLists = data.data.post_data;
@@ -472,7 +475,7 @@ CQ.mainApp.searchController
                   }
                   else{      //一般检索
                     SearchFacService.searchData(data).then(function(data){
-                      $("#ruleset").addClass('hide');
+                      // $("#ruleset").addClass('hide');
                       if(data.success)
                       {
                         $scope.postLists = data.data.post_data;
@@ -732,8 +735,8 @@ CQ.mainApp.searchController
                         plugin_config: {
                           valueField: 'topicId',
                           labelField: 'topicName',
-                          // options: topics,
-                          options: [{"topicId":4,"topicName":4}],
+                          options: topics,
+                          // options: [{"topicId":4,"topicName":4}],
                         },
                         data:{"type":"terms"},
                         valueSetter: function(rule, value) {

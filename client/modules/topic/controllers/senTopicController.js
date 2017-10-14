@@ -95,6 +95,7 @@ CQ.mainApp.topicController
                     }]
                 };
                 var keylists = [];
+                d.topicKeywords=new Set(d.topicKeywords);
                 d.topicKeywords.forEach(function (d) {
                     var tt = {};
                     tt.name = d;

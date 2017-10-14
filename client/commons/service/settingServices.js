@@ -386,7 +386,7 @@ angular.module('settingservice',[])
         ];
         var zhishiku = [
             {
-                label:"知识库",
+                label:"舆情知识库",
                 link:"#/zhishiku",
                 hasShow:true,
                 icon:"",
@@ -444,8 +444,8 @@ angular.module('settingservice',[])
                 items: historys
             },
             {
-                label:"知识库",
-                link:"#/zhishiku",
+                label:"舆情知识库",
+                link:"#/zhishiku/subjects",
                 hasShow:true,
                 icon:"fa fa-database",
                 items:zhishiku

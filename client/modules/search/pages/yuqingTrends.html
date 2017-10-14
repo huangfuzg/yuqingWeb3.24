@@ -7,9 +7,18 @@
             <li class="fa fa-arrow-circle-left"><a href="javascript:;" ng-click="back()">返回</a></li>
         </ol>
     </div>
+    <div class="input-group m-b-20">
+        <input type="text" class="form-control input-white" placeholder="Enter keywords here..."  ng-model="searchStr">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-primary" ng-click="onSearch()"><i class="fa fa-search"></i> Search</button>
+        </div>
+    </div>
     <div class="panel panel-primary" style="margin-bottom: 8px" ng-show="show_search">
+        <div class="panel-heading">
+            <h4 class="panel-title">高级检索</h4>
+        </div>
         <div class="panel-body">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-6">
                     <div class="input-group">
                         <input type="text" class="form-control input-md" placeholder="输入关键字..." ng-focus="setrule()" ng-model="searchStr">
@@ -18,23 +27,23 @@
                         </span>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="row" id="ruleset">
-                <div class="alert alert-info alert-dismissible m-t-15" role="alert">
+                <!-- <div class="alert alert-info alert-dismissible m-t-15" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                   输入单个关键字或形如 <code>topics=校庆,高考&keywords=高考,作弊&sites=新浪微博</code> 的简单搜索规则搜索，复杂规则请在下方设置
-                </div>
+                </div> -->
                 <div class="col-md-12">
-                    <a class="pull-right m-b-10" style="padding: 2px 5px; text-decoration: none; cursor: pointer;" data-toggle="collapse" ng-click="toggleMenu()"><span ng-if="setIsExtend">收起 <span class="fa fa-angle-down"></span></span>
+                    <!-- <a class="pull-right m-b-10" style="padding: 2px 5px; text-decoration: none; cursor: pointer;" data-toggle="collapse" ng-click="toggleMenu()"><span ng-if="setIsExtend">收起 <span class="fa fa-angle-down"></span></span>
                     <span ng-if="!setIsExtend">展开 <span class="fa fa-angle-right"></span></span>
                     </a>
-                    <p>搜索规则设置</p>
-                    <div class="panel-collapse collapse"  ng-class="{'in':setIsExtend}">
+                    <p>搜索规则设置</p> -->
+                    <div class="panel-collapse collapse in">
                         <div class="m-t-5" id="builder">
                         </div>
                         <div class="row text-center m-t-5">
-                        <button class="btn btn-primary btn-sm reset" style="margin-right: 50px">重置规则</button>
-                        <button class="btn btn-primary btn-sm parse-mongo" style="margin-left: 50px" ng-click="onAdvance()">高级搜索</button>
+                        <button class="btn btn-primary btn-sm reset" style="margin-right: 100px">重置规则</button>
+                        <button class="btn btn-primary btn-sm parse-mongo" style="margin-left: 100px" ng-click="onAdvance()">高级搜索</button>
                         </div>
                     </div>
                     <div id="result" class="hide">
@@ -57,17 +66,17 @@
             <h4 class="panel-title">搜索结果 <small style="color: white;">(共找到{{post_count}}条帖子)</small></h4>
         </div>
         <div class="panel-body">
-            <div class="" style="margin: 0 0 15px 15px; padding-bottom:5px; border-bottom: solid 1px #eee;">帖子排序: 
+            <div class="" style="margin: 0 0 15px 15px; padding-bottom:5px; border-bottom: solid 1px #eee;">排序: 
                 <label>
                     <select class="form-control" ng-model="sort" ng-change="onChange()">
                         <option value={{i}} ng-repeat="(i, item) in sortlist">{{item}}</option>
                     </select>
                 </label>
                 <label style="margin-left: 20px">
-                    <label>数据数量：</label>
-                    <input type="number" ng-model="page_num" placeholder="每页显示数据数量。。。" ng-blur="onblur()"/>
+                    数量：
+                    <label><input type="number" ng-model="page_num" placeholder="每页显示数据数量。。。" ng-blur="onblur()" class="form-control" /></label>
                 </label>
-                <span class="btn btn-primary pull-right" data-toggle="modal" data-target="#visuleSet">舆情分析</span>
+                <!-- <span class="btn btn-primary pull-right" data-toggle="modal" data-target="#visuleSet">舆情分析</span> -->
             </div>
             <ul class="media-list media-list-with-divider media-messaging">
             <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in postLists" 

@@ -1,0 +1,102 @@
+<style>
+    .timeline .timeline-body
+    {
+        margin-top: 10px;
+    }
+    .timeline-header .username{
+        font-size: 18px;
+    }
+    .timeline .timeline-time .time{
+        font-size: 20px;
+        margin-top: 10px;
+    }
+</style>
+<div id="content" class="content" style="padding: 0">
+    <ol class="breadcrumb" style="margin-left: 20px;
+    margin-top: 10px;font-size:1.1em;">
+        <li><a href="#/zhishiku/subjects">舆情知识库</a></li>
+        <li><a href="#/zhishiku/subjects">主题</a></li>
+        <li class="active">事件</li>
+    </ol>
+    <!-- end breadcrumb -->
+    <!-- begin timeline -->
+    <ul class="timeline">
+        <li ng-repeat="(i,event) in events">
+            <!-- begin timeline-time -->
+            <div class="timeline-time" ng-show={{i!=events.length-1}}>
+                <!-- <span class="date">today</span> -->
+                <span class="time">{{event.time}}</span>
+            </div>
+            <!-- end timeline-time -->
+            <!-- begin timeline-icon -->
+            <div class="timeline-icon">
+                <a href="javascript:;"><i class="fa fa-paw"></i></a>
+            </div>
+            <!-- end timeline-icon -->
+            <!-- begin timeline-body -->
+            <div class="timeline-body">
+                <div class="timeline-header">
+                    <!-- <span class="userimage"><img src="assets/img/user-1.jpg" alt="" /></span> -->
+                    <span class="username"><a href="javascript:;">{{event.name}}</a> <small></small></span>
+                    <!-- <span class="pull-right text-muted">18 Views</span> -->
+                </div>
+                <div class="timeline-content">
+                    <p>
+                        {{event.summary}}
+                    </p>
+                    <ul class="row list-unstyled">
+                        <li class="col-md-6" style="min-height: 200px">
+                            <img src={{event.img}}/>
+                        </li>
+                        <li class="col-md-6" id="wordsCloud_{{event.id}}" style="min-height: 200px">
+                            
+                        </li>
+                    </ul>
+                </div>
+                <div class="timeline-footer">
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-th fa-fw"></i>事件详情</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-users fa-fw"></i>社团演化</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-child fa-fw"></i>行为分析</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-heart  fa-heart"></i>情感分析</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-bullseye fa-fw"></i>观点挖掘</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-exchange fa-fw"></i>事件演化</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-compass fa-fw"></i>舆情引导</a>
+                </div>
+            </div>
+            <!-- end timeline-body -->
+        </li>
+        <li>
+            <!-- begin timeline-icon -->
+            <div class="timeline-icon">
+                <a href="javascript:;"><i class="fa fa-spinner"></i></a>
+            </div>
+            <!-- end timeline-icon -->
+            <!-- begin timeline-body -->
+            <div class="timeline-body">
+                Loading...
+            </div>
+            <!-- begin timeline-body -->
+        </li>
+    </ul>
+    <!-- end timeline -->
+    <div class="align-center" style="">
+    	<h2 class="text-center m-b-20" width="100%">{{subject.name}}</h2>
+        <ul id="subject" class="subject">
+            <li ng-repeat="subject in subjects">
+                <a ui-sref="events({subject:subject})">
+                    <div class="img-box">
+                        <img src={{subject.img}} style="width:100%;height:100%"/>
+                        <div class="img-shield"></div>
+                        <div class="description">
+                            <div>
+                                <h3>{{subject.name}}</h3>
+                                <p>{{subject.description}}</p>
+                                <p>点击查看详细分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

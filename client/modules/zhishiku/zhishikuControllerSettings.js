@@ -7,6 +7,17 @@ CQ.mainApp.zhishikuController
                 templateUrl: "/static/modules/zhishiku/pages/zhishiku.html",
                 controller: "zhishikuController"
             })
+            .state("subjects", {
+                url:"/zhishiku/subjects",
+                templateUrl: "/static/modules/zhishiku/pages/subjects.html",
+                controller: "subjectController"
+            })
+            .state("events", {
+                url:"/zhishiku/subjects/events",
+                templateUrl: "/static/modules/zhishiku/pages/events.html",
+                params:{"subject":null},
+                controller: "eventsController"
+            })
             .state("zhishiku.eventdetail", {
                 url:"/eventdetail",
                 templateUrl: "/static/modules/zhishiku/pages/eventdetail.html",
@@ -33,12 +44,12 @@ CQ.mainApp.zhishikuController
                 controller: "zhishikuController"
             })
             .state("zhishiku.evolutionary", {
-                url:"/evolutionary ",
+                url:"/evolutionary",
                 templateUrl: "/static/modules/zhishiku/pages/evolutionary.html",
                 controller: "zhishikuController"
             })
             .state("zhishiku.guidance", {
-                url:"/guidance ",
+                url:"/guidance",
                 templateUrl: "/static/modules/zhishiku/pages/guidance.html",
                 controller: "zhishikuController"
             });
