@@ -3,7 +3,7 @@ CQ.mainApp.zhishikuController
     .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){
         $stateProvider
             .state("zhishiku", {
-                url:"/zhishiku",
+                url:"/zhishiku/subjects/events/analyze",
                 templateUrl: "/static/modules/zhishiku/pages/zhishiku.html",
                 controller: "zhishikuController"
             })
@@ -21,36 +21,43 @@ CQ.mainApp.zhishikuController
             .state("zhishiku.eventdetail", {
                 url:"/eventdetail",
                 templateUrl: "/static/modules/zhishiku/pages/eventdetail.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "eventdetailController"
             })
             .state("zhishiku.community", {
                 url:"/community",
                 templateUrl: "/static/modules/zhishiku/pages/community.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "communityController"
             })
             .state("zhishiku.behavioural", {
                 url:"/behavioural",
                 templateUrl: "/static/modules/zhishiku/pages/behavioural.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "behaviouralController"
             })
             .state("zhishiku.sentiment", {
                 url:"/sentiment",
                 templateUrl: "/static/modules/zhishiku/pages/sentiment.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "sentimentController"
             })
             .state("zhishiku.viewpoint", {
                 url:"/viewpoint",
                 templateUrl: "/static/modules/zhishiku/pages/viewpoint.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "viewpointController"
             })
             .state("zhishiku.evolutionary", {
                 url:"/evolutionary",
                 templateUrl: "/static/modules/zhishiku/pages/evolutionary.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "evolutionaryController"
             })
             .state("zhishiku.guidance", {
                 url:"/guidance",
                 templateUrl: "/static/modules/zhishiku/pages/guidance.html",
-                controller: "zhishikuController"
+                params:{"event":null},
+                controller: "guidanceController"
             });
 }]);

@@ -1,6 +1,6 @@
 <div id="content" class="content" style="padding: 0">
     <!-- <h3 style="margin-left: 40px;" class="m-b-10">知识库</h3> -->
-    <div class="navbar bg-silver-lighter">
+    <!-- <div class="navbar bg-silver-lighter">
         <span class="navbar-brand">知识库</span>
         <ul class="nav navbar-nav">
             <li><a ui-sref="zhishiku.eventdetail">事件详情</a></li>
@@ -11,9 +11,17 @@
             <li><a ui-sref="zhishiku.evolutionary">事件演化</a></li>
             <li><a ui-sref="zhishiku.guidance">舆情引导</a></li>
         </ul>
-    </div>
-    <div class="col-xs-2">
-        <div class="wrapper">
+    </div> -->
+    <ol class="breadcrumb" style="margin-left: 20px;
+    margin-top: 10px;font-size:1.3em;">
+        <li><a href="#/zhishiku/subjects">舆情知识库</a></li>
+        <li><a href="#/zhishiku/subjects">主题</a></li>
+        <li><a href="#/zhishiku/subjects/events">事件</a></li>
+        <li class="active">{{modelName}}</li>
+
+    </ol>
+    <div class="col-xs-10" ui-view>
+        <!-- <div class="wrapper">
             <p><b>主题</b></p>
             <ul class="nav nav-pills nav-stacked nav-sm" id="subject">
                 <li>
@@ -38,7 +46,17 @@
                     </ul>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
-    <div class="col-xs-10" ui-view></div>
+    <div class="col-xs-2">
+        <ul class="nav">
+            <li><a ui-sref="zhishiku.eventdetail">事件详情</a></li>
+            <li><a ui-sref="zhishiku.community">社团发现</a></li>
+            <!-- <li><a ui-sref="zhishiku.behavioural">行为分析</a></li> -->
+            <li><a ui-sref="zhishiku.sentiment">情感分析</a></li>
+            <li><a ui-sref="zhishiku.viewpoint">观点挖掘</a></li>
+            <li><a ui-sref="zhishiku.evolutionary">事件演化</a></li>
+            <li><a ui-sref="zhishiku.guidance">舆情引导</a></li>
+        </ul>
+    </div>
 </div>
