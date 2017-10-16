@@ -147,6 +147,7 @@ CQ.mainApp.zhishikuController
         $timeout(function(){
             $("#title").hide();
         },0);
+        $rootScope.modelName="社团发现";
         var data=null;
         $http({
             method:"get",
@@ -266,10 +267,11 @@ CQ.mainApp.zhishikuController
                 .on("mouseout", mouseout)  
                 .call(force.drag);
             function  radius (d){   
-                if(!d.weight){//节点weight属性没有值初始化为1（一般就是叶子了）  
-                    d.weight=1;  
-                }                                                
-                return Math.log(d.weight)*2;                                     
+                // if(!d.weight){//节点weight属性没有值初始化为1（一般就是叶子了）  
+                //     d.weight=1;  
+                // }                                                
+                // return Math.log(d.weight)*2;
+                return 4;                                     
             }
             var last_scale=1,
             cur_group="",
@@ -438,7 +440,7 @@ CQ.mainApp.zhishikuController
                     $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
                     if(d.detail)
                     {
-                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,10)+"...");
+                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,15)+"...");
                         if(d.detail.is_V==1)
                             $("#title").append("<br/>大V")
                     }
@@ -480,6 +482,7 @@ CQ.mainApp.zhishikuController
     }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("eventdetailController", "start!!!");
+        $rootScope.modelName="事件详情";
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -498,6 +501,7 @@ CQ.mainApp.zhishikuController
     }]).controller("behaviouralController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("behaviouralController", "start!!!");
+        $rootScope.modelName="行为分析";
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -516,6 +520,7 @@ CQ.mainApp.zhishikuController
     }]).controller("sentimentController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("sentimentController", "start!!!");
+        $rootScope.modelName="情感分析";
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -526,6 +531,7 @@ CQ.mainApp.zhishikuController
     }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("viewpointController", "start!!!");
+        $rootScope.modelName="观点挖掘";
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -536,6 +542,7 @@ CQ.mainApp.zhishikuController
     }]).controller("evolutionaryController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("evolutionaryController", "start!!!");
+        $rootScope.modelName="事件演化";
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -554,6 +561,7 @@ CQ.mainApp.zhishikuController
     }]).controller("guidanceController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("guidanceController", "start!!!");
+        $rootScope.modelName="舆情引导";
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
