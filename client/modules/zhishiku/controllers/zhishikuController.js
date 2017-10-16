@@ -537,6 +537,207 @@ CQ.mainApp.zhishikuController
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("evolutionaryController", "start!!!");
         //页面UI初始化；
+        $http({
+            method:"get",
+            url:"/static/assets/data/zhishiku/da_v.json"
+        }).then(function(res){
+            var counts = (res.data);
+            var ti=[],dat=[[],[],[]];
+            var type=['大V数','帖子数/10','热度']
+            var mychart = echarts.init(document.getElementById('hot'));
+            counts.forEach(function (d) {
+                ti.push(d.time);
+                dat[0].push(+d.da_v);
+                dat[1].push(+(d.tiezi/10));
+                dat[2].push(+d.redu);
+            });
+            console.log(dat[1])
+            var option1 = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                toolbox: {
+                    feature: {
+                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:type
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        data: ti,
+
+                    },
+                    // {
+                    //     splitLine:'5',
+                    // }
+                ],
+                yAxis: [
+                    {
+                        type: 'value',
+
+
+                    },
+
+                ],
+                series: [
+                    {
+                        name:'大V数',
+                        type:'bar',
+                        // color:'blue',
+                        barWidth:'25',
+                        barGap:'10%',
+                        data:dat[0]
+                    },
+                    {
+                        name:'帖子数/10',
+                        type:'bar',
+                        barWidth:'25',
+                        barGap:'10%',
+                        data:dat[1]
+                    },
+                    {
+                        name:'热度',
+                        type:'line',
+                        // yAxisIndex: 1,
+                        data:dat[2]
+                    }
+                ]
+            };
+            mychart.setOption(option1);
+        },function(res){
+            // console.log(res);
+        });
+
+        $http({
+            method:"get",
+            url:"/static/assets/data/zhishiku/evolu.json"
+        }).then(function(res) {
+            var ex = res.data;
+            var leg = [],ti=[],dat=[];
+            var topics=[]
+            for(var i=0;i<6;i++){
+                dat[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];}
+            ex.forEach(function (d) {
+                if(leg.indexOf(d.topic)==-1)
+                    leg.push(d.topic);
+                if(ti.indexOf(d.time)==-1)
+                    ti.push(d.time);
+                ti.sort();
+                var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
+                // console.log(tmp)
+                dat[d.type-1][tmp-15]=d.num;
+                if(topics[topics.length-1]!=d.topic)
+                    topics.push(d.topic);
+
+
+            });
+
+            var mychart = echarts.init(document.getElementById('test'));
+            var option= {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {data: leg},
+                toolbox: {
+                    feature: {
+                        saveAsImage: {}
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: ti
+                    }
+                ],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: leg[0],
+                        type: 'line',
+                        // stack: '总量',
+                        areaStyle: {normal: {}},
+                        data: dat[0]
+                    },
+                    {
+                        name: leg[1],
+                        type: 'line',
+                        // stack: '总量',
+                        areaStyle: {normal: {}},
+                        data: dat[1]
+                    },
+                    {
+                        name: leg[2],
+                        type: 'line',
+                        // stack: '总量',
+                        areaStyle: {normal: {}},
+                        data: dat[2]
+                    },
+                    {
+                        name: leg[3],
+                        type: 'line',
+                        // stack: '总量',
+                        areaStyle: {normal: {}},
+                        data: dat[3]
+                    },
+                    {
+                        name: leg[4],
+                        type: 'line',
+                        // stack: '总量',
+                        areaStyle: {normal: {}},
+                        data: dat[4]
+                    },
+                    {
+                        name: leg[5],
+                        type: 'line',
+                        // stack: '总量',
+                        areaStyle: {normal: {}},
+                        data: dat[5]
+                    },
+                ]
+            };
+            // console.log(ti);
+            // option.xAxis[0].data=ti;
+            mychart.setOption(option);
+        },function(res){
+            console.log(res);
+        });
+
+
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
@@ -559,6 +760,15 @@ CQ.mainApp.zhishikuController
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
+                $http({
+                    method:"get",
+                    url:"/static/assets/data/zhishiku/yindao.json"
+                }).then(function(res){
+                    $scope.guideData = res.data;
+                    console.log($scope.guideData);
+                },function (res) {
+
+                });
                 $(".description>div>p").hide();
                 $(".img-box").hover(function(){
                     $(this).find(".description>div").animate({"height":"100%","padding":"20px"},500,"linear");
