@@ -140,10 +140,13 @@ CQ.mainApp.zhishikuController
                 }
             });
         }
-    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout", 
+    function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
         console.log("zhishikuController", "start!!!");
         //页面UI初始化；
+        $timeout(function(){
+            $("#title").hide();
+        },0);
         var data=null;
         $http({
             method:"get",
@@ -151,12 +154,20 @@ CQ.mainApp.zhishikuController
         }).then(function(res){
             data=res.data;
             console.log(data);
-            var nodes=[],edges=[],nodesl=0,edge_count=3;
+            var nodes=[],edges=[],nodesl=0,edge_count=2,color_index=0;
             for (var key in data)
             {
                 var color = "rgb("+[~~(Math.random()*200),~~(Math.random()*200),~~(Math.random()*200)].join(',')+")";
                 if(key=="user")
                     continue;
+                var usersNum={};
+                data[key]=data[key].filter(d=>{
+                    if(usersNum[d.user_id])
+                        return false;
+                    usersNum[d.user_id]=1;
+                    return true;
+                })
+                nodesl=nodes.length;
                 data[key].forEach((d,index)=>{
                     for(var i=0; i<edge_count; i++)
                     {
@@ -169,17 +180,23 @@ CQ.mainApp.zhishikuController
                         edges.push(edge);
                     }
                     d.group=key;
-                    d.color=color;
+                    d.color=color_index;
                     nodes.push(d);
+                    data['user'].forEach(m=>{
+                        if(m.user_id==d.user_id||m.user_name==d.user_id)
+                        {
+                            d.detail=m;
+                        }
+                    });
                 });
-                nodesl+=data[key].length;
+                // nodesl+=data[key].length;
+                color_index+=1;
             }
             edges.forEach(edge=>{
                 edge.source=(nodes[edge.source]||edge.source);
                 edge.target=(nodes[edge.target]||edge.target);
             });
             console.log(nodes);
-            console.log(edges);
             drawForceGraph("#communityGraph",nodes,edges);
         },function(res){
             console.log(res);
@@ -188,29 +205,61 @@ CQ.mainApp.zhishikuController
         {
             var width = $(dom).width(),
             height = $(dom).height(),
+            img_w=20,
+            img_h=20,
+            color = d3.scale.category10(),
             force = d3.layout.force()  
                 .nodes(d3.values(nodes))  
                 .links(edges)  
-                .size([width, height])  
-                .linkDistance(100)  
-                .charge(-8)  
-                .on("tick", tick)  
+                .size([width, height])
+                .gravity(0.2) 
+                .linkDistance(50)  
+                .charge(-20)  
+                .on("tick", tick)
+                // .on("end",zoomed)  
                 .start();
+            var zoom = d3.behavior.zoom()
+                .scaleExtent([1, 10])
+                .on("zoom", zoomed);
             var svg = d3.select(dom).append("svg")  
                 .attr("width", width)  
-                .attr("height", height); 
+                .attr("height", height);
+            svg.call(zoom);
+            svg=svg.append("g");
+
+            // svg.append("rect")
+            //     .attr("class","title")
+            //     .attr("width",100)
+            //     .attr("height",100);
+            // var title = svg.append("g");
+
+            // title.append("rect").attr("width",100)
+            //     .attr("height",100)
+            //     .attr("class","title"); 
+            // title.append("text")
+            //     .attr("class","title")
+            //     .text("test"); 
             var link = svg.selectAll(".link")  
                 .data(force.links())  
                 .enter().append("line")  
                 .attr("class", "link");  
             link.style("stroke",function(d){//  设置线的颜色    
-                return d.source.color;    
+                return color(d.source.color+1);    
             })    
             .style("stroke-width",function(d,i){//设置线的宽度    
                 return 0;    
             });
+            console.log(nodes.filter(d=>d.detail!=undefined));
             var node = svg.selectAll(".node")  
-                .data(force.nodes())  
+                .data(nodes.filter(d=>d.detail==undefined))  
+                .enter().append("g")  
+                .attr("class", "node")  
+                .on("mouseover", mouseover)  
+                .on("mouseout", mouseout)  
+                .call(force.drag);
+            console.log(nodes.filter(d=>d.detail!=undefined));
+            var node_img=svg.selectAll(".node-img")  
+                .data(nodes.filter(d=>d.detail!=undefined))  
                 .enter().append("g")  
                 .attr("class", "node")  
                 .on("mouseover", mouseover)  
@@ -222,18 +271,150 @@ CQ.mainApp.zhishikuController
                 }                                                
                 return Math.log(d.weight)*2;                                     
             }
+            var last_scale=1,
+            cur_group="",
+            transform={};
+            function zoomed()
+            {
+                console.log(cur_group);
+                var cluster={},
+                group,k,tx,ty,
+                closest=function(x,y)
+                {
+                    // console.log([x,y]);
+                    var min_dis=Number.MAX_VALUE,
+                    ret="";
+                    // min_x_mid=min_dis,
+                    // min_y_mid=min_dis;
+                    for(var c in cluster)
+                    {
+                        var dis=(x-cluster[c].midX)*(x-cluster[c].midX)+(y-cluster[c].midY)*(y-cluster[c].midY);
+                        if(c!='all'&&dis<min_dis)
+                        {
+                            min_dis=dis;
+                            ret=c;
+                            // min_x_mid=cluster[c].midX;
+                            // min_y_mid=cluster[c].midY;
+                        }
+                    }
+                    return ret;
+                };
+                nodes.forEach(d=>{
+                    if(cluster[d.group])
+                    {
+                        if(cluster[d.group].x0>d.x)
+                            cluster[d.group].x0=d.x;
+                        else if(cluster[d.group].x1<d.x)
+                            cluster[d.group].x1=d.x;
+                        if(cluster[d.group].y0>d.y)
+                            cluster[d.group].y0=d.y;
+                        else if(cluster[d.group].y1<d.y)
+                            cluster[d.group].y1=d.y;
+                    }
+                    else
+                    {
+                        cluster[d.group]={x0:d.x,x1:d.x,y0:d.y,y1:d.y};
+                    }
+                });
+                cluster.all={x1:Number.NEGATIVE_INFINITY,x0:Number.MAX_VALUE,y1:Number.NEGATIVE_INFINITY,y0:Number.MAX_VALUE};
+                for(var c in cluster)
+                {
+                    if(c!=="all")
+                    {
+                        cluster[c].midX=cluster[c].x0/2+cluster[c].x1/2;
+                        cluster[c].midY=cluster[c].y0/2+cluster[c].y1/2;
+                        cluster.all.x0=Math.min(cluster[c].x0,cluster.all.x0);
+                        cluster.all.y0=Math.min(cluster[c].y0,cluster.all.y0);
+                        cluster.all.y1=Math.max(cluster[c].y1,cluster.all.y1);
+                        cluster.all.x1=Math.max(cluster[c].x1,cluster.all.x1);
+                        cluster.all.midX=cluster.all.x0/2+cluster.all.x1/2;
+                        cluster.all.midY=cluster.all.y0/2+cluster.all.y1/2;
+                    }
+                    // cluster[c].disMid=(x,y)=>(x-cluster[c].midX)*(x-cluster[c].midX)+(y-cluster[c].midY)*(y-cluster[c].midY);
+                }
+                console.log(cluster);
+                // console.log(d3.event.translate);
+                // console.log(d3.event.scale);
+                // console.log(d3.event);
+                if(cur_group=="")
+                {
+                    group='all',
+                    // console.log(cluster[group]);
+                    k = 0.9 / Math.max((cluster[group].x1 - cluster[group].x0) / width, (cluster[group].y1 - cluster[group].y0) / height),
+                    tx = (width - k * (cluster[group].x0 + cluster[group].x1)) / 2,
+                    ty = (height - k * (cluster[group].y0 + cluster[group].y1)) / 2;
+                }
+                else if(d3.event.scale>transform.lastScale&&cur_group=="all")
+                {
+                    group=closest(d3.event.sourceEvent.offsetX,d3.event.sourceEvent.offsetY),
+                    k = 0.9 / Math.max((cluster[group].x1 - cluster[group].x0) / width, (cluster[group].y1 - cluster[group].y0) / height),
+                    tx = (width - k * (cluster[group].x0 + cluster[group].x1)) / 2,
+                    ty = (height - k * (cluster[group].y0 + cluster[group].y1)) / 2;
+                    transform.min_scale=d3.event.scale;
+                    transform.k=k;
+                    transform.min_tx=tx-d3.event.translate[0];
+                    transform.min_ty=ty-d3.event.translate[1];
+                    showEdge(group);
+                }
+                else
+                {
+                    // console.log(transform);
+                    // console.log(d3.event.scale);
+                    if(d3.event.scale<transform.lastScale&&d3.event.scale<=transform.min_scale)
+                    {
+                        group='all',
+                        k = 0.9 / Math.max((cluster[group].x1 - cluster[group].x0) / width, (cluster[group].y1 - cluster[group].y0) / height),
+                        tx = (width - k * (cluster[group].x0 + cluster[group].x1)) / 2,
+                        ty = (height - k * (cluster[group].y0 + cluster[group].y1)) / 2;
+                        hideEdge();
+                    }
+                    else
+                    {
+                        k=d3.event.scale/transform.min_scale*transform.k;
+                        tx=d3.event.translate[0]+transform.min_tx;
+                        ty=d3.event.translate[1]+transform.min_ty;
+                    }
+                }
+                svg.transition()
+                    .attr("transform", 
+                    "translate(" + tx + ',' + ty + ")scale(" + k + ")");
+                transform.lastScale=d3.event.scale;
+                cur_group=group||cur_group;
+            }
+            function hideEdge()
+            {
+                link.style("stroke-width",function(d,i){//设置线的宽度    
+                return 0;});
+            }
+            function showEdge(group)
+            {
+                link.style("stroke-width",function(d,i){//设置线的宽度    
+                return d.source.group==group&&d.target.group==group?"1px":0;});
+            }
+            node_img.append("image")  
+            .attr("xlink:href",function(d){  //设置圆点半径                        
+                return d.detail?d.detail.user_img:"";                            
+             })
+            .attr("width",img_w)
+            .attr("height",img_h)
+            .attr("transform","translate("+-img_w/2+","+-img_h/2+")");
             node.append("circle")  
                 .attr("r",function(d){  //设置圆点半径                        
                 return radius (d);                            
              })                                             
             .style("fill",function(d){ //设置圆点的颜色            
-                return d.color;  
-            });  
-              
-            node.append("text")  
+                return d.detail?"red":color(d.color);  
+            });    
+            var text = node.append("text")  
                 .attr("x", 12)  
-                .attr("dy", ".35em")  
-                .text(function(d) { return ""; }); 
+                .attr("dy", ".35em")
+                .attr("class","title")  
+                .text(function(d) { return ""; });
+            var imgText=node_img.append("text")  
+                .attr("x", 12)  
+                .attr("dy", ".35em") 
+                .attr("class","title")  
+                .text(function(d) { return ""; });  
             function tick() {//打点更新坐标  
               link  
                   .attr("x1", function(d) { return d.source.x; })  
@@ -244,23 +425,50 @@ CQ.mainApp.zhishikuController
               node  
                   .attr("transform", function(d) {   
                         return "translate(" + d.x + "," + d.y + ")";   
+                  });
+              node_img  
+                  .attr("transform", function(d) {   
+                        return "translate(" + d.x + "," + d.y + ")";   
                   });  
             }  
               
-            function mouseover() {  
+            function mouseover() { 
+                // console.log(d3.event); 
+                d3.select(this).select("text").text(function(d){
+                    $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
+                    if(d.detail)
+                    {
+                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,10)+"...");
+                        if(d.detail.is_V==1)
+                            $("#title").append("<br/>大V")
+                    }
+                    $("#title").css({"left":d3.event.clientX,"top":d3.event.clientY}).fadeIn('fast');
+                    return "";
+                });
               d3.select(this).select("circle").transition()  
-                  .duration(750)  
+                  .duration(250)  
                   .attr("r", function(d){  //设置圆点半径                        
                 return radius (d)+10;                            
-             }) ;  
+             }) ;
+             d3.select(this).select("image").transition()  
+                  .duration(250)  
+                  .attr("width", img_w*2)
+                  .attr("height", img_h*2)
+                  .attr("transform","translate("+-img_w+","+-img_h+")") ;  
             }  
               
-            function mouseout() {  
+            function mouseout() {
+              $("#title").fadeOut("fast");  
               d3.select(this).select("circle").transition()  
-                  .duration(750)  
+                  .duration(250)  
                   .attr("r", function(d){  //恢复圆点半径                        
                 return radius (d);                            
-             }) ;         
+             }) ;
+             d3.select(this).select("image").transition()  
+                  .duration(250)  
+                  .attr("width", img_w)
+                  .attr("height", img_h)
+                  .attr("transform","translate("+-img_w/2+","+-img_h/2+")") ;         
             }
         }
         $scope.$on('$viewContentLoaded', function() {
