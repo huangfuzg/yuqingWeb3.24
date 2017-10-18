@@ -479,25 +479,193 @@ CQ.mainApp.zhishikuController
                 App.runui();
             }
         });
-    }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout",
+    function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
         console.log("eventdetailController", "start!!!");
         $rootScope.modelName="事件详情";
+        var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
+        siteDefaultImg={"MicroBlog":"/static/assets/img/weibo.svg","baidutieba":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg"};
         //页面UI初始化；
+        $http({
+            method:"get",
+            url:"/static/assets/data/zhishiku/event_data.json"
+        }).then(function(res){
+            posts=res.data;
+            console.log(new Date(posts[0].pt_time));
+            $scope.durationTime=(new Date(posts[posts.length-1].topic_post_time)-new Date(posts[0].pt_time))/86400000;
+            $scope.durationTime=752;
+            $scope.postsNum=posts.length;
+            $scope.posterNum=new Set(posts.map(d=>d.poster).filter(d=>d!=" ")).size;
+            posts.forEach(d=>{
+                if(d.content&&d.content.charAt(0)==':')
+                    d.content=d.content.slice(1);
+                // console.log(siteNames[d.site_name]);
+                d.defaultPosterImg=siteDefaultImg[d.site_name];
+                d.site_name=siteNames[d.site_name]?siteNames[d.site_name]:d.site_name;
+            });
+            drawChart(posts);
+            pages=~~(posts.length/page_num)+1;
+            $scope.posts=posts.slice(0,page_num);
+            $timeout(function(){
+                $("#loading").hide();
+                var beforeScolltop=$("#posts").scrollTop();
+                $("#posts").scroll(function(){
+                    console.log($("#posts").scrollTop());
+                    if($("#posts").scrollTop()>beforeScolltop)
+                    {
+                        if($("#posts").scrollTop()+$("#posts").height()+150>$("#posts>ul").height()&&page<=pages)
+                        {
+                            $("#loading").show();
+                            $timeout(function(){
+                                $scope.posts=posts.slice(0,(++page)*page_num);
+                                $("#loading").hide();
+                            },1000);
+                        }
+                        beforeScolltop=$("#posts").scrollTop();
+                    }
+                });
+            },0);
+            console.log(posts);
+        },function(res){
+            console.log(res);
+        });
+        // $http({
+        //     method:"get",
+        //     url:"/static/assets/data/zhishiku/event_detection.json"
+        // }).then(function(res){
+        //     res.data.sort((a,b)=>{
+        //         return new Date(a.pt_time)>new Date(b.pt_time)?1:-1;
+        //     });
+        //     console.log(res.data);
+        //     console.log(res.data);
+        //     drawChart(res.data);
+        // },function(res){
+        //     console.log(res);
+        // });
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
-                $(".description>div>p").hide();
-                $(".img-box").hover(function(){
-                    $(this).find(".description>div").animate({"height":"100%","padding":"20px"},500,"linear");
-                    $(this).find(".description>div>p").show();
-                },function(){
-                    $(this).find(".description>div>p").hide();
-                    $(this).find(".description>div").animate({"height":"80px","padding":"0 20px"},500,"linear");
-                });
             }
         });
+        function getPosts(data)
+        {
+            page=1;
+            posts=data.reverse();
+            pages=~~(posts.length/page_num)+1;
+            $("#posts").slimScroll({scrollTo:0});
+            $scope.posts=posts.slice(0,page_num);
+        }
+        function drawChart(data) {
+            var ndx = crossfilter(data),
+            all = ndx.groupAll(),
+            dayDist = dc.barChart("#dayChart"),
+            dayDim = ndx.dimension(function(d) {
+                if(d.pt_time)
+                    return new Date(d.pt_time);
+                else if(d.topic_post_time)
+                    return new Date(d.topic_post_time);
+            }),
+            dayGroup = dayDim.group().reduceSum(function (d) {
+                return 1;
+            });
+            drawBarDayDist(dayDist, dayDim, dayGroup);
+            var datatypeDist = dc.pieChart("#siteChart"),
+            datatypeDim = ndx.dimension(function (d) {
+                return d.site_name;
+            }),
+            datatypeGroup = datatypeDim.group().reduceSum(function(d) {
+                return 1;
+            });
+            drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
+        }
+        function drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
+            var width = $("#siteChart").width(),
+            height = $("#siteChart").height(),
+            sum = datatypeDim.groupAll().reduceSum(function(d){return 1;}).value(),
+            r = width > height ? height * 0.4 : width * 0.4;
+            datatypeDist
+                .width(width)
+                .height(height)
+                .innerRadius(40)
+                .radius(r)
+                .cx(width*0.6)
+                .cy(height*0.5)
+                .dimension(datatypeDim)
+                .group(datatypeGroup)
+                .legend(dc.legend().horizontal(false).x(0).y(width*0.1).legendText(function(d){return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
+            // datatypeDist.addFilterHandler(function(filters, filter) {
+            //         filters.push(filter);
+            //         post_filters.site = filters;
+            //         return filters;
+            // });
+            datatypeDist.on("filtered", function(){
+                // console.log(post_filters);
+                // console.log(getPosts());
+                $timeout(function(){getPosts(datatypeDim.top(Infinity))},0);
+                console.log(datatypeDim.top(Infinity));
+            });
+            // datatypeDist.onClick(function(datum){console.log(datum)});
+            datatypeDist.render();
+        }
+        function drawBarDayDist(dayDist, dayDim, dayGroup){
+            var width = $("#dayChart").width(),
+            height = $("#dayChart").height(),
+            bars=dayGroup.size(),
+            xtick=80,
+            chart = dayDist.width(width)
+                    .height(height)
+                    .margins({top: 20, right: 10, bottom: 28, left: 40})
+                    .dimension(dayDim)
+                    .group(dayGroup)
+                    .elasticY(true)
+                    .yAxisPadding('10%') //设置y轴距离顶部的距离(为了renderLabel才设置)
+                    .centerBar(false)
+                    .round(dc.round.floor)
+                    .alwaysUseRounding(true)
+                    .renderLabel(true)
+                    .outerPadding(0.2)
+                    .controlsUseVisibility(true)
+                    .x(d3.scale.ordinal())
+                    // .elasticX(true)
+                    .xUnits(dc.units.ordinal)
+                    .yAxisLabel("帖子数量")
+                    .xAxisLabel("时间")
+                    .renderHorizontalGridLines(true);
+            chart.yAxis()
+                  .ticks(5)
+                  .tickFormat(function(d){
+                    return +d;
+                  });
+            chart.xAxis()
+                  .tickFormat(function(d,i){
+                    //console.log(d);
+                     // console.log(i%Math.ceil(width/bars/xtick));
+                    date_tick.push(d);
+                    var year=d.getFullYear(),
+                    mon=d.getMonth()+1,
+                    date=d.getDate()<10?'0'+d.getDate():d.getDate();
+                    if(mon<10)
+                    {
+                        mon='0'+mon
+                    } 
+                    return i%Math.ceil(bars*xtick/width)==0?year+'-'+mon+'-'+date:"";
+                  });
+            // chart.addFilterHandler(function(filters, filter) {
+            //         filters.push(filter);
+            //         var time_filter=[];
+            //         post_filters.pt_time = filters;
+            //         return filters;
+            // });
+             chart.on("filtered", function(){
+                // console.log(post_filters);
+                // console.log(getPosts());
+                $timeout(function(){getPosts(dayDim.top(Infinity))},0);
+                // getPosts(dayDim.top(Infinity));
+                console.log(dayDim.top(Infinity));
+            });
+            dayDist.render();
+        }
     }]).controller("behaviouralController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("behaviouralController", "start!!!");

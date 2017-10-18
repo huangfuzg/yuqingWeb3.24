@@ -1,3 +1,123 @@
+<style>
+	.text-muted a{
+		color: rgba(100,100,100,0.8);
+		font-size: 1.2em;
+		padding: 0 2px;
+	}
+</style>
 <div>
-	<h3 class="text-center">事件详情</h3>
+	<div class="row">
+		<!-- begin col-3 -->
+		<div class="col-sm-4 col-xs-12">
+			<div class="widget widget-stats bg-green">
+				<div class="stats-icon"><i class="fa fa-calendar"></i></div>
+				<div class="stats-info">
+					<h4>持续时间</h4>
+					<p>{{durationTime}}<i class="text-info"> 天</i></p>	
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<!-- end col-3 -->
+		<!-- begin col-3 -->
+		<div class="col-sm-4 col-xs-12">
+			<div class="widget widget-stats bg-blue">
+				<div class="stats-icon"><i class="fa fa-users"></i></div>
+				<div class="stats-info">
+					<h4>发帖人数</h4>
+					<p>{{posterNum}}</p>	
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<!-- end col-3 -->
+		<!-- begin col-3 -->
+		<div class="col-sm-4 col-sm-12">
+			<div class="widget widget-stats bg-purple">
+				<div class="stats-icon"><i class="fa fa-file"></i></div>
+				<div class="stats-info">
+					<h4>发帖总计</h4>
+					<p>{{postsNum}}</p>	
+				</div>
+				<div class="stats-link">
+					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+				</div>
+			</div>
+		</div>
+		<!-- end col-3 -->
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title"><i class="fa fa-bar-chart-o"></i> 事件发展趋势</div>
+				</div>
+				<div class="panel-body" style="height: 400px;">
+					<div id="dayChart" style="width: 100%;height: 100%"></div>
+				</div>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title"><img src="/static/assets/img/datasource.svg" class="fa"> 站点分布</div>
+				</div>
+				<div class="panel-body" style="height: 400px;">
+					<div id="siteChart" style="width: 100%;height: 100%"></div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<div class="panel-title">相关帖子</div>
+				</div>
+				<!-- <div class="panel-toolbar">					
+				</div> -->
+				<div class="panel-body">
+					<div id="posts" class="" data-scrollbar="true" style="height: 830px">
+						<ul class="media-list media-list-with-divider media-messaging">
+							<li class="media media-sm" ng-repeat="post in posts">
+								<a href="javascript:;" class="pull-left text-center">
+									<img src="{{post.poster_img}}" alt="" class="media-object rounded-corner" ng-if="post.poster_img&&post.poster_img!=' '"/>
+									<img src="{{post.defaultPosterImg}}" alt="" class="media-object rounded-corner" ng-if="!post.poster_img||post.poster_img==' '"/>
+								</a>
+								<div class="media-body">
+									<h5 class="media-heading">{{post.poster}}</h5>
+									<p>{{post.content}}</p>
+									<p ng-if="post.content==' '">{{post.title}}</p>
+									<p class="text-center" style="width: 100%"><img src={{post.img_url}} alt="" ng-if="post.img_url!=' '" style="margin: auto; min-width: 40%" />
+									</p>
+									<p class="text-center" style="width: 100%">
+										<video src="{{post.video_url}}" controls="controls" ng-if="post.video_url!=' '">
+										您的浏览器不支持 video 标签。
+										</video>
+									</p>
+									<p class="text-muted m-t-5"><i>{{post.pt_time}}</i>
+										<span class = "p-t-1 p-l-10 f-s-14 text-right iconslists">
+	                                        <a title = "情感分析"
+	                                        ng-click = "">
+	                                        <i class="fa fa-meh-o"></i>
+	                                        </a>
+	                                        <a class = "addsen" title = "观点" ng-click = "">
+	                                            <i class="fa fa-bullseye"></i>
+	                                        </a>
+	                                        <a class = "save" title = "舆情引导" ng-click = "">
+	                                            <i class="fa fa-compass"></i>
+	                                        </a>
+	                                    </span>
+									</p>
+								</div>
+							</li>
+						</ul>
+						<div id="loading" class="text-center">
+							<img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
