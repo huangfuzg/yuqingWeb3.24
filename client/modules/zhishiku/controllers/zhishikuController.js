@@ -19,7 +19,7 @@ CQ.mainApp.zhishikuController
             }
         });
     }])
-    .controller("subjectController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout", 
+    .controller("subjectController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout",
     function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
         console.log("zhishikuController", "start!!!");
         //页面UI初始化；
@@ -61,7 +61,7 @@ CQ.mainApp.zhishikuController
             }
         });
     }])
-    .controller("eventsController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams", "$timeout", 
+    .controller("eventsController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams", "$timeout",
     function($rootScope, $scope, $http, ngDialog, $state, $stateParams, $timeout) {
         console.log("eventsController", "start!!!");
         //页面UI初始化；
@@ -72,7 +72,7 @@ CQ.mainApp.zhishikuController
             img:"/static/assets/img/zhishiku/yuejie.jpg",
             name:"印方阻挠中方施工",
             summary:"2017年6月26日，中方在洞朗地区进行道路施工时，遭到印军越线阻拦。由历史条约来看，中方修建道路完全是在自己领土上的主权行为，印方无权干涉，中方就此向印方做出通报。",
-            keywords:[ {word:"洞朗",weight:1},{word:"阻挠",weight:1},{word:"修路",weight:1},{word:"印度",weight:0.98},{word:"中方",weight:0.9},{word:"冲突",weight:0.88} ,{word:"巡逻",weight:0.82},{word:"受伤",weight:0.75},{word:"边境",weight:0.7},{word:"不满",weight:0.67} ,{word:"边防",weight:0.47} ,{word:"激烈",weight:0.43},{word:"接触",weight:0.3},{word:"交涉",weight:0.21}]        
+            keywords:[ {word:"洞朗",weight:1},{word:"阻挠",weight:1},{word:"修路",weight:1},{word:"印度",weight:0.98},{word:"中方",weight:0.9},{word:"冲突",weight:0.88} ,{word:"巡逻",weight:0.82},{word:"受伤",weight:0.75},{word:"边境",weight:0.7},{word:"不满",weight:0.67} ,{word:"边防",weight:0.47} ,{word:"激烈",weight:0.43},{word:"接触",weight:0.3},{word:"交涉",weight:0.21}]
         },{
             id:1,
             time:"2017年8月15日",
@@ -87,7 +87,7 @@ CQ.mainApp.zhishikuController
             name:"中印双方撤军",
             summary:"2017年8月28日，中印双方达成共识，印方将越界人员和设备全部撤回边界印方一侧，中方对此进行了确认，至此，为期两个多月的中印对峙状态告一段落。中方表明将继续按照历史界约规定行使主权权利，维护边境地区的和平与安宁。",
             keywords:[{word:"撤军",weight:1} ,{word:"印度",weight:0.98} ,{word:"越界",weight:0.83} ,{word:"现场",weight:0.7},{word:"洞朗",weight:0.68} ,{word:"人员",weight:0.63} ,{word:"设备",weight:0.63} ,{word:"修路",weight:0.54} ,{word:"权利",weight:0.41} ,{word:"维护",weight:0.3},{word:"外交部",weight:0.9},{word:"国防部",weight:0.7},{word:"主权",weight:0.6},{word:"结束",weight:0.5}]
-        }]; 
+        }];
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("events app start!!!");
@@ -140,7 +140,7 @@ CQ.mainApp.zhishikuController
                 }
             });
         }
-    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout", 
+    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout",
     function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
         console.log("zhishikuController", "start!!!");
         //页面UI初始化；
@@ -208,21 +208,21 @@ CQ.mainApp.zhishikuController
             img_w=20,
             img_h=20,
             color = d3.scale.category10(),
-            force = d3.layout.force()  
-                .nodes(d3.values(nodes))  
-                .links(edges)  
+            force = d3.layout.force()
+                .nodes(d3.values(nodes))
+                .links(edges)
                 .size([width, height])
-                .gravity(0.2) 
-                .linkDistance(50)  
-                .charge(-20)  
+                .gravity(0.2)
+                .linkDistance(50)
+                .charge(-20)
                 .on("tick", tick)
-                // .on("end",zoomed)  
+                // .on("end",zoomed)
                 .start();
             var zoom = d3.behavior.zoom()
                 .scaleExtent([1, 10])
                 .on("zoom", zoomed);
-            var svg = d3.select(dom).append("svg")  
-                .attr("width", width)  
+            var svg = d3.select(dom).append("svg")
+                .attr("width", width)
                 .attr("height", height);
             svg.call(zoom);
             svg=svg.append("g");
@@ -235,41 +235,41 @@ CQ.mainApp.zhishikuController
 
             // title.append("rect").attr("width",100)
             //     .attr("height",100)
-            //     .attr("class","title"); 
+            //     .attr("class","title");
             // title.append("text")
             //     .attr("class","title")
-            //     .text("test"); 
-            var link = svg.selectAll(".link")  
-                .data(force.links())  
-                .enter().append("line")  
-                .attr("class", "link");  
-            link.style("stroke",function(d){//  设置线的颜色    
-                return color(d.source.color+1);    
-            })    
-            .style("stroke-width",function(d,i){//设置线的宽度    
-                return 0;    
+            //     .text("test");
+            var link = svg.selectAll(".link")
+                .data(force.links())
+                .enter().append("line")
+                .attr("class", "link");
+            link.style("stroke",function(d){//  设置线的颜色
+                return color(d.source.color+1);
+            })
+            .style("stroke-width",function(d,i){//设置线的宽度
+                return 0;
             });
             console.log(nodes.filter(d=>d.detail!=undefined));
-            var node = svg.selectAll(".node")  
-                .data(nodes.filter(d=>d.detail==undefined))  
-                .enter().append("g")  
-                .attr("class", "node")  
-                .on("mouseover", mouseover)  
-                .on("mouseout", mouseout)  
+            var node = svg.selectAll(".node")
+                .data(nodes.filter(d=>d.detail==undefined))
+                .enter().append("g")
+                .attr("class", "node")
+                .on("mouseover", mouseover)
+                .on("mouseout", mouseout)
                 .call(force.drag);
             console.log(nodes.filter(d=>d.detail!=undefined));
-            var node_img=svg.selectAll(".node-img")  
-                .data(nodes.filter(d=>d.detail!=undefined))  
-                .enter().append("g")  
-                .attr("class", "node")  
-                .on("mouseover", mouseover)  
-                .on("mouseout", mouseout)  
+            var node_img=svg.selectAll(".node-img")
+                .data(nodes.filter(d=>d.detail!=undefined))
+                .enter().append("g")
+                .attr("class", "node")
+                .on("mouseover", mouseover)
+                .on("mouseout", mouseout)
                 .call(force.drag);
-            function  radius (d){   
-                if(!d.weight){//节点weight属性没有值初始化为1（一般就是叶子了）  
-                    d.weight=1;  
-                }                                                
-                return Math.log(d.weight)*2;                                     
+            function  radius (d){
+                if(!d.weight){//节点weight属性没有值初始化为1（一般就是叶子了）
+                    d.weight=1;
+                }
+                return Math.log(d.weight)*2;
             }
             var last_scale=1,
             cur_group="",
@@ -376,64 +376,64 @@ CQ.mainApp.zhishikuController
                     }
                 }
                 svg.transition()
-                    .attr("transform", 
+                    .attr("transform",
                     "translate(" + tx + ',' + ty + ")scale(" + k + ")");
                 transform.lastScale=d3.event.scale;
                 cur_group=group||cur_group;
             }
             function hideEdge()
             {
-                link.style("stroke-width",function(d,i){//设置线的宽度    
+                link.style("stroke-width",function(d,i){//设置线的宽度
                 return 0;});
             }
             function showEdge(group)
             {
-                link.style("stroke-width",function(d,i){//设置线的宽度    
+                link.style("stroke-width",function(d,i){//设置线的宽度
                 return d.source.group==group&&d.target.group==group?"1px":0;});
             }
-            node_img.append("image")  
-            .attr("xlink:href",function(d){  //设置圆点半径                        
-                return d.detail?d.detail.user_img:"";                            
+            node_img.append("image")
+            .attr("xlink:href",function(d){  //设置圆点半径
+                return d.detail?d.detail.user_img:"";
              })
             .attr("width",img_w)
             .attr("height",img_h)
             .attr("transform","translate("+-img_w/2+","+-img_h/2+")");
-            node.append("circle")  
-                .attr("r",function(d){  //设置圆点半径                        
-                return radius (d);                            
-             })                                             
-            .style("fill",function(d){ //设置圆点的颜色            
-                return d.detail?"red":color(d.color);  
-            });    
-            var text = node.append("text")  
-                .attr("x", 12)  
+            node.append("circle")
+                .attr("r",function(d){  //设置圆点半径
+                return radius (d);
+             })
+            .style("fill",function(d){ //设置圆点的颜色
+                return d.detail?"red":color(d.color);
+            });
+            var text = node.append("text")
+                .attr("x", 12)
                 .attr("dy", ".35em")
-                .attr("class","title")  
+                .attr("class","title")
                 .text(function(d) { return ""; });
-            var imgText=node_img.append("text")  
-                .attr("x", 12)  
-                .attr("dy", ".35em") 
-                .attr("class","title")  
-                .text(function(d) { return ""; });  
-            function tick() {//打点更新坐标  
-              link  
-                  .attr("x1", function(d) { return d.source.x; })  
-                  .attr("y1", function(d) { return d.source.y; })  
-                  .attr("x2", function(d) { return d.target.x; })  
-                  .attr("y2", function(d) { return d.target.y; });  
-              
-              node  
-                  .attr("transform", function(d) {   
-                        return "translate(" + d.x + "," + d.y + ")";   
+            var imgText=node_img.append("text")
+                .attr("x", 12)
+                .attr("dy", ".35em")
+                .attr("class","title")
+                .text(function(d) { return ""; });
+            function tick() {//打点更新坐标
+              link
+                  .attr("x1", function(d) { return d.source.x; })
+                  .attr("y1", function(d) { return d.source.y; })
+                  .attr("x2", function(d) { return d.target.x; })
+                  .attr("y2", function(d) { return d.target.y; });
+
+              node
+                  .attr("transform", function(d) {
+                        return "translate(" + d.x + "," + d.y + ")";
                   });
-              node_img  
-                  .attr("transform", function(d) {   
-                        return "translate(" + d.x + "," + d.y + ")";   
-                  });  
-            }  
-              
-            function mouseover() { 
-                // console.log(d3.event); 
+              node_img
+                  .attr("transform", function(d) {
+                        return "translate(" + d.x + "," + d.y + ")";
+                  });
+            }
+
+            function mouseover() {
+                // console.log(d3.event);
                 d3.select(this).select("text").text(function(d){
                     $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
                     if(d.detail)
@@ -445,30 +445,30 @@ CQ.mainApp.zhishikuController
                     $("#title").css({"left":d3.event.clientX,"top":d3.event.clientY}).fadeIn('fast');
                     return "";
                 });
-              d3.select(this).select("circle").transition()  
-                  .duration(250)  
-                  .attr("r", function(d){  //设置圆点半径                        
-                return radius (d)+10;                            
+              d3.select(this).select("circle").transition()
+                  .duration(250)
+                  .attr("r", function(d){  //设置圆点半径
+                return radius (d)+10;
              }) ;
-             d3.select(this).select("image").transition()  
-                  .duration(250)  
+             d3.select(this).select("image").transition()
+                  .duration(250)
                   .attr("width", img_w*2)
                   .attr("height", img_h*2)
-                  .attr("transform","translate("+-img_w+","+-img_h+")") ;  
-            }  
-              
+                  .attr("transform","translate("+-img_w+","+-img_h+")") ;
+            }
+
             function mouseout() {
-              $("#title").fadeOut("fast");  
-              d3.select(this).select("circle").transition()  
-                  .duration(250)  
-                  .attr("r", function(d){  //恢复圆点半径                        
-                return radius (d);                            
+              $("#title").fadeOut("fast");
+              d3.select(this).select("circle").transition()
+                  .duration(250)
+                  .attr("r", function(d){  //恢复圆点半径
+                return radius (d);
              }) ;
-             d3.select(this).select("image").transition()  
-                  .duration(250)  
+             d3.select(this).select("image").transition()
+                  .duration(250)
                   .attr("width", img_w)
                   .attr("height", img_h)
-                  .attr("transform","translate("+-img_w/2+","+-img_h/2+")") ;         
+                  .attr("transform","translate("+-img_w/2+","+-img_h/2+")") ;
             }
         }
         $scope.$on('$viewContentLoaded', function() {
@@ -521,6 +521,160 @@ CQ.mainApp.zhishikuController
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
+                $http({
+                    method:"get",
+                    url:"/static/assets/data/zhishiku/emotion.json",
+                }).then(function (res) {
+                    $scope.cnt=0;
+                    var tmp = res.data;
+                    var table = res.data;
+                    var senTmp=true;
+                    var emotion1 = 0,emotion2=0,emotion3=0;
+                    tmp.forEach(function (d) {
+                        if(d.label=='袖手旁观')
+                            emotion1+=1;
+                        if(d.label=='情绪激动')
+                            emotion2+=1;
+                        if(d.label=='冷静客观')
+                            emotion3+=1;
+
+                    })
+                    var mychart = echarts.init(document.getElementById('emotion'));
+                    var option={
+                        title : {
+                            text: '某站点用户访问来源',
+                            subtext: '纯属虚构',
+                            x:'center'
+                        },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['袖手旁观','情绪激动','冷静客观']
+                        },
+                        series : [
+                            {
+                                name: '情感类型',
+                                type: 'pie',
+                                radius : '55%',
+                                center: ['50%', '60%'],
+                                data:[
+                                    {value:emotion1, name:'袖手旁观'},
+                                    {value:emotion2, name:'情绪激动'},
+                                    {value:emotion3, name:'冷静客观'},
+                                   ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                    // var ecConfig = require('echarts/config')；
+                    mychart.setOption(option);
+                    window.onresize = mychart.resize;
+                    mychart.on('legendselectchanged',function (params) {
+                        console.log(params.selected)
+                        var te = [];
+                        // mychart.on(ecConfig.EVENT.LEGEND_SELECTED, function (param) {
+                        //   console.log(param)
+                        // });
+                        for(var key in params.selected){
+
+                            if(params.selected[key])
+                            te.push(key)
+                        }
+                        senTmp=table.filter(function (d) {
+                            return te.includes(d.label)
+                        })
+                        $scope.senData=senTmp
+                        $scope.$digest();
+                        // console.log(te)
+
+                    })
+                    mychart.on('click',function (params) {
+                        // console.log(params)
+                        if(params.seriesIndex!='undefined'){
+
+
+                            // flag=!flag;
+                            if(params.data.name=='袖手旁观')
+                            {
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '袖手旁观'
+                              })
+                                // senTmp = table.filter(function (d) {
+                                // return d.label=='袖手旁观';
+                                //
+                                // })
+                                // if(flag==false){
+                                // $scope.senData=senTmp
+                                // $scope.$digest();}
+                                // if(flag==true){
+                                // $scope.senData=table
+                                // $scope.$digest();
+                                // }
+
+                                }
+                            if(params.data.name=='情绪激动')
+                            {
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '情绪激动'
+                              })
+                            //   senTmp = table.filter(function (d) {
+                            //     return d.label=='情绪激动';
+                            //
+                            // })
+                            //     if(flag==false){
+                            //         $scope.senData=senTmp
+                            //         $scope.$digest();}
+                            //     if(flag==true){
+                            //         $scope.senData=table
+                            //         $scope.$digest();
+                            //     }
+                            }
+                            if(params.data.name=='冷静客观')
+                            {
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '冷静客观'
+                              })
+                            //   senTmp = table.filter(function (d) {
+                            //     return d.label=='冷静客观';
+                            //     console.log('冷静客观');
+                            // })
+                            //     if(flag==false){
+                            //         $scope.senData=senTmp
+                            //         $scope.$digest();}
+                            //     if(flag==true){
+                            //         $scope.senData=table
+                            //         $scope.$digest();
+                            //     }
+                            }}
+
+                    })
+                    $scope.senData=tmp;
+                    // $scope.$watch($scope.cnt,function (newValue,oldValue) {
+                    //     {
+                    //     $scope.senData=table;
+                    //     console.log('dong')}
+                    // });
+
+                },function (res) {
+                   console.log(res)
+                });
+
             }
         });
     }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
@@ -543,12 +697,12 @@ CQ.mainApp.zhishikuController
         }).then(function(res){
             var counts = (res.data);
             var ti=[],dat=[[],[],[]];
-            var type=['大V数','帖子数/10','热度']
+            var type=['大V数','帖子数','热度']
             var mychart = echarts.init(document.getElementById('hot'));
             counts.forEach(function (d) {
                 ti.push(d.time);
                 dat[0].push(+d.da_v);
-                dat[1].push(+(d.tiezi/10));
+                dat[1].push(+(d.tiezi));
                 dat[2].push(+d.redu);
             });
             console.log(dat[1])
@@ -592,9 +746,9 @@ CQ.mainApp.zhishikuController
                 yAxis: [
                     {
                         type: 'value',
-
-
-                    },
+                    },{
+                        type:'value',
+                    }
 
                 ],
                 series: [
@@ -607,21 +761,36 @@ CQ.mainApp.zhishikuController
                         data:dat[0]
                     },
                     {
-                        name:'帖子数/10',
+                        name:'帖子数',
                         type:'bar',
+                        yAxisIndex:1,
                         barWidth:'25',
                         barGap:'10%',
-                        data:dat[1]
+                        data:dat[1],
+                        itemStyle:{
+                            normal:{
+                                color:'steelblue',
+                            }
+                        }
                     },
                     {
                         name:'热度',
                         type:'line',
+                        label:{
+                            normal:{
+                                show:true,
+                                position:'top',
+                                textStyle:{color:'#000000'}
+                                },
+
+                        },
                         // yAxisIndex: 1,
                         data:dat[2]
                     }
                 ]
             };
             mychart.setOption(option1);
+            window.onresize = mychart.resize;
         },function(res){
             // console.log(res);
         });
@@ -683,7 +852,8 @@ CQ.mainApp.zhishikuController
                 yAxis: [
                     {
                         type: 'value'
-                    }
+                    },
+
                 ],
                 series: [
                     {
@@ -733,6 +903,7 @@ CQ.mainApp.zhishikuController
             // console.log(ti);
             // option.xAxis[0].data=ti;
             mychart.setOption(option);
+            window.onresize = mychart.resize;
         },function(res){
             console.log(res);
         });
