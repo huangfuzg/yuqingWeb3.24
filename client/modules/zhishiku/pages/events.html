@@ -59,22 +59,22 @@
                         {{event.summary}}
                     </p>
                     <ul class="row list-unstyled" style="display: flex; flex-direction: row; justify-content: space-around;">
-                        <li class="colmd-6" style="min-height: 200px">
+                        <li class="colmd-6">
                             <img src={{event.img}} style="width: 100%;height: 100%" />
                         </li>
-                        <li class="colmd-6" id="wordsCloud_{{event.id}}" style="min-height: 200px">
+                        <li class="colmd-6" id="wordsCloud_{{event.id}}" style="height: 280px">
                             
                         </li>
                     </ul>
                 </div>
                 <div class="timeline-footer">
-                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.eventdetail({event:event})"><i class="fa fa-th fa-fw"></i>事件详情</a>
-                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.community({event:event})"><i class="fa fa-users fa-fw"></i>社团发现</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.eventdetail({event:event})"><i class="fa fa-list-ul fa-fw"></i> 事件详情</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.community({event:event})"><i class="fa fa-group fa-fw"></i> 社团发现</a>
                     <!-- <a href="javascript:;" class="btn btn-primary btn-sm"><i class="fa fa-child fa-fw"></i>行为分析</a> -->
-                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.sentiment({event:event})"><i class="fa fa-heart  fa-heart"></i>情感分析</a>
-                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.viewpoint({event:event})"><i class="fa fa-bullseye fa-fw"></i>观点挖掘</a>
-                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.evolutionary({event:event})"><i class="fa fa-exchange fa-fw"></i>事件演化</a>
-                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.guidance({event:event})"><i class="fa fa-compass fa-fw"></i>舆情引导</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.sentiment({event:event})"><i class="fa fa-heartbeat  fa-heart"></i> 情感分析</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.viewpoint({event:event})"><i class="fa fa-lightbulb-o fa-fw"></i> 观点挖掘</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.evolutionary({event:event})"><i class="fa fa-exchange fa-fw"></i> 事件演化</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.guidance({event:event})"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a>
                 </div>
             </div>
             <!-- end timeline-body -->

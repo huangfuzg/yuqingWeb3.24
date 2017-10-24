@@ -200,11 +200,13 @@ CQ.mainApp.searchController
                   {
                     var should = [];
                     should[0] = {};
-                    should[0].terms = {};
-                    should[0].terms.title = $scope.searchKeywords;
+                    should[0].match = {};
+                    should[0].match.title = {"operator":"and"};
+                    should[0].match.title.query=$scope.searchKeywords.join("");
                     should[1] = {};
-                    should[1].terms = {};
-                    should[1].terms.content = $scope.searchKeywords;
+                    should[1].match = {};
+                    should[1].match.content = {"operator":"and"};
+                    should[1].match.content.query=$scope.searchKeywords.join("");
                     must[must_index] = {};
                     must[must_index].bool = {};
                     must[must_index++].bool.should = should;

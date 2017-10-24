@@ -8,8 +8,8 @@ CQ.mainApp.dashboardController
                 controller: "dashboardController"
             });
     }])
-    .controller('dashboardController', ['$scope', '$rootScope', '$state','ChartService', 'notice', 'SearchFacService', 
-        function($scope, $rootScope, $state, ChartService, notice, SearchFacService) {
+    .controller('dashboardController', ['$scope', '$rootScope', '$http', '$state','ChartService', 'notice', 'SearchFacService', 
+        function($scope, $rootScope, $http, $state, ChartService, notice, SearchFacService) {
             $rootScope.dashboardController = true;
             console.log("dashboardController", "start!");
             $scope.HotPost = [];
@@ -27,6 +27,15 @@ CQ.mainApp.dashboardController
             var p = d3.select("#topicDist").append("p");
                 $("#topicDist>p").css({"position":"absolute","width":"100%","text-align":"center","bottom":"28px","left":"-10px"})
                 .text("帖子数量");
+            var mapData=[]; 
+            $http({
+                method:"get",
+                url:"/static/assets/data/map.json"
+            }).then(function(res){
+                mapData=res.data;
+            },function(res){
+                console.log(res.data);
+            });
             SearchFacService.getRuleData(params).then(function(data)
             {
                 data.allSites.forEach(function(d){
@@ -242,6 +251,7 @@ CQ.mainApp.dashboardController
             }
            
             function drawChart() {
+                $scope.sourceData=$scope.sourceData.filter(d=>d.topic_name!="");
                 var ndx = crossfilter($scope.sourceData),
                 all = ndx.groupAll(),
                 dayDist = dc.barChart("#dayDist"),
@@ -367,7 +377,7 @@ CQ.mainApp.dashboardController
                     .margins({ top: 0, right: 30, bottom: 20, left: 10 })
                     .label(function(d) {
                         return d.key + ":" + d.value; })
-                    //.renderLabel(true)
+                    .renderLabel(true)
                     .renderTitle(true)
                     .controlsUseVisibility(true)
                     .elasticX(true)
@@ -404,8 +414,11 @@ CQ.mainApp.dashboardController
                 //         .text("帖子数量");
             }
             function drawMap() {
+                $scope.mapData=mapData;
                 var width = $("#maps").width(),
                 height = $("#maps").height(),
+                maxvalue=0,
+                minvalue=0,
                 svg = d3.select("#maps")
                     .append("svg")
                     .attr("width", width)
@@ -418,7 +431,8 @@ CQ.mainApp.dashboardController
                     .translate([width * 4 / 8, height * 3 / 4]),
                 path = d3.geo.path()
                     .projection(projection),
-                color = d3.scale.category20();
+                color = d3.scale.category20(),
+                color1 = d3.scale.category20();
                 d3.json("/static/assets/data/china.geojson", function(error, root) {
                     if (error)
                         return console.error(error);
@@ -431,14 +445,14 @@ CQ.mainApp.dashboardController
                         .attr("fill", "rgba(0,0,255,0.2)")
                         .attr("d", path );
                         //求最大值和最小
-                        var maxvalue = d3.max($scope.mapData,function(d){return d.nums;});
-                        var minvalue = 0;
+                        maxvalue = d3.max($scope.mapData,function(d){return d.nums;});
+                        minvalue = 30;
                         //定义一个线性比例尺，将最小值和最大值之间的值映射到[0, 1]
                         var linear = d3.scale.linear()
                             .domain([minvalue,maxvalue]).range([0,1]);
                         //定义最小值和最大值对应的颜色
-                        var a = 0.2;
-                        var b = 1;
+                        var a = "rgb(0,0,180)";
+                        var b = "rgb(255,0,0)";
                         //颜色插值函数
                         var computeColor = d3.interpolate(a,b);
                         //将读取到的数据存到数组values，令其索引号为各省的名称
@@ -452,7 +466,7 @@ CQ.mainApp.dashboardController
                         provinces.style("fill", function(d,i){
                             var t = linear( values[d.properties.name] );
                             var color = computeColor(t);
-                            return "rgba(0,0,255,"+color.toString()+")";
+                            return color.toString();
                         })
                         .append("title")
                         .text(function(d){
@@ -462,7 +476,38 @@ CQ.mainApp.dashboardController
                         });
                     
                     });
-            }
+            var slideHeight=~~(height/3),
+            slideWidth=5,
+            slideLiner=d3.scale.linear().domain([1,~~(2*slideHeight/slideWidth)+1]).range([0,1]),
+            a = "rgb(0,0,180)",
+            b = "rgb(255,0,0)",
+                        //颜色插值函数
+            computeColor = d3.interpolate(a,b),
+            slideData=[];
+            for(var i=1; i<~~(2*slideHeight/slideWidth)+1; i++)
+                slideData.push(i);
+            d3.select("#maps svg").append("g").attr("class","slidebar").selectAll('.slidecircle').data(slideData).enter().append("circle")
+                .attr("cx",function(d){
+                    return width - 20;
+                })
+                .attr("cy",function(d){
+                    return height-10-d*slideWidth/2;
+                })
+                .attr("r",function(d){
+                    return slideWidth;
+                })
+                .style("fill",function(d){
+                    return computeColor(slideLiner(d)).toString();
+                });
+                maxvalue = d3.max($scope.mapData,function(d){return d.nums;});
+                        minvalue = 30;
+                d3.select("#maps svg .slidebar").append("text").attr("x",width-50)
+                    .attr("y",height-10-1*slideWidth/2)
+                    .text(minvalue);
+                d3.select("#maps svg .slidebar").append("text").attr("x",width-60)
+                    .attr("y",height-10-slideData.length*slideWidth/2)
+                    .text(maxvalue); 
+            } 
     }]);
 
 CQ.mainApp.dashboardController.directive('ngResize', resize);

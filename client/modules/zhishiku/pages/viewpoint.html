@@ -1,3 +1,40 @@
 <div>
-	<h3 class="text-center">观点挖掘</h3>
+    <div class="panel panel-primary" data-sortable-id="ui-general-1">
+        <div class="panel-heading">            
+            <h4 class="panel-title" style="font-size: 1.5em">中印对峙事件网友观点</h4>
+        </div>
+        <div class="panel-body" data-sortable-id="ui-widget-1">
+            <div data-scrollbar="false" data-height="300px">
+            <div class="panel panel-info" data-sortable-id="ui-widget-2" ng-repeat="(index,x) in items">
+                <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled" ng-click="expression" data-toggle="collapse" data-parent="#accordion" href="#{{index}}">
+                        <i class="fa fa-plus-circle pull-right"></i> 
+                        {{x.viewpoint}}
+                    </a>
+                </h3>
+                </div>
+                
+                <div id="{{index}}" class="panel-collapse collapse" ng-class={"in":index==0}>
+                    <div class="panel-body">
+                        <div data-scrollbar="true" data-height="100px">
+                        <ul class="media-list media-list-with-divider" style="list-style-type:disc">
+                            <li ng-repeat="item in x.show_comm">
+                                        <strong>{{item.User}}:</strong><br>{{item.Content}}
+                            </li>
+                            <li style="list-style: none">
+                                <button type="button" class="btn btn-info" ng-click="showAllPosts(x)" ng-show="!x.showall">查看全部</button>
+                                <button type="button" class="btn btn-info" ng-click="hideAllPosts(x)" ng-show="x.showall">收起</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            </div>     
+        </div>             
+    </div>
 </div>
+</div>
+ 
+
+

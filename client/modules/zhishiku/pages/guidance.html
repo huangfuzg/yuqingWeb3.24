@@ -1,3 +1,19 @@
+<style>
+	.media {
+    	margin-top: 15px;
+	}
+    .btn-row a {
+	    color: #666;
+	    font-size: 20px;
+	    margin-right: 5px;
+	    line-height: 14px;
+	    opacity: .2;
+	}
+	.btn-row a:hover {
+	    opacity: 1;
+	    filter: alpha(opacity=100);
+	}
+</style>
 <div>
 	<!-- <h3 class="text-center">舆情引导</h3> -->
 
@@ -14,42 +30,43 @@
 					引导过程</h4>
 			</div>
 			<div class="panel-body" >
-				<div class="height-lg" data-scrollbar="true" >
+				<div class="height-full" data-scrollbar="false" >
 					<ul class="media-list media-list-with-divider">
 						<li class="media media-sm" ng-repeat="x in guideData">
 							<div class="media-body col-md-5">
-
+		
 								<a href="{{x.post_url}}" class="pull-left">
 									<img src="/static/assets/img/weibo.svg" alt="" style="margin-right: 10px;" class="media-object rounded-corner" />
 								</a>
 
+								<div style="margin-left: 80px">
+									<p class="m-b-5">
+										{{x.content}}
+									</p>
 
-								<p class="m-b-5">
-									{{x.content}}
-								</p>
-
-								<i class="text-muted ">发帖人：{{x.postername}}  发帖时间：{{x.post_time}}</i>
-								<div class="panel-heading-btn">
-									<a href="javascript:;" class="btn btn-primary btn-xs m-r-5">态势分析</a>
-									<a href="javascript:;" class="btn btn-primary btn-xs m-r-5">情感分析</a>
-									<a href="javascript:;" class="btn btn-primary btn-xs m-r-5">扩散分析</a>
+									<p class="text-muted m-b-5"><i>发帖人：{{x.postername}}  发帖时间：{{x.post_time}}</i></p>
+									<!-- <div class="btn-row">
+										<a href="javascript:;" title="态势分析"><img src="/static/assets/icon/situation1.svg" style="width: 1.0em;"/></a>
+										<a href="javascript:;" title="情感分析"><img src="/static/assets/icon/emotion1.svg" style="width: 1.0em;"/></a>
+										<a href="javascript:;" title="扩散分析"><img src="/static/assets/icon/spread1.svg" style="width: 1.0em;"/></a>
+									</div> -->
 								</div>
 							</div>
 
 							<div class="media media-sm col-md-2" style="margin: auto">
-								<img src="/static/assets/img/left-arrow.png" style="margin-left: 50px" width="100" height="100"/>
+								<img src="/static/assets/img/left-arrow.png" style="margin-left: 40px" width="80" height="80"/>
 							</div>
-							<div class="col-md-5 media-body" >
-								<div class="col-md-2">
-									<a href="{{x.article_url}}" >
+							<div class="col-md-5 media-list media-list-with-divider media-messaging">
+								<div class="media media-sm">
+									<a href="{{x.article_url}}" class="pull-left text-center">
 										<img src="/static/assets/img/news2.svg" alt="" style="margin-right: 10px;" class="media-object rounded-corner" />
 									</a>
-								</div>
-								<a href="javascript:;"><h4 class="media-heading m-b-8">{{x.rec_article}}</h4></a>
-								<p class="m-b-5" style="margin-left: 85px">
+								<a href="{{x.article_url}}" class="media-body" style="color: inherit;"><h4 class="media-heading m-b-8">{{x.rec_article}}</h4>
+								<p class="m-b-5">
 									{{x.article}}
 								</p>
-
+								</a>
+								</div>
 							</div>
 						</li>
 

@@ -23,6 +23,8 @@ CQ.mainApp.topicController
                 var imgs4 = ["/static/assets/img/gk1.jpg","/static/assets/img/gk2.jpg","/static/assets/img/gk3.jpg"];
                 var imgs9 = ["/static/assets/img/da1.jpg","/static/assets/img/da2.jpg","/static/assets/img/da3.jpg"];
                 var imgs12 = ["/static/assets/img/zbqc1.jpg","/static/assets/img/zbqc2.jpg","/static/assets/img/zbqc3.jpg"];
+                var imgs8 = ["/static/assets/img/8-1.jpg","/static/assets/img/8-2.jpg","/static/assets/img/8-3.jpg","/static/assets/img/8-4.jpg"];
+                var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
                 res.forEach(function(d) {
                     var limitLen = 40;
                     try{
@@ -44,11 +46,19 @@ CQ.mainApp.topicController
                         d.imgs = imgs2;
                     }else if(d.topicId == 3) {
                         d.imgs = imgs12;
+                    }else if(d.topicId == 9) {
+                        d.imgs = imgs99;
+                    }else if(d.topicId == 8) {
+                        d.imgs = imgs8;
                     }else if(d.topicId > 4) {
                         // d.summary = "各个地方成人高考报名工作开始";
                         d.imgs = imgs2;
                     }
                     //d.imgs = imgs;
+                });
+                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70};
+                res.sort(function(a,b){
+                    return topicWeight[b.topicName]-topicWeight[a.topicName]>0?1:-1;
                 });
                 $scope.data = res;
                 setTimeout(function(){
@@ -72,8 +82,8 @@ CQ.mainApp.topicController
                 var options = {
                     series: [{
                         type: 'wordCloud',
-                        gridSize: 20,
-                        sizeRange: [12, 50],
+                        gridSize: 12,
+                        sizeRange: [12, 40],
                         rotationRange: [0, 0],
                         shape: 'circle',
                         textStyle: {
@@ -160,6 +170,41 @@ CQ.mainApp.topicController
                 drawChart(true);
             },function(error) {
                 console.log(error);
+                // var res1;
+                // if($stateParams.topicId==8)
+                // {
+                //     $http({
+                //         method:"get",
+                //         url:"/static/assets/data/shijiuda.json"
+                //     }).then(function(res){
+
+                //         res1=res.data.data;
+                //         console.log(res1);
+                //         $scope.topicName = res1.topicName;
+                //         $scope.postData = res1.postData;
+                //         $scope.backTopic = true;
+                //         drawChart(true);
+                //     },function(res){
+                //         console.log(res);
+                //     });
+                // }
+                // if($stateParams.topicId==9)
+                // {
+                //     $http({
+                //         method:"get",
+                //         url:"/static/assets/data/chengkao.json"
+                //     }).then(function(res){
+
+                //         res1=res.data.data;
+                //         console.log(res1);
+                //         $scope.topicName = res1.topicName;
+                //         $scope.postData = res1.postData;
+                //         $scope.backTopic = true;
+                //         drawChart(true);
+                //     },function(res){
+                //         console.log(res);
+                //     });
+                // }
             });
         }
         $scope.redraw = function()

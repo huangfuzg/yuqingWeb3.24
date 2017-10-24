@@ -449,14 +449,14 @@ angular.module('settingservice',[])
                 hasShow:true,
                 icon:"fa fa-database",
                 items:zhishiku
-            },
-            {
-                label:"友情链接",
-                link: "#/friendLink",
-                hasShow: true,
-                icon: "fa fa-flag",
-                items: friendLink
             }
+            // {
+            //     label:"友情链接",
+            //     link: "#/friendLink",
+            //     hasShow: true,
+            //     icon: "fa fa-flag",
+            //     items: friendLink
+            // }
         ];
         /**
          * 将json格式的数据转化为字符串作为value,以"jsondatas"为key

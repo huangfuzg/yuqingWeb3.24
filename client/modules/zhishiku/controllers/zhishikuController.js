@@ -104,9 +104,9 @@ CQ.mainApp.zhishikuController
                 var options = {
                     series: [{
                         type: 'wordCloud',
-                        gridSize: 1,
-                        sizeRange: [3, 40],
-                        rotationRange: [0, 180],
+                        gridSize: 10,
+                        sizeRange: [12, 50],
+                        rotationRange: [0, 90],
                         rotationStep: 20,
                         shape: 'circle',
                         textStyle: {
@@ -176,7 +176,7 @@ CQ.mainApp.zhishikuController
                         edge.source=nodes.length;
                         var i2 = 0;
                         // console.log(~~(Math.random()*data[key].length));
-                        while((i2=~~(Math.random()*data[key].length))==index);
+                        while((i2=~~(Math.random()*data[key].length))>=4*Math.log(index+10));
                         edge.target=nodesl+i2;
                         edges.push(edge);
                     }
@@ -215,7 +215,7 @@ CQ.mainApp.zhishikuController
                 .size([width, height])
                 .gravity(0.2) 
                 .linkDistance(50)  
-                .charge(-20)  
+                .charge(-50)  
                 .on("tick", tick)
                 // .on("end",zoomed)  
                 .start();
@@ -263,8 +263,8 @@ CQ.mainApp.zhishikuController
                 .data(nodes.filter(d=>d.detail!=undefined))  
                 .enter().append("g")  
                 .attr("class", "node")  
-                .on("mouseover", mouseover)  
-                .on("mouseout", mouseout)  
+                .on("mouseenter", mouseover)  
+                .on("mouseleave", mouseout)  
                 .call(force.drag);
             function  radius (d){   
                 // if(!d.weight){//节点weight属性没有值初始化为1（一般就是叶子了）  
@@ -440,7 +440,7 @@ CQ.mainApp.zhishikuController
                     $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
                     if(d.detail)
                     {
-                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,15)+"...");
+                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
                         if(d.detail.is_V==1)
                             $("#title").append("<br/>大V")
                     }
@@ -493,7 +493,7 @@ CQ.mainApp.zhishikuController
             posts=res.data;
             console.log(new Date(posts[0].pt_time));
             $scope.durationTime=(new Date(posts[posts.length-1].topic_post_time)-new Date(posts[0].pt_time))/86400000;
-            $scope.durationTime=752;
+            $scope.durationTime=16;
             $scope.postsNum=posts.length;
             $scope.posterNum=new Set(posts.map(d=>d.poster).filter(d=>d!=" ")).size;
             posts.forEach(d=>{
@@ -501,8 +501,15 @@ CQ.mainApp.zhishikuController
                     d.content=d.content.slice(1);
                 // console.log(siteNames[d.site_name]);
                 d.defaultPosterImg=siteDefaultImg[d.site_name];
+                if(d.pt_time)
+                    if(d.pt_time.indexOf("2017")==-1&&d.pt_time.indexOf("年")==-1)
+                    {
+                        // d.pt_time="2017年"+d.pt_time;
+                        d.pt_time="2017-"+d.pt_time.split(/月|日/).slice(0,2).join("-")+" 00:00:00"
+                    }
                 d.site_name=siteNames[d.site_name]?siteNames[d.site_name]:d.site_name;
             });
+            posts=posts.filter(d=>new Date(d.pt_time)>new Date("2017-8-14 23:59:59"));
             drawChart(posts);
             pages=~~(posts.length/page_num)+1;
             $scope.posts=posts.slice(0,page_num);
@@ -548,6 +555,15 @@ CQ.mainApp.zhishikuController
                 App.runui();
             }
         });
+        function dateFormat(date)
+        {
+            var year=date.getFullYear(),
+            month=date.getMonth()+1,
+            day=date.getDate();
+            month=month<10?'0'+month:month;
+            day=day<10?'0'+day:day;
+            return year+'-'+month+'-'+day;
+        }
         function getPosts(data)
         {
             page=1;
@@ -562,9 +578,9 @@ CQ.mainApp.zhishikuController
             dayDist = dc.barChart("#dayChart"),
             dayDim = ndx.dimension(function(d) {
                 if(d.pt_time)
-                    return new Date(d.pt_time);
+                    return dateFormat(new Date(d.pt_time));
                 else if(d.topic_post_time)
-                    return new Date(d.topic_post_time);
+                    return dateFormat(new Date(d.topic_post_time));
             }),
             dayGroup = dayDim.group().reduceSum(function (d) {
                 return 1;
@@ -641,15 +657,15 @@ CQ.mainApp.zhishikuController
                   .tickFormat(function(d,i){
                     //console.log(d);
                      // console.log(i%Math.ceil(width/bars/xtick));
-                    date_tick.push(d);
-                    var year=d.getFullYear(),
-                    mon=d.getMonth()+1,
-                    date=d.getDate()<10?'0'+d.getDate():d.getDate();
-                    if(mon<10)
-                    {
-                        mon='0'+mon
-                    } 
-                    return i%Math.ceil(bars*xtick/width)==0?year+'-'+mon+'-'+date:"";
+                    // date_tick.push(d);
+                    // var year=d.getFullYear(),
+                    // mon=d.getMonth()+1,
+                    // date=d.getDate()<10?'0'+d.getDate():d.getDate();
+                    // if(mon<10)
+                    // {
+                    //     mon='0'+mon
+                    // } 
+                    return i%Math.ceil(bars*xtick/width)==0?d:"";
                   });
             // chart.addFilterHandler(function(filters, filter) {
             //         filters.push(filter);
@@ -694,12 +710,218 @@ CQ.mainApp.zhishikuController
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
+                $http({
+                    method:"get",
+                    url:"/static/assets/data/zhishiku/allemotion.json",
+                }).then(function (res) {
+                    $scope.cnt=0;
+                    var tmp = res.data;
+                    var table = res.data,page_num=20,tables=table;
+                    // $scope.max_page=Math.ceil(res.data.length/page_num);
+                    $scope.page=1;
+                    var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                    $scope.getTableData=function(page,data){
+                        if(data)
+                            tables=data;
+                        if(page<1||page>$scope.max_page)
+                            return null;
+                        $scope.counts=tables.length;
+                        $scope.max_page=Math.ceil(tables.length/page_num);
+                        $scope.senData=tables.slice(page*page_num-page_num,page*page_num);
+                        $scope.page=page;
+                        if($scope.max_page<5)
+                        {
+                            $scope.pageset=[];
+                            for(var i=1;i<$scope.max_page+1;i++)
+                                $scope.pageset.push(i);
+                        }
+                        else if(page<4)
+                            $scope.pageset=angular.copy(pageset_min);
+                        else if(page>$scope.max_page-3)
+                            $scope.pageset=angular.copy(pageset_max);
+                        else
+                            $scope.pageset=pageset_min.map(d=>d+page-3);
+                    }
+                    var senTmp=true;
+                    var emotion1 = 0,emotion2=0,emotion3=0;
+                    tmp.forEach(function (d) {
+                        if(d.label=='袖手旁观')
+                            emotion1+=1;
+                        if(d.label=='情绪激动')
+                            emotion2+=1;
+                        if(d.label=='冷静客观')
+                            emotion3+=1;
+
+                    })
+                    var mychart = echarts.init(document.getElementById('emotion'));
+                    var option={
+                        // title : {
+                        //     text: '某站点用户访问来源',
+                        //     subtext: '纯属虚构',
+                        //     x:'center'
+                        // },
+                        tooltip : {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b} : {c} ({d}%)"
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['袖手旁观','情绪激动','冷静客观']
+                        },
+                        series : [
+                            {
+                                name: '情感类型',
+                                minAngle:5,
+                                type: 'pie',
+                                radius : '75%',
+                                center: ['50%', '50%'],
+                                label:{
+                                    normal:{
+                                        textStyle:{
+                                            fontSize:20,
+                                        }
+                                        
+                                    }
+                                },
+                                data:[
+                                    {value:emotion1, name:'袖手旁观',label:{
+                                        normal:{
+                                            fontSize:12,
+                                            show:true,
+                                        }
+                                    }},
+                                    {value:emotion2, name:'情绪激动'},
+                                    {value:emotion3, name:'冷静客观'},
+                                   ],
+                                itemStyle: {
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+                   
+                    mychart.setOption(option);
+                    window.onresize = mychart.resize;
+                    mychart.on('legendselectchanged',function (params) {
+                        console.log(params.selected)
+                        var te = [];
+                        
+                        for(var key in params.selected){
+
+                            if(params.selected[key])
+                            te.push(key)
+                        }
+                        senTmp=table.filter(function (d) {
+                            return te.includes(d.label)
+                        })
+                        $scope.getTableData(1,senTmp);
+                        $scope.$digest();
+                        // console.log(te)
+
+                    })
+                    mychart.on('click',function (params) {
+                        // console.log(params)
+                        if(params.seriesIndex!='undefined'){
+
+
+                            // flag=!flag;
+                            if(params.data.name=='袖手旁观')
+                            {
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '情绪激动'
+                              })
+                           
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '冷静客观'
+                              })
+
+                                }
+                            if(params.data.name=='情绪激动')
+                            {
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '冷静客观'
+                              })
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '袖手旁观'
+                              })
+                          
+                            }
+                            if(params.data.name=='冷静客观')
+                            {
+                              mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '袖手旁观'
+                              })
+                            mychart.dispatchAction({
+                                type: 'legendToggleSelect',
+                                // legend name
+                                name: '情绪激动'
+                              })
+                            }}
+
+                    })
+                    $scope.getTableData(1,tmp);
+                    // $scope.senData=tmp;
+                    // $scope.$watch($scope.cnt,function (newValue,oldValue) {
+                    //     {
+                    //     $scope.senData=table;
+                    //     console.log('dong')}
+                    // });
+
+                },function (res) {
+                   console.log(res)
+                });
             }
         });
     }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("viewpointController", "start!!!");
         $rootScope.modelName="观点挖掘";
+        $scope.showMoreBtn=true;
+        $scope.less=false;
+        $scope.expression=true;
+        var comm_show_num = 4;
+        $http({
+            method:"get",
+            url:"/static/assets/data/zhishiku/usercomment.json"
+        }).then(function(result){
+             $scope.items=result.data.data;
+            console.log($scope.items);
+            angular.forEach($scope.items,function(array){
+                console.log(array.usercomment);  
+            });
+            $scope.items.forEach(d=>{
+                d.show_comm=d.usercomment.slice(0,comm_show_num);
+            });
+            $scope.num=$scope.items.length;
+            console.log($scope.num);
+        })
+        
+        $scope.showAllPosts = function(x){
+            //$scope.items=$scope.items.usercomment;
+            x.show_comm=x.usercomment;
+            x.showall=true;
+        }
+        $scope.hideAllPosts = function(x){
+            //$scope.items=$scope.items.slice(0, 2).usercomment;
+            x.show_comm=x.usercomment.slice(0,comm_show_num);
+            x.showall=false;
+        }
+   
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -767,9 +989,7 @@ CQ.mainApp.zhishikuController
                 yAxis: [
                     {
                         type: 'value',
-
-
-                    },
+                    }
 
                 ],
                 series: [
@@ -784,13 +1004,27 @@ CQ.mainApp.zhishikuController
                     {
                         name:'帖子数/10',
                         type:'bar',
+                        // yAxisIndex:1,
                         barWidth:'25',
                         barGap:'10%',
-                        data:dat[1]
+                        data:dat[1],
+                        itemStyle:{
+                            normal:{
+                                color:'steelblue',
+                            }
+                        }
                     },
                     {
                         name:'热度',
                         type:'line',
+                        label:{
+                            normal:{
+                                show:true,
+                                position:'top',
+                                textStyle:{color:'#000000'}
+                                },
+
+                        },
                         // yAxisIndex: 1,
                         data:dat[2]
                     }
@@ -917,14 +1151,6 @@ CQ.mainApp.zhishikuController
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
-                $(".description>div>p").hide();
-                $(".img-box").hover(function(){
-                    $(this).find(".description>div").animate({"height":"100%","padding":"20px"},500,"linear");
-                    $(this).find(".description>div>p").show();
-                },function(){
-                    $(this).find(".description>div>p").hide();
-                    $(this).find(".description>div").animate({"height":"80px","padding":"0 20px"},500,"linear");
-                });
             }
         });
     }]).controller("guidanceController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
@@ -944,14 +1170,6 @@ CQ.mainApp.zhishikuController
                     console.log($scope.guideData);
                 },function (res) {
 
-                });
-                $(".description>div>p").hide();
-                $(".img-box").hover(function(){
-                    $(this).find(".description>div").animate({"height":"100%","padding":"20px"},500,"linear");
-                    $(this).find(".description>div>p").show();
-                },function(){
-                    $(this).find(".description>div>p").hide();
-                    $(this).find(".description>div").animate({"height":"80px","padding":"0 20px"},500,"linear");
                 });
             }
         });

@@ -56,6 +56,11 @@ CQ.mainApp.monitorController
                 res.unshift(res[res.length - 1]);
                 res.splice(res.length - 1, 1);
                 console.log(res);
+                console.log(res);
+                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70,"全部":60};
+                res.sort(function(a,b){
+                    return topicWeight[b.topicName]-topicWeight[a.topicName]>0?1:-1;
+                });
                 $scope.monitorData = res;
                 var topicLists = [];
                 $scope.monitorData.forEach(function (d) {

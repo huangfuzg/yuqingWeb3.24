@@ -25,6 +25,10 @@ CQ.mainApp.topicController
                 var imgs5 = ["/static/assets/img/hot_topic/115/1.jpg","/static/assets/img/hot_topic/115/2.jpg"];
                 var imgs6 = ["/static/assets/img/hot_topic/116/1.jpg","/static/assets/img/hot_topic/116/2.jpg"];
                 var imgs7 = ["/static/assets/img/hot_topic/117/1.jpg","/static/assets/img/hot_topic/117/2.jpg"];
+                var imgs11 = ["/static/assets/img/hot_topic/11/11-1.jpg","/static/assets/img/hot_topic/11/11-2.jpg","/static/assets/img/hot_topic/11/11-3.jpg"];
+                var imgs12 = ["/static/assets/img/hot_topic/12/12-1.jpg","/static/assets/img/hot_topic/12/12-2.jpg","/static/assets/img/hot_topic/12/12-3.jpg"];
+                var imgs13 = ["/static/assets/img/hot_topic/13/13-1.jpg","/static/assets/img/hot_topic/13/13-2.jpg","/static/assets/img/hot_topic/13/13-3.jpg"];
+                var imgs14 = ["/static/assets/img/hot_topic/14/14-1.jpg","/static/assets/img/hot_topic/14/14-2.jpg","/static/assets/img/hot_topic/14/14-3.jpg"];
                 res.forEach(function(d) {
                     var limitLen = 40;
                     try{
@@ -46,11 +50,15 @@ CQ.mainApp.topicController
                     }else if(d.topicId == 114) {
                         d.imgs = imgs9;
                     }else if(d.topicId == 120) {
-                        d.imgs = imgs5;
+                        d.imgs = imgs13;
                     }else if(d.topicId == 121) {
-                        d.imgs = imgs6;
+                        d.imgs = imgs14;
                     }else if(d.topicId == 122) {
                         d.imgs = imgs7;
+                    }else if(d.topicId == 123) {
+                        d.imgs = imgs11;
+                    }else if(d.topicId == 124) {
+                        d.imgs = imgs12;
                     }
                     //d.imgs = imgs;
                 });

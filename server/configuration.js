@@ -11,7 +11,7 @@ module.exports = {
         userToken: ""
 	},
     server: {
-        listenPort: 80,
+        listenPort: 8091,
         securePort: 8445,
         distFolder: path.resolve(__dirname, "../client/"),
         staticUrl: "/static",

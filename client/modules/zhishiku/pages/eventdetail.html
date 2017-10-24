@@ -1,7 +1,7 @@
 <style>
 	.text-muted a{
 		color: rgba(100,100,100,0.8);
-		font-size: 1.2em;
+		font-size: 1.0em;
 		padding: 0 2px;
 	}
 </style>
@@ -15,9 +15,9 @@
 					<h4>持续时间</h4>
 					<p>{{durationTime}}<i class="text-info"> 天</i></p>	
 				</div>
-				<div class="stats-link">
+				<!-- <div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!-- end col-3 -->
@@ -29,9 +29,9 @@
 					<h4>发帖人数</h4>
 					<p>{{posterNum}}</p>	
 				</div>
-				<div class="stats-link">
+				<!-- <div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!-- end col-3 -->
@@ -43,9 +43,9 @@
 					<h4>发帖总计</h4>
 					<p>{{postsNum}}</p>	
 				</div>
-				<div class="stats-link">
+				<!-- <div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!-- end col-3 -->
@@ -84,32 +84,34 @@
 									<img src="{{post.poster_img}}" alt="" class="media-object rounded-corner" ng-if="post.poster_img&&post.poster_img!=' '"/>
 									<img src="{{post.defaultPosterImg}}" alt="" class="media-object rounded-corner" ng-if="!post.poster_img||post.poster_img==' '"/>
 								</a>
-								<div class="media-body">
-									<h5 class="media-heading">{{post.poster}}</h5>
+								<a href="{{post.post_url}}" class="media-body" style="color: inherit;">
+									<h5 class="media-heading" ng-if="post.poster">{{post.poster}}</h5>
+									<h5 class="media-heading" ng-if="post.topic_poster_name">{{post.topic_poster_name}}</h5>
 									<p>{{post.content}}</p>
+									<p>{{post.topic_content}}</p>
 									<p ng-if="post.content==' '">{{post.title}}</p>
 									<p class="text-center" style="width: 100%"><img src={{post.img_url}} alt="" ng-if="post.img_url!=' '" style="margin: auto; min-width: 40%" />
 									</p>
 									<p class="text-center" style="width: 100%">
-										<video src="{{post.video_url}}" controls="controls" ng-if="post.video_url!=' '">
+										<video src="{{post.video_url}}" controls="controls" ng-if="post.video&&post.video_url!=' '">
 										您的浏览器不支持 video 标签。
 										</video>
 									</p>
-									<p class="text-muted m-t-5"><i>{{post.pt_time}}</i>
-										<span class = "p-t-1 p-l-10 f-s-14 text-right iconslists">
+									<p class="text-muted m-t-5">发帖时间： <i>{{post.pt_time}}</i><i>{{post.topic_post_time}}</i>
+										<!-- <span class = "p-t-1 p-l-10 f-s-14 text-right iconslists">
 	                                        <a title = "情感分析"
 	                                        ng-click = "">
-	                                        <i class="fa fa-meh-o"></i>
+	                                        <i class="fa fa-heartbeat"></i>
 	                                        </a>
 	                                        <a class = "addsen" title = "观点" ng-click = "">
-	                                            <i class="fa fa-bullseye"></i>
+	                                            <i class="fa fa-lightbulb-o"></i>
 	                                        </a>
 	                                        <a class = "save" title = "舆情引导" ng-click = "">
-	                                            <i class="fa fa-compass"></i>
+	                                            <i class="fa fa-paper-plane-o"></i>
 	                                        </a>
-	                                    </span>
+	                                    </span> -->
 									</p>
-								</div>
+								</a>
 							</li>
 						</ul>
 						<div id="loading" class="text-center">
