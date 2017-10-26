@@ -402,18 +402,18 @@ angular.module('settingservice',[])
                 items: dashboard
             },
             {
-                label:"话题分析",
-                link: "#/senTopic",
-                hasShow: true,
-                icon: "fa fa-bar-chart-o",
-                items: topicLists
-            },
-            {
                 label:"实时监控",
                 link: "#/monitor/-1/-1",
                 hasShow: true,
                 icon: "fa fa-eye",
                 items: monitorLists
+            },
+            {
+                label:"热点话题",
+                link: "#/hotTopic",
+                hasShow: true,
+                icon: "fa fa-bar-chart-o",
+                items: ""
             },
             {
                 label:"敏感信息",
@@ -422,20 +422,13 @@ angular.module('settingservice',[])
                 icon: "fa fa-table",
                 items: senMessages
             },
-            {
-                label:"系统设置",
-                link: "#/userSetting",
-                hasShow: true,
-                icon: "fa fa-gear",
-                items: systemSettings
-            },
-            {
-                label:"舆情检索",
-                link: "#/yuqingTrends",
-                hasShow: true,
-                icon: "fa fa-search",
-                items: yuqingSearch
-            },
+            // {
+            //     label:"舆情检索",
+            //     link: "#/yuqingTrends",
+            //     hasShow: true,
+            //     icon: "fa fa-search",
+            //     items: yuqingSearch
+            // },
             {
                 label:"历史案例",
                 link: "#/yuqingHistory",
@@ -449,6 +442,13 @@ angular.module('settingservice',[])
                 hasShow:true,
                 icon:"fa fa-database",
                 items:zhishiku
+            },
+            {
+                label:"系统设置",
+                link: "#/userSetting",
+                hasShow: true,
+                icon: "fa fa-gear",
+                items: systemSettings
             }
             // {
             //     label:"友情链接",
