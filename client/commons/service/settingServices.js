@@ -402,19 +402,20 @@ angular.module('settingservice',[])
                 items: dashboard
             },
             {
-                label:"实时监控",
-                link: "#/monitor/-1/-1",
-                hasShow: true,
-                icon: "fa fa-eye",
-                items: monitorLists
-            },
-            {
                 label:"热点话题",
                 link: "#/hotTopic",
                 hasShow: true,
                 icon: "fa fa-bar-chart-o",
                 items: ""
             },
+            {
+                label:"实时监控",
+                link: "#/monitor/-1/-1",
+                hasShow: true,
+                icon: "fa fa-eye",
+                items: monitorLists
+            },
+            
             {
                 label:"敏感信息",
                 link: "#/senmessages",

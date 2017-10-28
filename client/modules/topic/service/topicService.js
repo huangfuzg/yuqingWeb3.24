@@ -5,7 +5,7 @@ angular.module('topicService',['commons'])
         var factories = {};
         factories.topicData = $resource(CQ.variable.RESTFUL_URL + "topic_statistics", parseResource.params, parseResource.actions);
         factories.hotTopicData = $resource(CQ.variable.RESTFUL_URL + "hot_topic", parseResource.params, parseResource.actions);
-        factories.topicAnaly = $resource(CQ.variable.RESTFUL_URL + "topic_analysis", parseResource.params, parseResource.actions);
+        factories.topicAnaly = $resource(CQ.variable.RESTFUL_URL + "hot_topic_analysis", parseResource.params, parseResource.actions);
         return factories;
     }])
     .factory("TopicFacService",['TopicFac', 'RestService', function(TopicFac, RestService) {

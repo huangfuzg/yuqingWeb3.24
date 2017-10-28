@@ -1,0 +1,140 @@
+<style>
+    .dc-chart .pie-slice {
+        fill : black;
+        font-size: 13px;
+    }
+    .dc-chart g.row text {
+        fill : black;
+        font-size: 13px;
+    }
+   .dia_warning{
+         color: #f59c1a;
+     }
+
+    .ngdialog.ngdialog-theme-enginesetting {
+        padding: 5% !important;
+    }
+
+    .ngdialog.ngdialog-theme-enginesetting .ngdialog-content {
+        width: 80% !important;
+        /*margin: 20px;*/
+    }
+</style>
+<div class="panel panel-primary" data-sortable-id="ui-buttons-3">
+
+    <!--<ol class="breadcrumb pull-right p-r-2" ng-show = "backTopic">-->
+        <!--<li class = "fa fa-arrow-circle-left"><a href="javascript:;" ng-click="openModal()" >返回话题</a></li>-->
+    <!--</ol>-->
+    <div class="panel-heading">
+        <h4 class="panel-title f-s-15">{{topicName}}分析</h4>
+    </div>
+    <div class="panel-body">
+    <!--<h1 class="page-header m-b-10"> {{topicName}} </h1>-->
+    <div class = "width-full">
+        <!-- begin col-4 -->
+        <div class="col-md-6 animated fadeInLeft p-l-0">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success" ><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                        <!--<img src = "/static/assets/img/datasource.svg" class = "fa">-->
+                        <i class="fa fa-file-photo-o"></i>
+                        相关图片</h4>
+                </div>
+                <div class="panel-body">
+                    <!--<div class='col-md-12'>-->
+                        <carousel interval=5000 >
+                            <slide ng-repeat="slide in imgs" >
+                                <img ng-src="{{slide}}" class = "height-sm width-full">
+                            </slide>
+                        </carousel>
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 animated fadeInLeft p-l-0">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success" ><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                        <!--<img src = "/static/assets/img/datasource.svg" class = "fa">-->
+                        <i class="fa fa-cloud"></i>
+                        词频图</h4>
+                </div>
+                <div class="panel-body">
+                    <div id = "wordsCloud_{{topic_id}}" class = "width-full height-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 animated fadeInLeft p-l-0">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success" ><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                    <img src = "/static/assets/img/datasource.svg" class = "fa">
+                    数据源分布</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="datatypeDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
+                    </div>
+                </div>
+            </div>
+        </div>
+         <!-- begin col-4 -->
+        <div class="col-md-6 animated fadeInRight p-l-0">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                    <img src = "/static/assets/img/rowchart.svg" class = "fa">
+                    具体站点分布</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="siteDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- begin col-4 -->
+        <div class="col-md-12 animated fadeInLeft p-l-0">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                    <i class = "fa fa-bar-chart-o"></i>
+                    时间分布</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="dayDist1" class="height-sm width-full">
+                    </div>
+                    <div id="dayDist2" class="width-full">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</div>

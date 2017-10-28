@@ -390,8 +390,8 @@ CQ.mainApp.senmessageController
             $scope.tableData[i].export = true;
         }
         var $cols = ["title","pt_time","add_time","is_report"];
-        $scope.theads = ["标题","发布时间","添加时间","状态"];
-        $scope.showCols = [true,true,true,true];
+        $scope.theads = ["标题","发布时间","添加时间","状态","敏感词"];
+        $scope.showCols = [true,true,true,true,true];
         $scope.exportAll = function()
         {
             for(var i = 0; i < $scope.tableData.length; i++)
@@ -412,9 +412,23 @@ CQ.mainApp.senmessageController
         }
         $scope.changeTable = function(x)
         {
+            var today = new Date();
+            var endtime = today.valueOf();
             if(+x == -1)
             {
                 getAll();
+            }
+            if(+x==1){
+                //近一天
+                getTimeData(~~((endtime-86400000)/1000),~~(endtime/1000));
+            }
+            if(+x==2){
+                //近一周
+                getTimeData(~~((endtime-604800000)/1000),~~(endtime/1000));
+            }
+            if(+x==3){
+                //近一月
+                getTimeData(~~((endtime-2505600000)/1000),~~(endtime/1000));
             }
             else if(+x == 0)
             {
@@ -440,6 +454,34 @@ CQ.mainApp.senmessageController
                 };
             SenFacService.getSenLists(cons).then(function(res) {
                // console.log(res);
+                res.postData.forEach(function(d) {
+                    if(d.content.length > 40) {
+                        d.content = d.content.substring(0, 40) + "...";
+                    }
+                });
+                $scope.tableData = res.postData;
+                $scope.allRows = true;
+                for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    $scope.tableData[i].export = true;
+                }
+            });
+        }
+        var getTimeData = function(starttime,endtime)
+        {
+            console.log(starttime,endtime);
+            var cons = {
+                "userId":$scope.dataObj.userId,
+                "pageCounts":"all",
+                "is_report":$scope.dataObj.is_report,
+                "topicId":$scope.dataObj.topicId,
+                "dataType":$scope.dataObj.dataType,
+                "pageNum":$scope.dataObj.pageNum,
+                "startDate":starttime,
+                "endDate":endtime,
+            };
+            SenFacService.getSenmsg(cons).then(function(res) {
+                // console.log(res);
                 res.postData.forEach(function(d) {
                     if(d.content.length > 40) {
                         d.content = d.content.substring(0, 40) + "...";

@@ -74,7 +74,14 @@
                 </label>
                 <label style="margin-left: 20px">
                     数量：
-                    <label><input type="number" ng-model="page_num" placeholder="每页显示数据数量。。。" ng-blur="onblur()" class="form-control" /></label>
+                    <label>
+                        <select class="form-control" ng-model="page_num" ng-change="onblur()">
+                            <option value=10>10</option>
+                            <option value=20>20</option>
+                            <option value=50>50</option>
+                        </select>
+                        <!-- <input type="number" ng-model="page_num" placeholder="每页显示数据数量。。。" ng-blur="onblur()" class="form-control" /> -->
+                    </label>
                 </label>
                 <!-- <span class="btn btn-primary pull-right" data-toggle="modal" data-target="#visuleSet">舆情分析</span> -->
             </div>
@@ -98,9 +105,9 @@
                          ng-show = "it.board != 'Sina'" style="color: #707478">标题:{{it.title}}</h4>
                             <p>{{it.content.trim()}}</p>
                         </a>
-                        <i class="text-muted">{{it.pt_time}}, {{it.board}}</i>
-                        <div>
-                            <p ng-if = "it.data_type == 2" >
+                        <div class="m-t-10">
+                            <i class="text-muted m-r-10">{{it.pt_time}}, {{it.board}}</i>
+                            <span ng-if = "it.data_type == 2" >
                                 评论(
                                  <a href="javascript:;">
                                     {{it.comm_num || 0}}
@@ -116,21 +123,21 @@
                                     {{it.read_num || 0}}
                                  </a>
                                 )
-                            </p>
+                            </span>
                         </div>
                     </div>
                     <div class = "p-t-1 p-r-5 width-full f-s-14 text-right iconslists"
                     ng-show = "false">
-                            <a title = "帖子分析"
+                            <!-- <a title = "帖子分析"
                             ng-click = "OpenAnaly('analy_1',items.topicId)">
                             <img src = "/static/assets/img/analy.svg">
-                            </a>
+                            </a> -->
                             <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it.t_id)">
                                 <img src = "/static/assets/img/add.svg">
                             </a>
-                            <a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">
+                            <!-- <a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">
                                 <img src = "/static/assets/img/save.svg">
-                            </a>
+                            </a> -->
                     </div>
                 </li>
             </ul>

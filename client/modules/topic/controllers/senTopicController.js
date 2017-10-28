@@ -248,6 +248,7 @@ CQ.mainApp.topicController
             drawsiteDist(siteDist, siteDim, siteGroup);
             // draw sitedist
             drawdayDist1(dayDist1, dayDim1, dayGroup1);
+            // drawClouds();
         }
 
         function drawdatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
@@ -464,4 +465,53 @@ CQ.mainApp.topicController
             $("#dayDist2 .y").html("");
             $("#dayDist2 .y").remove();
         }
+            function drawClouds() {
+                $scope.data.forEach(function (d) {
+                    var doms = "wordsCloud_" + d.topicId;
+                    if(document.getElementById(doms) != undefined) {
+                        //console.log("aaa");
+                        var chart = echarts.init(document.getElementById(doms));
+                        var options = {
+                            series: [{
+                                type: 'wordCloud',
+                                gridSize: 12,
+                                sizeRange: [12, 40],
+                                rotationRange: [0, 0],
+                                shape: 'circle',
+                                textStyle: {
+                                    normal: {
+                                        color: function() {
+                                            return 'rgb(' + [
+                                                Math.round(Math.random() * 160),
+                                                Math.round(Math.random() * 160),
+                                                Math.round(Math.random() * 160)
+                                            ].join(',') + ')';
+                                        }
+                                    },
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    }
+                                },
+                                data: []
+                            }]
+                        };
+                        var keylists = [];
+                        d.topicKeywords=new Set(d.topicKeywords);
+                        d.topicKeywords.forEach(function (d) {
+                            var tt = {};
+                            tt.name = d;
+                            tt.value = Math.random() * 50 + 50;
+                            keylists.push(tt);
+                        });
+                        options.series[0].data = keylists;
+                        chart.setOption(options);
+                        var searchPost = function(param)
+                        {
+                            $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name],"topicIds":[d.topicId]});
+                        }
+                        chart.on("click",searchPost);
+                    }
+                });
+            }
     }]);

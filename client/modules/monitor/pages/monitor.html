@@ -10,8 +10,8 @@
     }
     .monitorContents {
         position: absolute;
-        top:50;
-        left: 220;
+        top: 50px;
+        left: 220px;
         overflow-y: hidden;
         overflow-x: auto;
     }
@@ -62,6 +62,7 @@
     .middles {
         vertical-align: middle;
     }
+
 </style>
 <!-- begin #content -->
 <div id = "content" class = "content">
@@ -93,10 +94,12 @@
                 <div ng-repeat = "(index, items) in monitorData" id = "topic_{{items.topicId}}" class="panel panel-primary col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-{{items.topicId}}" >
                     <div class="panel-heading">
                         <div class="panel-heading-btn">
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" ng-click = "startfresh(items)" ng-show="!items.fresh"><i class="fa fa-play-circle"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" ng-click = "pausefresh(items)" ng-show="items.fresh"><i class="fa fa-pause"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" ng-click = "refreshData(items.topicId)"><i class="fa fa-repeat"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" ng-click="panelCollapse(items.topicId)"><i class="fa fa-minus"></i></a>
+                            <!--<a href="javascript:;" class="f-s-20 btn btn-primary btn-sm m-r-5" ng-show="items.topicId!=-1">分析</a>-->
+                            <a title="开始" href="javascript:;" class="f-s-15 btn  btn-icon btn-circle btn-success" ng-click = "startfresh(items)" ng-show="!items.fresh"><i class="fa fa-play-circle"></i></a>
+                            <a title="暂停" href="javascript:;" class="f-s-15 btn  btn-icon btn-circle btn-success" ng-click = "pausefresh(items)" ng-show="items.fresh"><i class="fa fa-pause"></i></a>
+                            <a title="刷新" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click = "refreshData(items.topicId)"><i class="fa fa-repeat"></i></a>
+                            <a title="最小化" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-warning" ng-click="panelCollapse(items.topicId)"><i class="fa fa-minus"></i></a>
+                            <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="ShowSenAnalys(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
                         </div>
                         <h4 class="panel-title f-s-15">{{items.topicName}}</h4>
                     </div>
@@ -120,7 +123,7 @@
                                  ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)">
                                     <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">
                                     <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''" class="media-object rounded-corner w-32">
-                                    <img ng-src="{{pics[it.data_type]}}" ng-else class="media-object rounded-corner w-32">
+                                    <img ng-src="{{pics[it.data_type]}}" ng-if = "!(it.poster.img_url&&it.poster.img_url !== '')" class="media-object rounded-corner w-32">
                                     </a>
                                     <div class="media-body">
                                         <a class = "m-b-10 h-32" ng-href = "{{it.url}}" target="_blank">
@@ -163,16 +166,16 @@
                                     </div>
                                     <div class = "pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists"
                                     ng-show = "false">
-                                            <a title = "帖子分析"
-                                            ng-click = "OpenAnaly('analy_1',items.topicId)">
-                                            <img src = "/static/assets/img/analy.svg">
-                                            </a>
+                                            <!--<a title = "帖子分析"-->
+                                            <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
+                                            <!--<img src = "/static/assets/img/analy.svg">-->
+                                            <!--</a>-->
                                             <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id)">
                                                 <img src = "/static/assets/img/add.svg">
                                             </a>
-                                            <a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">
-                                                <img src = "/static/assets/img/save.svg">
-                                            </a>
+                                            <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->
+                                                <!--<img src = "/static/assets/img/save.svg">-->
+                                            <!--</a>-->
                                     </div>
                                 </li>
                                 <div class = "width-full m-t-20 loadsMore" style = "display:none">

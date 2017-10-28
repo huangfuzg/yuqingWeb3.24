@@ -27,6 +27,26 @@ angular.module('monitorService',['commons'])
 
         return factories;
     }])
+    .factory("TopicFac_", ['$resource', 'parseResource', function ($resource, parseResource) {
+        var factories = {};
+        factories.topicData = $resource(CQ.variable.RESTFUL_URL + "topic_statistics", parseResource.params, parseResource.actions);
+        // factories.hotTopicData = $resource(CQ.variable.RESTFUL_URL + "hot_topic", parseResource.params, parseResource.actions);
+        factories.topicAnaly = $resource(CQ.variable.RESTFUL_URL + "topic_analysis", parseResource.params, parseResource.actions);
+        return factories;
+    }])
+    .factory("TopicFacService_",['TopicFac_', 'RestService', function(TopicFac_, RestService) {
+        var factories = {};
+        factories.getTopicData = function(params) {
+            return RestService.get(TopicFac_.topicData, params);
+        };
+        // factories.getHotTopicData = function(params) {
+        //     return RestService.get(TopicFac.hotTopicData, params);
+        // };
+        factories.getTopicAnalyData = function(params) {
+            return RestService.get(TopicFac_.topicAnaly, params);
+        };
+        return factories;
+    }])
     .factory("PostDataService", ["$http", function($http) {
         var factories = {};
         // flush data every 30s

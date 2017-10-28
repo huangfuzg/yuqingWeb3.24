@@ -461,6 +461,8 @@ CQ.mainApp.searchController
                       {
                         $scope.postLists = data.data.post_data;
                         // pages = 10;
+                        console.log($scope.postLists);
+                        $scope.postLists.forEach(d=>d.content.length>200?d.content=d.content.slice(0,200).trim()+"......":d.content);
                         pages = Math.ceil(data.data.post_count/page_num);
                         $scope.post_count = data.data.post_count;
                         getPagelist();
@@ -690,11 +692,18 @@ CQ.mainApp.searchController
                     $('[data-toggle="tooltip"]').tooltip();
 
                     var $b = $('#builder');
-
+                     var rules_basic = {
+                      condition: 'AND',
+                      rules: [{
+                        id: 'title',
+                        operator: 'equal',
+                        value: ""
+                      }]
+                    };
                     var options = {
                       allow_empty: true,
 
-
+                      rules: rules_basic,
                       plugins: {
                         'bt-tooltip-errors': { delay: 100},
                         'not-group': null
@@ -797,7 +806,6 @@ CQ.mainApp.searchController
                               .find('.selectize-control').removeClass('form-control');
                         }
                     });
-
                 }
                 //get elastic
                 // $('.parse-mongo').on('click', function() {

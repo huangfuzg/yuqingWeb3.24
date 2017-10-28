@@ -57,7 +57,7 @@ CQ.mainApp.dashboardController
             $scope.reDraw = function()
             {
                 console.log("resize!!!!!!");
-                drawChart();
+                drawChart();              
             }
             var format = function(date)
             {
@@ -215,9 +215,12 @@ CQ.mainApp.dashboardController
             });
             function getData() {
                 ChartService.getDashboardData({}).then(function(res){
-                        console.log(res);
+                        //console.log(res);
+                        $scope.data = res.data;
                         $scope.HotPost = res.Hot.hotPost;
                         $scope.HotPoster = res.Hot.hotPoster;
+                        $scope.WordCloud = res.word_cloud;
+                        console.log($scope.HotPoster);
                         if($scope.HotPoster instanceof Array)
                         {
                             $scope.HotPoster.forEach(function(d){
@@ -236,6 +239,8 @@ CQ.mainApp.dashboardController
                             })
                         }
                         $scope.HotWeibo = res.Hot.hotWeibo;
+                        $scope.HotWeiboUser = res.Hot.hotWeiboUser;
+                        console.log($scope.HotWeibo);
                         $scope.mapData = res.mapData;
                         $scope.sourceData = res.sourceData;
                         $scope.sourceData.forEach(function(d) {
@@ -244,6 +249,7 @@ CQ.mainApp.dashboardController
                         console.log($scope.dataTypeLists);
                         drawChart();
                         drawMap();
+                        drawClouds();
                 },function(error){
                     console.log(error);
                     notice.notify_info("抱歉！","数据请求出错，请重试！","",false,"","");
@@ -279,6 +285,53 @@ CQ.mainApp.dashboardController
                 });
                 drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
             }
+            function drawClouds() {
+                var doms = "wordsCloud123";
+                if(document.getElementById(doms) != undefined) {
+                var chart = echarts.init(document.getElementById(doms));
+                var options = {
+                    series: [{
+                        type: 'wordCloud',
+                        gridSize: 20,
+                        sizeRange: [12, 50],
+                        rotationRange: [0, 90],
+                        shape: 'circle',
+                        textStyle: {
+                            normal: {
+                                color: function() {
+                                    return 'rgb(' + [
+                                        Math.round(Math.random() * 160),
+                                        Math.round(Math.random() * 160),
+                                        Math.round(Math.random() * 160)
+                                    ].join(',') + ')';
+                                }
+                            },
+                            emphasis: {
+                                shadowBlur: 15,
+                                shadowColor: '#333'
+                            }
+                        },
+                        data: []
+                    }]
+                };
+                var keylists = [];
+                console.log($scope.WordCloud);
+                $scope.WordCloud.forEach(function (d) {
+                    var tt = {};
+                    tt.name = d.word;
+                    tt.value = d.weight;
+                    keylists.push(tt);
+                });
+                options.series[0].data = keylists;
+                chart.setOption(options);
+                // var searchPost = function(param)
+                // {
+                //     $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name]});
+                // }
+                // chart.on("click",searchPost);
+                }
+            }
+        
             function drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
                 var width = $("#datatypeDist").width(),
                 height = $("#datatypeDist").height(),
