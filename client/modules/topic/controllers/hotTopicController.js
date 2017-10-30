@@ -30,7 +30,7 @@ CQ.mainApp.topicController
                 var imgs13 = ["/static/assets/img/hot_topic/13/13-1.jpg","/static/assets/img/hot_topic/13/13-2.jpg","/static/assets/img/hot_topic/13/13-3.jpg"];
                 var imgs14 = ["/static/assets/img/hot_topic/14/14-1.jpg","/static/assets/img/hot_topic/14/14-2.jpg","/static/assets/img/hot_topic/14/14-3.jpg"];
                 res.forEach(function(d) {
-                    var limitLen = 40;
+                    var limitLen = 50;
                     try{
                         if(d.summary.length > limitLen)
                         {
@@ -63,6 +63,27 @@ CQ.mainApp.topicController
                     //d.imgs = imgs;
                 });
                 $scope.data = res;
+                $scope.data.forEach(d=>{
+                    var imgs = [];
+                    console.log(d);
+                    d.imgs.forEach(url=>{
+                        var image = new Image();
+                        image.src = url;
+                        if(image.complete)
+                        {
+                            imgs.push(image.src);
+                        }
+                        image.onload = function()
+                        {
+                            imgs.push(image.src);
+                        }
+                        image.onerror = function()
+                        {
+                            
+                        }
+                    });
+                    d.imgs = imgs;
+                });
                 setTimeout(function(){
                     $scope.$apply(function(){
                             drawClouds();
@@ -124,21 +145,30 @@ CQ.mainApp.topicController
             });
         }
         $scope.openModal = function(topicId){
-            $state.go("topicAnalysController", {topicId: topicId});
+            $state.go("hotTopicAnalysController", {topicId: topicId});
         };
 
     }])
-    .controller("topicAnalysController1", ["$rootScope", "$scope", "$http", "$stateParams", "TopicFacService","$state",
-        function($rootScope, $scope, $http, $stateParams, TopicFacService, $state) {
+    .controller("hotTopicAnalysController", ["$rootScope", "$scope", "$http", "$stateParams", "TopicFacService", "SearchFacService", "$state", "$timeout",
+        function($rootScope, $scope, $http, $stateParams, TopicFacService, SearchFacService, $state, $timeout) {
         console.log("topicAnalys", "start!!!");
+        var page_num=10,pages,posts,page=1;
         $scope.postData = null;
         $scope.eventData = null;
         $scope.topicName = "";
         $scope.backTopic = false;
+        $scope.filters = {"start_time":"","site":[],"topicIds":[],"end_time":"", "filter":"", "filtertype":0};
+        $scope.siteDefaultImg=["/static/assets/img/news2.svg","/static/assets/img/luntan.svg","/static/assets/img/weibo.svg","/static/assets/img/baidu.svg","/static/assets/img/weixin1.svg","/static/assets/img/search.svg"];
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 App.runui();
                 getTopicAnalysData();
+                $scope.userId = 1;
+                var params = {userId:$scope.userId};
+                SearchFacService.getRuleData(params).then(function(data)
+                {
+                    $scope.allSites = data.allSites;
+                });
             }
         });
         $scope.openModal = function(){
@@ -148,6 +178,7 @@ CQ.mainApp.topicController
             var cons = {};
             cons.userId = 1;
             cons.topicId = $stateParams.topicId;
+            $scope.filters.topicIds.push(+$stateParams.topicId);
              TopicFacService.getTopicAnalyData(cons).then(function(res){
                 //console.log(res);
                 // res.postData.forEach(function(d) {
@@ -155,10 +186,67 @@ CQ.mainApp.topicController
                 // });
                 $scope.topicName = res.topicName;
                 $scope.postData = res.postData;
+                posts = res.postData;
+                pages=~~(posts.length/page_num)+1;
+                $scope.posts=posts.slice(0,page_num);
+                $timeout(function(){
+                    $("#loading").hide();
+                    var beforeScolltop=$("#posts").scrollTop();
+                    $("#posts").scroll(function(){
+                        console.log($("#posts").scrollTop());
+                        if($("#posts").scrollTop()>beforeScolltop)
+                        {
+                            if($("#posts").scrollTop()+$("#posts").height()+150>$("#posts>ul").height()&&page<=pages)
+                            {
+                                $("#loading").show();
+                                $timeout(function(){
+                                    $scope.posts=posts.slice(0,(++page)*page_num);
+                                    $("#loading").hide();
+                                },1000);
+                            }
+                            beforeScolltop=$("#posts").scrollTop();
+                        }
+                    });
+                },0);
                 $scope.backTopic = true;
                 drawChart(true);
             },function(error) {
                 console.log(error);
+                // var res1;
+                // if($stateParams.topicId==8)
+                // {
+                //     $http({
+                //         method:"get",
+                //         url:"/static/assets/data/shijiuda.json"
+                //     }).then(function(res){
+
+                //         res1=res.data.data;
+                //         console.log(res1);
+                //         $scope.topicName = res1.topicName;
+                //         $scope.postData = res1.postData;
+                //         $scope.backTopic = true;
+                //         drawChart(true);
+                //     },function(res){
+                //         console.log(res);
+                //     });
+                // }
+                // if($stateParams.topicId==9)
+                // {
+                //     $http({
+                //         method:"get",
+                //         url:"/static/assets/data/chengkao.json"
+                //     }).then(function(res){
+
+                //         res1=res.data.data;
+                //         console.log(res1);
+                //         $scope.topicName = res1.topicName;
+                //         $scope.postData = res1.postData;
+                //         $scope.backTopic = true;
+                //         drawChart(true);
+                //     },function(res){
+                //         console.log(res);
+                //     });
+                // }
             });
         }
         $scope.redraw = function()
@@ -202,27 +290,127 @@ CQ.mainApp.topicController
             drawsiteDist(siteDist, siteDim, siteGroup);
             // draw sitedist
             drawdayDist1(dayDist1, dayDim1, dayGroup1);
+            // drawClouds();
         }
 
         function drawdatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
              var width = $("#datatypeDist").width() * 0.9,
-                height = $("#datatypeDist").height() * 0.9;
+                height = $("#datatypeDist").height() * 0.9,
+                sum = datatypeDim.groupAll().value();
                 datatypeDist
                     .width(width)
                     .height(height)
                     .innerRadius(20)
                     .dimension(datatypeDim)
                     .group(datatypeGroup)
-                    .legend(dc.legend());
+                    .legend(dc.legend().legendText(function(d){return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
+                // datatypeDist.addFilterHandler(function(filters, filter) {
+                //     filters.push(filter);
+                //     $scope.filters.site = filters;
+                //     $scope.filters.filter = filter;
+                //     $scope.filters.filtertype = 1;
+                //     return filters;
+                // });
+                datatypeDist.addFilterHandler(function(filters, filter) {
+                    filters.push(filter);
+                    $scope.filters.filter = filter;
+                    $scope.filters.filtertype = 1;
+                    return filters;
+                });
                 datatypeDist.render();
+                // console.log(d3.selectAll('text.pie-slice'));
+                // d3.selectAll('text.pie-slice').text(function(d) {
+                //             if(d.endAngle != d.startAngle)
+                //                 return d.data.key + ' ' + dc.utils.printSingleValue((d.endAngle - d.startAngle) / (2*Math.PI) * 100) + '%';
+                //         });
         }
+
+        $scope.selectGraphPost = function()
+        {
+            var params = {};
+            var format = function(date)
+            {
+                var datetime = new Date(date);
+                // year = datetime.getFullYear(),
+                // month = datetime.getMonth() + 1,
+                // day = datetime.getdate();
+                // if(month<=9){
+                //     month="0"+month;
+                // }
+                // if(day<=9){
+                //     day="0"+date;
+                // }
+                // return year+"-"+month+"-"+day;
+            }
+            // var start_time = format($scope.filters.start_time);
+            var siteIds = [];
+            if($scope.filters.filtertype == 1)//点击数据源分布图
+            {
+                for(var i = 0; i < $scope.allSites.length; i++)
+                {
+                    if($scope.filters.filter == $scope.allSites[i].dataTypeName)
+                    {
+                        if($scope.filters.site.length == 0)
+                        {
+                            siteIds.push($scope.allSites[i].dataTypeId);
+                            break;
+                        }
+                        for(var j = 0; j < $scope.filters.site.length; j++)
+                        {
+                            for(var k = 0; k < $scope.allSites[i].detail_sites.length;k++)
+                            {
+                                if($scope.allSites[i].detail_sites[k].siteName == $scope.filters.site[j])
+                                {
+                                    siteIds.push($scope.allSites[i].detail_sites[k].siteId);
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+                console.log(siteIds);
+            }
+            else if($scope.filters.filtertype == 2)//点击具体站点分布图
+            {
+                for(var i = 0; i < $scope.allSites.length; i++)
+                {
+                    for(var j = 0; j < $scope.allSites[i].detail_sites.length; j++)
+                    {
+                        console.log($scope.filters.filter);
+                        if($scope.allSites[i].detail_sites[j].siteName = $scope.filters.filter)
+                        {
+                            siteIds.push($scope.allSites[i].detail_sites[j].siteId+10);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            params.sites = siteIds;
+            params.topicIds = $scope.filters.topicIds;
+            params.start_time = $scope.filters.start_time;
+            params.end_time = $scope.filters.end_time;
+            console.log(params);
+            $state.go("yuqingTrendsController",params);
+        }
+
+        function getPosts(data)
+        {
+            page=1;
+            posts=data.reverse();
+            pages=~~(posts.length/page_num)+1;
+            $("#posts").slimScroll({scrollTo:0});
+            $scope.posts=posts.slice(0,page_num);
+        }
+
         function drawsiteDist(siteDist, siteDim, siteGroup) {
             var width = $("#siteDist").width() * 0.9,
                 height = $("#siteDist").height() * 0.9;
-                siteDist.data = function() {
-                    var top10 = siteGroup.top(10);
-                    return top10;
-                };
+                // siteDist.data = function() {
+                //     var top10 = siteGroup.top(10);
+                //     return top10;
+                // };
                 siteDist.width(width)
                     .height(height)
                     .dimension(siteDim)
@@ -232,9 +420,36 @@ CQ.mainApp.topicController
                     .label(function(d) {
                         return d.key + ":" + d.value; })
                     .renderTitle(true)
+                    // .on('pretransition', function(chart) {
+                    //     chart.select("svg > g")
+                    //     .attr("transform", "translate(" + 10 + "," + -20 + ")");
+                    //     chart.select("svg").append("text")
+                    //     .attr("transform", "translate(" + (width/2) + "," + (height - 20 - 20 + 28) + ")")
+                    //     .style("text-anchor", "middle")
+                    //     .text("帖子数量");
+                    // })
                     .controlsUseVisibility(true)
                     .elasticX(true);
+                    siteDist.addFilterHandler(function(filters, filter) {
+                        filters.push(filter);
+                        $scope.filters.site = filters;
+                        $scope.filters.filter = filter;
+                        $scope.filters.filtertype = 2;
+                        return filters;
+                    });
+                siteDist.on("filtered", function(){
+                    // console.log(post_filters);
+                    // console.log(getPosts());
+                    $timeout(function(){getPosts(siteDim.top(Infinity))},0);
+                    console.log(siteDim.top(Infinity));
+                });
                 siteDist.render();
+                // d3.select("#siteDist svg > g")
+                //     .attr("transform", "translate(" + 10 + "," + -20 + ")");
+                // d3.select("#siteDist svg").append("text")
+                //     .attr("transform", "translate(" + (width/2) + "," + (height - 20 - 20 + 28) + ")")
+                //     .style("text-anchor", "middle")
+                //     .text("帖子数量");
         }
         function drawdayDist1(dayDist1, dayDim1, dayGroup1) {
              var dateFormat =d3.time.format("%Y-%m-%d %H:%M:%S");
@@ -243,10 +458,12 @@ CQ.mainApp.topicController
              var dayGroup2 = dayDim2.group().reduceSum(function(d) {
                 return 0.2;
              });
+             var width = $("#dayDist1").width() * 0.9;
+             var height = $("#dayDist1").height() * 0.9;
              dayDist1
                 .renderArea(true)
-                .width($("#dayDist1").width() * 0.9)
-                .height($("#dayDist1").height() * 0.9)
+                .width(width)
+                .height(height)
                 .transitionDuration(1000)
                 .margins({top: 30, right: 50, bottom: 25, left: 40})
                 .dimension(dayDim1)
@@ -265,7 +482,14 @@ CQ.mainApp.topicController
                 .xUnits(d3.time.minutes)
                 .elasticY(true)
                 .renderHorizontalGridLines(true)
-                .brushOn(false);
+                .brushOn(false)
+                .xAxisLabel("时间")
+                .yAxisLabel("帖子数量");
+            dayDist1.on("filtered", function(){
+                // console.log(post_filters);
+                // console.log(getPosts());
+                $timeout(function(){getPosts(dayDim1.top(Infinity))},0);
+            });
             dayDist1.render();
 
             // line2  
@@ -290,8 +514,66 @@ CQ.mainApp.topicController
                     $scope.postData[0].postTime]))
                 .renderHorizontalGridLines(false)
                 .brushOn(true);
+            dayDist2.addFilterHandler(function(filters, filter) {
+                filters.push(filter);
+                $scope.filters.start_time = filter[0];
+                $scope.filters.end_time = filter[1];
+                console.log($scope.filters.start_time);
+                console.log($scope.filters.end_time);
+                // $scope.filters.filtertype = 3;
+                return filters;
+            });  
             dayDist2.render();
             $("#dayDist2 .y").html("");
             $("#dayDist2 .y").remove();
         }
+            function drawClouds() {
+                $scope.data.forEach(function (d) {
+                    var doms = "wordsCloud_" + d.topicId;
+                    if(document.getElementById(doms) != undefined) {
+                        //console.log("aaa");
+                        var chart = echarts.init(document.getElementById(doms));
+                        var options = {
+                            series: [{
+                                type: 'wordCloud',
+                                gridSize: 12,
+                                sizeRange: [12, 40],
+                                rotationRange: [0, 0],
+                                shape: 'circle',
+                                textStyle: {
+                                    normal: {
+                                        color: function() {
+                                            return 'rgb(' + [
+                                                Math.round(Math.random() * 160),
+                                                Math.round(Math.random() * 160),
+                                                Math.round(Math.random() * 160)
+                                            ].join(',') + ')';
+                                        }
+                                    },
+                                    emphasis: {
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    }
+                                },
+                                data: []
+                            }]
+                        };
+                        var keylists = [];
+                        d.topicKeywords=new Set(d.topicKeywords);
+                        d.topicKeywords.forEach(function (d) {
+                            var tt = {};
+                            tt.name = d;
+                            tt.value = Math.random() * 50 + 50;
+                            keylists.push(tt);
+                        });
+                        options.series[0].data = keylists;
+                        chart.setOption(options);
+                        var searchPost = function(param)
+                        {
+                            $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name],"topicIds":[d.topicId]});
+                        }
+                        chart.on("click",searchPost);
+                    }
+                });
+            }
     }]);

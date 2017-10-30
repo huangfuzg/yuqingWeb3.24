@@ -286,7 +286,7 @@ CQ.mainApp.dashboardController
                 drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
             }
             function drawClouds() {
-                var doms = "wordsCloud123";
+                var doms = "wordsCloud";
                 if(document.getElementById(doms) != undefined) {
                 var chart = echarts.init(document.getElementById(doms));
                 var options = {

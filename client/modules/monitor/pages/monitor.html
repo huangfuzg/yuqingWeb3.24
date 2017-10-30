@@ -62,7 +62,9 @@
     .middles {
         vertical-align: middle;
     }
-
+    .media-body a{
+        word-break: break-word !important;
+    }
 </style>
 <!-- begin #content -->
 <div id = "content" class = "content">
@@ -99,7 +101,7 @@
                             <a title="暂停" href="javascript:;" class="f-s-15 btn  btn-icon btn-circle btn-success" ng-click = "pausefresh(items)" ng-show="items.fresh"><i class="fa fa-pause"></i></a>
                             <a title="刷新" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click = "refreshData(items.topicId)"><i class="fa fa-repeat"></i></a>
                             <a title="最小化" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-warning" ng-click="panelCollapse(items.topicId)"><i class="fa fa-minus"></i></a>
-                            <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="ShowSenAnalys(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
+                            <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="openModal(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
                         </div>
                         <h4 class="panel-title f-s-15">{{items.topicName}}</h4>
                     </div>
@@ -135,7 +137,7 @@
                                         </a>
                                         <p class="m-b-5 m-t-5 f-s-14">
                                         <a ng-href = "{{it.url}}" target="_blank" style="color: #333">
-                                        <h4 class="media-heading f-s-15" ng-if = "it.title"
+                                        <h4 class="media-heading f-s-15" ng-if = "(!it.poster||it.poster.name == '')&&it.title"
                                          ng-show = "it.board != 'Sina'">{{it.title}}</h4>
                                          </a>
                                         <a  ng-if = "it.content && it.data_type != 0" ng-href = "{{it.url}}" target="_blank" class = "f-s-14">

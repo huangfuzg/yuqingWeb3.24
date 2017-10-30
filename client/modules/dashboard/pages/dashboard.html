@@ -138,6 +138,24 @@
 				</div>
 			</div>
 		</div>
+			<div class = "col-md-4">
+			<div class="panel panel-primary" data-sortable-id="index-7">
+				<div class="panel-heading">
+					<div class="panel-heading-btn">
+						<a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();"><i class="fa fa-repeat"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+					</div>
+					<h4 class="panel-title f-s-14 font-w-600">
+					<img src = "/static/assets/img/topic.svg" class = "fa">
+				近一周热点话题</h4>
+				</div>
+				<div class="panel-body">
+					<div id="wordsCloud" class="height-sm">
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="col-md-4">
 			<div class="panel panel-primary" data-sortable-id="index-6">
 				<div class="panel-heading">
@@ -156,46 +174,6 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- <div class = "col-md-4 ">
-			<div class="panel panel-primary" data-sortable-id="index-7">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title f-s-14 font-w-600">
-					<img src = "/static/assets/img/map.svg" class = "fa">
-					地域分布</h4>
-				</div>
-				<div class="panel-body">
-					<div id="maps" class="height-sm">
-					
-					</div>
-				</div>
-			</div>
-		</div> -->
-		<div class = "col-md-4 animated fadeInDown">
-			<div class="panel panel-primary" data-sortable-id="index-7">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title f-s-14 font-w-600">
-					<img src = "/static/assets/img/map.svg" class = "fa">
-					近一周数据地域分布</h4>
-				</div>
-				<div class="panel-body">
-					<div id="maps" class="height-sm">
-					
-					</div>
-				</div>
-			</div>
-		</div>
-		
 		<div class = "col-md-8 animated fadeInUp">
 			<ul class="nav nav-tabs nav-tabs-primary nav-justified nav-justified-mobile" data-sortable-id="index-2">
 				<li class="active"><a href="index.html#email" data-toggle="tab"><i class="fa fa-weibo m-r-5"></i> <span class="hidden-xs f-s-14 font-w-600">近一周热门微博</span></a></li>
@@ -219,10 +197,36 @@
 								</a>
 								<div class="media-body">
 									<a href="javascript:;"><h4 class="media-heading f-s-15" ng-bind = "items.title"></h4></a>
-									<p class="m-b-5 f-s-14" ng-bind = "items.content">
-									</p>
-									<a class="" ng-bind = "items.pt_time" href = "{{items.url}}" target="_blank" ></a>
-									<i class="text-muted" ng-bind = "items.board"></i>
+									<p class="m-b-5 f-s-14" ng-bind = "items.content"></p>
+									<div class="m-t-5">
+										<a ng-bind = "items.pt_time" href = "{{items.url}}" target="_blank" ></a>
+										&nbsp;
+										<i class="text-muted" ng-bind = "items.board"></i>
+										&nbsp;
+										<span>
+											<i ng-if="items.comm_num&&items.comm_num!=''">
+					                            评论(
+					                             <a href="javascript:;">
+					                                {{items.comm_num || 0}}
+					                             </a>
+					                            )
+					                        </i>
+					                        <i ng-if="items.repost_num&&items.repost_num!=''">
+					                             回帖(
+					                             <a href="javascript:;">
+					                                {{items.repost_num || 0}}
+					                             </a>
+					                            )
+					                        </i>
+					                        <i ng-if="items.read_num&&items.read_num!=''">
+					                            点赞(
+					                            <a href="javascript:;">
+					                                {{items.read_num || 0}}
+					                             </a>
+					                            )
+					                        </i>
+				                        </span>
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -260,8 +264,35 @@
 									<a href="{{items.url}}"><h4 class="media-heading f-s-15" ng-bind = "items.name"></h4></a>
 									<p class="m-b-5 f-s-14" ng-bind = "items.content">
 									</p>
-									<a ng-bind = "items.pt_time" href = "{{items.url}}" target="_blank" ></a>
-									<i class="text-muted" ng-bind = "items.board"></i>
+									<div class="m-t-5">
+										<a ng-bind = "items.pt_time" href = "{{items.url}}" target="_blank" ></a>
+										&nbsp;
+										<i class="text-muted" ng-bind = "items.board"></i>
+										&nbsp;
+										<span>
+											<i ng-if="items.comm_num&&items.comm_num!=''">
+					                            评论(
+					                             <a href="javascript:;">
+					                                {{items.comm_num || 0}}
+					                             </a>
+					                            )
+					                        </i>
+					                        <i ng-if="items.repost_num&&items.repost_num!=''">
+					                             回帖(
+					                             <a href="javascript:;">
+					                                {{items.repost_num || 0}}
+					                             </a>
+					                            )
+					                        </i>
+					                        <i ng-if="items.read_num&&items.read_num!=''">
+					                            点赞(
+					                            <a href="javascript:;">
+					                                {{items.read_num || 0}}
+					                             </a>
+					                            )
+					                        </i>
+				                        </span>
+									</div>
 								</div>
 							</li>
 						</ul>
@@ -277,17 +308,17 @@
 								</a>
 								<div class="media-body">
 									<a href="{{items.home_url}}" target="_blank"><h4 class="media-heading f-s-15" ng-bind = "items.name"></h4></a>
-									<ul class="f-s-14 breadcrumb">
+									<ul class="breadcrumb">
 										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">关注：{{items.Follows}}</a></li>
 										<li><a ui-sref="{{items.home_url}}" title="查看详细博主信息">粉丝：{{items.Following}}</a></li>
 										<li><a href="{{items.home_url}}" target="_blank" title="查看博主微博">微博数：{{items.post_num}}</a></li>
 										<!-- <li>最近发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
 									</ul>
-										<ul class="f-s-14 breadcrumb">
+										<ul class="breadcrumb">
 										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">所在地：{{items.location}}</a></li>
 										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">用户id：{{items.id}}</a></li>
 									</ul>
-									<ul class="f-s-14 breadcrumb">
+									<ul class="breadcrumb">
 										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">简介：{{items.intro}}</a></li>
 									</ul>
 
@@ -298,7 +329,7 @@
 				</div>
 			</div>
 		</div>
-		<div class = "col-md-4">
+		<div class = "col-md-4 animated fadeInDown">
 			<div class="panel panel-primary" data-sortable-id="index-7">
 				<div class="panel-heading">
 					<div class="panel-heading-btn">
@@ -307,12 +338,11 @@
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
 					</div>
 					<h4 class="panel-title f-s-14 font-w-600">
-					<img src = "/static/assets/img/topic.svg" class = "fa">
-				近一周热点话题</h4>
+					<img src = "/static/assets/img/map.svg" class = "fa">
+					近一周数据地域分布</h4>
 				</div>
 				<div class="panel-body">
-					<div id="wordsCloud123" class="height-sm">
-					
+					<div id="maps" class="height-sm">
 					</div>
 				</div>
 			</div>

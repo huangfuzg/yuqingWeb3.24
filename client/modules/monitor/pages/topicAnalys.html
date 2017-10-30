@@ -20,15 +20,13 @@
         /*margin: 20px;*/
     }
 </style>
-<div class="panel panel-primary" data-sortable-id="ui-buttons-3">
-
-    <!--<ol class="breadcrumb pull-right p-r-2" ng-show = "backTopic">-->
-        <!--<li class = "fa fa-arrow-circle-left"><a href="javascript:;" ng-click="openModal()" >返回话题</a></li>-->
-    <!--</ol>-->
-    <div class="panel-heading">
-        <h4 class="panel-title f-s-15">{{topicName}}分析</h4>
-    </div>
-    <div class="panel-body">
+<!--<div class="panel panel-primary" data-sortable-id="ui-buttons-3">-->
+<div id="content" class="content" ng-resize="">
+    <ol class="breadcrumb pull-right p-r-2" ng-show = "backTopic">
+        <li class = "fa fa-arrow-circle-left"><a href="javascript:;" ng-click="back()" >返回</a></li>
+    </ol>
+    <h1 class="page-header m-b-10"> {{topicName}} </h1>
+    <!--<div class="panel-body">-->
     <!--<h1 class="page-header m-b-10"> {{topicName}} </h1>-->
     <div class = "width-full">
         <!-- begin col-4 -->
@@ -46,8 +44,11 @@
                         相关图片</h4>
                 </div>
                 <div class="panel-body">
+                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                    </div>
                     <!--<div class='col-md-12'>-->
-                        <carousel interval=5000 >
+                        <carousel interval=5000 class="height-sm">
                             <slide ng-repeat="slide in imgs" >
                                 <img ng-src="{{slide}}" class = "height-sm width-full">
                             </slide>
@@ -70,6 +71,9 @@
                         词频图</h4>
                 </div>
                 <div class="panel-body">
+                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                    </div>
                     <div id = "wordsCloud_{{topic_id}}" class = "width-full height-sm">
                     </div>
                 </div>
@@ -88,6 +92,9 @@
                     数据源分布</h4>
                 </div>
                 <div class="panel-body">
+                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                    </div>
                     <div id="datatypeDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
                     </div>
                 </div>
@@ -107,6 +114,9 @@
                     具体站点分布</h4>
                 </div>
                 <div class="panel-body">
+                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                    </div>
                     <div id="siteDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
                     </div>
                 </div>
@@ -127,6 +137,9 @@
                     时间分布</h4>
                 </div>
                 <div class="panel-body">
+                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                    </div>
                     <div id="dayDist1" class="height-sm width-full">
                     </div>
                     <div id="dayDist2" class="width-full">
@@ -135,6 +148,6 @@
             </div>
         </div>
     </div>
-    </div>
+    <!--</div>-->
 
 </div>

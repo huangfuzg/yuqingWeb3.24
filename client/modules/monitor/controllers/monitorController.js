@@ -1,8 +1,8 @@
 "use strict";
 CQ.mainApp.monitorController
    .controller("monitorController", ["$rootScope", "$scope", "$interval", "ngDialog","MonitorFacService",
-    "$location","$stateParams", "$http", "PostDataService", "$timeout", "notice",function ($rootScope, $scope, $interval,
-        ngDialog, MonitorFacService, $location, $stateParams, $http, PostDataService,
+    "$location","$stateParams","$state", "$http", "PostDataService", "$timeout", "notice",function ($rootScope, $scope, $interval,
+        ngDialog, MonitorFacService, $location, $stateParams,$state, $http, PostDataService,
         $timeout, notice) {
         console.log("monitorController", "start!!!");
         //页面UI初始化；
@@ -57,9 +57,11 @@ CQ.mainApp.monitorController
                 res.splice(res.length - 1, 1);
                 console.log(res);
                 console.log(res);
-                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70,"全部":60};
+                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70,"全部":-100};
                 res.sort(function(a,b){
-                    return topicWeight[b.topicName]-topicWeight[a.topicName]>0?1:-1;
+                    var weight_a = topicWeight[a.topicName] || 0;
+                    var weight_b = topicWeight[b.topicName] || 0;
+                    return weight_b-weight_a>0?1:-1;
                 });
                 $scope.monitorData = res;
                 var topicLists = [];
@@ -336,17 +338,17 @@ CQ.mainApp.monitorController
             }
             );
         };
-        $scope.ShowSenAnalys = function(topic_id){
-            // console.log(topic_id);
-            $scope.topic_id = topic_id;
-            ngDialog.open({
-                template:'/static/modules/monitor/pages/topicAnalys.html',
-                controller:'sentopicAnalysController',
-                appendClassName: "ngdialog-theme-enginesetting",
-                width:'100%',
-                scope:$scope
-            });
-        };
+        // $scope.ShowSenAnalys = function(topic_id){
+        //     // console.log(topic_id);
+        //     $scope.topic_id = topic_id;
+        //     ngDialog.open({
+        //         template:'/static/modules/monitor/pages/topicAnalys.html',
+        //         controller:'sentopicAnalysController',
+        //         appendClassName: "ngdialog-theme-enginesetting",
+        //         width:'100%',
+        //         scope:$scope
+        //     });
+        // };
         $scope.MarkRead  = function(post_id) {
             // console.log($(this).find(".save").find("img").remove());
             // $("#"+post_id+"").find(".save").find("img").remove()
@@ -407,7 +409,9 @@ CQ.mainApp.monitorController
                 angular.element(tt.closest("li")).find(".iconslists").addClass("ng-hide");
             }
         };
-
+           $scope.openModal = function(topicId){
+               $state.go("sentopicAnalysController", {topicId: topicId});
+           };
    }])
    .controller("openTopic", ["$rootScope","$scope","ngDialog", function($rootScope, $scope, ngDialog) {
         console.log("openTopic","start!!!");
@@ -447,7 +451,8 @@ CQ.mainApp.monitorController
     .controller("sentopicAnalysController", ["$rootScope", "$scope", "$http", "$stateParams", "TopicFacService_", "SearchFacService", "$state",
         function($rootScope, $scope, $http, $stateParams, TopicFacService_, SearchFacService, $state) {
             console.log("topicAnalys", "start!!!");
-            // console.log($scope.topic_id);
+            console.log($stateParams.topicId);
+            $scope.topic_id=$stateParams.topicId;
             $scope.senpostData = null;
 
             $scope.topicName = "";
@@ -544,7 +549,21 @@ CQ.mainApp.monitorController
                     if(res.topicId!=$scope.topic_id){
                         return;
                     }
-                    $scope.imgs = res.img_url;
+                    $scope.imgs = [];
+                    res.imgs.forEach(url=>{
+                        var img= new Image();
+                        img.src=url;
+                        img.onload=function()
+                        {
+                            $scope.imgs.push(img.src);
+                            console.log(img.src);
+                        }
+                        img.onerror=function()
+                        {
+                            console.log(url+" is not found!!!");
+                        }
+                    });
+                    // $scope.imgs = res.imgs;
                     // console.log(res);
                     // var imgs2 = ["/static/assets/img/1.jpg","/static/assets/img/2.jpg","/static/assets/img/3.jpg"];
                     // var imgs3 = ["/static/assets/img/ky1.jpg","/static/assets/img/ky2.jpg","/static/assets/img/ky3.jpg"];
@@ -584,6 +603,7 @@ CQ.mainApp.monitorController
                     $scope.topic_kws = res.topic_kws;
                     $scope.backTopic = true;
                     drawChart(true);
+                    $(".loading").hide();
                 },function(error) {
                     console.log(error);
 
@@ -769,12 +789,12 @@ CQ.mainApp.monitorController
                     return filters;
                 });
                 siteDist.render();
-                d3.select("#siteDist svg > g")
-                    .attr("transform", "translate(" + 10 + "," + -20 + ")");
-                d3.select("#siteDist svg").append("text")
-                    .attr("transform", "translate(" + (width/2) + "," + (height - 20 - 20 + 28) + ")")
-                    .style("text-anchor", "middle")
-                    .text("帖子数量");
+                // d3.select("#siteDist svg > g")
+                //     .attr("transform", "translate(" + 10 + "," + -20 + ")");
+                // d3.select("#siteDist svg").append("text")
+                //     .attr("transform", "translate(" + (width/2) + "," + (height - 20 - 20 + 28) + ")")
+                //     .style("text-anchor", "middle")
+                //     .text("帖子数量");
             }
             function drawdayDist1(dayDist1, dayDim1, dayGroup1) {
                 var dateFormat =d3.time.format("%Y-%m-%d %H:%M:%S");
@@ -851,7 +871,7 @@ CQ.mainApp.monitorController
                 var doms = "wordsCloud_" + $scope.topic_id;
                 // var topicwords = new Set(Oeject.keys($scope.topic_kws));
                 // var topicword = Array.from(topicwords);
-                var topicwords = Object.keys($scope.topic_kws);
+                // var topicwords = Object.keys($scope.topic_kws);
                 if(document.getElementById(doms) != undefined) {
                         //console.log("aaa");
                         var chart = echarts.init(document.getElementById(doms));
@@ -882,10 +902,10 @@ CQ.mainApp.monitorController
                         };
                         var keylists = [];
                     // console.log("key-values",$scope.topic_kws[topicwords[0]]);
-                        for(var i=0;i<topicwords.length;i++){
+                        for(var i=0;i<$scope.topic_kws.length;i++){
                             var tt = {};
-                            tt.name = topicwords[i];
-                            tt.value = $scope.topic_kws[topicwords[i]];
+                            tt.name = $scope.topic_kws[i].word;
+                            tt.value = $scope.topic_kws[i].weight;
                             keylists.push(tt);
                         };
 
@@ -922,7 +942,7 @@ CQ.mainApp.monitorController
             }
         }
         $scope.DoaddSen = function() {
-            if($scope.detailData.senwords.split)
+            if($scope.detailData.senwords instanceof String)
             {
                 $scope.detailData.senwords = $scope.detailData.senwords.split(',');
             }

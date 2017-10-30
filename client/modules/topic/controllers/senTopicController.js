@@ -131,7 +131,7 @@ CQ.mainApp.topicController
         };
 
     }])
-    .controller("topicAnalysController", ["$rootScope", "$scope", "$http", "$stateParams", "TopicFacService", "SearchFacService", "$state",
+    .controller("senTopicAnalysController", ["$rootScope", "$scope", "$http", "$stateParams", "TopicFacService", "SearchFacService", "$state",
         function($rootScope, $scope, $http, $stateParams, TopicFacService, SearchFacService, $state) {
         console.log("topicAnalys", "start!!!");
         $scope.postData = null;
