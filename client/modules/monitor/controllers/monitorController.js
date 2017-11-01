@@ -563,45 +563,13 @@ CQ.mainApp.monitorController
                             console.log(url+" is not found!!!");
                         }
                     });
-                    // $scope.imgs = res.imgs;
-                    // console.log(res);
-                    // var imgs2 = ["/static/assets/img/1.jpg","/static/assets/img/2.jpg","/static/assets/img/3.jpg"];
-                    // var imgs3 = ["/static/assets/img/ky1.jpg","/static/assets/img/ky2.jpg","/static/assets/img/ky3.jpg"];
-                    // var imgs4 = ["/static/assets/img/gk1.jpg","/static/assets/img/gk2.jpg","/static/assets/img/gk3.jpg"];
-                    // var imgs9 = ["/static/assets/img/da1.jpg","/static/assets/img/da2.jpg","/static/assets/img/da3.jpg"];
-                    // var imgs12 = ["/static/assets/img/zbqc1.jpg","/static/assets/img/zbqc2.jpg","/static/assets/img/zbqc3.jpg"];
-                    // var imgs8 = ["/static/assets/img/8-1.jpg","/static/assets/img/8-2.jpg","/static/assets/img/8-3.jpg","/static/assets/img/8-4.jpg"];
-                    // var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
-                    //
-                    //     if(res.topicId == 2) {
-                    //         $scope.imgs = imgs9;
-                    //     }else if(res.topicId == 1) {
-                    //         $scope.imgs = imgs4;
-                    //         // d.summary = "各大高校研究生复试工作正在进行，大多数高校已经录取结束";
-                    //     }else if(res.topicId == 0) {
-                    //         $scope.imgs = imgs2;
-                    //     }else if(res.topicId == 3) {
-                    //         $scope.imgs = imgs12;
-                    //     }else if(res.topicId == 9) {
-                    //         $scope.imgs = imgs99;
-                    //     }else if(res.topicId == 8) {
-                    //         $scope.imgs = imgs8;
-                    //     }else if(res.topicId > 4) {
-                    //         // d.summary = "各个地方成人高考报名工作开始";
-                    //         $scope.imgs = imgs2;
-                    //     }
-                        //d.imgs = imgs;
 
-
-
-                    //console.log(res);
-                    // res.postData.forEach(function(d) {
-                    //     d.postTime = d.postTime.substring(0,10)
-                    // });
                     $scope.topicName = res.topicName;
                     $scope.senpostData = res.postData;
                     $scope.topic_kws = res.topic_kws;
                     $scope.backTopic = true;
+                    $scope.senTopicEvolu=res.topic_info;
+                    drawEchart();
                     drawChart(true);
                     $(".loading").hide();
                 },function(error) {
@@ -620,6 +588,95 @@ CQ.mainApp.monitorController
                 {
                     console.log(err);
                 }
+            }
+            function drawEchart() {
+                var times = []
+                var keys = [];
+                $scope.senTopicEvolu.forEach(function (d) {
+                    times.push(d.time);
+                    for(var t in d.topic){
+                        if(keys.indexOf(t)<0){
+                            keys.push(t);
+                        }
+                    }
+                })
+                console.log('keys:',keys);
+                // keys.splice(5);
+                var dat=[]
+                for(var i=0;i<keys.length;i++){
+                    dat[i]=[0,0,0,0,0,0,0]
+                }
+                $scope.senTopicEvolu.forEach(function (v,d) {
+                    // console.log('v:',v,'d:',d);
+                    for(var i=0;i<keys.length;i++){
+                        var tmp = keys[i];
+                        if(v.topic.hasOwnProperty(tmp)) {
+                            // console.log(v.topic,tmp)
+                            if(i>0)
+                                dat[i][d] = +v.topic[tmp]+(+dat[i-1][d]);
+                            else{
+                                dat[i][d] = +v.topic[tmp];
+                            }
+                        }
+                        else{
+                            if(i>0)
+                                dat[i][d] = +(+dat[i-1][d]);
+                            else{
+                                dat[i][d] = +0;
+                            }
+                        }
+                    }
+                })
+                console.log(dat);
+                var myChart = echarts.init(document.getElementById('senTopicEvolu'));
+                var option = {
+                    // title: {
+                    //     text: '堆叠区域图'
+                    // },
+                    // tooltip : {
+                    //     trigger: 'axis',
+                    //     axisPointer: {
+                    //         type: 'cross',
+                    //         label: {
+                    //             backgroundColor: '#6a7985'
+                    //         }
+                    //     }
+                    // },
+                    legend: {
+                        data:keys
+                    },
+                    // toolbox: {
+                    //     feature: {
+                    //         saveAsImage: {}
+                    //     }
+                    // },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : times
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+
+                    ]
+                }
+                for(var i=0;i<keys.length;i++){
+                    var tmp={name:keys[i],type:'line',stack:'总量',areaStyle: {normal: {}},data:dat[i]}
+                    option.series.push(tmp)
+                }
+                myChart.setOption(option);
             }
             function drawChart(first) {
                 if(first)

@@ -39,6 +39,7 @@ CQ.mainApp.senmessageController
                 return "btn btn-primary";
             }else return "btn";
         };
+
         //上一页
         $scope.Previous = function () {
         $scope.selectPage($scope.pageNum - 1);
@@ -364,6 +365,12 @@ CQ.mainApp.senmessageController
     .controller("exportController", ["$scope", "exportSevice", "SenFacService", function ($scope, exportSevice, SenFacService) {
         //console.log($scope.detailDataId);
         $scope.tableData = JSON.parse(JSON.stringify($scope.sendata));
+        $scope.isActiveTablePage = function (page) {
+            if($scope.tablepage==page){
+                return "btn btn-primary";
+            }else return "btn";
+        };
+        // console.log($scope.tableData);
         $scope.x = 0;
         for(var i = 0; i < $scope.tableData.length; i++)
         {
@@ -389,6 +396,33 @@ CQ.mainApp.senmessageController
         {
             $scope.tableData[i].export = true;
         }
+        var table = $scope.tableData,page_num=10,tables=table;
+        $scope.tablepage=1;
+        var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+        $scope.getTableData=function(page,data){
+            if(data)
+                tables=data;
+            if(page<1||page>$scope.max_page)
+                return null;
+            $scope.counts=tables.length;
+            $scope.max_page=Math.ceil(tables.length/page_num);
+            console.log($scope.max_page);
+            $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
+            $scope.tablepage=page;
+            if($scope.max_page<5)
+            {
+                $scope.pageset=[];
+                for(var i=1;i<$scope.max_page+1;i++)
+                    $scope.pageset.push(i);
+            }
+            else if(page<4)
+                $scope.pageset=angular.copy(pageset_min);
+            else if(page>$scope.max_page-3)
+                $scope.pageset=angular.copy(pageset_max);
+            else
+                $scope.pageset=pageset_min.map(d=>d+page-3);
+        }
+        $scope.getTableData(1);
         var $cols = ["title","pt_time","add_time","is_report"];
         $scope.theads = ["标题","发布时间","添加时间","状态","敏感词"];
         $scope.showCols = [true,true,true,true,true];
@@ -438,7 +472,54 @@ CQ.mainApp.senmessageController
                 {
                     $scope.tableData[i].export = true;
                 }
+                for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    if($scope.tableData[i].data_type == 2)
+                    {
+                        $scope.tableData[i].title = $scope.tableData[i].content;
+                    }
+                    if($scope.tableData[i].is_report == 0)
+                    {
+                        $scope.tableData[i].is_report = "未上报";
+                    }
+                    else if($scope.tableData[i].is_report == 1)
+                    {
+                        $scope.tableData[i].is_report = "上报未处理";
+                    }
+                    else if($scope.tableData[i].is_report == 2)
+                    {
+                        $scope.tableData[i].is_report = "已处理";
+                    }
+                }
+                var table = $scope.tableData,page_num=10,tables=table;
+                $scope.tablepage=1;
+                var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                $scope.getTableData=function(page,data){
+                    if(data)
+                        tables=data;
+                    if(page<1||page>$scope.max_page)
+                        return null;
+                    $scope.counts=tables.length;
+                    $scope.max_page=Math.ceil(tables.length/page_num);
+                    console.log($scope.max_page);
+                    $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
+                    $scope.tablepage=page;
+                    if($scope.max_page<5)
+                    {
+                        $scope.pageset=[];
+                        for(var i=1;i<$scope.max_page+1;i++)
+                            $scope.pageset.push(i);
+                    }
+                    else if(page<4)
+                        $scope.pageset=angular.copy(pageset_min);
+                    else if(page>$scope.max_page-3)
+                        $scope.pageset=angular.copy(pageset_max);
+                    else
+                        $scope.pageset=pageset_min.map(d=>d+page-3);
+                }
+                $scope.getTableData(1);
             }
+
         }
         var getAll = function()
         {
@@ -465,6 +546,52 @@ CQ.mainApp.senmessageController
                 {
                     $scope.tableData[i].export = true;
                 }
+                for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    if($scope.tableData[i].data_type == 2)
+                    {
+                        $scope.tableData[i].title = $scope.tableData[i].content;
+                    }
+                    if($scope.tableData[i].is_report == 0)
+                    {
+                        $scope.tableData[i].is_report = "未上报";
+                    }
+                    else if($scope.tableData[i].is_report == 1)
+                    {
+                        $scope.tableData[i].is_report = "上报未处理";
+                    }
+                    else if($scope.tableData[i].is_report == 2)
+                    {
+                        $scope.tableData[i].is_report = "已处理";
+                    }
+                }
+                var table = $scope.tableData,page_num=10,tables=table;
+                $scope.tablepage=1;
+                var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                $scope.getTableData=function(page,data){
+                    if(data)
+                        tables=data;
+                    if(page<1||page>$scope.max_page)
+                        return null;
+                    $scope.counts=tables.length;
+                    $scope.max_page=Math.ceil(tables.length/page_num);
+                    console.log($scope.max_page);
+                    $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
+                    $scope.tablepage=page;
+                    if($scope.max_page<5)
+                    {
+                        $scope.pageset=[];
+                        for(var i=1;i<$scope.max_page+1;i++)
+                            $scope.pageset.push(i);
+                    }
+                    else if(page<4)
+                        $scope.pageset=angular.copy(pageset_min);
+                    else if(page>$scope.max_page-3)
+                        $scope.pageset=angular.copy(pageset_max);
+                    else
+                        $scope.pageset=pageset_min.map(d=>d+page-3);
+                }
+                $scope.getTableData(1);
             });
         }
         var getTimeData = function(starttime,endtime)
@@ -493,6 +620,53 @@ CQ.mainApp.senmessageController
                 {
                     $scope.tableData[i].export = true;
                 }
+                for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    if($scope.tableData[i].data_type == 2)
+                    {
+                        $scope.tableData[i].title = $scope.tableData[i].content;
+                    }
+                    if($scope.tableData[i].is_report == 0)
+                    {
+                        $scope.tableData[i].is_report = "未上报";
+                    }
+                    else if($scope.tableData[i].is_report == 1)
+                    {
+                        $scope.tableData[i].is_report = "上报未处理";
+                    }
+                    else if($scope.tableData[i].is_report == 2)
+                    {
+                        $scope.tableData[i].is_report = "已处理";
+                    }
+                }
+                // console.log($scope.tableData);
+                var table = $scope.tableData,page_num=10,tables=table;
+                $scope.tablepage=1;
+                var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                $scope.getTableData=function(page,data){
+                    if(data)
+                        tables=data;
+                    if(page<1||page>$scope.max_page)
+                        return null;
+                    $scope.counts=tables.length;
+                    $scope.max_page=Math.ceil(tables.length/page_num);
+                    console.log($scope.max_page);
+                    $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
+                    $scope.tablepage=page;
+                    if($scope.max_page<5)
+                    {
+                        $scope.pageset=[];
+                        for(var i=1;i<$scope.max_page+1;i++)
+                            $scope.pageset.push(i);
+                    }
+                    else if(page<4)
+                        $scope.pageset=angular.copy(pageset_min);
+                    else if(page>$scope.max_page-3)
+                        $scope.pageset=angular.copy(pageset_max);
+                    else
+                        $scope.pageset=pageset_min.map(d=>d+page-3);
+                }
+                $scope.getTableData(1);
             });
         }
     }])

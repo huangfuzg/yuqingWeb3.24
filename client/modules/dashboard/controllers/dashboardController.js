@@ -8,10 +8,25 @@ CQ.mainApp.dashboardController
                 controller: "dashboardController"
             });
     }])
-    .controller('dashboardController', ['$scope', '$rootScope', '$http', '$state','ChartService', 'notice', 'SearchFacService', 
-        function($scope, $rootScope, $http, $state, ChartService, notice, SearchFacService) {
+    .controller('dashboardController', ['$scope', '$rootScope', '$http', '$timeout','$state','ChartService', 'notice', 'SearchFacService',
+        function($scope, $rootScope, $http,$timeout, $state, ChartService, notice, SearchFacService) {
             $rootScope.dashboardController = true;
             console.log("dashboardController", "start!");
+            $scope.mapflag=false;
+            var endTime = new Date()
+            $scope.date = endTime.getFullYear()+'-'+(endTime.getMonth()+1)+'-'+endTime.getDate();
+            var startTime = new Date(Date.parse($scope.date) - 604800000)
+            $scope.startTime = startTime.getFullYear()+'-'+(startTime.getMonth()+1)+'-'+startTime.getDate();
+            $("#datepicker-default")
+                .datepicker({todayHighlight:true, autoclose:true, format: 'yyyy-mm-dd'})
+                .datepicker('setEndDate', getFormatData())
+                .on('changeDate', function(ev){
+                    $timeout(function(){
+                        getData($scope.date);
+                        var startTime = new Date(Date.parse($scope.date) - 604800000)
+                        $scope.startTime = startTime.getFullYear()+'-'+(startTime.getMonth()+1)+'-'+startTime.getDate();
+                    },1000);
+                });
             $scope.HotPost = [];
             $scope.HotPoster = [];
             $scope.HotWeibo = [];
@@ -213,8 +228,24 @@ CQ.mainApp.dashboardController
                     notice.notify_info("欢迎回来！！","admin!!","",false,"","");
                 }
             });
-            function getData() {
-                ChartService.getDashboardData({}).then(function(res){
+            function getFormatData() {
+                var datetime = new Date();
+                var year=datetime.getFullYear();//获取完整的年份(4位,1970)
+                var month=datetime.getMonth()+1;//获取月份(0-11,0代表1月,用的时候记得加上1)
+                if(month<=9){
+                    month="0"+month;
+                }
+                var date=datetime.getDate();//获取日(1-31)
+                if(date<=9){
+                    date="0"+date;
+                }
+                return year+"-"+month+"-"+date;
+            };
+            function getData(date) {
+                if(!date){
+                    date=new Date();
+                    date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();}
+                ChartService.getDashboardData({date:date}).then(function(res){
                         //console.log(res);
                         $scope.data = res.data;
                         $scope.HotPost = res.Hot.hotPost;
@@ -248,7 +279,9 @@ CQ.mainApp.dashboardController
                         });
                         console.log($scope.dataTypeLists);
                         drawChart();
-                        drawMap();
+                        if(!$scope.mapflag){
+                            drawMap();
+                        }
                         drawClouds();
                 },function(error){
                     console.log(error);
@@ -467,6 +500,7 @@ CQ.mainApp.dashboardController
                 //         .text("帖子数量");
             }
             function drawMap() {
+                $scope.mapflag=true;
                 $scope.mapData=mapData;
                 var width = $("#maps").width(),
                 height = $("#maps").height(),
