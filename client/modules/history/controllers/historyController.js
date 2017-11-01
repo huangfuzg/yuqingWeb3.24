@@ -89,6 +89,7 @@ CQ.mainApp.historyController
             drawBarDayDist(dayDist, dayDim, dayGroup);
             var siteDist = dc.pieChart("#siteDist"),
             siteDim = ndx.dimension(function(d) {
+
                 return d.board;
             }),
             siteGroup = siteDim.group().reduceSum(function(d) {
@@ -112,7 +113,7 @@ CQ.mainApp.historyController
                 .group(dayGroup)
                 .elasticY(true)
                 .yAxisPadding('10%') //设置y轴距离顶部的距离(为了renderLabel才设置)
-                .centerBar(false)
+                .centerBar(true)
                 .round(dc.round.floor)
                 .alwaysUseRounding(true)
                 .renderLabel(true)
@@ -132,10 +133,14 @@ CQ.mainApp.historyController
         dayDist.render();
     }
     function drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
+        var max_count = 6,data=datatypeGroup.top(max_count);
         var width = $("#siteDist").width(),
         height = $("#siteDist").height(),
         sum = datatypeDim.groupAll().reduceSum(function(d){return 1;}).value(),
         r = width > height ? height * 0.4 : width * 0.4;
+        if(data.reduce((acc,d)=>acc+d.value,0)<sum)
+            data.push({key:"其他站点",value:sum-data.reduce((acc,d)=>acc+d.value,0)});
+        datatypeDist.data(data);
         datatypeDist
             .width(width)
             .height(height)
@@ -145,7 +150,7 @@ CQ.mainApp.historyController
             .cy(height*0.5)
             .dimension(datatypeDim)
             .group(datatypeGroup)
-            .legend(dc.legend().horizontal(false).x(0).y(width*0.1).legendText(function(d){return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
+            .legend(dc.legend().horizontal(false).autoItemWidth(true).x(0).y(width*0.1).legendText(function(d){return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
         datatypeDist.render();
     }
 }]);

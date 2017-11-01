@@ -12,6 +12,9 @@ body {
   color: #707478
 }
 
+svg text{
+  font-size: 1.2em;
+}
 .ie8 body {
   font-family: Arial, sans-serif
 }
@@ -26,7 +29,9 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-weight: 300;
   color: #7c7f83
 }
-
+.panel .panel-title{
+  font-size: 1.3em !important;
+}
 a {
   transition: color 100ms ease-in-out;
   -o-transition: color 100ms ease-in-out;

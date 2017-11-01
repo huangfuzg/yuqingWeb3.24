@@ -434,11 +434,30 @@ CQ.mainApp.senmessageController
             {
                 $scope.tableData = JSON.parse(JSON.stringify($scope.sendata));
                 $scope.allRows = true;
-                for(var i = 0; i < $scope.tableData.length; i++)
+            }
+            for(var i = 0; i < $scope.tableData.length; i++)
                 {
                     $scope.tableData[i].export = true;
                 }
-            }
+                 for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    if($scope.tableData[i].data_type == 2)
+                    {
+                        $scope.tableData[i].title = $scope.tableData[i].content;
+                    }
+                    if($scope.tableData[i].is_report == 0)
+                    {
+                        $scope.tableData[i].is_report = "未上报";
+                    }
+                    else if($scope.tableData[i].is_report == 1)
+                    {
+                        $scope.tableData[i].is_report = "上报未处理";
+                    }
+                    else if($scope.tableData[i].is_report == 2)
+                    {
+                        $scope.tableData[i].is_report = "已处理";
+                    }
+                }
         }
         var getAll = function()
         {
@@ -464,6 +483,25 @@ CQ.mainApp.senmessageController
                 for(var i = 0; i < $scope.tableData.length; i++)
                 {
                     $scope.tableData[i].export = true;
+                }
+                for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    if($scope.tableData[i].data_type == 2)
+                    {
+                        $scope.tableData[i].title = $scope.tableData[i].content;
+                    }
+                    if($scope.tableData[i].is_report == 0)
+                    {
+                        $scope.tableData[i].is_report = "未上报";
+                    }
+                    else if($scope.tableData[i].is_report == 1)
+                    {
+                        $scope.tableData[i].is_report = "上报未处理";
+                    }
+                    else if($scope.tableData[i].is_report == 2)
+                    {
+                        $scope.tableData[i].is_report = "已处理";
+                    }
                 }
             });
         }
@@ -492,6 +530,25 @@ CQ.mainApp.senmessageController
                 for(var i = 0; i < $scope.tableData.length; i++)
                 {
                     $scope.tableData[i].export = true;
+                }
+                for(var i = 0; i < $scope.tableData.length; i++)
+                {
+                    if($scope.tableData[i].data_type == 2)
+                    {
+                        $scope.tableData[i].title = $scope.tableData[i].content;
+                    }
+                    if($scope.tableData[i].is_report == 0)
+                    {
+                        $scope.tableData[i].is_report = "未上报";
+                    }
+                    else if($scope.tableData[i].is_report == 1)
+                    {
+                        $scope.tableData[i].is_report = "上报未处理";
+                    }
+                    else if($scope.tableData[i].is_report == 2)
+                    {
+                        $scope.tableData[i].is_report = "已处理";
+                    }
                 }
             });
         }

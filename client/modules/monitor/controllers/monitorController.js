@@ -57,7 +57,7 @@ CQ.mainApp.monitorController
                 res.splice(res.length - 1, 1);
                 console.log(res);
                 console.log(res);
-                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70,"全部":-100};
+                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":-200,"全部":-100};
                 res.sort(function(a,b){
                     var weight_a = topicWeight[a.topicName] || 0;
                     var weight_b = topicWeight[b.topicName] || 0;
@@ -557,6 +557,19 @@ CQ.mainApp.monitorController
                         {
                             $scope.imgs.push(img.src);
                             console.log(img.src);
+                            var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
+                    //
+                    //     if(res.topicId == 2) {
+                    //         $scope.imgs = imgs9;
+                    //     }else if(res.topicId == 1) {
+                    //         $scope.imgs = imgs4;
+                    //         // d.summary = "各大高校研究生复试工作正在进行，大多数高校已经录取结束";
+                    //     }else if(res.topicId == 0) {
+                    //         $scope.imgs = imgs2;
+                    //     }else if(res.topicId == 3) {
+                    //         $scope.imgs = imgs12;
+                        if(res.topicId == 9) 
+                            $scope.imgs = imgs99;
                         }
                         img.onerror=function()
                         {
@@ -571,7 +584,7 @@ CQ.mainApp.monitorController
                     // var imgs9 = ["/static/assets/img/da1.jpg","/static/assets/img/da2.jpg","/static/assets/img/da3.jpg"];
                     // var imgs12 = ["/static/assets/img/zbqc1.jpg","/static/assets/img/zbqc2.jpg","/static/assets/img/zbqc3.jpg"];
                     // var imgs8 = ["/static/assets/img/8-1.jpg","/static/assets/img/8-2.jpg","/static/assets/img/8-3.jpg","/static/assets/img/8-4.jpg"];
-                    // var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
+                     // var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
                     //
                     //     if(res.topicId == 2) {
                     //         $scope.imgs = imgs9;
@@ -582,8 +595,8 @@ CQ.mainApp.monitorController
                     //         $scope.imgs = imgs2;
                     //     }else if(res.topicId == 3) {
                     //         $scope.imgs = imgs12;
-                    //     }else if(res.topicId == 9) {
-                    //         $scope.imgs = imgs99;
+                        // if(res.topicId == 9) 
+                        //     $scope.imgs = imgs99;
                     //     }else if(res.topicId == 8) {
                     //         $scope.imgs = imgs8;
                     //     }else if(res.topicId > 4) {
@@ -643,7 +656,37 @@ CQ.mainApp.monitorController
                 // linechart1 and linechart2
                 var dayDist1  = dc.lineChart('#dayDist1');
                 var dayDim1  = ndx.dimension(function (d) {
+                    var min_time = new Date($scope.senpostData[$scope.senpostData.length - 1].postTime),
+                        max_time = new Date($scope.senpostData[0].postTime),
+                        months = max_time.getMonth()-min_time.getMonth()<0?max_time.getMonth()-min_time.getMonth()+12:max_time.getMonth()-min_time.getMonth(),
+                        days=Math.abs(max_time.getDate()-min_time.getDate());
+                    var postTime = new Date(d.postTime),
+                        year = postTime.getFullYear(),
+                        month = postTime.getMonth()<10?'0'+postTime.getMonth():postTime.getMonth(),
+                        day = postTime.getDate()<10?'0'+postTime.getDate():postTime.getDate(),
+                        hour = postTime.getHours()<10?'0'+postTime.getHours():postTime.getHours(),
+                        minute = postTime.getMinutes()<10?'0'+postTime.getMinutes():postTime.getMinutes(),
+                        second = postTime.getSeconds()<10?'0'+postTime.getSeconds():postTime.getSeconds();
+                    var ret = postTime;
+                    if(months>0)
+                    {
+                        ret = year+'-'+month+'-'+day;
+                    }
+                    else if(days>7)
+                    {
+                        ret = year+'-'+month+'-'+day+' '+hour+':00:00';
+                    }
+                    else if(days>1)
+                    {
+                        ret = year+'-'+month+'-'+day+' '+hour+':'+minute+':00';
+                    }
+                    else
+                    {
+                        ret = d.postTime;
+                    }
+                    d.postTime = new Date(ret);
                     return d.postTime;
+                    // return d.postTime;
                 });
                 var dayGroup1 = dayDim1.group();
                 drawdatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
@@ -796,7 +839,89 @@ CQ.mainApp.monitorController
                 //     .style("text-anchor", "middle")
                 //     .text("帖子数量");
             }
-            function drawdayDist1(dayDist1, dayDim1, dayGroup1) {
+            function drawdayDist1(dayDist1, dayDim1, dayGroup1, ndx) {
+                function drawElasticxDayDist()
+                {
+                    var x1 = new Date(dayDim1.top(1)[0].postTime),
+                    x2=new Date(dayDim1.bottom(1)[0].postTime),
+                    months = x1.getMonth()-x2.getMonth()<0?x1.getMonth()-x2.getMonth()+12:x1.getMonth()-x2.getMonth(),
+                    days=Math.abs(x1.getDate()-x2.getDate());
+                    var dayDim = ndx.dimension(d=>{
+                        var date = new Date(d.postTime),
+                        year = date.getFullYear(),
+                        month = date.getMonth(),
+                        day = date.getDate(),
+                        week = data.get
+                        if(months>3)//按月显示
+                        {}
+                        else if(months>0)//按星期显示
+                        {
+                            
+                        }
+                        else if(days>0)//按天显示
+                        {}
+                        else//按时间显示
+                        {}
+                    });
+                    console.log(x1);
+                    console.log(x2);
+                }
+                var reDraw = function(){
+                    // console.log(data);
+                    dayDist1.data=function(){
+                        var ticks = 15,
+                    data = dayDim1.top(Infinity).reverse(),
+                    x1 = new Date(data[0].postTime),
+                    x2 = new Date(data[data.length-1].postTime),
+                    timeRange = ~~((x2.getTime() - x1.getTime())/ticks/2),
+                    startTime = x1,
+                    midTime = new Date(startTime.getTime()+timeRange),
+                    endTime = new Date(startTime.getTime()+timeRange*2),
+                    count = 0;
+                    // console.log(dayDim1.top(Infinity));
+                    data = data.reduce((acc,d)=>{
+                        count+=1;
+                        // console.log(acc);
+                        if(new Date(d.postTime)>=endTime||new Date(d.postTime)>=x2)
+                        {
+                            acc.push({key:startTime,value:count});
+                            startTime = endTime;
+                            midTime = new Date(startTime.getTime()+timeRange);
+                            endTime = new Date(startTime.getTime()+timeRange*2);
+                            count=0;
+                        }
+                        return acc;
+                    },[]);
+                        return data};
+                    // dayDist1
+                    //     .renderArea(true)
+                    //     .width(width)
+                    //     .height(height)
+                    //     .transitionDuration(1000)
+                    //     .margins({top: 30, right: 50, bottom: 25, left: 40})
+                    //     .dimension(dayDim1)
+                    //     .group(dayGroup1)
+                    //     .mouseZoomable(true)
+                    //     .rangeChart(dayDist2)
+                    //     .title(function(p){
+                    //         return [
+                    //             "时间: "+dateFormat(p.key),
+                    //             "数目: "+p.value
+                    //         ].join("\n");
+                    //     })
+                    //     .x(d3.time.scale().domain([$scope.senpostData[$scope.senpostData.length - 1].postTime,
+                    //         $scope.senpostData[0].postTime]))
+                    //     .round(d3.time.minute.round)
+                    //     .xUnits(d3.time.minutes)
+                    //     // .elasticY(true)
+                    //     // .elasticX(true)
+                    //     .renderHorizontalGridLines(true)
+                    //     .brushOn(false)
+                    //     .xAxisLabel("时间")
+                    //     .yAxisLabel("帖子数量");
+                    // dayDist1.render();
+                }
+                // console.log(dayGroup1.top(Infinity));
                 var dateFormat =d3.time.format("%Y-%m-%d %H:%M:%S");
                 var dayDist2 = dc.barChart("#dayDist2");
                 var dayDim2 = dayDim1;
@@ -823,20 +948,26 @@ CQ.mainApp.monitorController
                     })
                     .x(d3.time.scale().domain([$scope.senpostData[$scope.senpostData.length - 1].postTime,
                         $scope.senpostData[0].postTime]))
-                    .round(d3.time.minute.round)
-                    .xUnits(d3.time.minutes)
+                    .round(d3.time.hours.round)
+                    // .x(dc.)
+                    .xUnits(d3.time.hours)
                     .elasticY(true)
+                    // .elasticX(true)
                     .renderHorizontalGridLines(true)
                     .brushOn(false)
                     .xAxisLabel("时间")
                     .yAxisLabel("帖子数量");
                 dayDist1.render();
-
+                // var defaultredraw = dayDist1.redraw;
+                // dayDist1.redraw = function(){
+                //     reDraw();
+                //     defaultredraw();
+                // };
                 // line2
 
                 dayDist2
-                    .width($("#dayDist2").width() * 0.9)
-                    .height(50)
+                    .width($("#dayDist2").width())
+                    .height(100)
                     .margins({top: 20, right: 10, bottom: 20, left: 30})
                     .dimension(dayDim2)
                     .group(dayGroup2)
@@ -844,9 +975,9 @@ CQ.mainApp.monitorController
                     .yAxisPadding('10%') //设置y轴距离顶部的距离(为了renderLabel才设置)
                     .centerBar(true)
                     .gap(1)
-                    //.round(d3.time.round)
+                    // .round(d3.time.month.round)
                     .alwaysUseRounding(true)
-                    //.xUnits(d3.time.minutes);
+                    // .xUnits(d3.time.month)
                     .renderLabel(false)
                     .outerPadding(0.2)
                     .controlsUseVisibility(true)
@@ -869,8 +1000,14 @@ CQ.mainApp.monitorController
             }
             function drawClouds() {
                 var doms = "wordsCloud_" + $scope.topic_id;
-                // var topicwords = new Set(Oeject.keys($scope.topic_kws));
-                // var topicword = Array.from(topicwords);
+                var topicKeywords = {};
+                $scope.topic_kws.forEach(d=>{
+                    // if(!topicKeywords[d.word])
+                    //     topicKeywords[d.word] = 0 ;
+                    topicKeywords[d.word]=(topicKeywords[d.word]||0)+d.weight;
+                });
+                $scope.topic_kws=Object.keys(topicKeywords).map(key=>{return {word:key,weight:topicKeywords[key]};});
+                // console.log($scope.topic_kws);
                 // var topicwords = Object.keys($scope.topic_kws);
                 if(document.getElementById(doms) != undefined) {
                         //console.log("aaa");
@@ -878,8 +1015,13 @@ CQ.mainApp.monitorController
                         var options = {
                             series: [{
                                 type: 'wordCloud',
-                                gridSize: 12,
-                                sizeRange: [12, 80],
+                                gridSize: 20,
+                                size: ['100%', '100%'],
+                                autoSize: {
+                                    enable: true,
+                                    minSize: 0
+                                },
+                                sizeRange: [20, 80],
                                 rotationRange: [0, 0],
                                 shape: 'circle',
                                 textStyle: {
@@ -913,7 +1055,7 @@ CQ.mainApp.monitorController
                         chart.setOption(options);
                         var searchPost = function(param)
                         {
-                            $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name],"topicIds":[d.topicId]});
+                            $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name],"topicIds":[$scope.topic_id]});
                         }
                         chart.on("click",searchPost);
 
@@ -942,7 +1084,7 @@ CQ.mainApp.monitorController
             }
         }
         $scope.DoaddSen = function() {
-            if($scope.detailData.senwords instanceof String)
+            if($scope.detailData.senwords&&$scope.detailData.senwords.split)
             {
                 $scope.detailData.senwords = $scope.detailData.senwords.split(',');
             }

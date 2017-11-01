@@ -29,6 +29,8 @@ CQ.mainApp.topicController
                 var imgs12 = ["/static/assets/img/hot_topic/12/12-1.jpg","/static/assets/img/hot_topic/12/12-2.jpg","/static/assets/img/hot_topic/12/12-3.jpg"];
                 var imgs13 = ["/static/assets/img/hot_topic/13/13-1.jpg","/static/assets/img/hot_topic/13/13-2.jpg","/static/assets/img/hot_topic/13/13-3.jpg"];
                 var imgs14 = ["/static/assets/img/hot_topic/14/14-1.jpg","/static/assets/img/hot_topic/14/14-2.jpg","/static/assets/img/hot_topic/14/14-3.jpg"];
+                var imgsqiche = ["/static/assets/img/hot_topic/qihce/qiche1.jpg","/static/assets/img/hot_topic/qiche/qiche2.jpg","/static/assets/img/hot_topic/qiche/qiche3.jpg"];
+                var imgsyinlibo = ["/static/assets/img/hot_topic/yinlibo/yinlibo1.jpg","/static/assets/img/hot_topic/yinlibo/yinlibo2.jpg","/static/assets/img/hot_topic/yinlibo/yinlibo3.jpg"];
                 res.forEach(function(d) {
                     var limitLen = 50;
                     try{
@@ -51,14 +53,20 @@ CQ.mainApp.topicController
                         d.imgs = imgs9;
                     }else if(d.topicId == 120) {
                         d.imgs = imgs13;
-                    }else if(d.topicId == 121) {
+                    }else if(d.topicId == 140) {
+                        d.imgs = imgs13;
+                    }else if(d.topicId == 141) {
                         d.imgs = imgs14;
-                    }else if(d.topicId == 122) {
-                        d.imgs = imgs7;
-                    }else if(d.topicId == 123) {
+                    }else if(d.topicId == 142) {
                         d.imgs = imgs11;
-                    }else if(d.topicId == 124) {
+                    }else if(d.topicId == 143) {
                         d.imgs = imgs12;
+                    }else if(d.topicId == 130) {
+                        d.topicName = "十九大";
+                    }else if(d.topicId == 132) {
+                        d.imgs = imgsqiche;
+                    }else if(d.topicId == 133) {
+                        d.imgs = imgsyinlibo;
                     }
                     //d.imgs = imgs;
                 });
@@ -186,6 +194,9 @@ CQ.mainApp.topicController
                 // });
                 $scope.topicName = res.topicName;
                 $scope.postData = res.postData;
+                $scope.allTopics = res.all_topic;
+                $scope.topicIndex = res.topic_index;
+                $scope.topicRelation = res.topic_relation;
                 posts = res.postData;
                 pages=~~(posts.length/page_num)+1;
                 $scope.posts=posts.slice(0,page_num);
@@ -290,6 +301,7 @@ CQ.mainApp.topicController
             drawsiteDist(siteDist, siteDim, siteGroup);
             // draw sitedist
             drawdayDist1(dayDist1, dayDim1, dayGroup1);
+            drawTopicRealDist("#topicRealsDist",$scope.allTopics,$scope.topicRelation);
             // drawClouds();
         }
 
@@ -395,6 +407,72 @@ CQ.mainApp.topicController
             $state.go("yuqingTrendsController",params);
         }
 
+        function mylayout()
+        {
+            var _nodes = [],
+            _size = [0,0],
+            _midnodeIndex = 0,
+            _edges = [],
+            _min_r = 0;
+            console.log(this);
+            this.nodes = function(nodes)
+            {
+                _nodes = nodes;
+                return this;
+            }
+            this.edges = function(edges)
+            {
+                _edges = edges;
+                return this;
+            }
+            this.size = function(size)
+            {
+                _size = size;
+                return this;
+            }
+            this.midnodeIndex = function(index)
+            {
+                _midnodeIndex = index;
+                return this;
+            }
+            this.minR = function(r)
+            {
+                _min_r = r;
+                return this;
+            }
+            this.run = function()
+            {
+                var max_r = Math.min(_size[0],_size[1])*0.9/2,
+                min_r = _min_r,
+                start_arc = 2*Math.random()*Math.PI,//起始角度
+                tick_arc = 2*Math.PI/(_nodes.length-1),
+                max_weight = _edges.reduce((acc,d)=>d.weight>acc?d.weight:acc,0),
+                min_weight = _edges.reduce((acc,d)=>d.weight<acc?d.weight:acc,Infinity),
+                rScale = d3.scale.linear().domain([min_weight,max_weight]).range([max_r,min_r]);
+                _nodes[_midnodeIndex].x = _size[0]/2;
+                _nodes[_midnodeIndex].y = _size[1]/2;
+                _edges.forEach((d,i)=>{
+                    if(d.source==_nodes[_midnodeIndex])
+                    {
+                        let r = rScale(d.weight),
+                        arc = start_arc+tick_arc*i;
+                        // console.log(r);
+                        d.target.x = _nodes[_midnodeIndex].x + r*Math.cos(arc);
+                        d.target.y = _nodes[_midnodeIndex].y + r*Math.sin(arc);
+                        // console.log(d.target);
+                    }
+                    else if(d.target==_nodes[_midnodeIndex])
+                    {
+                        let r = rScale(d.weight),
+                        arc = start_arc+tick_arc*i;
+                        // console.log(r);
+                        d.source.x = _nodes[_midnodeIndex].x + r*Math.cos(arc);
+                        d.source.y = _nodes[_midnodeIndex].y + r*Math.sin(arc);
+                    }
+                });
+            }
+        }
+
         function getPosts(data)
         {
             page=1;
@@ -402,6 +480,169 @@ CQ.mainApp.topicController
             pages=~~(posts.length/page_num)+1;
             $("#posts").slimScroll({scrollTo:0});
             $scope.posts=posts.slice(0,page_num);
+        }
+
+        function drawTopicRealDist(dom,topics,topic_reals)
+        {
+            topic_reals.forEach(real=>{
+                real.source = topics[real.source]||real.source;
+                real.target = topics[real.target]||real.target;
+            });
+            drawForceGraph(dom,topics,topic_reals);
+        }
+
+        function drawForceGraph(dom,nodes,edges)
+        {
+            var width = $(dom).width(),
+            height = $(dom).height(),
+            img_w=20,
+            img_h=20,
+            color = d3.scale.category20(),
+            // force = d3.layout.force()  
+            //     .nodes(d3.values(nodes))  
+            //     .links(edges)  
+            //     .size([width, height])
+            //     .gravity(0.5) 
+            //     .linkDistance(100)  
+            //     .charge(-2000)  
+            //     .on("tick", tick)
+            //     // .on("end",zoomed)  
+            //     .start();
+            layout = (new mylayout()).nodes(nodes)
+                        .edges(edges)
+                        .size([width, height])
+                        .midnodeIndex($scope.topicIndex)
+                        .minR(60)
+                        .run();
+            // var zoom = d3.behavior.zoom()
+            //     .scaleExtent([1, 10])
+            //     .on("zoom", zoomed);
+            var svg = d3.select(dom).append("svg")  
+                .attr("width", width)  
+                .attr("height", height);
+            // svg.call(zoom);
+            // svg=svg.append("g");
+
+            var link = svg.selectAll(".link")  
+                .data(edges.filter(d=>d.weight>0.05))  
+                .enter().append("line")  
+                .attr("class", "link");  
+            link.style("stroke",function(d){//  设置线的颜色 
+                d.target.weight = d.weight;   
+                return color(d.source.color+1);    
+            })    
+            .style("stroke-width",function(d,i){//设置线的宽度    
+                return d.weight*20;    
+            });
+            var node = svg.selectAll(".node")  
+                .data(nodes)  
+                .enter().append("g")  
+                .attr("class", "node")  
+                .on("mouseenter", mouseover)  
+                .on("mouseleave", mouseout);
+                // .call(force.drag);  
+            tick();
+                // .call(force.drag);
+            // console.log(nodes.filter(d=>d.detail!=undefined));
+            // var node_img=svg.selectAll(".node-img")  
+            //     .data(nodes.filter(d=>d.detail!=undefined))  
+            //     .enter().append("g")  
+            //     .attr("class", "node")  
+            //     .on("mouseenter", mouseover)  
+            //     .on("mouseleave", mouseout)  
+            //     .call(force.drag);
+            function radius (d){   
+                // if(!d.weight){//节点weight属性没有值初始化为1（一般就是叶子了）  
+                //     d.weight=1;  
+                // }                                                
+                // return Math.log(d.weight)*2;
+                return 20;                                     
+            }
+            
+            function hideEdge()
+            {
+                link.style("stroke-width",function(d,i){//设置线的宽度    
+                return 0;});
+            }
+            function showEdge(group)
+            {
+                link.style("stroke-width",function(d,i){//设置线的宽度    
+                return d.source.group==group&&d.target.group==group?"1px":0;});
+            }
+            // node_img.append("image")  
+            // .attr("xlink:href",function(d){  //设置圆点半径                        
+            //     return d.detail?d.detail.user_img:"";                            
+            //  })
+            // .attr("width",img_w)
+            // .attr("height",img_h)
+            // .attr("transform","translate("+-img_w/2+","+-img_h/2+")");
+            node.append("circle")  
+                .attr("r",function(d,i){  //设置圆点半径                        
+                return radius (d);                            
+             })                                             
+            .style("fill",function(d,i){ //设置圆点的颜色  
+                d.color = color(i);          
+                return d.color;  
+            });
+
+            var legend = svg.append('g').attr('class','.legend').selectAll('.lenged').data(nodes)
+            .enter().append('g').attr("transform",function(d,i){
+                return "translate("+10+","+(10+i*20)+")";
+            });
+            legend.append("rect").attr("x",0).attr("y",0)
+                    .attr("width",10).attr("height",10)
+                    .attr("fill",function(d){return d.color;});
+            legend.append("text").attr("x",15).attr("y",10)
+                    .text(function(d){return d.topic_name})
+                    .attr("fill",function(d){return "#000";});
+
+            // var text = node.append("text")  
+            //     .attr("x", 12)  
+            //     .attr("dy", ".35em")
+            //     .attr("class","title")  
+            //     .text(function(d) { return ""; });
+            // var imgText=node_img.append("text")  
+            //     .attr("x", 12)  
+            //     .attr("dy", ".35em") 
+            //     .attr("class","title")  
+            //     .text(function(d) { return ""; });  
+            function tick() {//打点更新坐标  
+              link  
+                  .attr("x1", function(d) { return d.source.x; })  
+                  .attr("y1", function(d) { return d.source.y; })  
+                  .attr("x2", function(d) { return d.target.x; })  
+                  .attr("y2", function(d) { return d.target.y; });  
+              
+              node  
+                  .attr("transform", function(d) {   
+                        return "translate(" + d.x + "," + d.y + ")";   
+                  });
+              // node_img  
+              //     .attr("transform", function(d) {   
+              //           return "translate(" + d.x + "," + d.y + ")";   
+              //     });  
+            }  
+              
+            function mouseover(d) { 
+                // console.log(d3.event);
+    
+                    $("#title").html("话题id: "+d.id+"<br/>话题名称: "+d.topic_name+"<br/>话题描述："+d.summary.slice(0,50)+"...<br/>话题关键词："+d.topic_kws.slice(0,3)+"...");
+                    $("#title").css({"left":d3.event.clientX+2,"top":d3.event.clientY}).fadeIn('fast');
+              d3.select(this).select("circle").transition()  
+                  .duration(250)  
+                  .attr("r", function(d){  //设置圆点半径                        
+                return radius (d)+10;                            
+             });  
+            }  
+              
+            function mouseout() {
+              $("#title").fadeOut("fast");  
+              d3.select(this).select("circle").transition()  
+                  .duration(250)  
+                  .attr("r", function(d){  //恢复圆点半径                        
+                return radius (d);                            
+             });         
+            }
         }
 
         function drawsiteDist(siteDist, siteDim, siteGroup) {
@@ -451,6 +692,7 @@ CQ.mainApp.topicController
                 //     .style("text-anchor", "middle")
                 //     .text("帖子数量");
         }
+
         function drawdayDist1(dayDist1, dayDim1, dayGroup1) {
              var dateFormat =d3.time.format("%Y-%m-%d %H:%M:%S");
              var dayDist2 = dc.barChart("#dayDist2");

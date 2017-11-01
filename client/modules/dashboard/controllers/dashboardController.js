@@ -25,7 +25,7 @@ CQ.mainApp.dashboardController
             $scope.dataTypes = [];
             var params = {userId:$scope.userId};
             var p = d3.select("#topicDist").append("p");
-                $("#topicDist>p").css({"position":"absolute","width":"100%","text-align":"center","bottom":"28px","left":"-10px"})
+                $("#topicDist>p").css({"position":"absolute","width":"100%","text-align":"center","bottom":"28px","left":"-10px","font-size":"1.2em",color:"#000"})
                 .text("帖子数量");
             var mapData=[]; 
             $http({
@@ -324,11 +324,11 @@ CQ.mainApp.dashboardController
                 });
                 options.series[0].data = keylists;
                 chart.setOption(options);
-                // var searchPost = function(param)
-                // {
-                //     $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name]});
-                // }
-                // chart.on("click",searchPost);
+                var searchPost = function(param)
+                {
+                    $state.go("yuqingTrendsController",{"keywords":[keylists[param.dataIndex].name]});
+                }
+                chart.on("click",searchPost);
                 }
             }
         

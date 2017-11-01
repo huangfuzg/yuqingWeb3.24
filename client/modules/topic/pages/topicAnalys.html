@@ -7,6 +7,16 @@
         fill : black;
         font-size: 13px;
     }
+    .title{
+        max-width: 150px;
+        position: fixed;
+        left:0;
+        background-color: rgba(0,0,0,0.8);
+        border:1px solid #333;
+        padding: 2px;
+        color:#fff;
+        pointer-events: none;
+    }
 </style>
 <div id="content" class="content" ng-resize="">
     <ol class="breadcrumb pull-right p-r-2" ng-show = "backTopic">
@@ -15,6 +25,18 @@
     <h1 class="page-header m-b-10"> {{topicName}} </h1>
     <div class = "width-full">
         <!-- begin col-4 -->
+        <div class="col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">话题相似度</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="topicRealsDist" class="width-full height-sm">
+                        <div class="title" id="title"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="col-md-6">
             <div class="col-md-6 animated fadeInLeft p-l-0" ng-show="false">
                 <div class="panel panel-primary" data-sortable-id="index-1">
