@@ -3,7 +3,7 @@
 angular.module('dashboardService',['commons'])
     .factory("Chart", ['$resource', 'parseResource', function ($resource, parseResource) {
         var factories = {};
-        factories.dashboardData = $resource(CQ.variable.RESTFUL_URL + "dashboard_temp", parseResource.params, parseResource.actions);
+        factories.dashboardData = $resource(CQ.variable.RESTFUL_URL + "dashboard_time", parseResource.params, parseResource.actions);
         return factories;
     }])
     .factory("ChartService",['Chart', 'RestService', function(Chart, RestService) {

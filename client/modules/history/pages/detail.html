@@ -178,7 +178,7 @@
                                     <div style="position: absolute; left:-30px; top:0;">
                                         <div class="indexi" style="display: none">1</div>
                                     </div>
-                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[0].day}}</div>
+                                    <div class="page-header" style="font-size: 1.5em">{{posts[0].date}}</div>
                                     <!-- <h5>{{case.date}}年，舆情系统检测到{{case.title}}相关信息</h5> -->
                                     <ul class="media-list media-list-with-divider media-messaging pre" style="padding-bottom: 0">
                                         <li class="media meida-sm" ng-repeat="(i, post) in postslist" style="padding: 15px">
@@ -200,12 +200,12 @@
                                     <div style="position: absolute; left:-30px; top:0;">
                                         <div class="indexi" style="display: none">2</div>
                                     </div>
-                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[0].nextday(1)}}</div>
+                                    <div class="page-header" style="font-size: 1.5em">{{posts[0].nexttime(5000*60)}}</div>
                                     <h5>舆情监控人员通过系统发现这些信息，并将其标注为敏感信息,随后，查看原帖子，考证其是否有违法违纪行为，如有，将其迅速取证并上报有关部门</h5>
                                     <img src="/static/assets/img/history/legoo.png" ng-show="case.img2.length == 0" style="width: 100%">
                                     <ul class="list-inline">
                                         <li ng-repeat="(i, img) in case.img2">
-                                            <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[0].nextday(1)}}</div>
+                                            <div class="page-header" style="font-size: 1.5em">{{posts[0].nexttime(5000*60)}}</div>
                                             <h5>舆情监控人员通过系统发现这些信息，并将其标注为敏感信息,随后，查看原帖子，考证其是否有违法违纪行为，如有，将其迅速取证并上报有关部门</h5>
                                             <img src="{{img}}" style="width: 100%" />
                                         </li>
@@ -229,11 +229,11 @@
                                     <div style="position: absolute; left:-30px; top:0;">
                                         <div class="indexi" style="display: none">3</div>
                                     </div>
-                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[posts.length-1].nextday(1)}}</div>
+                                    <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[posts.length-1].date}}</div>
                                     <h5>有关部门迅速相应，对相关问题进行了处理</h5>
                                     <ul class="list-inline">
                                         <li ng-repeat="(i, img) in case.img4">
-                                            <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[posts.length-1].nextday(1)}}</div>
+                                            <div class="page-header" style="font-size: 1.5em">{{case.date}}-{{posts[posts.length-1].date}}</div>
                                             <h5>有关部门迅速相应，对相关问题进行了处理</h5>
                                             <img src="{{img}}" style="width: 100%"/>
                                         </li>

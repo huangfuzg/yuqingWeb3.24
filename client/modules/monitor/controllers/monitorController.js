@@ -605,16 +605,12 @@ CQ.mainApp.monitorController
                     //     }
                         //d.imgs = imgs;
 
-
-
-                    //console.log(res);
-                    // res.postData.forEach(function(d) {
-                    //     d.postTime = d.postTime.substring(0,10)
-                    // });
                     $scope.topicName = res.topicName;
                     $scope.senpostData = res.postData;
                     $scope.topic_kws = res.topic_kws;
                     $scope.backTopic = true;
+                    $scope.senTopicEvolu=res.topic_info;
+                    drawEchart();
                     drawChart(true);
                     $(".loading").hide();
                 },function(error) {
@@ -633,6 +629,79 @@ CQ.mainApp.monitorController
                 {
                     console.log(err);
                 }
+            }
+            function drawEchart() {
+                var times = []
+                var keys = [];
+                var dat=[]
+                for(var i=0;i<10;i++){
+                    dat[i]=[0,0,0,0,0,0,0]
+                }
+                $scope.senTopicEvolu.forEach(function (d) {
+                    var sentime = d.time.slice(0,10);
+                    if(times.indexOf(sentime)<0)
+                        times.push(sentime);
+                        if(keys.indexOf(d.word)<0){
+                            keys.push(d.word);
+                        }
+                    if(d.number>0){
+                        dat[keys.indexOf(d.word)][times.indexOf(sentime)]=Math.log(d.number);
+                    }
+                    else{
+                        dat[keys.indexOf(d.word)][times.indexOf(sentime)]=d.number;
+                    }
+
+                })
+                times = times.reverse();
+                for(var i=0;i<dat.length;i++){
+                    dat[i]=dat[i].reverse();
+                }
+                console.log('times',times);
+                console.log('keys:',keys);
+                // $scope.senTopicEvolu.forEach(function (v,d) {
+                //     // console.log('v:',v,'d:',d);
+                //     for(var i=0;i<keys.length;i++){
+                //         var tmp = keys[i];
+                //         if(v.topic.hasOwnProperty(tmp)) {
+                //             // console.log(v.topic,tmp)
+                //             dat[i][d] = +v.topic[tmp];
+                //         }
+                //     }
+                // })
+                console.log(dat);
+                var sencolor = ['#a6cee3','#fdbf6f','#b2df8a','#1f78b4','#33a02c','#6a3d9a','#e31a1c','#ff7f00','#cab2d6','#fb9a99']
+                var myChart = echarts.init(document.getElementById('senTopicEvolu'));
+                var option = {
+                    legend: {
+                        data:keys
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : times.reverse()
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+                        }
+                    ],
+                    series : [
+
+                    ]
+                }
+                for(var i=0;i<keys.length;i++){
+                    var tmp={name:keys[i],type:'line',stack:'总量',itemStyle:{normal:{color:sencolor[i]}},areaStyle: {normal: {}},data:dat[i]}
+                    option.series.push(tmp)
+                }
+                myChart.setOption(option);
             }
             function drawChart(first) {
                 if(first)

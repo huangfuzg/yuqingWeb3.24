@@ -78,9 +78,14 @@ CQ.mainApp.historyController
             dayDist = dc.barChart("#dayDist"),
             dayDim = ndx.dimension(function(d) {
                 var date = new Date(d.post_time);
-                var day = (date.getMonth() + 1) + '-' + date.getDate();
-                d.nextday = function(i){return (date.getMonth() + 1) + '-' + (date.getDate()+i);}
+                var formatDate = function(da)
+                {
+                    return da.toLocaleDateString();
+                }
+                var day = formatDate(date);
+                d.nexttime = function(da){console.log(this);return (new Date(new Date(this.post_time).getTime()+da)).toLocaleString()};
                 d.day = day;
+                d.date = date.toLocaleString();
                 return d.day;
             }),
             dayGroup = dayDim.group().reduceSum(function (d) {
@@ -125,9 +130,7 @@ CQ.mainApp.historyController
                 .xUnits(dc.units.ordinal)
                 .renderHorizontalGridLines(true);
         chart.yAxis()
-              .ticks(5)
               .tickFormat(function(d){
-                console.log(d);
                 return +d;
               });
         dayDist.render();

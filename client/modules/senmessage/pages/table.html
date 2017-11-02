@@ -80,7 +80,20 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <span class="btn btn-primary pull-right" ng-click="exportExcel()">导出</span>
+                        <div class="btn-group pull-right" id="data-table_paginate">
+                            <button type="button" class="btn btn-white" ng-click="getTableData(tablepage-1)" ng-class="{disabled:tablepage<=1}">上一页</button>
+                            <button type="button" class="btn btn-white {{isActiveTablePage(index)}}" ng-repeat="index in pageset"  ng-click="getTableData(index)">
+                                {{index}}
+                            </button>
+                            <button type="button" class="btn btn-white" ng-click="getTableData(tablepage+1)" ng-class="{disabled:tablepage>=max_page}">下一页</button>
+                            <!--<ul class="pagination ">-->
+                                <!--<li class="btn btn-primary previous" id="data-table_previous" ng-click="getTableData(tablepage-1)" ng-class="{disabled:tablepage<=1}"><a href="javascript:void">Previous</a></li>-->
+                                <!--<li class="btn btn-primary" ng-repeat="index in pageset" ng-class="{active:tablepage==index}" ng-click="getTableData(index)"><a href="javascript:void">{{index}}</a></li>-->
+                                <!--<li class="btn btn-primary next" id="data-table_next" ng-click="getTableData(tablepage+1)" ng-class="{disabled:tablepage>=max_page}"><a href="javascript:void">Next</a></li>-->
+                            <!--</ul>-->
+                            <span class="btn btn-primary pull-right" ng-click="exportExcel()">导出</span>
+                        </div>
+
                     </div>
                 </div>
             </div>

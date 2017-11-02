@@ -57,24 +57,6 @@
                 </div>
             </div>
              <!-- begin col-4 -->
-            <div class="col-md-12 animated fadeInRight p-l-0">
-                <div class="panel panel-primary" data-sortable-id="index-1">
-                    <div class="panel-heading">
-                        <div class="panel-heading-btn">
-                            <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-                        </div>
-                        <h4 class="panel-title f-s-16">
-                        <img src = "/static/assets/img/rowchart.svg" class = "fa">
-                        具体站点分布</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="siteDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
-                        </div>
-                    </div>
-                </div>
-            </div>
 
              <!-- begin col-4 -->
             <div class="col-md-12 animated fadeInLeft p-l-0">
@@ -98,7 +80,25 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                    <img src = "/static/assets/img/rowchart.svg" class = "fa">
+                    具体站点分布</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="siteDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="panel-title">相关帖子</div>
@@ -145,6 +145,27 @@
                         <div id="loading" class="text-center">
                             <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 animated fadeInLeft p-l-0">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <!--<a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>-->
+                        <!--<a href="javascript;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>-->
+                        <!--<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>-->
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                        <i class = "fa fa-bar-chart-o"></i>
+                        话题演化</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                    </div>
+                    <div id="hotTopicEvolu" class="height-md width-full">
                     </div>
                 </div>
             </div>
