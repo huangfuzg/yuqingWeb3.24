@@ -12,9 +12,95 @@ body {
   color: #707478
 }
 
+#load{
+  background: #d9e0e7;
+  vertical-align: center;
+  position: fixed;
+  left: 220px;
+  right: 0px;
+  top:0;
+  bottom: 0;
+}
+@-moz-keyframes load1 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes load1 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@-o-keyframes load1 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+#load .loader {
+  position: absolute;
+  top: 49%;
+  left: 45%;
+  margin-left: 10%;
+  transform: translate3d(-50%, -50%, 0);
+}
+#load .dot {
+  width: 30px;
+  height: 30px;
+  background: #3ac;
+  border-radius: 100%;
+  display: inline-block;
+  animation: load1 1s infinite;
+}
+#load .dot:nth-child(1) {
+  animation-delay: 0.1s;
+  background: #32aacc;
+}
+#load .dot:nth-child(2) {
+  animation-delay: 0.2s;
+  background: #64aacc;
+}
+#load .dot:nth-child(3) {
+  animation-delay: 0.3s;
+  background: #96aacc;
+}
+#load .dot:nth-child(4) {
+  animation-delay: 0.4s;
+  background: #c8aacc;
+}
+#load .dot:nth-child(5) {
+  animation-delay: 0.5s;
+  background: #faaacc;
+}
+
 svg text{
   font-size: 1.2em;
 }
+
 .ie8 body {
   font-family: Arial, sans-serif
 }
@@ -5386,6 +5472,8 @@ ul.tagit.inverse li.tagit-choice .tagit-close:focus .ui-icon-close:before, ul.ta
   background: -o-radial-gradient(center, ellipse cover, #666 0, #000 100%);
   background: -ms-radial-gradient(center, ellipse cover, #666 0, #000 100%);
   background: radial-gradient(ellipse at center, #666 0, #000 100%);
+  background-image: url("/static/assets/img/login.jpg");
+  background-size: contain;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#666666', endColorstr='#000000', GradientType=1);
   opacity: .6;
   filter: alpha(opacity=60)

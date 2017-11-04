@@ -5,7 +5,7 @@ CQ.mainApp.frameController
 		console.log("mainController", "start!");
 		$rootScope.mainController = false;
 		$scope.cardNums = 0;
-
+		$("#load").hide();
 		$scope.$on('$includeContentLoaded', function(event, data) {
 			$scope.cardNums += 1;
 			if($scope.cardNums == 3) {

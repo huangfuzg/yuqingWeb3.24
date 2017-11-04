@@ -76,10 +76,11 @@ CQ.mainApp.dashboardController
             }
             var format = function(date)
             {
-                var year = date.substring(0,4);
-                var month = date.substring(4,6);
-                var day = date.substring(6);
-                console.log(year + '-' + month + '-' + day);
+                date = new Date(date);   
+                var year = date.getFullYear();
+                var month = (date.getMonth()+1)<10?'0'+(date.getMonth()+1):(date.getMonth()+1);
+                var day = date.getDate()<10?'0'+date.getDate():date.getDate();
+                // console.log(year + '-' + month + '-' + day);
                 return year + '-' + month + '-' + day;
             }
             $scope.selectGraphPost = function()
@@ -289,7 +290,11 @@ CQ.mainApp.dashboardController
                     notice.notify_info("抱歉！","数据请求出错，请重试！","",false,"","");
                 });
             }
-           
+            function updateSitePosts(posts)
+            {
+                var dataTypeLists = posts.reduce((acc,post)=>{acc[+post.data_type]+=+post.post_num;return acc;},[0,0,0,0,0,0]);
+                $scope.dataTypeLists = dataTypeLists;
+            }
             function drawChart() {
                 $scope.sourceData=$scope.sourceData.filter(d=>d.topic_name!="");
                 var ndx = crossfilter($scope.sourceData),
@@ -323,27 +328,26 @@ CQ.mainApp.dashboardController
                 var doms = "wordsCloud";
                 if(document.getElementById(doms) != undefined) {
                 var chart = echarts.init(document.getElementById(doms));
+                var color = d3.scale.category10();
+                var i = 0;
                 var options = {
                     series: [{
                         type: 'wordCloud',
-                        gridSize: 20,
-                        sizeRange: [12, 50],
-                        rotationRange: [0, 90],
+                        gridSize: 1,
+                        sizeRange: [12, 45],
+                        rotationRange: [0, 45],
                         shape: 'circle',
                         textStyle: {
                             normal: {
                                 color: function() {
-                                    return 'rgb(' + [
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160)
-                                    ].join(',') + ')';
-                                }
+                                    return color(i++);
+                                },
+                            fontFamily:'italic',
                             },
-                            emphasis: {
-                                shadowBlur: 15,
-                                shadowColor: '#333'
-                            }
+                            // emphasis: {
+                            //     shadowBlur: 15,
+                            //     shadowColor: '#333'
+                            // }
                         },
                         data: []
                     }]
@@ -411,6 +415,12 @@ CQ.mainApp.dashboardController
                         .yAxisLabel("帖子数量")
                         .xAxisLabel("时间")
                         .renderHorizontalGridLines(true);
+                dayDist.on("filtered", function(){
+                    // console.log(post_filters);
+                    // console.log(getPosts());
+                    $timeout(function(){updateSitePosts(dayDim.top(Infinity))},0);
+                    console.log(dayDim.top(Infinity));
+                });
                 chart.yAxis()
                       .ticks(5)
                       .tickFormat(function(d){
@@ -474,6 +484,11 @@ CQ.mainApp.dashboardController
                     .tickFormat(function(d){
                         return +d;
                     });
+                topicDist.on("filtered", function(){
+                    // console.log(post_filters);
+                    // console.log(getPosts());
+                    $timeout(function(){updateSitePosts(topicDim.top(Infinity))},0);
+                });
                 topicDist.addFilterHandler(function(filters, filter) {
                         filters.push(filter);
                         $scope.filters.topic = filters;

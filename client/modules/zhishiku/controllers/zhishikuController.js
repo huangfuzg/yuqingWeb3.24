@@ -49,6 +49,7 @@ CQ.mainApp.zhishikuController
                 console.log("zhishiku subject app start!!!");
                 App.runui();
                 $timeout(function(){
+                    // $("#subject > li :not(:first-child)").height($("#subject > li:nth-child(1)").height());
                     $(".description>div>p").hide();
                     $(".img-box").hover(function(){
                         $(this).find(".description>div").animate({"height":"100%","padding":"20px"},300,"linear");
@@ -101,22 +102,20 @@ CQ.mainApp.zhishikuController
                 if(document.getElementById(doms) != undefined) {
                     //console.log("aaa");
                 var chart = echarts.init(document.getElementById(doms));
+                var color = d3.scale.category10();
+                var i = 0;
                 var options = {
                     series: [{
                         type: 'wordCloud',
-                        gridSize: 10,
-                        sizeRange: [12, 50],
-                        rotationRange: [0, 90],
+                        gridSize: 2,
+                        sizeRange: [20, 38],
+                        rotationRange: [0, 45],
                         rotationStep: 20,
                         shape: 'circle',
                         textStyle: {
                             normal: {
                                 color: function() {
-                                    return 'rgb(' + [
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160)
-                                    ].join(',') + ')';
+                                    return color(i++);
                                 }
                             },
                             emphasis: {
@@ -219,6 +218,7 @@ CQ.mainApp.zhishikuController
                 .on("tick", tick)
                 // .on("end",zoomed)  
                 .start();
+            $timeout(zoomed,5000);
             var zoom = d3.behavior.zoom()
                 .scaleExtent([1, 10])
                 .on("zoom", zoomed);
@@ -227,7 +227,7 @@ CQ.mainApp.zhishikuController
                 .attr("height", height);
             svg.call(zoom);
             svg=svg.append("g");
-
+            // force.on("end",function(){zoomed()});
             // svg.append("rect")
             //     .attr("class","title")
             //     .attr("width",100)
@@ -417,23 +417,44 @@ CQ.mainApp.zhishikuController
                 .attr("dy", ".35em") 
                 .attr("class","title")  
                 .text(function(d) { return ""; });  
-            function tick() {//打点更新坐标  
-              link  
+            function tick() {//打点更新坐标 
+              if(force.alpha() <= 0.08)
+              {
+                link  
                   .attr("x1", function(d) { return d.source.x; })  
                   .attr("y1", function(d) { return d.source.y; })  
                   .attr("x2", function(d) { return d.target.x; })  
                   .attr("y2", function(d) { return d.target.y; });  
               
-              node  
+                node  
                   .attr("transform", function(d) {   
                         return "translate(" + d.x + "," + d.y + ")";   
                   });
-              node_img  
+                node_img  
                   .attr("transform", function(d) {   
                         return "translate(" + d.x + "," + d.y + ")";   
-                  });  
-            }  
+                  });
+                // force.stop();
+              } 
+              if(force.alpha() <= 0.05)
+              {
+                // link  
+                //   .attr("x1", function(d) { return d.source.x; })  
+                //   .attr("y1", function(d) { return d.source.y; })  
+                //   .attr("x2", function(d) { return d.target.x; })  
+                //   .attr("y2", function(d) { return d.target.y; });  
               
+                // node  
+                //   .attr("transform", function(d) {   
+                //         return "translate(" + d.x + "," + d.y + ")";   
+                //   });
+                // node_img  
+                //   .attr("transform", function(d) {   
+                //         return "translate(" + d.x + "," + d.y + ")";   
+                //   });
+                force.stop();
+              }  
+            }   
             function mouseover() { 
                 // console.log(d3.event); 
                 d3.select(this).select("text").text(function(d){

@@ -9,6 +9,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
+	<link rel="shortcut icon" href="/static/assets/icon/yuqing.png" type="image/x-icon">
 	
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="/static/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
@@ -49,7 +50,17 @@
 		</div>
 		<div ng-include = "'/static/commons/pages/leftbar.html'" ng-controller = "leftbarController">
 		</div>
-		<div ui-view>
+		<div>
+			<div ui-view></div>
+			<div id="load">
+				<div class="loader">
+					<div class="dot"></div>
+			        <div class="dot"></div>
+			        <div class="dot"></div>
+			        <div class="dot"></div>
+			        <div class="dot"></div>
+			    </div>
+			</div>
 		</div>
 		<div ng-include = "'/static/commons/pages/theme.html'" ng-controller = "themeController">
 		</div>

@@ -19,6 +19,144 @@
         width: 80% !important;
         /*margin: 20px;*/
     }
+    .loading{
+        width:100%;
+        height:100%;
+        text-align: center;
+        position: relative;
+    }
+    .loading img{
+        position: absolute;
+        top: 48%;
+    }
+    svg .tick text{
+        font-size: 1.0em;
+    }
+    @import url(https://fonts.googleapis.com/css?family=Lato:100,300,700);
+    h2 {
+      font-family: 'Lato';
+      color: black;
+      text-transform: uppercase;
+      font-size: 2em;
+      letter-spacing: 1.5px;
+      text-align: center;
+      margin-top: 20px;
+      -webkit-animation: fade 2s infinite;
+      -moz-animation: fade 2s infinite;
+    }
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 40%;
+      margin-left: 10%;
+      transform: translate3d(-50%, -50%, 0);
+    }
+
+    @-webkit-keyframes rise {
+      50% {
+        transform: rotate(30deg);
+        -ms-transform: rotate(30deg);
+        /* IE 9 */
+        -webkit-transform: rotate(30deg);
+        -moz-transform: rotate(30deg);
+      }
+    }
+    @-moz-keyframes rise {
+      50% {
+        transform: rotate(30deg);
+        -ms-transform: rotate(30deg);
+        /* IE 9 */
+        -webkit-transform: rotate(30deg);
+        -moz-transform: rotate(30deg);
+      }
+    }
+    @-o-keyframes rise {
+      50% {
+        transform: rotate(30deg);
+        -ms-transform: rotate(30deg);
+        /* IE 9 */
+        -webkit-transform: rotate(30deg);
+        -moz-transform: rotate(30deg);
+      }
+      @keyframes rise {
+        50% {
+          transform: rotate(30deg);
+          -ms-transform: rotate(30deg);
+          /* IE 9 */
+          -webkit-transform: rotate(30deg);
+          -moz-transform: rotate(30deg);
+        }
+      }
+    }
+    @-webkit-keyframes fall {
+      50% {
+        transform: rotate(-30deg);
+        -ms-transform: rotate(-30deg);
+        /* IE 9 */
+        -webkit-transform: rotate(-30deg);
+        -moz-transform: rotate(30deg);
+      }
+    }
+    @-moz-keyframes fall {
+      50% {
+        transform: rotate(-30deg);
+        -ms-transform: rotate(-30deg);
+        /* IE 9 */
+        -webkit-transform: rotate(-30deg);
+        -moz-transform: rotate(-30deg);
+      }
+    }
+    @-o-keyframes fall {
+      50% {
+        transform: rotate(-30deg);
+        -ms-transform: rotate(-30deg);
+        /* IE 9 */
+        -webkit-transform: rotate(-30deg);
+        -moz-transform: rotate(30deg);
+      }
+      @keyframes fall {
+        50% {
+          transform: rotate(-30deg);
+          -ms-transform: rotate(-30deg);
+          /* IE 9 */
+          -webkit-transform: rotate(-30deg);
+          -moz-transform: rotate(30deg);
+        }
+      }
+    }
+    @-webkit-keyframes fade {
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    @-moz-keyframes fade {
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    @-o-keyframes fade {
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
+      @keyframes fade {
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+    }
 </style>
 <!--<div class="panel panel-primary" data-sortable-id="ui-buttons-3">-->
 <div id="content" class="content" ng-resize="">
@@ -44,15 +182,17 @@
                         相关图片</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
-                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
-                    </div>
                     <!--<div class='col-md-12'>-->
-                        <carousel interval=5000 class="height-sm">
-                            <slide ng-repeat="slide in imgs" >
-                                <img ng-src="{{slide}}" class = "height-sm width-full">
-                            </slide>
-                        </carousel>
+                        <div class="height-sm">
+                            <div class="loading text-center">
+                                <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                            </div>
+                            <carousel interval=5000 class="" style="height: 100%">
+                                <slide ng-repeat="slide in imgs" >
+                                    <img ng-src="{{slide}}" class = "height-sm width-full">
+                                </slide>
+                            </carousel>
+                        </div>
                     <!--</div>-->
                 </div>
             </div>
@@ -71,10 +211,10 @@
                         词频图</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
-                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
-                    </div>
                     <div id = "wordsCloud_{{topic_id}}" class = "width-full height-sm">
+                        <div class="loading text-center">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,10 +232,10 @@
                     数据源分布</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
-                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
-                    </div>
                     <div id="datatypeDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
+                        <div class="loading text-center">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,10 +254,10 @@
                     具体站点分布</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
-                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
-                    </div>
                     <div id="siteDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
+                        <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,10 +277,10 @@
                     时间分布</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
-                        <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
-                    </div>
                     <div id="dayDist1" class="height-sm width-full">
+                        <div class="loading text-center" style="height: 100%;width: 100%;margin:auto;">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
                     </div>
                     <div id="dayDist2" class="width-full">
                     </div>

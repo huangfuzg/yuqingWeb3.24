@@ -494,15 +494,18 @@ CQ.mainApp.senmessageController
                 }
                 var table = $scope.tableData,page_num=10,tables=table;
                 $scope.tablepage=1;
+                $scope.max_page=Math.ceil(tables.length/page_num);
                 var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
                 $scope.getTableData=function(page,data){
                     if(data)
                         tables=data;
+                    $scope.max_page=Math.ceil(tables.length/page_num);
+                    console.log($scope.max_page);
                     if(page<1||page>$scope.max_page)
                         return null;
                     $scope.counts=tables.length;
-                    $scope.max_page=Math.ceil(tables.length/page_num);
                     console.log($scope.max_page);
+                    console.log(pageset_max);
                     $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
                     $scope.tablepage=page;
                     if($scope.max_page<5)
@@ -569,14 +572,15 @@ CQ.mainApp.senmessageController
 
                 var table = $scope.tableData,page_num=10,tables=table;
                 $scope.tablepage=1;
+                $scope.max_page=Math.ceil(tables.length/page_num);
                 var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
                 $scope.getTableData=function(page,data){
                     if(data)
                         tables=data;
+                    $scope.max_page=Math.ceil(tables.length/page_num);
                     if(page<1||page>$scope.max_page)
                         return null;
                     $scope.counts=tables.length;
-                    $scope.max_page=Math.ceil(tables.length/page_num);
                     console.log($scope.max_page);
                     $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
                     $scope.tablepage=page;
@@ -644,14 +648,15 @@ CQ.mainApp.senmessageController
                 // console.log($scope.tableData);
                 var table = $scope.tableData,page_num=10,tables=table;
                 $scope.tablepage=1;
+                $scope.max_page=Math.ceil(tables.length/page_num);
                 var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
                 $scope.getTableData=function(page,data){
                     if(data)
                         tables=data;
+                    $scope.max_page=Math.ceil(tables.length/page_num);
                     if(page<1||page>$scope.max_page)
                         return null;
                     $scope.counts=tables.length;
-                    $scope.max_page=Math.ceil(tables.length/page_num);
                     console.log($scope.max_page);
                     $scope.tableData=tables.slice(page*page_num-page_num,page*page_num);
                     $scope.tablepage=page;

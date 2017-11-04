@@ -118,7 +118,7 @@ CQ.mainApp.historyController
                 .group(dayGroup)
                 .elasticY(true)
                 .yAxisPadding('10%') //设置y轴距离顶部的距离(为了renderLabel才设置)
-                .centerBar(true)
+                .centerBar(false)
                 .round(dc.round.floor)
                 .alwaysUseRounding(true)
                 .renderLabel(true)

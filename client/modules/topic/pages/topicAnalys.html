@@ -15,7 +15,18 @@
         border:1px solid #333;
         padding: 2px;
         color:#fff;
+        z-index:1000;
         pointer-events: none;
+    }
+    .loading{
+        width:100%;
+        height:100%;
+        text-align: center;
+        position: relative;
+    }
+    .loading img{
+        position: absolute;
+        top: 48%;
     }
 </style>
 <div id="content" class="content" ng-resize="">
@@ -28,11 +39,14 @@
         <div class="col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h4 class="panel-title">话题相似度</h4>
+                    <h4 class="panel-title">话题相关性</h4>
                 </div>
                 <div class="panel-body">
                     <div id="topicRealsDist" class="width-full height-sm">
                         <div class="title" id="title"></div>
+                        <div class="loading">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,6 +65,9 @@
                         数据源分布</h4>
                     </div>
                     <div class="panel-body">
+                        <div class="loading">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
                         <div id="datatypeDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
                         </div>
                     </div>
@@ -59,28 +76,6 @@
              <!-- begin col-4 -->
 
              <!-- begin col-4 -->
-            <div class="col-md-12 animated fadeInLeft p-l-0">
-                <div class="panel panel-primary" data-sortable-id="index-1">
-                    <div class="panel-heading">
-                        <div class="panel-heading-btn">
-                            <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
-                            <a href="javascript;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-                        </div>
-                        <h4 class="panel-title f-s-16">
-                        <i class = "fa fa-bar-chart-o"></i>
-                        时间分布</h4>
-                    </div>
-                    <div class="panel-body">
-                        <div id="dayDist1" class="height-sm width-full">
-                        </div>
-                        <div id="dayDist2" class="width-full">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
             <div class="panel panel-primary" data-sortable-id="index-1">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
@@ -94,6 +89,32 @@
                 </div>
                 <div class="panel-body">
                     <div id="siteDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
+                        <div class="loading">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 animated fadeInLeft">
+            <div class="panel panel-primary" data-sortable-id="index-1">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title f-s-16">
+                    <i class = "fa fa-bar-chart-o"></i>
+                    时间分布</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="dayDist1" class="height-sm width-full">
+                        <div class="loading">
+                            <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
+                        </div>
+                    </div>
+                    <div id="dayDist2" class="width-full">
                     </div>
                 </div>
             </div>
@@ -142,14 +163,14 @@
                                 </a>
                             </li>
                         </ul>
-                        <div id="loading" class="text-center">
+                        <div class="loading text-center">
                             <img src="/static/assets/icon/loading.gif" style="width: 30px"/>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-12 animated fadeInLeft p-l-0">
+        <div class="col-md-12 animated fadeInLeft p-l-0" ng-show="true">
             <div class="panel panel-primary" data-sortable-id="index-1">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
