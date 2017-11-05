@@ -15,6 +15,7 @@ CQ.mainApp.dashboardController
             $scope.mapflag=false;
             var endTime = new Date()
             $scope.date = endTime.getFullYear()+'-'+(endTime.getMonth()+1)+'-'+endTime.getDate();
+            $scope.enddate = $scope.date;
             var startTime = new Date(Date.parse($scope.date) - 604800000)
             $scope.startTime = startTime.getFullYear()+'-'+(startTime.getMonth()+1)+'-'+startTime.getDate();
             $("#datepicker-default")
@@ -22,7 +23,9 @@ CQ.mainApp.dashboardController
                 .datepicker('setEndDate', getFormatData())
                 .on('changeDate', function(ev){
                     $timeout(function(){
+                        console.log($scope.date);
                         getData($scope.date);
+                        $scope.enddate = $scope.date;
                         var startTime = new Date(Date.parse($scope.date) - 604800000)
                         $scope.startTime = startTime.getFullYear()+'-'+(startTime.getMonth()+1)+'-'+startTime.getDate();
                     },1000);
@@ -249,6 +252,7 @@ CQ.mainApp.dashboardController
                     date = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();}
                 ChartService.getDashboardData({date:date}).then(function(res){
                         //console.log(res);
+                        
                         $scope.data = res.data;
                         $scope.HotPost = res.Hot.hotPost;
                         $scope.HotPoster = res.Hot.hotPoster;

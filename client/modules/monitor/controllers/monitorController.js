@@ -20,6 +20,7 @@ CQ.mainApp.monitorController
         $rootScope.freshLists = [];
         $scope.cons = {};
         $scope.date = getFormatData();
+        $scope.lastDate = $scope.date;
         $scope.pics = ["/static/assets/img/news2.svg","/static/assets/img/luntan.svg", "/static/assets/img/weibo.svg"
         ,"/static/assets/img/tieba.svg","/static/assets/img/weixin1.svg","/static/assets/img/baidu.svg"];
         $scope.$on('$viewContentLoaded', function() {
@@ -35,6 +36,14 @@ CQ.mainApp.monitorController
             .datepicker('setEndDate', getFormatData())
             .on('changeDate', function(ev){
                 $scope.monitorData = [];
+                if($scope.date == "")
+                {
+                    $scope.date =$scope.lastDate;
+                }
+                else
+                {
+                    $scope.lastDate = $scope.date;
+                }
                 $rootScope.freshLists.forEach(function (d) {
                     $interval.cancel(d);
                 });
@@ -45,7 +54,6 @@ CQ.mainApp.monitorController
                 },1000);
             });
         function getMonitorData() {
-
             var cons = {};
             cons.dataType = $scope.dataType ;
             cons.siteId = $scope.siteId;
@@ -621,6 +629,7 @@ CQ.mainApp.monitorController
                     $(".loading").hide();
                 },function(error) {
                     console.log(error);
+                    $("#load").hide();
                 });
             }
             $scope.redraw = function()

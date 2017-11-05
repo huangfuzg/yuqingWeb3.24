@@ -1,8 +1,8 @@
 "use strict";
 CQ.mainApp.topicController
-    .controller("hotTopicController", ["$rootScope", "$scope", "TopicFacService", "$http", "ngDialog", "$state",
+    .controller("hotTopicController", ["$rootScope", "$scope", "TopicFacService", "$http", "ngDialog", "$state", "$timeout", 
     function($rootScope, $scope, 
-    TopicFacService, $http, ngDialog, $state) {
+    TopicFacService, $http, ngDialog, $state ,$timeout) {
         console.log("hotTopicController", "start!!!");
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
@@ -10,6 +10,19 @@ CQ.mainApp.topicController
                 console.log("hot topic app start!!!");
                 App.runui();
                 getTopicData();
+                $timeout(function(){
+                    console.log($(".lead").length);
+                    $(".lead").mouseover(function(event) {
+                        /* Act on the event */
+                        $(".title").css({left:event.clientX,top:event.clientY});
+                        $(".title").text($(this).data("mytitle"));
+                        $(".title").fadeIn("fast");
+                    });
+                    $(".lead").mouseout(function(event) {
+                        /* Act on the event */
+                        $(".title").fadeOut("fast");
+                    });
+                },1000);
             }
         });
         
