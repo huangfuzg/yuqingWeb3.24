@@ -10,7 +10,8 @@ CQ.mainApp = {
     searchController:        angular.module("search.Controller", ["yuqingsearchService"]),
     historyController:       angular.module("history.Controller",["historyService"]),
     friendLinkController:    angular.module("friendLink.Controller",[]),
-    zhishikuController:      angular.module("zhishiku.Controller",["zhishikuService"])
+    zhishikuController:      angular.module("zhishiku.Controller",["zhishikuService"]),
+    errorController:         angular.module("error.Controller",[])
 };
 angular.module('mainApp', [
     "ui.router",
@@ -28,7 +29,8 @@ angular.module('mainApp', [
     "search.Controller",
     "history.Controller",
     "friendLink.Controller",
-    "zhishiku.Controller"
+    "zhishiku.Controller",
+    "error.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
