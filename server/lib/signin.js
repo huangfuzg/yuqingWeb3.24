@@ -24,11 +24,13 @@ exports.init = function (request, response) {
             }
             request.login(user, function (err) {
                 console.log(err);
-                if (err) return response.send(404, user);
+                var Info={data:{user:{}},code:1,success:false};
+                if(err) return response.send(200, JSON.stringify(Info));
+                // if (err) return response.send(404, user);
                // user.data.password = undefined;
                 console.log("[-------------logIn success!!----------------]", JSON.stringify(user));
-                var userInfo={username:user.username};
-                return response.send(200, JSON.stringify(userInfo));
+                var Info={data:{user:{username:user.username}},code:0,success:true};
+                return response.send(200, JSON.stringify(Info));
             });
         })(request, response);
     };

@@ -229,7 +229,7 @@ CQ.mainApp.dashboardController
             $scope.$on('$viewContentLoaded', function() {
                 if($rootScope.mainController) {
                     App.runui();
-                    notice.notify_info("欢迎回来！！","admin!!","",false,"","");
+                    notice.notify_info("欢迎回来！！",$rootScope.curentUser,false,"","");
                 }
             });
             function getFormatData() {

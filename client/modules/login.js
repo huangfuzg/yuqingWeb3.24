@@ -27,10 +27,17 @@ function login() {
         return;
     }
     $.post("/api/auth/login",{username:username,password:password},function(data, status){
-        console.log(data);
-        if(status == "success")
+        data=JSON.parse(data);
+        if(data.code==0)
         {
             window.location.href = "index.html";
+        }
+        else
+        {
+            $(".alert-danger").show();
+            setTimeout(function(){
+                $(".alert-danger").fadeOut();
+            },2000);
         }
     });
     // window.location.href = "index.html";

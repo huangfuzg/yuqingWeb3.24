@@ -12,7 +12,7 @@ CQ.variable = {
     USER_PRIVILEGES_DEPTS: "",
     USERNAME_ADMIN: "admin",
     APIKEY: "309dea40e47f447ca83efb6407cea0c9",
-    RESTFUL_URL: "http://localhost:8091/restapi/"
+    RESTFUL_URL: "/restapi/"
 };
 CQ.variables = {};
 CQ.variables.CURRENT_USER = "";
