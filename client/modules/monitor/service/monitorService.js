@@ -54,7 +54,7 @@ angular.module('monitorService',['commons'])
             return $http.post(CQ.variable.RESTFUL_URL + "monitor/flush", data);
         };
 
-        factories.addSenmessage = function(data) {
+        factories.addSenMessage = function(data) {
             return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
         };
 
