@@ -8,7 +8,7 @@ CQ.mainApp.systemsettingController
                 controller: "userSettingController"
             })
             .state("roleSettingController", {
-                url:"/roleSetting",
+                url:"/userattr",
                 templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
                 controller: "roleSettingController"
             });
