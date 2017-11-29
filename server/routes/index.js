@@ -1,3 +1,6 @@
+var request = require('request');
+var path = require('path');
+var http = require('http');
 exports.index = function (app, config) {
 
 
@@ -12,7 +15,6 @@ exports.index = function (app, config) {
         }
     });
     
-
     app.get(config.client.baseUrl + "/login", function (req, res) {
         // Just send the index.html for other files to support HTML5Mode
         console.log("log in!!!");

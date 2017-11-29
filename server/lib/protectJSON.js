@@ -14,7 +14,7 @@ module.exports = function (req, res, next) {
                     body = arguments[1];
                 }
             }
-            body = ")]}',\n" + body;
+            // body = ")]}',\n" + body;
             return _send.call(res, body);
         }
         _send.apply(res, arguments);

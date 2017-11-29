@@ -17,5 +17,11 @@ module.exports = {
         staticUrl: "/static",
         sessionSecret: "cq-nodejs-vte",
         cookieSecret: "srs-vte-lab"
+    },
+    restServer:{
+        baseUrl:"http://118.190.133.203:8899/yqdata",
+        host:"118.190.133.203",
+        port:8899,
+        basePath:"/yqdata",
     }
 };
