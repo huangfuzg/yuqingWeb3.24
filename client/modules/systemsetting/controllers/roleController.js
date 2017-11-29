@@ -9,5 +9,4 @@ CQ.mainApp.systemsettingController
                 App.runui();
             }
         });
-        
    }]);
