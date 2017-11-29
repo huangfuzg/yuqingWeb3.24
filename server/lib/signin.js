@@ -27,7 +27,8 @@ exports.init = function (request, response) {
                 if (err) return response.send(404, user);
                // user.data.password = undefined;
                 console.log("[-------------logIn success!!----------------]", JSON.stringify(user));
-                return response.send(200, JSON.stringify(user));
+                var userInfo={username:user.username};
+                return response.send(200, JSON.stringify(userInfo));
             });
         })(request, response);
     };

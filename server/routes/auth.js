@@ -20,5 +20,4 @@ exports.auth = function (app, security, logger) {
     		security.currentUser(request, response);
     	});
     });
-
 };
