@@ -1,0 +1,179 @@
+<style>
+.dia_warning{
+    color: #f59c1a;
+}
+
+.ngdialog.ngdialog-theme-details {
+    padding: 5% !important;
+}
+
+.ngdialog.ngdialog-theme-details .ngdialog-content {
+    width: 1000px !important;
+}
+
+</style>
+<div class="panel panel-primary" data-sortable-id="ui-buttons-3">
+    <div class="panel-heading">
+
+        <h4 class="panel-title f-s-15">添加敏感信息</h4>
+    </div>
+    <div class="panel-body">
+        <div class="page-header m-r-5 m-t-5" style="text-align:center">发布者信息：</div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">个人主页URL：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.poster.home_url"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">头像URL：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.poster.img_url"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">昵称：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.poster.name"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">简介：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " rows="4" ng-model = "detailData.poster.intro"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">ID：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.id">
+            </div>
+            <label class="col-md-2 control-label f-s-14">认证：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.authentication">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">被关注数：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.follows">
+            </div>
+            <label class="col-md-2 control-label f-s-14">关注数：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.following">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">发帖数：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.post_num">
+            </div>
+            <label class="col-md-2 control-label f-s-14">级别：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.level">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">位置：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.location">
+            </div>
+            <label class="col-md-2 control-label f-s-14">生日：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.birthday">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label p-r-10 f-s-14">手机号：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.cellphone">
+            </div>
+            <label class="col-md-2 control-label p-r-10 f-s-14">QQ号：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.QQ">
+            </div>
+        </div>
+
+        <div>
+        <div class="page-header m-r-5 m-t-5" style="text-align:center">敏感信息：
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">URL：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.url"></textarea>
+            </div>
+        </div>
+                <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">标题：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.title"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">内容：</label>
+            <div class="col-md-10">
+                <textarea class="form-control f-s-14"  rows="4" ng-model = "detailData.content" 
+                ></textarea>
+            </div>
+        </div>
+        
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">图片URL：</label>
+            <div class="col-md-10">
+                <input class="form-control f-s-14" ng-model = "detailData.img_url" 
+                >
+            </div>
+        </div>  
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">敏感词：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.senwords">
+            </div>
+            <label class="col-md-2 control-label f-s-14">发帖时间：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"   ng-model = "detailData.pt_time">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">站点：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.board">
+            </div>
+            <label class="col-md-2 control-label f-s-14">话题：</label>
+            <div class="col-md-4">
+                <select name="selection" class="form-control f-s-14" style="width: 183.33px" ng-model = "detailData.topic_name">
+                <option value="话题1">话题1</option>
+                <option value="话题2">话题2</option>
+                </select>
+            </div>
+            </label>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label f-s-14">IP地址：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"   ng-model = "detailData.Ip">
+            </div>
+            <label class="col-md-2 control-label f-s-14">浏览数：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"   ng-model = "detailData.read_num">
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <label class="col-md-2 control-label p-r-10 f-s-14">评论数：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.comm_num">
+            </div>
+            <label class="col-md-2 control-label p-r-10 f-s-14">转发数：</label>
+            <div class="col-md-4">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.repost_num">
+            </div>
+        </div>
+        
+         
+        <div class="form-group col-md-12">
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-sm btn-success pull-right f-s-14" ng-click = "DoaddSen()">确认提交</button>
+            </div>
+        </div> 
+    </div>
+</div>

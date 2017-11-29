@@ -116,6 +116,20 @@ CQ.mainApp.senmessageController
             });
         }
 
+        //添加敏感信息
+        $scope.addSenMessage = function(){
+            ngDialog.open(
+            {
+                template: '/static/modules/senmessage/pages/addSenMessage.html',
+                controller: 'addSenMessage',
+                appendClassName: "ngdialog-theme-details",
+                width: "100%",
+                scope: $scope
+            }
+            );
+        };
+
+
         //设置搜索
        $scope.search = function(){
         //console.log($scope.dataObj);
@@ -347,6 +361,59 @@ CQ.mainApp.senmessageController
             }
         );
     };
+   }])
+    .controller("addSenMessage", ["$rootScope","$scope","ngDialog","PostDataService","notice",
+     function($rootScope, $scope, ngDialog, PostDataService, notice) {
+        console.log("addSenMessage","start!!!");
+        //console.log($scope.post_id);
+        $scope.DoaddSen = function() {
+            if($scope.detailData.senwords&&$scope.detailData.senwords.split)
+            {
+                $scope.detailData.senwords = $scope.detailData.senwords.split(',');
+            }
+            else
+            {
+                $scope.detailData.senwords = [];
+            }
+            console.log("$scope.detailData");
+            console.log($scope.detailData);
+            var cons = {};
+            cons.userId = 1;
+            //$scope.detailData.url=" ";
+            $scope.detailData.site_id=0;
+            $scope.detailData.site_name=$scope.detailData.board;
+            $scope.detailData.topic_id=0;
+            $scope.detailData.dataType=0;
+            //$scope.detailData.topic_name=" ";
+            $scope.detailData.html=" ";
+            $scope.detailData.st_time="2017-11-28";
+            $scope.detailData.add_time="2017-11-28";
+            //$scope.detailData.read_num=0;
+            //$scope.detailData.comm_num=0;
+            //$scope.detailData.img_url=" "; 
+            //$scope.detailData.repost_num=0;
+            $scope.detailData.lan_type=0;
+            $scope.detailData.repost_pt_id=" ";
+            $scope.detailData.text_type=0;
+            $scope.detailData.is_report=0;
+            //$scope.detailData.poster.home_url=" ";
+            //$scope.detailData.poster.id=" ";
+            //$scope.detailData.poster.img_url=" ";
+            
+            var postData = [];
+            postData.push($scope.detailData);
+            cons.postData = postData;
+            PostDataService.addSenMessage(cons).then(function(res) {
+                console.log(res);
+                ngDialog.closeAll();
+                notice.notify_info("您好","添加成功！","",false,"","");
+            },function(err) {
+                console.log(err);
+                notice.notify_info("您好","添加失败！请重试","",false,"","");
+            });
+            
+        };
+        
    }])
     .controller("displayDetailData", ["$scope", "SenFacService", function ($scope, SenFacService) {
         //console.log($scope.detailDataId);
