@@ -66,24 +66,32 @@ angular.module('commons',[])
         };
         return self;
     }])
-    .factory("RestService", function($q) {
+    .factory("RestService", function($q,$state) {
         var factories = {};
         factories.get = function(resource, params) {
+            $("#load").show();
+            console.log("$window.sessionStorage:");
+            // console.log($cookies.getAll());
             var deferred = $q.defer();
             get(resource, params, deferred);
             return deferred.promise;
         };
         factories.update = function(resource, params, data) {
+            $("#load").show();
+            console.log("$window.sessionStorage:");
+            // console.log($cookies.getAll());
             var deferred = $q.defer();
             update(resource, params, data, deferred);
             return deferred.promise;
         };
         factories.remove = function(resource, params) {
+            $("#load").show();
             var deferred = $q.defer();
             remove(resource, params, deferred);
             return deferred.promise;
         };
         factories.create = function(resource, data) {
+            $("#load").show();
             var deferred = $q.defer();
             create(resource, data, deferred);
             return deferred.promise;
@@ -91,48 +99,56 @@ angular.module('commons',[])
         //execute get action
         function get(resource, params, deferred) {
             resource.get(params).$promise.then(function(res) {
+                $("#load").hide();
                 if (res.success) {
                     deferred.resolve(res.data);
                 } else {
                     deferred.reject(res);
                 }
             }, function(error) {
+                $("#load").hide();
                 systemFailHandle(error);
             });
         }
         //execute update action
         function update(resource, params, data, deferred) {
             resource.update(params, data).$promise.then(function(res) {
+                $("#load").hide();
                 if (res.success) {
                     deferred.resolve(res);
                 } else {
                     deferred.reject(res);
                 }
             }, function(error) {
+                $("#load").hide();
                 systemFailHandle(error);
             });
         }
         //execute remove action
         function remove(resource, params, deferred) {
             resource.remove(params).$promise.then(function(res) {
+                $("#load").hide();
                 if (res.success) {
                     deferred.resolve(res);
                 } else {
                     deferred.reject(res);
                 }
             }, function(error) {
+                $("#load").hide();
                 systemFailHandle(error);
             });
         }
         //execute get action
         function create(resource, data, deferred) {
             resource.save(data).$promise.then(function(res) {
+                $("#load").hide();
                 if (res.success) {
                     deferred.resolve(res);
                 } else {
                     deferred.reject(res);
                 }
             }, function(error) {
+                $("#load").hide();
                 systemFailHandle(error);
             });
         }
@@ -141,12 +157,15 @@ angular.module('commons',[])
             var errMessage = "";
             switch (error.status) {
                 case 500:
+                    $state.go('error',{errorcode:500});
                     errMessage = "the server responded with a status of 500 (Server Error)";
                     break;
                 case 404:
+                    $state.go('error',{errorcode:404});
                     errMessage = "未找到:" + error.config.url;
                     break;
                 default:
+                    $state.go('error',{});
                     errMessage = error.statusText;
             }
         }

@@ -27,9 +27,10 @@ var server = http.createServer(app);
 
 require("./middleware/staticMiddleware")(app, config, logger);
 app.use(cookieParser(config.server.cookieSecret));
-app.use(session({ secret: config.server.sessionSecret, cookie: { maxAge: 30 * 60 * 1000 } }));
+app.use(session({ secret: config.server.sessionSecret, cookie: { maxAge: 60 * 60 * 1000 } }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
 app.use(protectJSON);
@@ -49,12 +50,11 @@ app.use(function (request, response, next) {
         next();
     }
 });
-
 require('./middleware/RedirectMiddleware')(app);
 require("./routes/auth").auth(app, security, logger);
 require("./routes/index").index(app, config);
 require("./middleware/errorHandleMiddleware")(app);
-
+require("./routes/api").api(app, config);
 server.listen(config.server.listenPort, '0.0.0.0', 511, function () {
     // Once the server is listening we automatically open up a browser
     console.log("server start!!");

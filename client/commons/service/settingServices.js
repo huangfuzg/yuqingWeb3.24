@@ -399,7 +399,7 @@ angular.module('settingservice',[])
                 link: "#/dashboard",
                 hasShow: true,
                 icon: "fa fa-dashboard",
-                items: dashboard
+                items: ""
             },
             {
                 label:"热点话题",
@@ -421,7 +421,7 @@ angular.module('settingservice',[])
                 link: "#/senmessages",
                 hasShow: true,
                 icon: "fa fa-table",
-                items: senMessages
+                items: ""
             },
             // {
             //     label:"舆情检索",
@@ -435,21 +435,21 @@ angular.module('settingservice',[])
                 link: "#/yuqingHistory",
                 hasShow: true,
                 icon: "fa fa-star",
-                items: historys
+                items: ""
             },
             {
                 label:"舆情知识库",
                 link:"#/zhishiku/subjects",
                 hasShow:true,
                 icon:"fa fa-database",
-                items:zhishiku
+                items:""
             },
             {
                 label:"系统设置",
                 link: "#/userSetting",
                 hasShow: true,
                 icon: "fa fa-gear",
-                items: systemSettings
+                items: ""
             }
             // {
             //     label:"友情链接",

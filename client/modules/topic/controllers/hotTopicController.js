@@ -1,8 +1,8 @@
 "use strict";
 CQ.mainApp.topicController
-    .controller("hotTopicController", ["$rootScope", "$scope", "TopicFacService", "$http", "ngDialog", "$state",
+    .controller("hotTopicController", ["$rootScope", "$scope", "TopicFacService", "$http", "ngDialog", "$state", "$timeout", 
     function($rootScope, $scope, 
-    TopicFacService, $http, ngDialog, $state) {
+    TopicFacService, $http, ngDialog, $state ,$timeout) {
         console.log("hotTopicController", "start!!!");
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
@@ -10,6 +10,19 @@ CQ.mainApp.topicController
                 console.log("hot topic app start!!!");
                 App.runui();
                 getTopicData();
+                $timeout(function(){
+                    console.log($(".lead").length);
+                    $(".lead").mouseover(function(event) {
+                        /* Act on the event */
+                        $(".title").css({left:event.clientX,top:event.clientY});
+                        $(".title").text($(this).data("mytitle"));
+                        $(".title").fadeIn("fast");
+                    });
+                    $(".lead").mouseout(function(event) {
+                        /* Act on the event */
+                        $(".title").fadeOut("fast");
+                    });
+                },1000);
             }
         });
         
@@ -34,10 +47,10 @@ CQ.mainApp.topicController
                 res.forEach(function(d) {
                     var limitLen = 50;
                     try{
-                        if(d.summary.length > limitLen)
-                        {
-                            d.summary = d.summary.substring(0,limitLen) + "...";
-                        }
+                        // if(d.summary.length > limitLen)
+                        // {
+                        //     d.summary = d.summary.substring(0,limitLen) + "...";
+                        // }
                     }
                     catch(err)
                     {
@@ -61,8 +74,6 @@ CQ.mainApp.topicController
                         d.imgs = imgs11;
                     }else if(d.topicId == 143) {
                         d.imgs = imgs12;
-                    }else if(d.topicId == 130) {
-                        d.topicName = "十九大";
                     }else if(d.topicId == 132) {
                         d.imgs = imgsqiche;
                     }else if(d.topicId == 133) {
@@ -110,27 +121,25 @@ CQ.mainApp.topicController
                 if(document.getElementById(doms) != undefined) {
                     //console.log("aaa");
                 var chart = echarts.init(document.getElementById(doms));
+                var color = d3.scale.category10();
+                var i = 0;
                 var options = {
                     series: [{
                         type: 'wordCloud',
-                        gridSize: 20,
-                        sizeRange: [12, 50],
-                        rotationRange: [0, 0],
+                        gridSize: 1,
+                        sizeRange: [5, 35],
+                        rotationRange: [0, 45],
                         shape: 'circle',
                         textStyle: {
                             normal: {
                                 color: function() {
-                                    return 'rgb(' + [
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160),
-                                        Math.round(Math.random() * 160)
-                                    ].join(',') + ')';
+                                    return color(i++);
                                 }
                             },
-                            emphasis: {
-                                shadowBlur: 10,
-                                shadowColor: '#333'
-                            }
+                            // emphasis: {
+                            //     shadowBlur: 10,
+                            //     shadowColor: '#333'
+                            // }
                         },
                         data: []
                     }]
@@ -176,6 +185,10 @@ CQ.mainApp.topicController
                 SearchFacService.getRuleData(params).then(function(data)
                 {
                     $scope.allSites = data.allSites;
+                    if(!$scope.senpostData)
+                    {
+                        $("#load").show();
+                    }
                 });
             }
         });
@@ -202,7 +215,7 @@ CQ.mainApp.topicController
                 pages=~~(posts.length/page_num)+1;
                 $scope.posts=posts.slice(0,page_num);
                 $timeout(function(){
-                    $("#loading").hide();
+                    $(".loading").hide();
                     var beforeScolltop=$("#posts").scrollTop();
                     $("#posts").scroll(function(){
                         console.log($("#posts").scrollTop());
@@ -369,7 +382,37 @@ CQ.mainApp.topicController
             // linechart1 and linechart2
             var dayDist1  = dc.lineChart('#dayDist1');
             var dayDim1  = ndx.dimension(function (d) {
+                var min_time = new Date($scope.postData[$scope.postData.length - 1].postTime),
+                    max_time = new Date($scope.postData[0].postTime),
+                    months = max_time.getMonth()-min_time.getMonth()<0?max_time.getMonth()-min_time.getMonth()+12:max_time.getMonth()-min_time.getMonth(),
+                    days=Math.abs(max_time.getDate()-min_time.getDate());
+                var postTime = new Date(d.postTime),
+                    year = postTime.getFullYear(),
+                    month = postTime.getMonth()<10?'0'+postTime.getMonth():postTime.getMonth(),
+                    day = postTime.getDate()<10?'0'+postTime.getDate():postTime.getDate(),
+                    hour = postTime.getHours()<10?'0'+postTime.getHours():postTime.getHours(),
+                    minute = postTime.getMinutes()<10?'0'+postTime.getMinutes():postTime.getMinutes(),
+                    second = postTime.getSeconds()<10?'0'+postTime.getSeconds():postTime.getSeconds();
+                var ret = postTime;
+                if(months>0)
+                {
+                    ret = year+'-'+month+'-'+day;
+                }
+                else if(days>7)
+                {
+                    ret = year+'-'+month+'-'+day+' '+hour+':00:00';
+                }
+                else if(days>1)
+                {
+                    ret = year+'-'+month+'-'+day+' '+hour+':'+minute+':00';
+                }
+                else
+                {
+                    ret = d.postTime;
+                }
+                d.postTime = new Date(ret);
                 return d.postTime;
+                // return d.postTime;
             });
             var dayGroup1 = dayDim1.group();
             drawdatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
@@ -701,7 +744,7 @@ CQ.mainApp.topicController
             function mouseover(d) { 
                 // console.log(d3.event);
     
-                    $("#title").html("话题id: "+d.id+"<br/>话题名称: "+d.topic_name+"<br/>话题描述："+d.summary.slice(0,50)+"...<br/>话题关键词："+d.topic_kws.slice(0,3)+"...");
+                    $("#title").html("话题id: "+d.id+"<br/>话题名称: "+d.topic_name+"<br/>话题描述："+d.summary.slice(0,50)+"<br/>话题相关性："+d.weight+"...<br/>话题关键词："+d.topic_kws.slice(0,3)+"...");
                     $("#title").css({"left":d3.event.clientX+2,"top":d3.event.clientY}).fadeIn('fast');
               d3.select(this).select("circle").transition()  
                   .duration(250)  
@@ -775,8 +818,8 @@ CQ.mainApp.topicController
              var dayGroup2 = dayDim2.group().reduceSum(function(d) {
                 return 0.2;
              });
-             var width = $("#dayDist1").width() * 0.9;
-             var height = $("#dayDist1").height() * 0.9;
+             var width = $("#dayDist1").width();
+             var height = $("#dayDist1").height();
              dayDist1
                 .renderArea(true)
                 .width(width)
@@ -812,9 +855,9 @@ CQ.mainApp.topicController
             // line2  
             
             dayDist2
-                .width($("#dayDist2").width() * 0.9)
-                .height(50)
-                .margins({top: 20, right: 10, bottom: 20, left: 30})
+                .width($("#dayDist2").width())
+                .height(100)
+                .margins({top: 30, right: 50, bottom: 25, left: 40})
                 .dimension(dayDim2)
                 .group(dayGroup2)
                 .elasticY(false)

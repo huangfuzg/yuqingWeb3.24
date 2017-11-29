@@ -70,7 +70,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="odd gradeX" ng-repeat="item in tableData">
+                                <tr class="odd gradeX" ng-repeat="item in showTableData">
                                     <td style="width:10px;"><input type="checkbox" ng-model="item.export"></td>
                                     <td ng-if="showCols[4]">{{item.senwords.join('')}}</td>
                                     <td ng-if="showCols[0]">{{item.title}}</td>

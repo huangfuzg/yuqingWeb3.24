@@ -1,11 +1,17 @@
 "use strict";
 CQ.mainApp.frameController
-	.controller('mainController', ['$scope', '$rootScope', '$state', 'DataSourceTree',
-		function($scope, $rootScope, $state, DataSourceTree) {
+	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree',
+		function($scope, $rootScope, $state, $http, DataSourceTree) {
 		console.log("mainController", "start!");
 		$rootScope.mainController = false;
 		$scope.cardNums = 0;
-
+		$("#load").hide();
+		$http.get("/getuser").success(function(data){
+			console.log(data);
+			CQ.variables.CURRENT_USER = data.data.username;
+			console.log(CQ.variables.CURRENT_USER); 
+			$rootScope.curentUser = CQ.variables.CURRENT_USER;
+		});
 		$scope.$on('$includeContentLoaded', function(event, data) {
 			$scope.cardNums += 1;
 			if($scope.cardNums == 3) {
@@ -21,6 +27,12 @@ CQ.mainApp.frameController
 		function($scope, $rootScope, $state, $http) {
 			$rootScope.headerController = true;
 			$scope.searchword = "";
+			// $scope.$watch($rootScope.curentUser,function(newValue,oldValue){
+			// 	$scope.curentUser = newValue;
+			// 	console.log($scope.curentUser);
+			// });
+			// $scope.curentUser = $rootScope.curentUser;
+			console.log($scope.curentUser);
 			$scope.search = function()
 			{
 				if($scope.searchword != "")
@@ -30,8 +42,9 @@ CQ.mainApp.frameController
 			}
 			$scope.logout = function()
 			{
-				$http.post("http://localhost/api/auth/logout",{})
+				$http.post("/api/auth/logout",{})
 				.success(function(data,status,headers,config){
+					CQ.variables.CURRENT_USER = "";
 					console.log("logout!!!");
 				});
 			}
@@ -41,6 +54,7 @@ CQ.mainApp.frameController
 		function($scope, $rootScope, $state, DataSourceTree,$http) {
 			//console.log(DataSourceTree.allLinks);
 			$scope.allLinks = null;
+			// $scope.curentUser = CQ.variables.CURRENT_USER;
 			$scope.$on('$viewContentLoaded', function() {
 	            if($rootScope.mainController) {
 	                App.runui();

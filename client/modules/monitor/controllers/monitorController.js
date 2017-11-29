@@ -20,6 +20,7 @@ CQ.mainApp.monitorController
         $rootScope.freshLists = [];
         $scope.cons = {};
         $scope.date = getFormatData();
+        $scope.lastDate = $scope.date;
         $scope.pics = ["/static/assets/img/news2.svg","/static/assets/img/luntan.svg", "/static/assets/img/weibo.svg"
         ,"/static/assets/img/tieba.svg","/static/assets/img/weixin1.svg","/static/assets/img/baidu.svg"];
         $scope.$on('$viewContentLoaded', function() {
@@ -35,6 +36,14 @@ CQ.mainApp.monitorController
             .datepicker('setEndDate', getFormatData())
             .on('changeDate', function(ev){
                 $scope.monitorData = [];
+                if($scope.date == "")
+                {
+                    $scope.date =$scope.lastDate;
+                }
+                else
+                {
+                    $scope.lastDate = $scope.date;
+                }
                 $rootScope.freshLists.forEach(function (d) {
                     $interval.cancel(d);
                 });
@@ -51,13 +60,14 @@ CQ.mainApp.monitorController
             cons.date = $scope.date;
             cons.pageCount = 20;
             $scope.cons = angular.copy(cons);
+            $(".loader").show();
             MonitorFacService.getMonitorData(cons).then(function(res){
                 console.log(res);
                 res.unshift(res[res.length - 1]);
                 res.splice(res.length - 1, 1);
                 console.log(res);
                 console.log(res);
-                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":-200,"全部":-100};
+                var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70,"全部":-100};
                 res.sort(function(a,b){
                     var weight_a = topicWeight[a.topicName] || 0;
                     var weight_b = topicWeight[b.topicName] || 0;
@@ -473,6 +483,10 @@ CQ.mainApp.monitorController
             var params = {userId: $scope.userId};
             SearchFacService.getRuleData(params).then(function (data) {
                 $scope.allSites = data.allSites;
+                if(!$scope.senpostData)
+                {
+                    $("#load").show();
+                }
             });
 
 
@@ -549,33 +563,6 @@ CQ.mainApp.monitorController
                     if(res.topicId!=$scope.topic_id){
                         return;
                     }
-                    $scope.imgs = [];
-                    res.imgs.forEach(url=>{
-                        var img= new Image();
-                        img.src=url;
-                        img.onload=function()
-                        {
-                            $scope.imgs.push(img.src);
-                            console.log(img.src);
-                            var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
-                    //
-                    //     if(res.topicId == 2) {
-                    //         $scope.imgs = imgs9;
-                    //     }else if(res.topicId == 1) {
-                    //         $scope.imgs = imgs4;
-                    //         // d.summary = "各大高校研究生复试工作正在进行，大多数高校已经录取结束";
-                    //     }else if(res.topicId == 0) {
-                    //         $scope.imgs = imgs2;
-                    //     }else if(res.topicId == 3) {
-                    //         $scope.imgs = imgs12;
-                        if(res.topicId == 9) 
-                            $scope.imgs = imgs99;
-                        }
-                        img.onerror=function()
-                        {
-                            console.log(url+" is not found!!!");
-                        }
-                    });
                     // $scope.imgs = res.imgs;
                     // console.log(res);
                     // var imgs2 = ["/static/assets/img/1.jpg","/static/assets/img/2.jpg","/static/assets/img/3.jpg"];
@@ -612,10 +599,37 @@ CQ.mainApp.monitorController
                     $scope.senTopicEvolu=res.topic_info;
                     drawEchart();
                     drawChart(true);
+                    $scope.imgs = [];
+                    res.imgs.forEach(url=>{
+                        var img= new Image();
+                        img.src=url;
+                        img.onload=function()
+                        {
+                            $scope.imgs.push(img.src);
+                            console.log(img.src);
+                            // var imgs99 = ["/static/assets/img/9-1.jpg","/static/assets/img/9-2.jpg","/static/assets/img/9-3.jpg"];
+                    //
+                    //     if(res.topicId == 2) {
+                    //         $scope.imgs = imgs9;
+                    //     }else if(res.topicId == 1) {
+                    //         $scope.imgs = imgs4;
+                    //         // d.summary = "各大高校研究生复试工作正在进行，大多数高校已经录取结束";
+                    //     }else if(res.topicId == 0) {
+                    //         $scope.imgs = imgs2;
+                    //     }else if(res.topicId == 3) {
+                    //         $scope.imgs = imgs12;
+                        // if(res.topicId == 9) 
+                        //     $scope.imgs = imgs99;
+                        }
+                        img.onerror=function()
+                        {
+                            console.log(url+" is not found!!!");
+                        }
+                    });
                     $(".loading").hide();
                 },function(error) {
                     console.log(error);
-
+                    $("#load").hide();
                 });
             }
             $scope.redraw = function()
@@ -685,12 +699,16 @@ CQ.mainApp.monitorController
                         {
                             type : 'category',
                             boundaryGap : false,
-                            data : times.reverse()
+                            data : times.reverse(),
+                            name : '时间',
+                            nameLocation : 'end',
                         }
                     ],
                     yAxis : [
                         {
-                            type : 'value'
+                            type : 'value',
+                            name : '词频数',
+
                         }
                     ],
                     series : [
@@ -997,8 +1015,8 @@ CQ.mainApp.monitorController
                 var dayGroup2 = dayDim2.group().reduceSum(function(d) {
                     return 0.2;
                 });
-                var width = $("#dayDist1").width() * 0.9;
-                var height = $("#dayDist1").height() * 0.9;
+                var width = $("#dayDist1").width();
+                var height = $("#dayDist1").height();
                 dayDist1
                     .renderArea(true)
                     .width(width)
@@ -1037,7 +1055,7 @@ CQ.mainApp.monitorController
                 dayDist2
                     .width($("#dayDist2").width())
                     .height(100)
-                    .margins({top: 20, right: 10, bottom: 20, left: 30})
+                    .margins({top: 30, right: 50, bottom: 25, left: 40})
                     .dimension(dayDim2)
                     .group(dayGroup2)
                     .elasticY(false)
@@ -1081,26 +1099,24 @@ CQ.mainApp.monitorController
                 if(document.getElementById(doms) != undefined) {
                         //console.log("aaa");
                         var chart = echarts.init(document.getElementById(doms));
+                        var color = d3.scale.category10();
+                        var i = 0;
                         var options = {
                             series: [{
                                 type: 'wordCloud',
-                                gridSize: 20,
+                                gridSize: 1,
                                 size: ['100%', '100%'],
                                 autoSize: {
                                     enable: true,
                                     minSize: 0
                                 },
-                                sizeRange: [20, 80],
-                                rotationRange: [0, 0],
+                                sizeRange: [30, 80],
+                                rotationRange: [0, 45],
                                 shape: 'circle',
                                 textStyle: {
                                     normal: {
                                         color: function() {
-                                            return 'rgb(' + [
-                                                Math.round(Math.random() * 160),
-                                                Math.round(Math.random() * 160),
-                                                Math.round(Math.random() * 160)
-                                            ].join(',') + ')';
+                                            return color(i++);
                                         }
                                     },
                                     emphasis: {
