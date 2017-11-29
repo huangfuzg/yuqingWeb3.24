@@ -1,5 +1,13 @@
 "use strict";
 CQ.mainApp.frameController
+	.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+			$stateProvider
+				.state("attrController", {
+	                url:"/userattr",
+	                templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
+	                controller: "headerController"
+	            });
+		}])
 	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree',
 		function($scope, $rootScope, $state, $http, DataSourceTree) {
 		console.log("mainController", "start!");
@@ -27,6 +35,7 @@ CQ.mainApp.frameController
 		function($scope, $rootScope, $state, $http,ngDialog) {
 			$rootScope.headerController = true;
 			$rootScope.fusername = "yuqing123";
+			$scope.pwdyes=true;
 			$rootScope.fbirth = "1949-10-01";
 			$rootScope.femail = "123456@xjtu.com";
 			$rootScope.fwork = "西安交通大学";
@@ -38,6 +47,8 @@ CQ.mainApp.frameController
 			// });
 			// $scope.curentUser = $rootScope.curentUser;
 			console.log($scope.curentUser);
+			$(".form_datetime")
+                .datepicker({autoclose:true, format: 'yyyy-mm-dd'})
 			$scope.search = function()
 			{
 				if($scope.searchword != "")
@@ -110,8 +121,10 @@ CQ.mainApp.frameController
 	            	$rootScope.fwork = $('#input4').val();
 	            }
 	            //$rootScope.fdistrict = $('.province cxselect option:selected').text();
-	            $rootScope.fdistrict = $('.province cxselect').val();
+	            //$rootScope.fdistrict = $('.province cxselect').val();
+	            $rootScope.fdistrict = $(".province cxselect").find("option:selected").text();
 	            //+$('.city cxselect option:selected').text()+$('.area cxselect option:selected').text();
+	            console.log($rootScope.fdistrict);
 	            $scope.changed1 = false;
 	            $scope.changed2 = false;
 	            $scope.changed3 = false;
