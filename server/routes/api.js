@@ -25,6 +25,16 @@ exports.api = function (app, config) {
             response.status(401).send("error：没有权限");
         }
     });
+    app.get("/getperminssion",function(request, response){
+        console.log("------getperminssion------");
+        if (request.isAuthenticated()) {
+            var user = {username:config.RESTAPI.username};
+            console.log(user);
+            response.status(200).send({data:user,code:0,success:true});
+        } else {
+            response.status(401).send("error：没有权限");
+        }
+    });
     //转发api
     app.all("/restapi*",function(req,res,next){
         console.log("----------request-----------");

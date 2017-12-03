@@ -49,7 +49,7 @@ angular.module('mainApp', [
             // $httpProvider.defaults.headers.patch = {};
         }
     ])
-    .run(['$rootScope', '$window', '$location', '$log', '$state', '$stateParams', function($rootScope, $window, $location, $log, $state, $stateParams) {
+    .run(['$rootScope', '$window', '$location', '$log', '$state', '$stateParams', 'accountManage', function($rootScope, $window, $location, $log, $state, $stateParams, accountManage) {
 
         var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);
         var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);
@@ -65,6 +65,11 @@ angular.module('mainApp', [
             $rootScope.$state.go($rootScope.previousState_name, $rootScope.previousState_params);
         }
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
+                console.log(accountManage.isAuthenticated());
+                if(!accountManage.isAuthenticated())
+                {
+                    window.location = '/yuqing/login';
+                }
                 if (fromState.scrollTop === true && window.localStorage) {
                     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
                     window.localStorage.setItem(fromState.name, scrollTop);

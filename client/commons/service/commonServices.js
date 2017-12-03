@@ -4,23 +4,35 @@ angular.module('commons',[])
         var ret = {};
         ret.md5 = function(str)
         {
-            return CryptoJS.MD5(str);
+            return CryptoJS.MD5(str).toString();
         }
         ret.sha2 = function(str)
         {
-            return CryptoJS.SHA256(str);
+            return CryptoJS.SHA256(str).toString();
         }
         ret.sha5 =function(str)
         {
-            return CryptoJS.SHA512(str);
+            return CryptoJS.SHA512(str).toString();
         }
-        ret.aesEncrypt = function(str,secret)
+        ret.aesEncrypt = function(str)
         {
-            return CryptoJS.AES.encrypt(str,secret);
+            var secret = CQ.variable.SECRET,
+            iv = secret;
+            return CryptoJS.AES.encrypt(str,secret,{
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            }).toString();
         }
-        ret.aesDecrypt = function(str,secret)
+        ret.aesDecrypt = function(str)
         {
-            return CryptoJS.AES.decrypt(str,secret);
+            var secret = CQ.variable.SECRET,
+            iv = secret;
+            return CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(str,secret,{
+                iv: iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            }));
         }
         ret.hashEncode = function(pwd)
         {
@@ -61,6 +73,20 @@ angular.module('commons',[])
             }
         };
     })
+    .factory('permissions', ['crypto', 'localStorage', function (crypto,localstorage) {
+        var ret = {},
+        permissionList=[];
+        ret.setPermissions = function(permissions)
+        {
+            permissionList = permission;
+        }
+        ret.hasPermission = function(permission)
+        {
+            permission = permission.trim();
+            return permissionList.filter(p=>p==permission).length>0;
+        }
+        return ret;
+    }])
     .factory('accountManage', ['crypto', 'localStorage', function (crypto,localstorage) {
         var ret = {};
 
@@ -68,7 +94,7 @@ angular.module('commons',[])
         ret.logout = function()
         {
             localstorage.removeItem('user');
-            localstorage.removeItem('username');
+            // localstorage.removeItem('username');
         }
 
         //验证是否登录
@@ -77,7 +103,7 @@ angular.module('commons',[])
             var loginfo = localStorage.getItem('user'),
             secret = CQ.variable.SECRET;
             console.log(loginfo);
-            return loginfo&&is_exceed_logintime.apply(this,crypto.aesDecrypt(loginfo,secret).split('#'));
+            return loginfo&&is_exceed_logintime(JSON.parse(crypto.aesDecrypt(loginfo)));
         }
 
         //获得用户名
@@ -85,29 +111,41 @@ angular.module('commons',[])
         {
             if(CQ.variables.CURRENT_USER == "")
             {
-                CQ.variables.CURRENT_USER = localStorage.getItem("username");
+                var loginfo = localStorage.getItem('user');
+                CQ.variables.CURRENT_USER = JSON.parse(crypto.aesDecrypt(loginfo)).username;
             }
             return CQ.variables.CURRENT_USER;
+        }
+
+        //获得用户权限
+        ret.getPermissions = function()
+        {
+            if(CQ.variables.PERMISSIONS == "")
+            {
+                var loginfo = localStorage.getItem('user');
+                CQ.variables.PERMISSIONS = JSON.parse(crypto.aesDecrypt(loginfo)).permissionList;
+            }
+            return CQ.variables.PERMISSIONS;
         }
 
         //获得请求token
         ret.getToken = function()
         {
-            var loginfo = localStorage.getItem('user'),
-            secret = CQ.variable.SECRET;
             if(CQ.variables.APIKEY == null)
             {
-                console.log(crypto.aesDecrypt(loginfo,secret));
-                CQ.variables.APIKEY = crypto.aesDecrypt(loginfo,secret).toString().split('#')[0];
+                var loginfo = localStorage.getItem('user');
+                CQ.variables.APIKEY = JSON.parse(crypto.aesDecrypt(loginfo)).token;
             }
-            console.log(CQ.variables.APIKEY);
             return CQ.variables.APIKEY;
         }
         
         //登录超时验证
-        function is_exceed_logintime(token,loginTime,maxTime)
+        function is_exceed_logintime(userinfo)
         {
-            return (new Date()).getTime()<+loginTime+ +maxTIme;
+            var token = userinfo.token,
+            loginTime = userinfo.loginTime,
+            maxTime = userinfo.maxLoginTime;
+            return (new Date()).getTime()<+loginTime+ +maxTime;
         }
         
         return ret;
@@ -261,7 +299,7 @@ angular.module('commons',[])
         //add user token
         function addToken(params)
         {
-            params.userId = accountManage.getToken();
+            params.userid = accountManage.getToken();
             console.log(params);
         }
         return factories;

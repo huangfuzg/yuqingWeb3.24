@@ -18,9 +18,21 @@ CQ.variable = {
 };
 CQ.variables = {};
 CQ.variables.CURRENT_USER = "";
+CQ.variables.PERMISSIONS = [];
 
-
+function aesDecrypt(str)
+{
+    var secret = CQ.variable.SECRET,
+    iv = secret;
+    return CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(str,secret,{
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    }));
+}
 $(function () {
+    var loginfo = localStorage.getItem('user');
+    CQ.variables.PERMISSIONS = JSON.parse(aesDecrypt(loginfo)).permissionList;
     console.log("mainApp", "system init!");
     angular.bootstrap(document, ['mainApp']);
 });

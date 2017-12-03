@@ -15,6 +15,7 @@ CQ.mainApp.frameController
 		$scope.cardNums = 0;
 		$("#load").hide();
 		$rootScope.curentUser = accountManage.getUsername();
+		console.log(CQ.variables.PERMISSIONS);
 		$scope.$on('$includeContentLoaded', function(event, data) {
 			$scope.cardNums += 1;
 			if($scope.cardNums == 3) {
@@ -26,8 +27,8 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog',
-		function($scope, $rootScope, $state, $http,ngDialog) {
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
+		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
 			$rootScope.headerController = true;
 			$rootScope.fusername = "yuqing123";
 			$scope.pwdyes=true;
@@ -53,11 +54,12 @@ CQ.mainApp.frameController
 			}
 			$scope.logout = function()
 			{
-				$http.post("/api/auth/logout",{})
-				.success(function(data,status,headers,config){
-					CQ.variables.CURRENT_USER = "";
-					console.log("logout!!!");
-				});
+				accountManage.logout();
+				// $http.post("/api/auth/logout",{})
+				// .success(function(data,status,headers,config){
+				// 	CQ.variables.CURRENT_USER = "";
+				// 	console.log("logout!!!");
+				// });
 			}
 			$scope.changename = function(){
 				$scope.changed1 = true;

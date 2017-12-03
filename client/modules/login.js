@@ -31,7 +31,15 @@ function login() {
         if(data.code==0)
         {
             console.log(data.data.token);
-            account_login(data.data.token,data.data.user_name);
+            var userinfo = {};
+            userinfo.username = username;
+            userinfo.token = data.data.token;
+            userinfo.loginTime = (new Date()).getTime();
+            userinfo.maxLoginTime = data.data.max_time||CQ.variable.MAX_LOGIN_TIME;
+            userinfo.permissionList = [];
+            userinfo.permissionList.push(data.data.user_authority)
+            console.log(userinfo); 
+            account_login(userinfo);
             window.location.href = "index.html";
         }
         else
@@ -45,18 +53,17 @@ function login() {
     // window.location.href = "index.html";
 }
 
-var account_login = function(token,username)
+var account_login = function(userinfo)
 {
-    var loginTime = (new Date()).getTime(),
-    max_login_time = CQ.variable.MAX_LOGIN_TIME,
-    secret = CQ.variable.SECRET,
+    // var loginTime = (new Date()).getTime(),
+    // max_login_time = CQ.variable.MAX_LOGIN_TIME,
+    var secret = CQ.variable.SECRET,
     iv = secret;
-    localStorage.setItem('user', CryptoJS.AES.encrypt([token,loginTime,max_login_time].join('#'),secret,{
+    localStorage.setItem('user', CryptoJS.AES.encrypt(JSON.stringify(userinfo),secret,{
         iv: iv,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7
-    }));
-    localStorage.setItem('username',username);
+    }).toString());
 }
 
 var password_encode = function(pwd)
