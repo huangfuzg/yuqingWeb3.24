@@ -49,8 +49,9 @@ angular.module('mainApp', [
             // $httpProvider.defaults.headers.patch = {};
         }
     ])
-    .run(['$rootScope', '$window', '$location', '$log', '$state', '$stateParams', 'accountManage', function($rootScope, $window, $location, $log, $state, $stateParams, accountManage) {
-
+    .run(['$rootScope', '$window', '$location', '$log', '$state', '$stateParams', 'accountManage', 'permissions', function($rootScope, $window, $location, $log, $state, $stateParams, accountManage, permissions) {
+        $rootScope.curentUser = accountManage.getUsername();//获取用户名
+        permissions.setPermissions(CQ.variables.PERMISSIONS);//设置用户权限
         var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);
         var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);
         var routeChangeStartOff = $rootScope.$on('$routeChangeStart', routeChangeStart);
@@ -65,10 +66,16 @@ angular.module('mainApp', [
             $rootScope.$state.go($rootScope.previousState_name, $rootScope.previousState_params);
         }
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-                console.log(accountManage.isAuthenticated());
+                console.log(arguments);
                 if(!accountManage.isAuthenticated())
                 {
                     window.location = '/yuqing/login';
+                }
+                if(toState.permission&&!permissions.hasPermission(toState.permission))
+                {
+                    console.log("没有权限");
+                    event.defaultPrevented = true;
+                    $state.go('error',{errorcode:401});
                 }
                 if (fromState.scrollTop === true && window.localStorage) {
                     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
@@ -109,4 +116,30 @@ angular.module('mainApp', [
             $rootScope.previousState_params = fromParams;
             console.log("mainApp stateChangeSuccess");
         }
-    }]);
+    }])
+    .directive('ngPermission', function(permissions) {
+        return {
+          link: function(scope, element, attrs) {
+            if(typeof(attrs.ngPermission) == 'number')
+                attrs.ngPermission = ''+attrs.ngPermission;
+            if((typeof(attrs.ngPermission) != 'string'))
+              throw "hasPermission value must be a string";
+            var value = attrs.ngPermission.trim();
+            var notPermissionFlag = value[0] === '!';
+            if(notPermissionFlag) {
+              value = value.slice(1).trim();
+            }
+       
+            function toggleVisibilityBasedOnPermission() {
+              var hasPermission = permissions.hasPermission(value);
+       
+              if(hasPermission && !notPermissionFlag || !hasPermission && notPermissionFlag)
+                element.show();
+              else
+                element.hide();
+            }
+            toggleVisibilityBasedOnPermission();
+            scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
+          }
+        };
+      });

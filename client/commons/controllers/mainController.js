@@ -8,14 +8,12 @@ CQ.mainApp.frameController
 	                controller: "headerController"
 	            });
 		}])
-	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree', 'accountManage', 
-		function($scope, $rootScope, $state, $http, DataSourceTreem, accountManage) {
+	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree', 
+		function($scope, $rootScope, $state, $http, DataSourceTreem) {
 		console.log("mainController", "start!");
 		$rootScope.mainController = false;
 		$scope.cardNums = 0;
 		$("#load").hide();
-		$rootScope.curentUser = accountManage.getUsername();
-		console.log(CQ.variables.PERMISSIONS);
 		$scope.$on('$includeContentLoaded', function(event, data) {
 			$scope.cardNums += 1;
 			if($scope.cardNums == 3) {
@@ -42,7 +40,6 @@ CQ.mainApp.frameController
 			// 	console.log($scope.curentUser);
 			// });
 			// $scope.curentUser = $rootScope.curentUser;
-			console.log($scope.curentUser);
 			$(".form_datetime")
                 .datepicker({autoclose:true, format: 'yyyy-mm-dd'})
 			$scope.search = function()

@@ -17,7 +17,7 @@
 		<!-- end sidebar user -->
 		<!-- begin sidebar nav -->
 		<ul class="nav f-s-15">
-			<li class = "has-sub {{it.isActive}}" ng-repeat = "(index,it) in allLinks" ng-click="moduleHomelinkclick(it)">
+			<li class = "has-sub {{it.isActive}}" ng-repeat = "(index,it) in allLinks" ng-click="moduleHomelinkclick(it)" ng-permission={{it.permission}}>
 				<a href = "{{it.link}}" ng-if = "it.link && it.link!='#/yuqingTrends'">
 					<b class="caret pull-right" ng-if = 'it.items'></b>
 					<i class="{{it.icon}}"></i>
@@ -29,7 +29,7 @@
 					<span ng-bind = "it.label"></span>
 				</a>
 				<ul class="sub-menu" ng-if = "it.items">
-					<li class ="has-sub" ng-repeat = "(index1,item) in it.items">
+					<li class ="has-sub" ng-repeat = "(index1,item) in it.items" ng-permission={{item.permission}}>
 						<a href = "{{item.link}}" ng-if="item.link!='#/yuqingTrends'">
 							<b class="caret pull-right" ng-if = 'item.items'></b>
 							<i class="{{item.icon}}"></i>
@@ -41,7 +41,7 @@
 							<span ng-bind = "item.label"></span>
 						</a>
 						<ul class = "sub-menu">
-							<li class = "has-sub" ng-repeat = "(index2,itt) in item.items">
+							<li class = "has-sub" ng-repeat = "(index2,itt) in item.items" ng-permission={{itt.permission}}>
 								<a href = "{{itt.link}}" ng-if = "itt.link">
 								<b class="caret pull-right" ng-if = 'itt.items'></b>
 								<i class="{{itt.icon}}"></i>

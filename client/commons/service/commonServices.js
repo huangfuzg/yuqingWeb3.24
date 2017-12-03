@@ -73,12 +73,13 @@ angular.module('commons',[])
             }
         };
     })
-    .factory('permissions', ['crypto', 'localStorage', function (crypto,localstorage) {
+    .factory('permissions', ['$rootScope', 'crypto', 'localStorage', function ($rootScope, crypto, localstorage) {
         var ret = {},
         permissionList=[];
         ret.setPermissions = function(permissions)
         {
-            permissionList = permission;
+            permissionList = permissions;
+            $rootScope.$broadcast('permissionsChanged');
         }
         ret.hasPermission = function(permission)
         {

@@ -28,6 +28,7 @@ function login() {
     $.post(CQ.variable.RESTFUL_URL+"/log_in",{"user_account":username,"user_pwd":password_encode(password)},function(data, status){
         // data=JSON.parse(data);
         console.log(data);
+        var userPermissions = {1:['1'],2:['1','2'],3:['1','2','3']};
         if(data.code==0)
         {
             console.log(data.data.token);
@@ -36,8 +37,8 @@ function login() {
             userinfo.token = data.data.token;
             userinfo.loginTime = (new Date()).getTime();
             userinfo.maxLoginTime = data.data.max_time||CQ.variable.MAX_LOGIN_TIME;
-            userinfo.permissionList = [];
-            userinfo.permissionList.push(data.data.user_authority)
+            // userinfo.permissionList = [];
+            userinfo.permissionList = userPermissions[data.data.user_authority]||[];
             console.log(userinfo); 
             account_login(userinfo);
             window.location.href = "index.html";

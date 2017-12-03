@@ -8,7 +8,8 @@ angular.module('settingservice',[])
                 link: "#/dashboard", 
                 hasShow:true,
                 icon:"",
-                items: ""
+                items: "",
+                permission: "1",
             }
         ];
         var topicLists = [
@@ -17,14 +18,16 @@ angular.module('settingservice',[])
                 link: "#/senTopic", 
                 hasShow: true,
                 icon:"",
-                items: ""
+                items: "",
+                permission: "1",
             },
             {
                 label: "热点话题",
                 link: "#/hotTopic", 
                 hasShow:true,
                 icon:"",
-                items: ""
+                items: "",
+                permission: "1",
             }
         ];
         var monitorLists = [
@@ -35,7 +38,8 @@ angular.module('settingservice',[])
                 icon:"",
                 items: "",
                 siteTypeId: -1,
-                siteId: -1
+                siteId: -1,
+                permission: "1",
             },
             {
                 label: "新闻类",
@@ -44,6 +48,7 @@ angular.module('settingservice',[])
                 icon:"",
                 siteTypeId: 0,
                 siteId: -1,
+                permission: "1",
                 items: [{
                     label: "人民网教育",
                     link: "#/monitor/0/1", 
@@ -51,6 +56,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 0,
                     siteId: 0,
+                    permission: "1",
                 },
                 {
                     label: "搜狐教育",
@@ -59,6 +65,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 0,
                     siteId: 1,
+                    permission: "1",
                 },
                 {
                     label: "新浪教育",
@@ -67,6 +74,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 0,
                     siteId: 2,
+                    permission: "1",
                 },   
                 ]
             },
@@ -77,6 +85,7 @@ angular.module('settingservice',[])
                 icon:"",
                 siteTypeId: 1,
                 siteId: -1,
+                permission: "1",
                 items: [{
                     label: "考研帮论坛",
                     link: "#/monitor/1/-1", 
@@ -84,6 +93,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 1,
                     siteId: 0,
+                    permission: "1",
                 },
                 {
                     label: "天涯论坛",
@@ -92,6 +102,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 1,
                     siteId: 1,
+                    permission: "1",
                 },
                 {
                     label: "凯迪社区",
@@ -100,6 +111,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 1,
                     siteId: 2,
+                    permission: "1",
                 },
                   
                 ]
@@ -111,6 +123,7 @@ angular.module('settingservice',[])
                 siteTypeId: 2,
                 siteId: -1,
                 icon:"",
+                permission: "1",
                 items: [{
                     label: "新浪微博",
                     link: "#/monitor/2/-1", 
@@ -118,6 +131,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 2,
                     siteId: 0,
+                    permission: "1",
                 },
                  
                 ]
@@ -129,6 +143,7 @@ angular.module('settingservice',[])
                 siteTypeId: 3,
                 siteId: -1,
                 icon:"",
+                permission: "1",
                 items: [{
                     label: "西安交通大学贴吧",
                     link: "#/monitor/3/-1", 
@@ -136,6 +151,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 0,
+                    permission: "1",
                 },
                 {
                     label: "答案贴吧",
@@ -144,6 +160,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 1,
+                    permission: "1",
                 },
                 {
                     label: "高考贴吧",
@@ -152,6 +169,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 2,
+                    permission: "1",
                 },
                  {
                     label: "高三贴吧",
@@ -160,6 +178,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 3,
+                    permission: "1",
                 },
                 {
                     label: "高考1997贴吧",
@@ -168,6 +187,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 4,
+                    permission: "1",
                 },
                 {
                     label: "高考恋爱100天贴吧",
@@ -176,6 +196,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 5,
+                    permission: "1",
                 },
                 {
                     label: "金太阳贴吧",
@@ -184,6 +205,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 6,
+                    permission: "1",
                 },
                 {
                     label: "教育贴吧",
@@ -192,6 +214,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 7,
+                    permission: "1",
                 },
                 {
                     label: "考试贴吧",
@@ -200,6 +223,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 8,
+                    permission: "1",
                 },
                 {
                     label: "理科贴吧",
@@ -208,6 +232,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 9,
+                    permission: "1",
                 },
                 {
                     label: "李毅贴吧",
@@ -216,6 +241,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 10,
+                    permission: "1",
                 },
                 {
                     label: "理综贴吧",
@@ -224,6 +250,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 11,
+                    permission: "1",
                 },
                 {
                     label: "全程高考贴吧",
@@ -232,6 +259,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 12,
+                    permission: "1",
                 },
                 {
                     label: "全国卷贴吧",
@@ -240,6 +268,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 13,
+                    permission: "1",
                 },
                 {
                     label: "数学贴吧",
@@ -248,6 +277,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 14,
+                    permission: "1",
                 },
                 {
                     label: "文科贴吧",
@@ -256,6 +286,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 15,
+                    permission: "1",
                 },
                 {
                     label: "文综贴吧",
@@ -264,6 +295,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 16,
+                    permission: "1",
                 },
                 {
                     label: "学生贴吧",
@@ -272,6 +304,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 17,
+                    permission: "1",
                 },
                 {
                     label: "语文贴吧",
@@ -280,6 +313,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 18,
+                    permission: "1",
                 },
                 {
                     label: "答案贴吧",
@@ -288,6 +322,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 1,
+                    permission: "1",
                 },
                 {
                     label: "高考贴吧",
@@ -296,6 +331,7 @@ angular.module('settingservice',[])
                     icon:"",
                     siteTypeId: 3,
                     siteId: 2,
+                    permission: "1",
                 },
                 ]
             },
@@ -306,7 +342,8 @@ angular.module('settingservice',[])
                 icon:"",
                 siteTypeId: 4,
                 siteId: -1,
-                items: ""
+                items: "",
+                permission: "1",
             },
             {
                 label: "全网搜索",
@@ -315,7 +352,8 @@ angular.module('settingservice',[])
                 icon:"",
                 siteTypeId: 5,
                 siteId: -1,
-                items: ""
+                items: "",
+                permission: "1",
             }
         ];
         var senMessages = [
@@ -324,7 +362,8 @@ angular.module('settingservice',[])
                 link: "#/senmessages",
                 hasShow: true,
                 icon: "",
-                items: ""
+                items: "",
+                permission: "1",
             },
             // {
             //     label:"手工添加",
@@ -340,7 +379,8 @@ angular.module('settingservice',[])
                 link: "#/userSetting",
                 hasShow: true,
                 icon: "",
-                items: ""
+                items: "",
+                permission: "1",
             },
             // {
             //     label:"角色设置",
@@ -356,7 +396,8 @@ angular.module('settingservice',[])
                 link: "#/yuqingTrends",
                 hasShow: true,
                 icon: "",
-                items: ""
+                items: "",
+                permission: "1",
             },
             // {
             //     label:"关联分析",
@@ -372,7 +413,8 @@ angular.module('settingservice',[])
                 link: "#/yuqingHistory",
                 hasShow: true,
                 icon: "",
-                items: ""
+                items: "",
+                permission: "1",
             }
         ];
         var friendLink = [
@@ -381,7 +423,8 @@ angular.module('settingservice',[])
                 link: "#/friendLink",
                 hasShow: true,
                 icon: "",
-                items: ""
+                items: "",
+                permission: "1",
             }
         ];
         var zhishiku = [
@@ -390,7 +433,8 @@ angular.module('settingservice',[])
                 link:"#/zhishiku/subjects",
                 hasShow:true,
                 icon:"",
-                items:""
+                items:"",
+                permission: "1",
             }
         ]
         factories.allLinks = [
@@ -399,21 +443,24 @@ angular.module('settingservice',[])
                 link: "#/dashboard",
                 hasShow: true,
                 icon: "fa fa-dashboard",
-                items: ""
+                items: "",
+                permission: "1",
             },
             {
                 label:"热点话题",
                 link: "#/hotTopic",
                 hasShow: true,
                 icon: "fa fa-bar-chart-o",
-                items: ""
+                items: "",
+                permission: "1",
             },
             {
                 label:"实时监控",
                 link: "#/monitor/-1/-1",
                 hasShow: true,
                 icon: "fa fa-eye",
-                items: monitorLists
+                items: monitorLists,
+                permission: "1",
             },
             
             {
@@ -421,7 +468,8 @@ angular.module('settingservice',[])
                 link: "#/senmessages",
                 hasShow: true,
                 icon: "fa fa-table",
-                items: ""
+                items: "",
+                permission: "1",
             },
             // {
             //     label:"舆情检索",
@@ -435,21 +483,24 @@ angular.module('settingservice',[])
                 link: "#/yuqingHistory",
                 hasShow: true,
                 icon: "fa fa-star",
-                items: ""
+                items: "",
+                permission: "1",
             },
             {
                 label:"舆情知识库",
                 link:"#/zhishiku/subjects",
                 hasShow:true,
                 icon:"fa fa-database",
-                items:""
+                items:"",
+                permission: "1",
             },
             {
                 label:"系统设置",
                 link: "#/userSetting",
                 hasShow: true,
                 icon: "fa fa-gear",
-                items: ""
+                items: "",
+                permission: "1",
             }
             // {
             //     label:"友情链接",

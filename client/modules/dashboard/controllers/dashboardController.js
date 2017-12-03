@@ -5,7 +5,8 @@ CQ.mainApp.dashboardController
             .state('dashboard', {
                 url: "/dashboard",
                 templateUrl: "/static/modules/dashboard/pages/dashboard.html",
-                controller: "dashboardController"
+                controller: "dashboardController",
+                permission:'1'
             });
     }])
     .controller('dashboardController', ['$scope', '$rootScope', '$http', '$timeout','$state','ChartService', 'notice', 'SearchFacService',
