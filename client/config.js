@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 window.CQ = {};
 
@@ -14,13 +14,7 @@ CQ.variable = {
     SECRET:"nicai",
     MAX_LOGIN_TIME:60*60*1000,
     APIKEY: null,
-    RESTFUL_URL: "http://118.190.133.203:8899/yqdata/"
+    RESTFUL_URL: "http://118.190.133.203:8899/yqdata"
 };
 CQ.variables = {};
 CQ.variables.CURRENT_USER = "";
-
-
-$(function () {
-    console.log("mainApp", "system init!");
-    angular.bootstrap(document, ['mainApp']);
-});

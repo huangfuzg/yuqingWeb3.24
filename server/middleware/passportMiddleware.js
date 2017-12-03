@@ -9,7 +9,7 @@ exports = module.exports = function (app, passport, config) {
         process.nextTick(function () {
             // var user = {userId:1,username:"yuqing",password:"yuqing"};
             var md5 = crypto.createHash('md5');
-            var userInfo = {user_account:username,user_pwd:md5.update(password).digest('hex')};
+            var userInfo = {user_account:username,user_pwd:password};
             // if(username == user.username && password == user.password)
             // {
             //     return done(null, user);

@@ -7,7 +7,7 @@ exports.index = function (app, config) {
     app.all(config.client.baseUrl + "/index.html*", function (req, res, next) {
         console.log("req.isAuthenticated()---------------", req.isAuthenticated());
         // res.sendfile("index.html", { root: config.server.distFolder });
-        if (req.isAuthenticated()) {
+        if (true) {
             res.sendfile("index.html", { root: config.server.distFolder });
             // return next();
         } else {

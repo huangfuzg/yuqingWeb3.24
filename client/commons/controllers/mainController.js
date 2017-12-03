@@ -8,18 +8,13 @@ CQ.mainApp.frameController
 	                controller: "headerController"
 	            });
 		}])
-	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree',
-		function($scope, $rootScope, $state, $http, DataSourceTree) {
+	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree', 'accountManage', 
+		function($scope, $rootScope, $state, $http, DataSourceTreem, accountManage) {
 		console.log("mainController", "start!");
 		$rootScope.mainController = false;
 		$scope.cardNums = 0;
 		$("#load").hide();
-		$http.get("/getuser").success(function(data){
-			console.log(data);
-			CQ.variables.CURRENT_USER = data.data.username;
-			console.log(CQ.variables.CURRENT_USER); 
-			$rootScope.curentUser = CQ.variables.CURRENT_USER;
-		});
+		$rootScope.curentUser = accountManage.getUsername();
 		$scope.$on('$includeContentLoaded', function(event, data) {
 			$scope.cardNums += 1;
 			if($scope.cardNums == 3) {
