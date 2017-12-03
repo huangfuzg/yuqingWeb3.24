@@ -124,6 +124,8 @@ angular.module('mainApp', [
                 attrs.ngPermission = ''+attrs.ngPermission;
             if((typeof(attrs.ngPermission) != 'string'))
               throw "hasPermission value must be a string";
+            if(attrs.ngPermission=="")
+                return;
             var value = attrs.ngPermission.trim();
             var notPermissionFlag = value[0] === '!';
             if(notPermissionFlag) {
