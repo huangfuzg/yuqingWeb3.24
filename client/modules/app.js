@@ -66,10 +66,10 @@ angular.module('mainApp', [
             $rootScope.$state.go($rootScope.previousState_name, $rootScope.previousState_params);
         }
         $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams, options) {
-                console.log(arguments);
+                console.log(accountManage.isAuthenticated());
                 if(!accountManage.isAuthenticated())
                 {
-                    window.location = '/yuqing/login';
+                    accountManage.logout();
                 }
                 if(toState.permission&&!permissions.hasPermission(toState.permission))
                 {

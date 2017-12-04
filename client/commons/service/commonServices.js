@@ -14,6 +14,18 @@ angular.module('commons',[])
         {
             return CryptoJS.SHA512(str).toString();
         }
+        ret.b64encode = function(str)
+        {
+            return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+        }
+        ret.b64decode = function(str)
+        {
+            return decodeURIComponent(atob(str).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+        }
         ret.aesEncrypt = function(str)
         {
             var secret = CQ.variable.SECRET,
@@ -95,6 +107,7 @@ angular.module('commons',[])
         ret.logout = function()
         {
             localstorage.removeItem('user');
+            window.location = "/yuqing/login";
             // localstorage.removeItem('username');
         }
 
@@ -132,12 +145,25 @@ angular.module('commons',[])
         //获得请求token
         ret.getToken = function()
         {
-            if(CQ.variables.APIKEY == null)
+            var loginfo = localStorage.getItem('user'),
+            userinfo = JSON.parse(crypto.aesDecrypt(loginfo)),
+            token = userinfo.token,
+            loginTime = userinfo.loginTime,
+            maxTime = userinfo.maxLoginTime;
+            if((new Date()).getTime()<+loginTime+ +maxTime)
             {
-                var loginfo = localStorage.getItem('user');
-                CQ.variables.APIKEY = JSON.parse(crypto.aesDecrypt(loginfo)).token;
+                return token;
             }
-            return CQ.variables.APIKEY;
+            else
+            {
+                ret.logout();
+            }
+            // if(CQ.variables.APIKEY == null)
+            // {
+            //     var loginfo = localStorage.getItem('user');
+            //     CQ.variables.APIKEY = JSON.parse(crypto.aesDecrypt(loginfo)).token;
+            // }
+            // return CQ.variables.APIKEY;
         }
         
         //登录超时验证
@@ -194,7 +220,7 @@ angular.module('commons',[])
         };
         return self;
     }])
-    .factory("RestService", ['$q', '$state', 'accountManage', function($q,$state,accountManage) {
+    .factory("RestService", ['$q', '$state', 'accountManage', 'crypto', function($q,$state,accountManage,crypto) {
         var factories = {};
         factories.get = function(resource, params) {
             $("#load").show();
@@ -300,7 +326,10 @@ angular.module('commons',[])
         //add user token
         function addToken(params)
         {
-            params.userid = accountManage.getToken();
+            params.userid = crypto.b64encode(JSON.stringify({
+                token:accountManage.getToken(),
+                time:(new Date()).getTime()
+            }));
             console.log(params);
         }
         return factories;

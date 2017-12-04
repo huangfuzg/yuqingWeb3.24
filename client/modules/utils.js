@@ -32,6 +32,8 @@ function aesDecrypt(str)
 }
 $(function () {
     var loginfo = localStorage.getItem('user');
+    if(loginfo == null)
+        window.location = "/yuqing/login";
     CQ.variables.PERMISSIONS = JSON.parse(aesDecrypt(loginfo)).permissionList;
     console.log("mainApp", "system init!");
     angular.bootstrap(document, ['mainApp']);
