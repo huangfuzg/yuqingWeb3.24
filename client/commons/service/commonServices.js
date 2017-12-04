@@ -326,10 +326,8 @@ angular.module('commons',[])
         //add user token
         function addToken(params)
         {
-            params.userid = crypto.b64encode(JSON.stringify({
-                token:accountManage.getToken(),
-                time:(new Date()).getTime()
-            }));
+            params.userid = crypto.b64encode(accountManage.getToken()+'#'+(new Date()).getTime()
+            );
             console.log(params);
         }
         return factories;
