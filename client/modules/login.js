@@ -29,26 +29,29 @@ function login() {
         // data=JSON.parse(data);
         console.log(data);
         var userPermissions = {1:['1'],2:['1','2'],3:['1','2','3']};
-        if(data.code==0)
+        if(data.success)
         {
-            console.log(data.data.token);
-            var userinfo = {};
-            userinfo.username = username;
-            userinfo.token = data.data.token;
-            userinfo.loginTime = (new Date()).getTime();
-            userinfo.maxLoginTime = data.data.max_time||CQ.variable.MAX_LOGIN_TIME;
-            // userinfo.permissionList = [];
-            userinfo.permissionList = userPermissions[data.data.user_authority]||[];
-            console.log(userinfo); 
-            account_login(userinfo);
-            window.location.href = "index.html";
-        }
-        else
-        {
-            $(".alert-danger").show();
-            setTimeout(function(){
-                $(".alert-danger").fadeOut();
-            },2000);
+            if(data.data.status)
+            {
+                console.log(data.data.token);
+                var userinfo = {};
+                userinfo.username = username;
+                userinfo.token = data.data.token;
+                userinfo.loginTime = (new Date()).getTime();
+                userinfo.maxLoginTime = data.data.max_time||CQ.variable.MAX_LOGIN_TIME;
+                // userinfo.permissionList = [];
+                userinfo.permissionList = userPermissions[data.data.user_authority]||[];
+                console.log(userinfo); 
+                account_login(userinfo);
+                window.location.href = "index.html";
+            }
+            else
+            {
+                $(".alert-danger").show();
+                setTimeout(function(){
+                    $(".alert-danger").fadeOut();
+                },2000);
+            }
         }
     });
     // window.location.href = "index.html";
