@@ -36,6 +36,7 @@ angular.module('mainApp', [
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
             //Enable cross domain calls
             $httpProvider.defaults.useXDomain = true;
+            $httpProvider.interceptors.push('http-auth-interceptor');
             $urlRouterProvider.otherwise("/dashboard");
             // $stateProvider
             // .state('dashboard', {

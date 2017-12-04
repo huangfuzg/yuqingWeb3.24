@@ -62,16 +62,6 @@ angular.module('commons',[])
         }
         return ret;         
     })
-    .factory('http-auth-interceptor', function ($q, $rootScope) {
-        return {
-            responseError: function (response) {
-                if (response.status === 401 || response.status === 403) {
-                    $rootScope.$broadcast('event:auth-loginRequired');
-                }
-                return $q.reject(response);
-            }
-        };
-    })
     .factory('localStorage', function () {
         return {
             get: function (storage_name) {
@@ -177,6 +167,21 @@ angular.module('commons',[])
         
         return ret;
     }])
+    .factory('http-auth-interceptor', function ($q, $rootScope, accountManage, crypto) {
+        return {
+            request: function(config){
+                config.headers = config.headers || {};
+                config.headers.authorization = crypto.b64encode(accountManage.getToken()+'.'+Math.random()*900+100+'.'+(new Date()).getTime());
+                return config;
+            },
+            responseError: function (response) {
+                if (response.status === 401 || response.status === 403) {
+                    $rootScope.$broadcast('event:auth-loginRequired');
+                }
+                return $q.reject(response);
+            }
+        };
+    })
     .factory('redirectInterceptor', ['$q', '$location', '$window', function($q, $location, $window) {
         return {
             'response': function(response) {
