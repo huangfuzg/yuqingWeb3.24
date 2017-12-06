@@ -14,6 +14,7 @@ CQ.mainApp = {
     errorController:         angular.module("error.Controller",[]),
     usermanagementController:angular.module("usermanagement.Controller",[]),
     groupmanagementController:angular.module("groupmanagement.Controller",[]),
+    msgController:           angular.module("msg.Controller",["msgService"])
 };
 angular.module('mainApp', [
     "ui.router",
@@ -34,7 +35,8 @@ angular.module('mainApp', [
     "zhishiku.Controller",
     "error.Controller",
     "usermanagement.Controller",
-    "groupmanagement.Controller"
+    "groupmanagement.Controller",
+    "msg.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
