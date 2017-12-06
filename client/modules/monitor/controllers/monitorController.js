@@ -1182,27 +1182,9 @@ CQ.mainApp.monitorController
             var cons = {};
             cons.userId = 1;
             var postData = [];
-            $scope.detailData.url=" ";
-            $scope.detailData.site_id=0;
-            $scope.detailData.site_name=" ";
-            $scope.detailData.topic_id=0;
-            $scope.detailData.data_type=0;
-            $scope.detailData.topic_name=" ";
-            $scope.detailData.html=" ";
-            $scope.detailData.st_time="2017-11-28";
-            $scope.detailData.add_time="2017-11-28";
-            $scope.detailData.read_num=0;
-            $scope.detailData.comm_num=0;
-            $scope.detailData.img_url=" "; 
-            $scope.detailData.repost_num=0;
-            $scope.detailData.lan_type=0;
-            $scope.detailData.repost_pt_id=" ";
-            $scope.detailData.text_type=0;
-            $scope.detailData.is_report=0;
-            
             postData.push($scope.detailData);
             cons.postData = postData;
-            PostDataService.addSenmessage(cons).then(function(res) {
+            PostDataService.addSenMessage(cons).then(function(res) {
                 console.log(res);
                 ngDialog.closeAll();
                 notice.notify_info("您好","添加成功！","",false,"","");

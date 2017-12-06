@@ -108,6 +108,8 @@ CQ.mainApp.senmessageController
                     }
                 });
                 $scope.sendata = res.postData;
+                console.log("zyz");
+                console.log(res.postData);
                 $scope.pages = Math.ceil(res.totalCount/10);
                 $scope.newpage = Math.ceil(res.totalCount/10);
                 for(var i=0;i<$scope.newpage;i++){
