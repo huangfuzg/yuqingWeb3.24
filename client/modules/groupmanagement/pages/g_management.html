@@ -1,0 +1,74 @@
+<div id="content" class="content">
+    <div class="row">
+                <!-- begin col-2 -->
+                <div class="col-md-1">
+                    <form>
+                        <div class="input-group m-b-15">
+                            <input type="text" class="form-control input-sm input-white" placeholder="Search" />
+                            <span class="input-group-btn">
+                                <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    <div class="accordion" id="accordion2">
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a style="font-size: 16px;color: #000000" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                    用户组管理
+                                </a>
+                            </div>
+                            <div id="collapseOne" class="accordion-body collapse" style="height: 0px; ">
+                                <ul class="nav nav-pills nav-stacked nav-inbox">
+                                    <li ng-repeat="(index, group) in data" id="{{index}}"><a href="javascript:;"><i class="fa fa-star fa-fw m-r-5" ng-click="showwhich()"></i>第{{index+1}}组</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                <!-- end col-2 -->
+                <!-- begin col-10 -->
+                <div class="col-md-11">
+                    <div class="email-btn-row hidden-xs">
+                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-plus m-r-5"></i> 添加组</a>
+                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-plus m-r-5"></i> 添加用户</a>
+                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-minus m-r-5"></i> 删除用户</a>
+                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit m-r-5"></i> 管理用户话题</a>
+                    </div>
+                    <div class="email-content"  ng-repeat="(index, group) in data">
+                        <table class="table table-email">
+                            <thead>
+                                <tr>
+                                    <th>用户组</th>
+                                    <th>用户名</th>
+                                    <th>密码</th>
+                                    <th>最近登录时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="man in group.member">
+                                <td style="width: 10%">{{index+1}}</td>
+                                <td style="width: 20%">{{man.username}}</td>
+                                <td style="width: 30%">{{man.password}}</td>
+                                <td style="width: 20%">{{man.time}}</td>
+                                <td style="width: 10%"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
+                        </tr>
+
+                            </tbody>
+                        </table>
+                        <div class="email-footer clearfix">
+                            <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
+                                <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
+                                <li class="disabled"><a href="javascript:;"><i class="fa fa-angle-left"></i></a></li>
+                                <li><a href="javascript:;"><i class="fa fa-angle-right"></i></a></li>
+                                <li><a href="javascript:;"><i class="fa fa-angle-double-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <!-- end col-10 -->
+            </div>
+</div>

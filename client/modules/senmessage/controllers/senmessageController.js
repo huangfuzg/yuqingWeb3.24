@@ -101,13 +101,14 @@ CQ.mainApp.senmessageController
                         "endDate":$scope.dataObj.endDate == "" ? '""' : $scope.dataObj.endDate
                 };
             SenFacService.getSenLists(cons).then(function(res) {
-               // console.log(res);
+                console.log(res);
                 res.postData.forEach(function(d) {
                     if(d.content.length > 40) {
                         d.content = d.content.substring(0, 40) + "...";
                     }
                 });
                 $scope.sendata = res.postData;
+                console.log($scope.sendata);
                 $scope.pages = Math.ceil(res.totalCount/10);
                 $scope.newpage = Math.ceil(res.totalCount/10);
                 for(var i=0;i<$scope.newpage;i++){

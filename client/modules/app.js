@@ -11,7 +11,9 @@ CQ.mainApp = {
     historyController:       angular.module("history.Controller",["historyService"]),
     friendLinkController:    angular.module("friendLink.Controller",[]),
     zhishikuController:      angular.module("zhishiku.Controller",["zhishikuService"]),
-    errorController:         angular.module("error.Controller",[])
+    errorController:         angular.module("error.Controller",[]),
+    usermanagementController:angular.module("usermanagement.Controller",[]),
+    groupmanagementController:angular.module("groupmanagement.Controller",[]),
 };
 angular.module('mainApp', [
     "ui.router",
@@ -30,12 +32,15 @@ angular.module('mainApp', [
     "history.Controller",
     "friendLink.Controller",
     "zhishiku.Controller",
-    "error.Controller"
+    "error.Controller",
+    "usermanagement.Controller",
+    "groupmanagement.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
             //Enable cross domain calls
             $httpProvider.defaults.useXDomain = true;
+            $httpProvider.interceptors.push('http-auth-interceptor');
             $urlRouterProvider.otherwise("/dashboard");
             // $stateProvider
             // .state('dashboard', {
