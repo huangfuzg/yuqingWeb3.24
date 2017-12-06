@@ -11,7 +11,8 @@ CQ.mainApp = {
     historyController:       angular.module("history.Controller",["historyService"]),
     friendLinkController:    angular.module("friendLink.Controller",[]),
     zhishikuController:      angular.module("zhishiku.Controller",["zhishikuService"]),
-    errorController:         angular.module("error.Controller",[])
+    errorController:         angular.module("error.Controller",[]),
+    msgController:           angular.module("msg.Controller",["msgService"])
 };
 angular.module('mainApp', [
     "ui.router",
@@ -30,7 +31,8 @@ angular.module('mainApp', [
     "history.Controller",
     "friendLink.Controller",
     "zhishiku.Controller",
-    "error.Controller"
+    "error.Controller",
+    "msg.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
