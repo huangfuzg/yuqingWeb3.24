@@ -49,6 +49,9 @@ CQ.mainApp.frameController
 					$state.go("yuqingTrendsController",{keywords:[$scope.searchword]});
 				}
 			}
+            $scope.viewmore = function () {
+                $state.go("showController")
+            }
 			$scope.logout = function()
 			{
 				accountManage.logout();
