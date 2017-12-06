@@ -11,5 +11,10 @@ CQ.mainApp.systemsettingController
                 url:"/userattr",
                 templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
                 controller: "roleSettingController"
+            })
+            .state("manageTopicController", {
+                url:"/manageTopic",
+                templateUrl: "/static/modules/systemsetting/pages/manageTopic.html",
+                controller: "manageTopicController"
             });
 }]);
