@@ -1,5 +1,24 @@
 "use strict";
 angular.module('commons',[])
+    .factory('Userattr', ['$resource','parseResource',function($resource,parseResource){
+        var factories = {};
+        factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "user_attr", parseResource.params, parseResource.actions);
+        return factories;
+    }])
+    // .factory("UserattrService",['Userattr', 'RestService', function(Userattr, RestService) {
+    //     var factories = {};
+    //     factories.getUserattrData = function(params) {
+    //         return RestService.get(Userattr.userattrData, params);
+    //     };
+    //     return factories;
+    // }])
+    .factory('UserattrService', ['$http', function($http){
+        var factories = {};
+        factories.getUserattrData = function() {
+            return $http.get("http://118.190.133.203:8100/yqdata/user_attr");
+        };
+        return factories;
+    }])
     .factory('crypto', function () {
         var ret = {};
         ret.md5 = function(str)
@@ -337,4 +356,3 @@ angular.module('commons',[])
         }
         return factories;
     }]);
-

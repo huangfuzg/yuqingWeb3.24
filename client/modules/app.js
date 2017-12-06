@@ -12,6 +12,8 @@ CQ.mainApp = {
     friendLinkController:    angular.module("friendLink.Controller",[]),
     zhishikuController:      angular.module("zhishiku.Controller",["zhishikuService"]),
     errorController:         angular.module("error.Controller",[]),
+    usermanagementController:angular.module("usermanagement.Controller",[]),
+    groupmanagementController:angular.module("groupmanagement.Controller",[]),
     msgController:           angular.module("msg.Controller",["msgService"])
 };
 angular.module('mainApp', [
@@ -32,6 +34,8 @@ angular.module('mainApp', [
     "friendLink.Controller",
     "zhishiku.Controller",
     "error.Controller",
+    "usermanagement.Controller",
+    "groupmanagement.Controller",
     "msg.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",

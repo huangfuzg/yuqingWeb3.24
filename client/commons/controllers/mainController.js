@@ -25,8 +25,15 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
-		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage','UserattrService',
+		function($scope, $rootScope, $state, $http,ngDialog,accountManage,UserattrService) {
+			// UserattrService.getUserattrData().then(function(res){
+			// 	//$rootScope.fusername = res.user_logintime;
+			// 	console.log(res);
+			// });
+			$http.get("http://118.190.133.203:8100/yqdata/user_attr").then(function(data){
+				console.log(data);
+			});
 			$rootScope.headerController = true;
 			$rootScope.fusername = "yuqing123";
 			$scope.pwdyes=true;
