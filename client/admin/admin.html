@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<title>高考舆情后端管理系统</title>
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<link rel="shortcut icon" href="/static/assets/icon/yuqing.png" type="image/x-icon">
+	
+	<!-- ================== BEGIN BASE CSS STYLE ================== -->
+	<link href="/static/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+	<link href="/static/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="/static/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="/static/assets/css/animate.min.css" rel="stylesheet" />
+	<link href="/static/assets/css/style.min.css" rel="stylesheet" />
+	<link href="/static/assets/css/style-responsive.min.css" rel="stylesheet" />
+	<link href="/static/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+	<!-- ================== END BASE CSS STYLE ================== -->
+	
+	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
+	<link href="/static/assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
+	<link href="/static/assets/plugins/bootstrap-datepicker/css/datepicker.css" rel="stylesheet" />
+	<link rel="stylesheet" href="/static/assets/plugins/selectize/dist/css/selectize.bootstrap3.css">
+	<link href="/static/assets/plugins/bootstrap-datepicker/css/datepicker3.css" rel="stylesheet" />
+    <link href="/static/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/static/assets/plugins/dc/dc.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/plugins/d3/bullet.css">
+    <link rel="stylesheet" type="text/css" href="/static/assets/plugins/c3/c3.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/ngDialog/css/ngDialog.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/commons/plugins/ngDialog/css/ngDialog-theme-default.css">
+    <link rel="stylesheet" href="/static/assets/plugins/query-builder/css/query-builder.default.css" id="qb-theme">
+	<!-- ================== END PAGE LEVEL STYLE ================== -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="/static/assets/plugins/pace/pace.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+</head>
+<body ng-controller="mainController">
+	<!-- begin #page-loader -->
+	<!-- <div id="page-loader" class="fade in"><span class="spinner"></span></div> -->
+	<!-- end #page-loader -->
+	
+	<!-- begin #page-container -->
+	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+		<div ng-include = "'/static/admin/commons/pages/header.html'" ng-controller = "headerController">
+		</div>
+		<div ng-include = "'/static/admin/commons/pages/leftbar.html'" ng-controller = "leftbarController">
+		</div>
+		<div>
+			<div ui-view></div>
+			<div id="load">
+				<div class="loader">
+					<div class="dot"></div>
+			        <div class="dot"></div>
+			        <div class="dot"></div>
+			        <div class="dot"></div>
+			        <div class="dot"></div>
+			    </div>
+			</div>
+		</div>
+		<!-- <div ng-include = "'/static/commons/pages/theme.html'" ng-controller = "themeController"></div>
+		</div> -->
+		<!-- begin #footer -->
+		<!-- <div id="footer" class="footer col-md-8">
+		    &copy; 2016 陕西省天地网实验室 All Rights Reserved
+		</div> -->
+		<!-- end #footer -->
+		<!-- begin scroll to top btn -->
+		<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+		<!-- end scroll to top btn -->
+	</div>
+	<!-- end page container -->
+	
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="/static/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+	<script src="/static/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+	<script src="/static/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script src="/static/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="assets/crossbrowserjs/respond.min.js"></script>
+		<script src="assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="/static/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="/static/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+	<!-- ================== END BASE JS ================== -->
+
+	<!-- ================== END CRYPTO JS ================== -->
+	<script type="text/javascript" src="/static/assets/plugins/crypto-js/crypto-js.js"></script>
+	<!-- ================== END CRYPTO JS ================== -->	
+	
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="/static/assets/plugins/gritter/js/jquery.gritter.js"></script>
+	<script src="/static/assets/plugins/flot/jquery.flot.min.js"></script>
+	<script src="/static/assets/plugins/flot/jquery.flot.time.min.js"></script>
+	<script src="/static/assets/plugins/flot/jquery.flot.resize.min.js"></script>
+	<script src="/static/assets/plugins/flot/jquery.flot.pie.min.js"></script>
+	<script src="/static/assets/plugins/sparkline/jquery.sparkline.js"></script>
+	<script src="/static/assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+	<script src="/static/assets/plugins/jquery-jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+	<script src="/static/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script src="/static/assets/js/dashboard.min.js"></script>
+	<script src="/static/assets/js/apps.min.js"></script>
+	<!-- ================== END PAGE LEVEL JS ================== -->
+
+
+	<!-- ================== CHart JS ================== -->
+    <script type="text/javascript" src="/static/assets/plugins/d3/d3.min.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/c3/c3.min.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/crossfilter/crossfilter.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/dc/dc.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/d3/bullet.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/echarts/echarts.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/echarts/echarts-wordcloud.js"></script>
+    <!-- ================== END CHart JS ================== -->
+
+	<!-- ================== ANGULAR BASE JS ================== -->
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs/angular-animate.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angularjs-ui/ui-bootstrap-tpls-0.13.0.min.js"></script>
+	<!-- ================== END ANGULAR BASE JS ================== -->
+
+	<!-- ================== ANGULAR PLUGINS JS ================== -->
+	<script type="text/javascript" src="/static/commons/plugins/tink-popover/tink-popover-angular.min.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/tree-control/angular-tree-control.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/ngDialog/js/ngDialog.min.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/ngfileupload/ng-file-upload-shim.min.js"></script>
+    <script type="text/javascript" src="/static/commons/plugins/ngfileupload/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="/static/assets/js/angular-drag/ngDraggable.js"></script>
+    <script type="text/javascript" src="/static/assets/plugins/tableExport/tableExport.js"></script>
+    <script src="/static/assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="/static/assets/plugins/jquery-extendext/jQuery.extendext.min.js"></script>
+    <script src="/static/assets/plugins/selectize/dist/js/standalone/selectize.min.js"></script>
+    <script src="/static/assets/plugins/sql-parser/browser/sql-parser.js"></script>
+	<script src="/static/assets/plugins/doT/doT.js"></script>
+	<script src="/static/assets/plugins/query-builder/js/query-builder.standalone.min.js"></script>
+	<script src="/static/assets/plugins/interact/interact.js"></script>
+	<script src="/static/assets/plugins/query-builder-elasticsearch/query-builder-elasticsearch.js"></script>
+	<script src="/static/assets/plugins/rasterizehtml/dist/rasterizeHTML.allinone.js"></script>
+	<!-- ================== END ANGULAR PLUGINS JS ================== -->
+
+	<!-- ================== COMMON DESIGN JS ================== -->
+	<script type="text/javascript" src = "/static/admin/modules/utils.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/app.js"></script>
+	<script type="text/javascript" src = "/static/admin/commons/service/settingServices.js"></script>
+	<script type="text/javascript" src = "/static/admin/commons/service/commonServices.js"></script>
+	<script type="text/javascript" src = "/static/admin/commons/service/noticeServices.js"></script>
+	<script type="text/javascript" src = "/static/admin/commons/controllers/mainController.js"></script>
+	<script type="text/javascript" src = "/static/admin/commons/directive/scroll-bottom.js"></script>
+	<!-- ================== END COMMON DESIGN JS ================== -->
+
+	<!-- ================== dashboard JS ================== -->
+	<script type="text/javascript" src = "/static/admin/modules/dashboard/controllers/dashboardController.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/dashboard/dashboardControllerSettings.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/dashboard/service/dashboardService.js"></script>
+	<!-- ================== END dashboard JS ================== -->
+
+	<!-- ================== content JS ================== -->
+	<script type="text/javascript" src = "/static/admin/modules/content/controllers/contentController.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/content/contentControllerSettings.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/content/service/contentService.js"></script>
+	<!-- ================== END content JS ================== -->
+
+	<!-- ================== usermanage JS ================== -->
+	<script type="text/javascript" src = "/static/admin/modules/usermanage/controllers/usermanageController.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/usermanage/usermanageControllerSettings.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/usermanage/service/usermanageService.js"></script>
+	<!-- ================== END usermanage JS ================== -->
+
+	<!-- ================== usergroupmanage JS ================== -->
+	<script type="text/javascript" src = "/static/admin/modules/usergroupmanage/controllers/usergroupmanageController.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/usergroupmanage/usergroupmanageControllerSettings.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/usergroupmanage/service/usergroupmanageService.js"></script>
+	<!-- ================== END usergroupmanage JS ================== -->
+	
+	<!-- ================== error JS ================== -->
+	<script type="text/javascript" src = "/static/admin/modules/error/controllers/errorController.js"></script>
+	<script type="text/javascript" src = "/static/admin/modules/error/errorControllerSettings.js"></script>
+	<!-- ================== END error JS ================== -->
+</body>
+</html>

@@ -43,7 +43,14 @@ function login() {
                 userinfo.permissionList = userPermissions[data.data.user_authority]||[];
                 console.log(userinfo); 
                 account_login(userinfo);
-                window.location.href = "index.html";
+                if(data.data.user_authority == 3)
+                {
+                    window.location.href = "admin.html";
+                }
+                else
+                {
+                    window.location.href = "index.html";
+                }
             }
             else
             {
