@@ -4,7 +4,7 @@ CQ.mainApp.dashboardController
     $stateProvider
         .state('dashboard', {
             url: "/dashboard",
-            templateUrl: "/static/admin/modules/error/pages/dashboard.html",
+            templateUrl: "/static/admin/modules/dashboard/pages/dashboard.html",
             controller: "dashboardController",
             permission:'3'
         });
