@@ -6,6 +6,6 @@ CQ.mainApp.dashboardController
             url: "/dashboard",
             templateUrl: "/static/admin/modules/dashboard/pages/dashboard.html",
             controller: "dashboardController",
-            permission:'3'
+            permission:'1'
         });
 }]);

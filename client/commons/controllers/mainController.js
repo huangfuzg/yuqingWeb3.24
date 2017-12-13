@@ -25,8 +25,8 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage','UserattrService',
-		function($scope, $rootScope, $state, $http,ngDialog,accountManage,UserattrService) {
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
+		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
 			// UserattrService.getUserattrData().then(function(res){
 			// 	//$rootScope.fusername = res.user_logintime;
 			// 	console.log(res);

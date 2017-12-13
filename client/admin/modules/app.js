@@ -135,4 +135,92 @@ angular.module('mainApp', [
             scope.$on('permissionsChanged', toggleVisibilityBasedOnPermission);
           }
         };
-      });
+    })
+    .directive('ngEditable', function(ngDialog) {
+        return {
+          link: function(scope, element, attrs) {
+            if(attrs.ngEditable !== false && attrs.ngEditable !== 'false')
+            {
+                var div = $('<div class="edit-container"></div>'),
+                edit_btn = $('<a href="javascript:void"></a>'),
+                remove_btn = $('<a href="javascript:void"></a>'),
+                style_btn = $('<a href="javascript:void"></a>'),
+                tagName = element[0].tagName,
+                editing = false;
+                // input = $('<textarea></textarea>');
+                // element.css({'-webkit-user-modify':'read-write-plaintext-only'});
+                element.parent().append(div);
+                div.append(remove_btn);
+                div.append(style_btn);
+                div.append(edit_btn);
+                // div.append(input);
+                div.append(element);
+                div.css({position:'relative',width:element.width()});
+                edit_btn.attr("title","编辑");
+                edit_btn.addClass('btn fa fa-edit pull-right');
+                edit_btn.css({'margin-top':element.height()/2-10});
+                edit_btn.click(function(){
+                    element.css({'-webkit-user-modify':'read-write-plaintext-only'});
+                    edit_btn.hide();
+                    remove_btn.hide();
+                    style_btn.hide();
+                    element.focus();
+                    editing = true;
+                    element.keyup(function(ev){
+                        if(attrs['ngBind']&&attrs['ngBind']!='')
+                        {
+                            scope[attrs['ngBind']] = element.text();
+                            scope.$digest();
+                        }
+                    });
+                    element.focusout(function(ev){
+                        element.css({'-webkit-user-modify':'read-only'});
+                        editing = false;
+                    });
+                });
+                remove_btn.attr("title","删除");
+                remove_btn.addClass('btn fa fa-trash-o pull-right');
+                remove_btn.css({'margin-top':element.height()/2-10});
+                remove_btn.click(function(){
+                    div.remove();
+                });
+                style_btn.attr("title","修改样式");
+                style_btn.addClass('btn fa fa-tags pull-right');
+                style_btn.css({'margin-top':element.height()/2-10});
+                style_btn.click(function(){
+                    ngDialog.open(
+                    {
+                        template: '/static/modules/senmessage/pages/addSenMessage.html',
+                        // controller: 'addSenMessage',
+                        // appendClassName: "ngdialog-theme-details",
+                        data: [],
+                        width: "100%",
+                        scope: scope
+                    });
+                });
+                div.hover(function(){
+                    if(!editing)
+                    {
+                        edit_btn.show();
+                        remove_btn.show();
+                        style_btn.show();
+                    }    
+                },function(){
+                    edit_btn.hide();
+                    remove_btn.hide();
+                    style_btn.hide();
+                });
+                // input.css({position:'absolute',width:'100%','min-height':'100%',border:'none','word-break':'break-all'});
+                // console.log(div);
+            }
+          }
+        };
+    })
+    .directive('ngAddelement', function() {
+        var elementList = []
+        return {
+          link: function(scope, element, attrs) {
+            
+          }
+        };
+    });
