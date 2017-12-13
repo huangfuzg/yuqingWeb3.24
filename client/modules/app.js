@@ -1,6 +1,6 @@
 "use strict";
 CQ.mainApp = {
-    frameController:         angular.module("frame.controller", ["settingservice"]),
+    frameController:         angular.module("frame.controller", ["settingservice","headerService"]),
     frameServices:           angular.module("frame.services", ["commons","Notice", "scrollBottom"]),
     dashboardController:     angular.module("dashboard.Controller", ["dashboardService"]),
     topicController:         angular.module("topic.Controller", ["topicService"]),

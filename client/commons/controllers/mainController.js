@@ -25,11 +25,45 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
-		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
-			// UserattrService.getUserattrData().then(function(res){
-			// 	//$rootScope.fusername = res.user_logintime;
-			// 	console.log(res);
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','$interval','ngDialog', 'accountManage','headerService',
+		function($scope, $rootScope, $state, $http,$interval,ngDialog,accountManage,headerService) {
+		console.log('+++++++++++');
+			$scope.delNot = function () {
+				$('#NotLabel').hide();
+            }
+            $scope.showdetail = function(msgid)
+            {
+                $state.go("detailController",{msgid:msgid});
+            }
+            var cons={}
+            headerService.getUnreadNum(cons).then(function (res) {
+                console.log('aaaaaa'+res);
+                $scope.unReadNum = res.unread_num;
+            })
+            headerService.getUnread(cons).then(function (res) {
+                console.log('bbbbbb'+res);
+                $scope.unReadList = res;
+            })
+            $interval(function () {
+                var cons={}
+                headerService.getUnreadNum(cons).then(function (res) {
+                    console.log('aaaaaa'+res);
+                    $scope.unReadNum = res.unread_num;
+                    // if($scope.unReadNum!=0){
+                            // $('#NotLabel').show();
+                    // }
+                })
+                headerService.getUnread(cons).then(function (res) {
+                    console.log('bbbbbb'+res);
+                    $scope.unReadList = res;
+                })
+			},20000);
+			$scope.sendmsg = function () {
+				$state.go('msgController');
+            }
+			// $scope.$watch($rootScope.curentUser,function(newValue,oldValue){
+			// 	$scope.curentUser = newValue;
+			// 	console.log($scope.curentUser);
 			// });
 			// $http.get("http://118.190.133.203:8100/yqdata/user_attr").then(function(data){
 			// 	console.log(data);

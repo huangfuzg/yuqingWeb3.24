@@ -227,29 +227,33 @@ angular.module('commons',[])
     }])
     .factory("RestService", ['$q', '$state', 'accountManage', 'crypto', function($q,$state,accountManage,crypto) {
         var factories = {};
-        factories.get = function(resource, params) {
-            $("#load").show();
+        factories.get = function(resource, params, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(params);
             var deferred = $q.defer();
             get(resource, params, deferred);
             return deferred.promise;
         };
-        factories.update = function(resource, params, data) {
-            $("#load").show();
+        factories.update = function(resource, params, data, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(data);
             var deferred = $q.defer();
             update(resource, params, data, deferred);
             return deferred.promise;
         };
-        factories.remove = function(resource, params) {
-            $("#load").show();
+        factories.remove = function(resource, params, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(params);
             var deferred = $q.defer();
             remove(resource, params, deferred);
             return deferred.promise;
         };
-        factories.create = function(resource, data) {
-            $("#load").show();
+        factories.create = function(resource, data, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(data);
             var deferred = $q.defer();
             create(resource, data, deferred);
