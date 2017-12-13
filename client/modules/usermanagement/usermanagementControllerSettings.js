@@ -7,11 +7,18 @@ CQ.mainApp.usermanagementController
 	            templateUrl: "/static/modules/usermanagement/pages/u_management.html",
 	            controller: "usermanagementController",
 	            permission:"2"
-	        });
+	        })
+	    
 	        // .state("usermanagementController", {
 	        //     url:"/management",
 	        //     templateUrl: "/static/modules/usermanagement/pages/a_management.html",
 	        //     controller: "usermanagementController",
 	        //     permission:"3"
 	        // });
+	        .state("managetopicController", {
+	            url:"/managetopic",
+	            templateUrl: "/static/modules/usermanagement/pages/managetopic.html",
+	            controller: "managetopicController",
+	            permission:"2"
+	        });
 	}]);

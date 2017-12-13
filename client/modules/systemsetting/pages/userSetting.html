@@ -58,10 +58,10 @@
                         <tr ng-repeat="topicItem in pageData">
                             <td style="width: 10%" ng-show = "false">{{topicItem.topicId}}</td>
                             
-                            <td style="width: 15%">{{topicItem.topicName}}</td>
-                            <td style="width: 30%">{{toStr(topicItem.topicKeywords)}}</td>
-                            <td style="width: 35%">{{topicItem.sitesStr}}</td>
-                            <td style="width: 10%"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
+                            <td style="width: 15%;vertical-align: middle">{{topicItem.topicName}}</td>
+                            <td style="width: 30%;vertical-align: middle">{{toStr(topicItem.topicKeywords)}}</td>
+                            <td style="width: 35%;vertical-align: middle">{{topicItem.sitesStr}}</td>
+                            <td style="width: 10%;vertical-align: middle"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -225,3 +225,5 @@
             </div>
         </div>
 </div>
+
+  

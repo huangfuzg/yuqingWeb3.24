@@ -15,27 +15,30 @@ CQ.mainApp.systemsettingController
                 $scope.page = 0;
                 $http.get(url1).success(function(data){
                     console.log(data);
-                    var dic=data.data;
+                    var dic=data.data.topic;
                     $scope.topicList=[];
                     for (var key in dic){
                         var topiclist=dic[key]; 
-                        topiclist[0].rowspan=topiclist.length;
-                        topiclist.forEach(function(d){
-                            d.username=key;
-                            sites = "";
-                            d.siteLists.forEach(function(site){
-                                if(sites != "")
-                                {
-                                    sites += ",";
-                                }
-                                if(site.siteName)
-                                {
-                                    sites += site.siteName;
-                                }
+                        if(topiclist.length!=0)
+                        {
+                            topiclist[0].rowspan=topiclist.length;
+                            topiclist.forEach(function(d){
+                                d.username=key;
+                                sites = "";
+                                d.siteLists.forEach(function(site){
+                                    if(sites != "")
+                                    {
+                                        sites += ",";
+                                    }
+                                    if(site.siteName)
+                                    {
+                                        sites += site.siteName;
+                                    }
+                                });
+                                d.sitesStr = sites;
+                                $scope.topicList.push(d);
                             });
-                            d.sitesStr = sites;
-                            $scope.topicList.push(d);
-                        });
+                        }
                     };
                     console.log($scope.topicList);                                               
                     $scope.topicCount = $scope.topicList.length;
@@ -48,33 +51,33 @@ CQ.mainApp.systemsettingController
             }
         });
 
-                $scope.onDragComplete = function($data,$event)
-                {
+        $scope.onDragComplete = function($data,$event)
+        {
 
-                };
+        };
 
-                $scope.onDropComplete = function($data,$event)
+        $scope.onDropComplete = function($data,$event)
+        {
+            for(var i = 0; i < $scope.allsites.length; i++)
+            {
+                for(var j = 0; j < $scope.allsites[i].detail_sites.length; j++)
                 {
-                    for(var i = 0; i < $scope.allsites.length; i++)
+                    if($scope.allsites[i].detail_sites[j].siteId == $data.siteId)
                     {
-                        for(var j = 0; j < $scope.allsites[i].detail_sites.length; j++)
+                        if($scope.allsites[i].detail_sites[j].selected)
                         {
-                            if($scope.allsites[i].detail_sites[j].siteId == $data.siteId)
-                            {
-                                if($scope.allsites[i].detail_sites[j].selected)
-                                {
-                                    return;
-                                }
-                                else
-                                {
-                                    $scope.allsites[i].detail_sites[j].selected = true;
-                                    $scope.topic.siteLists.push($data);
-                                    return;
-                                }
-                            }
+                            return;
+                        }
+                        else
+                        {
+                            $scope.allsites[i].detail_sites[j].selected = true;
+                            $scope.topic.siteLists.push($data);
+                            return;
                         }
                     }
-                };
+                }
+            }
+        };
         //拖动全选
         $scope.onAllDrag = function($data,$event)
         {
@@ -151,9 +154,11 @@ CQ.mainApp.systemsettingController
                     if(!!data.data)
                     {
                         $scope.topic.topicId = data.data;
+                        console.log("ZYZ");
                         console.log($scope.topic);
                     }
                     $scope.reload($scope.topic,"save");
+
                 }
                 // setTimeout(function(){
                 //     window.location.reload("index.html#/userSetting");
@@ -220,6 +225,31 @@ CQ.mainApp.systemsettingController
             $scope.topicNameEnable = false;
             $scope.submitUrl  = $scope.baseUrl + "/addtopic";
         }
+
+        //添加话题
+        $scope.newTopics = function()
+        {
+            var url1 = $scope.baseUrl+"/batchsetui";
+            $http.get(url1).success(function(data){
+                console.log(data);
+                $scope.grouplist=data.data;
+                $scope.modelName = "批量添加话题";
+                $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
+                $scope.topic.topicKeywords.push([]);
+                console.log($scope.allsites);
+                $scope.allsites.forEach(function(d1)
+                {
+                    d1.selected = false;
+                    d1.detail_sites.forEach(function(d){
+                        d.selected = false;
+                    });
+                });
+                console.log($scope.topic);
+                $scope.topicNameEnable = false;
+                $scope.submitUrl  = $scope.baseUrl + "/addtopics";
+            });
+        }
+
         //选择站点
         $scope.checkBoxChange = function(d,typesite)
         {
@@ -257,6 +287,7 @@ CQ.mainApp.systemsettingController
         //刷新
         $scope.reload = function(d,opretion)
         {
+
             if(opretion == "save" && $scope.modelName == "添加话题")
             {
                 d.sitesStr = "";
@@ -275,7 +306,6 @@ CQ.mainApp.systemsettingController
                 {
                     $scope.getDataByPage($scope.page);
                 }
-                $("#myModal").modal('hide');
                 $scope.topicCount++;
                 return true;
             }
@@ -291,32 +321,32 @@ CQ.mainApp.systemsettingController
                 {
                     if($scope.topicList[i].topicName == d.topicName)
                     {
-                     $scope.topicList[i] = d;
-                     $scope.pageData[i%$scope.pageSize] = d;
-                     $("#myModal").modal('hide');
-                     return true; 
-                 }
-             }
-         }
-         else if(opretion == "delete")
-         {
+                       $scope.topicList[i] = d;
+                       $scope.pageData[i%$scope.pageSize] = d;
+                       $("#myModal").modal('hide');
+                       return true; 
+                   }
+               }
+           }
+           else if(opretion == "delete")
+           {
             for(var i = 0; i < $scope.topicList.length; i++)
             {
                 if($scope.topicList[i].topicId == d)
                 {
-                 $scope.topicList.splice(i,1);
-                 $scope.getDataByPage($scope.page);
-                 $scope.topicCount--;
-                 return true; 
-             }
-         }
-     }
-     return false;
- }
+                   $scope.topicList.splice(i,1);
+                   $scope.getDataByPage($scope.page);
+                   $scope.topicCount--;
+                   return true; 
+               }
+           }
+       }
+       return false;
+   }
         //分页
         $scope.getDataByPage = function(page)
         {
-            
+
             $scope.maxPage = $scope.maxPage || 0;
             $scope.page = $scope.page || 0;
             if(page >= 0 && page<= $scope.maxPage)
@@ -330,11 +360,11 @@ CQ.mainApp.systemsettingController
             {
                 if(i==$scope.pageData.length-1||
                     $scope.pageData[i].username!=$scope.pageData[i+1].username)
-                    {
-                        $scope.pageData[0].rowspan=i+1;
-                        break;
-                    }
-            
+                {
+                    $scope.pageData[0].rowspan=i+1;
+                    break;
+                }
+
             }
             
             console.log($scope.pageData);
@@ -414,7 +444,8 @@ CQ.mainApp.systemsettingController
     }
 }])
 .controller("userSettingController", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function ($rootScope, 
-    $scope, $http, ngDialog, notice) {
+    $scope, $http, ngDialog, notice) 
+    {
     console.log("userSettingController", "start!!!");
     $scope.topic_id = null;
         //页面UI初始化；
@@ -422,12 +453,13 @@ CQ.mainApp.systemsettingController
             if($rootScope.mainController) {
                 $scope.userId = 1;
                 $scope.baseUrl = CQ.variable.RESTFUL_URL ;
-                var url = $scope.baseUrl+"/settopic?userId=" + $scope.userId;
+                var url = $scope.baseUrl+"/settopic";
+                //?userId=" + $scope.userId;
                 // var url = "/static/setup.json";
                 var sites = "";
                 $scope.page = 0;
                 $http.get(url).success(function(data){
-                    console.log(data.data.topicData);
+                    console.log(data);
                     data.data.topicData.forEach(function(d){
                         sites = "";
                         d.siteLists.forEach(function(site){
@@ -694,28 +726,28 @@ CQ.mainApp.systemsettingController
                 {
                     if($scope.topicList[i].topicName == d.topicName)
                     {
-                     $scope.topicList[i] = d;
-                     $scope.pageData[i%$scope.pageSize] = d;
-                     $("#myModal").modal('hide');
-                     return true; 
-                 }
-             }
-         }
-         else if(opretion == "delete")
-         {
-            for(var i = 0; i < $scope.topicList.length; i++)
-            {
-                if($scope.topicList[i].topicId == d)
+                       $scope.topicList[i] = d;
+                       $scope.pageData[i%$scope.pageSize] = d;
+                       $("#myModal").modal('hide');
+                       return true; 
+                   }
+               }
+           }
+           else if(opretion == "delete")
+           {
+                for(var i = 0; i < $scope.topicList.length; i++)
                 {
-                 $scope.topicList.splice(i,1);
-                 $scope.getDataByPage($scope.page);
-                 $scope.topicCount--;
-                 return true; 
-             }
-         }
-     }
-     return false;
- }
+                    if($scope.topicList[i].topicId == d)
+                    {
+                        $scope.topicList.splice(i,1);
+                        $scope.getDataByPage($scope.page);
+                        $scope.topicCount--;
+                        return true; 
+                    }
+                }
+            }
+            return false;
+        }
         //分页
         $scope.getDataByPage = function(page)
         {
@@ -730,7 +762,8 @@ CQ.mainApp.systemsettingController
             $scope.pageData = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
         };
         //修改话题
-        $scope.changeTopic = function(d){
+        $scope.changeTopic = function(d)
+        {
             console.log(d);
             $scope.modelName = "修改话题";
             $scope.topicNameEnable = true;
@@ -757,8 +790,8 @@ CQ.mainApp.systemsettingController
                         });
                         update(d3);
                     });
-                };
-            }]);
+        };
+    }]);
 
 CQ.mainApp.systemsettingController.directive('nameexistCheck', nameexistCheck);
 function nameexistCheck(){
