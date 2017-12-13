@@ -1,6 +1,6 @@
 "use strict";
 CQ.mainApp.usermanagementController
-    .controller('usermanagementController', ['$scope', '$rootScope', '$http','ngDialog', function($scope, $rootScope, $http,ngDialog){
+    .controller('usermanagementController', ['$scope', '$rootScope', '$state','$http','ngDialog', function($scope, $rootScope, $state,$http,ngDialog){
         //$rootScope.usermanagementController = true;
         console.log("usermanagementController started");
         $scope.pagelist = [];
@@ -13,7 +13,6 @@ CQ.mainApp.usermanagementController
             url:"/static/assets/data/user.json"
         }).then(function(res){
             $scope.data=res.data;
-            
             $scope.search = function()
             {
                 console.log($scope.data);
@@ -33,6 +32,25 @@ CQ.mainApp.usermanagementController
         },function(res) {
             console.log(res);
         });
+        $scope.adduser = function()
+        {
+            ngDialog.open(
+                {
+                    template: '/static/modules/usermanagement/pages/addUser.html',
+                    controller: 'addUser',
+                    width:"20%",
+                    scope:$scope
+                });
+        }
+        $scope.showUserattr = function(d)
+        {
+             $state.go("viewUserController",{userName:d}); 
+             console.log(d);  
+        };
+        $scope.editTopic = function()
+        {
+             $state.go("manageTopicController");
+        };
         $scope.selectBoxChange = function(d){
             if(d.selected)
             {
@@ -71,9 +89,7 @@ CQ.mainApp.usermanagementController
                 console.log(res);
             });
         };
-        $scope.changeTopic = function(d){
 
-        };
         $scope.remove = function(d)
         {
             $scope.user_id = d.auth;
@@ -87,6 +103,24 @@ CQ.mainApp.usermanagementController
             });
         };
         
+    }])
+    .controller("addUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
+        $http, ngDialog, notice) {
+        console.log("addUser");
+        var password_encode = function(pwd)
+        {
+            var secret = CQ.variable.SECRET,
+            secret_arr = secret.split(''),
+            hash = CryptoJS.SHA256(pwd+secret).toString().split(''),
+            char_index = c=>c-'a';
+            secret_arr.forEach(c=>{
+                if(hash[char_index(c)])
+                {
+                    hash[char_index(c)] = c;
+                }
+            });
+            return hash.join('');
+        }
     }])
     .controller("deleteUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
         $http, ngDialog, notice) {

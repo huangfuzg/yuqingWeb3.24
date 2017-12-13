@@ -6,6 +6,7 @@ CQ.mainApp.monitorController
         $timeout, notice) {
         console.log("monitorController", "start!!!");
         //页面UI初始化；
+        console.log($stateParams);
         $scope.topic_id = null;
         $scope.monitortopic_id = null;
         $scope.monitorData = null;

@@ -32,7 +32,7 @@ CQ.mainApp.msgController
             var E = window.wangEditor
             var editor1 = new E('#input')
             editor1.customConfig.debug = true
-            // editor1.customConfig.uploadImgShowBase64 = true
+            editor1.customConfig.uploadImgShowBase64 = true
             editor1.customConfig.menus = [
                 'head',         //标题
                 'bold',         //粗体
@@ -57,7 +57,10 @@ CQ.mainApp.msgController
                     desc:$scope.desc
                 };
                 msgService.sendMsg(cons).then(function(res) {
-                    console.log(res);
+                    console.log('+++++++++',res);
+                    if(res.success==true){
+                        alert('发送成功');
+                    }
                 });
             }, false)
 
