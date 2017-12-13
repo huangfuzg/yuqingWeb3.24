@@ -1,5 +1,5 @@
-// "use strict";
-// angular.module("usermanagementService", ["commons"])
+"use strict";
+angular.module("usermanagementService", ["commons"])
 // 	.factory("PostUserService", ["$http", function($http) {
 //         var factories = {};
 //         // flush data every 30s

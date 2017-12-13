@@ -1,13 +1,13 @@
 "use strict";
 CQ.mainApp.frameController
-	.config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
-			$stateProvider
-				.state("attrController", {
-	                url:"/userattr",
-	                templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
-	                controller: "headerController"
-	            });
-		}])
+	// .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider) {
+	// 		$stateProvider
+	// 			.state("attrController", {
+	//                 url:"/userattr",
+	//                 templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
+	//                 controller: "headerController"
+	//             });
+	// 	}])
 	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree', 
 		function($scope, $rootScope, $state, $http, DataSourceTreem) {
 		console.log("mainController", "start!");
@@ -31,24 +31,24 @@ CQ.mainApp.frameController
 			// 	//$rootScope.fusername = res.user_logintime;
 			// 	console.log(res);
 			// });
-			$http.get("http://118.190.133.203:8100/yqdata/user_attr").then(function(data){
-				console.log(data);
-			});
-			$rootScope.headerController = true;
-			$rootScope.fusername = "yuqing123";
-			$scope.pwdyes=true;
-			$rootScope.fbirth = "1949-10-01";
-			$rootScope.femail = "123456@xjtu.com";
-			$rootScope.fwork = "西安交通大学";
-			$rootScope.fdistrict = "陕西省西安市碑林区";
-			$scope.searchword = "";
-			// $scope.$watch($rootScope.curentUser,function(newValue,oldValue){
-			// 	$scope.curentUser = newValue;
-			// 	console.log($scope.curentUser);
+			// $http.get("http://118.190.133.203:8100/yqdata/user_attr").then(function(data){
+			// 	console.log(data);
 			// });
-			// $scope.curentUser = $rootScope.curentUser;
-			$(".form_datetime")
-                .datepicker({autoclose:true, format: 'yyyy-mm-dd'})
+			// $rootScope.headerController = true;
+			// $rootScope.fusername = "yuqing123";
+			// $scope.pwdyes=true;
+			// $rootScope.fbirth = "1949-10-01";
+			// $rootScope.femail = "123456@xjtu.com";
+			// $rootScope.fwork = "西安交通大学";
+			// $rootScope.fdistrict = "陕西省西安市碑林区";
+			// $scope.searchword = "";
+			// // $scope.$watch($rootScope.curentUser,function(newValue,oldValue){
+			// // 	$scope.curentUser = newValue;
+			// // 	console.log($scope.curentUser);
+			// // });
+			// // $scope.curentUser = $rootScope.curentUser;
+			// $(".form_datetime")
+   //              .datepicker({autoclose:true, format: 'yyyy-mm-dd'})
 			$scope.search = function()
 			{
 				if($scope.searchword != "")
@@ -68,73 +68,73 @@ CQ.mainApp.frameController
 				// 	console.log("logout!!!");
 				// });
 			}
-			$scope.changename = function(){
-				$scope.changed1 = true;
-			}
-			$scope.changebirth = function(){
-				$scope.changed2 = true;
-			}
-			$scope.changeemail = function(){
-				$scope.changed3 = true;
-			}
-			$scope.changework = function(){
-				$scope.changed4 = true;
-			}
-			$scope.changedistrict = function(){
-				$scope.changed5 = true;
-			}
+			// $scope.changename = function(){
+			// 	$scope.changed1 = true;
+			// }
+			// $scope.changebirth = function(){
+			// 	$scope.changed2 = true;
+			// }
+			// $scope.changeemail = function(){
+			// 	$scope.changed3 = true;
+			// }
+			// $scope.changework = function(){
+			// 	$scope.changed4 = true;
+			// }
+			// $scope.changedistrict = function(){
+			// 	$scope.changed5 = true;
+			// }
 			$scope.setattr = function()
 			{
-				$state.go("attrController");
+				$state.go("roleSettingController",{userName:$rootScope.curentUser});
 			}
-			$scope.validatepwd = function(){
-				if($('#pwd').val()==="yuqing")
-				{
-					$scope.changed6=true;
-					$scope.pwdyes=false;
-				}
-				else{
-					$scope.pwd=true;
-				}
-			}
-			$scope.savepwd = function(){
-				if($('#input6').val()===$('#input7').val()){
-					$scope.changed6=false;
-					$scope.pwdyes=true;
-					$('#pwd').val("");
-					$('#input6').val("");
-					$('#input7').val("");
-				}
-			}
-			$scope.saveattr = function(){
-				if($('#input1').val())
-				{
-					$rootScope.fusername = $scope.username;
-					//$rootScope.fusername = $('#input1').val();
-				}
-	            if($('#input2').val())
-	            {
-	            	$rootScope.fbirth = $('#input2').val();
-	            }
-	            if($('#input3').val())
-	            {
-	            	$rootScope.femail = $('#input3').val();
-	            }
-	            if($('#input4').val())
-	            {
-	            	$rootScope.fwork = $('#input4').val();
-	            }
-	            //$rootScope.fdistrict = $('.province cxselect option:selected').text();
-	            //$rootScope.fdistrict = $('.province cxselect').val();
-	            $rootScope.fdistrict = $(".province cxselect").find("option:selected").text();
-	            //+$('.city cxselect option:selected').text()+$('.area cxselect option:selected').text();
-	            console.log($rootScope.fdistrict);
-	            $scope.changed1 = false;
-	            $scope.changed2 = false;
-	            $scope.changed3 = false;
-	            $scope.changed4 = false;
-	            $scope.changed5 = false;
-        	}	
+			// $scope.validatepwd = function(){
+			// 	if($('#pwd').val()==="yuqing")
+			// 	{
+			// 		$scope.changed6=true;
+			// 		$scope.pwdyes=false;
+			// 	}
+			// 	else{
+			// 		$scope.pwd=true;
+			// 	}
+			// }
+			// $scope.savepwd = function(){
+			// 	if($('#input6').val()===$('#input7').val()){
+			// 		$scope.changed6=false;
+			// 		$scope.pwdyes=true;
+			// 		$('#pwd').val("");
+			// 		$('#input6').val("");
+			// 		$('#input7').val("");
+			// 	}
+			// }
+			// $scope.saveattr = function(){
+			// 	if($('#input1').val())
+			// 	{
+			// 		$rootScope.fusername = $scope.username;
+			// 		//$rootScope.fusername = $('#input1').val();
+			// 	}
+	  //           if($('#input2').val())
+	  //           {
+	  //           	$rootScope.fbirth = $('#input2').val();
+	  //           }
+	  //           if($('#input3').val())
+	  //           {
+	  //           	$rootScope.femail = $('#input3').val();
+	  //           }
+	  //           if($('#input4').val())
+	  //           {
+	  //           	$rootScope.fwork = $('#input4').val();
+	  //           }
+	  //           //$rootScope.fdistrict = $('.province cxselect option:selected').text();
+	  //           //$rootScope.fdistrict = $('.province cxselect').val();
+	  //           $rootScope.fdistrict = $(".province cxselect").find("option:selected").text();
+	  //           //+$('.city cxselect option:selected').text()+$('.area cxselect option:selected').text();
+	  //           console.log($rootScope.fdistrict);
+	  //           $scope.changed1 = false;
+	  //           $scope.changed2 = false;
+	  //           $scope.changed3 = false;
+	  //           $scope.changed4 = false;
+	  //           $scope.changed5 = false;
+   //      	}	
 			console.log("headerController", "start!");
 	}])
 	.controller('leftbarController', ['$scope', '$rootScope', '$state', 'DataSourceTree',"$http", 

@@ -7,6 +7,7 @@ CQ.mainApp = {
     usergroupmanageController:     angular.module("usergroupmanage.Controller", []),
     usermanageController:     angular.module("usermanage.Controller", []),
     errorController:     angular.module("error.Controller", []),
+    systemsettingController:    angular.module("systemsetting.Controller", ["systemsettingService"])
 };
 angular.module('mainApp', [
     "ui.router",
@@ -20,7 +21,8 @@ angular.module('mainApp', [
     "content.Controller",
     "usergroupmanage.Controller",
     "usermanage.Controller",
-    "error.Controller"
+    "error.Controller",
+    "systemsetting.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

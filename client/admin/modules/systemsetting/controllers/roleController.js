@@ -1,7 +1,7 @@
 "use strict";
 CQ.mainApp.systemsettingController
-    .controller("roleSettingController", ["$rootScope", "$scope","$stateParams","UserattrService","WatchattrService","$http",function ($rootScope, $scope,$stateParams,UserattrService,WatchattrService,$http) {
-            //$rootScope.fusername = "yuqing123";
+    .controller("roleSettingController", ["$rootScope", "$scope","$stateParams","$http",function ($rootScope, $scope,$stateParams,$http) {
+            $scope.fusername = "yuqing123";
             $scope.pwdyes=true;
             $scope.fbirth = "1949-10-01";
             $scope.femail = "123456@xjtu.com";
@@ -11,17 +11,12 @@ CQ.mainApp.systemsettingController
             //  $scope.curentUser = newValue;
             //  console.log($scope.curentUser);
             // });
-            UserattrService.getUserattrData().then(function(res){
-             //$rootScope.fusername = res.user_logintime;
-             console.log(res);
-             $scope.fusername=res.user_account;
-            });
-            // WatchattrService.getUserattrData({username:'sxuser'}).then(function(res) {
-            //     console.log(res);
+            // UserattrService.getUserattrData().then(function(res){
+            //  //$rootScope.fusername = res.user_logintime;
+            //  console.log(res);
             // });
-            // $http.get("http://118.190.133.203:8899/yqdata/watch_user_attr",{username:"sxuser"}).then(function(data){
-            //     console.log(data.data.data);
-            //     $rootScope.fusername=data.data.data.user_account;
+            // $http.get("http://118.190.133.203:8100/yqdata/user_attr").then(function(data){
+            //     console.log(data);
             // });
             $(".form_datetime")
                 .datepicker({autoclose:true, format: 'yyyy-mm-dd'});

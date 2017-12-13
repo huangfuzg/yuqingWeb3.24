@@ -36,6 +36,10 @@ CQ.mainApp.frameController
 				// 	console.log("logout!!!");
 				// });
 			}
+			$scope.setattr = function()
+			{
+				$state.go("roleSettingController",{userName:$rootScope.curentUser});
+			}
 			console.log("headerController", "start!");
 	}])
 	.controller('leftbarController', ['$scope', '$rootScope', '$state', 'DataSourceTree',"$http", 

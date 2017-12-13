@@ -27,10 +27,10 @@ li{
 
 </style>
 <div id="content" class="content">
-    <h1 class="page-header">用户设置</h1> 
+    <h1 class="page-header">查看组内用户属性</h1> 
     <ul class="nav nav-pills">
         <li class="active"><a href="#nav-pills-tab-1" data-toggle="tab">基本资料</a></li>
-        <li><a href="#nav-pills-tab-2" data-toggle="tab">账号设置</a></li>
+        <li><a href="#nav-pills-tab-2" data-toggle="tab" ng-show="false">账号设置</a></li>
         <li><a href="#nav-pills-tab-3" data-toggle="tab" ng-show="false">Pills Tab 3</a></li>
         <li><a href="#nav-pills-tab-4" data-toggle="tab" ng-show="false">Pills Tab 4</a></li>
     </ul>
@@ -103,7 +103,7 @@ li{
                 <div class="form-group" >
                     <label class="control-label col-md-1"></label>
                     <div class="col-md-1 text-left">
-                        <a href="#modal-dialog1" class="btn btn-sm btn-primary" data-toggle="modal" ng-disabled="myForm.username.$dirty && myForm.username.$invalid ||  myForm.email.$dirty && myForm.email.$invalid">保存</a>
+                        <a href="#modal-dialog1" class="btn btn-sm btn-inverse" data-toggle="modal" ng-disabled="myForm.username.$dirty && myForm.username.$invalid ||  myForm.email.$dirty && myForm.email.$invalid">保存</a>
                     </div>
                 </div>              
             </form> 
