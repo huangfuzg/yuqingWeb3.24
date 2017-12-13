@@ -8,8 +8,13 @@ CQ.mainApp.systemsettingController
                 controller: "userSettingController"
             })
             .state("roleSettingController", {
-                url:"/userattr",
+                url:"/userattr/:userName",
                 templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
                 controller: "roleSettingController"
+            })
+            .state("manageTopicController", {
+                url:"/manageTopic",
+                templateUrl: "/static/modules/systemsetting/pages/manageTopic.html",
+                controller: "manageTopicController"
             });
 }]);

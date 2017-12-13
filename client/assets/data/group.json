@@ -1,0 +1,71 @@
+[
+	{
+		"username":"admin",
+		"password":"admin",
+		"id":"1",
+		"group":"1",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"admina",
+		"password":"admin",
+		"id":"2",
+		"group":"1",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"sxadmin",
+		"password":"sxadmin",
+		"id":"3",
+		"group":"1",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"aadmin",
+		"password":"aadmin",
+		"id":"4",
+		"group":"2",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"aaadmin",
+		"password":"aaadmin",
+		"id":"5",
+		"group":"2",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"sasasadmin",
+		"password":"sasaadmin",
+		"id":"6",
+		"group":"2",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"ssasadmin",
+		"password":"sasadmin",
+		"id":"7",
+		"group":"3",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"sasasadmin",
+		"password":"sasaadmin",
+		"id":"8",
+		"group":"3",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"sasasadmin",
+		"password":"sasaadmin",
+		"id":"9",
+		"group":"3",
+		"time":"2017/6/1 04:35:24"
+	},
+	{
+		"username":"sasasadmin",
+		"password":"sasaadmin",
+		"id":"10",
+		"group":"3",
+		"time":"2017/6/1 04:35:24"
+	}]

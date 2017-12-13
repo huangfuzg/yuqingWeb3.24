@@ -1,0 +1,133 @@
+treecontrol {
+    /* prevent user selection */
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-weight: 400;
+    line-height: 1.49;
+    color: #555;
+    text-decoration: none;
+}
+
+treecontrol ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    overflow: hidden;
+}
+
+treecontrol li {
+    position: relative;
+    padding: 0 0 0 20px;
+    line-height: 30px;
+}
+
+li.tree-collapsed span.tree-branch-head,
+li.tree-expanded span.tree-branch-head,
+li.tree-leaf span.tree-branch-head {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 20px;
+    background: url("../images/icons.gif") no-repeat;
+    background-position: 0 0;
+}
+
+li.tree-leaf span.tree-branch-head i.file{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+}
+
+li.tree-expanded span.tree-branch-head:hover {
+    background-position: -48px -80px;
+}
+
+li.tree-expanded span.tree-branch-head {
+    background-position: -32px -80px;
+}
+
+li.tree-collapsed span.tree-branch-head:hover {
+    background-position: -16px -80px;
+}
+
+li.tree-collapsed span.tree-branch-head {
+    background-position: 0 -80px;
+}
+
+.tree-title {
+    display: inline-block;
+    color: #666;
+    vertical-align: top;
+    width: 100%;
+    cursor: pointer;
+    padding-left: 5px;
+}
+
+i.file {
+    margin-top: 6px;
+    width: 16px !important;
+    height: 16px;
+    display: inline-block !important;
+    margin-left: 10px;
+    margin-right: 5px;
+    line-height: 30px;
+    background: url("../images/icons.gif") no-repeat;
+}
+
+treecontrol li.tree-expanded span.tree-leaf-head,
+treecontrol li.tree-collapsed span.tree-leaf-head {
+    display: none;
+}
+
+treecontrol li.tree-expanded span.tree-branch-head,
+treecontrol li.tree-collapsed span.tree-branch-head {
+    display: inline;
+}
+
+treecontrol li.tree-leaf span.tree-branch-head {
+    display: none;
+}
+
+treecontrol li.tree-leaf span.tree-leaf-head {
+    display: inline;
+    margin-left: 10px;
+}
+
+treecontrol li span.tree-branch-head {
+    cursor: pointer;
+}
+
+treecontrol li .tree-label {
+    cursor: pointer;
+    display: inline-block;
+    line-height: 30px;
+    width: 80%;
+}
+
+treecontrol li .tree-unselectable {
+    cursor: not-allowed;
+}
+
+.tree-selected  .tree-title{
+    background-color: #EEE;
+    padding-left: 5px;
+    font-weight: bold;
+    color: #3498db;
+}
+
+.tree-unselectable .tree-title{
+    color: #ddd;
+}
+.tree-label {
+    border: 1px solid transparent;
+}
+
+.tree-label:hover {
+    background-color: #EEE;
+    border-color: #CCC;
+}

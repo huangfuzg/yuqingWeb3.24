@@ -35,7 +35,7 @@ angular.module('commons',[])
                 mode: CryptoJS.mode.CBC,
                 padding: CryptoJS.pad.Pkcs7
             }).toString();
-        }
+        } 
         ret.aesDecrypt = function(str)
         {
             var secret = CQ.variable.SECRET,
@@ -171,7 +171,7 @@ angular.module('commons',[])
         return {
             request: function(config){
                 config.headers = config.headers || {};
-                config.headers.authorization = crypto.b64encode(accountManage.getToken()+'#'+Math.random()*100000+'#'+(new Date()).getTime());
+                config.headers.authorization = crypto.b64encode(accountManage.getToken()+'.'+Math.random()*900+100+'.'+(new Date()).getTime());
                 return config;
             },
             responseError: function (response) {
