@@ -104,9 +104,7 @@
                             <a title="最小化" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-warning" ng-click="panelCollapse(items.topicId)"><i class="fa fa-minus"></i></a>
                             <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="openModal(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
                         </div>
-                        <h4 class="panel-title f-s-15">{{items.topicName}}</h4>
-                        <h4 class = "media-heading f-s-14" title = "发现用户" ng-permission="2">发现用户:{{}} </h4>
-                                           
+                        <h4 class="panel-title f-s-15" title="发现用户："+{{}}>{{items.topicName}}</h4>                                                                
                     </div>
                     <div class="panel-body">
                         <div  class = "">

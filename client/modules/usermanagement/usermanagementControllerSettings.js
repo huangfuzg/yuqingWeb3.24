@@ -19,4 +19,10 @@ CQ.mainApp.usermanagementController
 	        //     controller: "usermanagementController",
 	        //     permission:"3"
 	        // });
+	        .state("managetopicController", {
+	            url:"/managetopic",
+	            templateUrl: "/static/modules/usermanagement/pages/managetopic.html",
+	            controller: "managetopicController",
+	            permission:"2"
+	        });
 	}]);
