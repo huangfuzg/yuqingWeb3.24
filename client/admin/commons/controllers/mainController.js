@@ -25,8 +25,8 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage','UserattrService',
-		function($scope, $rootScope, $state, $http,ngDialog,accountManage,UserattrService) {
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
+		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
 			$scope.logout = function()
 			{
 				accountManage.logout();

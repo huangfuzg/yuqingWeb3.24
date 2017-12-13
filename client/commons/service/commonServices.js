@@ -1,18 +1,5 @@
 "use strict";
 angular.module('commons',[])
-    .factory('Userattr', ['$resource','parseResource',function($resource,parseResource){
-        var factories = {};
-        factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "user_attr", parseResource.params, parseResource.actions);
-        return factories;
-    }])
-    // .factory("UserattrService",['Userattr', 'RestService', function(Userattr, RestService) {
-    //     var factories = {};
-    //     factories.getUserattrData = function(params) {
-    //         return RestService.get(Userattr.userattrData, params);
-    //     };
-    //     return factories;
-    // }])
-    
     .factory('crypto', function () {
         var ret = {};
         ret.md5 = function(str)
@@ -48,7 +35,7 @@ angular.module('commons',[])
                 mode: CryptoJS.mode.CBC,
                 padding: CryptoJS.pad.Pkcs7
             }).toString();
-        }
+        } 
         ret.aesDecrypt = function(str)
         {
             var secret = CQ.variable.SECRET,
@@ -184,7 +171,7 @@ angular.module('commons',[])
         return {
             request: function(config){
                 config.headers = config.headers || {};
-                config.headers.authorization = crypto.b64encode(accountManage.getToken()+'#'+Math.random()*100000+'#'+(new Date()).getTime());
+                config.headers.authorization = crypto.b64encode(accountManage.getToken()+'.'+Math.random()*900+100+'.'+(new Date()).getTime());
                 return config;
             },
             responseError: function (response) {
@@ -350,3 +337,4 @@ angular.module('commons',[])
         }
         return factories;
     }]);
+
