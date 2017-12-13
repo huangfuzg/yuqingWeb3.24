@@ -6,6 +6,7 @@ angular.module("msgService", ["commons"])
         factories.pushMsg = $resource(CQ.variable.RESTFUL_URL+"pushmsg", parseResource.params, parseResource.actions);
         // factories.sendMsg = $resource("http://118.190.133.203:8100/yqdata/send_user_msg", parseResource.params, parseResource.actions);
         // factories.pushMsg = $resource("http://118.190.133.203:8100/yqdata/pushmsg", parseResource.params, parseResource.actions);
+        // factories.showdetailMsg = $resource("http://118.190.133.203:8100/yqdata/showmsgdetail", parseResource.params, parseResource.actions);
         factories.deluserMsg = $resource(CQ.variable.RESTFUL_URL+"delusermsg", parseResource.params, parseResource.actions);
         factories.showdetailMsg = $resource(CQ.variable.RESTFUL_URL+"showmsgdetail", parseResource.params, parseResource.actions);
         factories.getuser = $resource(CQ.variable.RESTFUL_URL+"send_user_msg_ui", parseResource.params, parseResource.actions);

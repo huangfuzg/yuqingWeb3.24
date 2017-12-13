@@ -25,8 +25,40 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
-		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','$interval','ngDialog', 'accountManage','headerService',
+		function($scope, $rootScope, $state, $http,$interval,ngDialog,accountManage,headerService) {
+		console.log('+++++++++++');
+			$scope.delNot = function () {
+				$('#NotLabel').hide();
+            }
+            $scope.showdetail = function(msgid)
+            {
+                $state.go("detailController",{msgid:msgid});
+            }
+            var cons={}
+            headerService.getUnreadNum(cons).then(function (res) {
+                console.log('aaaaaa'+res);
+                $scope.unReadNum = res.unread_num;
+            })
+            headerService.getUnread(cons).then(function (res) {
+                console.log('bbbbbb'+res);
+                $scope.unReadList = res;
+            })
+            $interval(function () {
+                var cons={}
+                headerService.getUnreadNum(cons).then(function (res) {
+                    console.log('aaaaaa'+res);
+                    $scope.unReadNum = res.unread_num;
+                    // if($scope.unReadNum!=0){
+                            // $('#NotLabel').show();
+                    // }
+                })
+                headerService.getUnread(cons).then(function (res) {
+                    console.log('bbbbbb'+res);
+                    $scope.unReadList = res;
+                })
+			},20000)
+
 			$rootScope.headerController = true;
 			$rootScope.fusername = "yuqing123";
 			$scope.pwdyes=true;
@@ -35,6 +67,9 @@ CQ.mainApp.frameController
 			$rootScope.fwork = "西安交通大学";
 			$rootScope.fdistrict = "陕西省西安市碑林区";
 			$scope.searchword = "";
+			$scope.sendmsg = function () {
+				$state.go('msgController');
+            }
 			// $scope.$watch($rootScope.curentUser,function(newValue,oldValue){
 			// 	$scope.curentUser = newValue;
 			// 	console.log($scope.curentUser);
