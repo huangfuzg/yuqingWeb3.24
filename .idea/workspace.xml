@@ -3,17 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="48ea3db1-9eba-4424-9362-02041f89af53" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/commons/controllers/mainController.js" afterPath="$PROJECT_DIR$/client/commons/controllers/mainController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/commons/pages/header.html" afterPath="$PROJECT_DIR$/client/commons/pages/header.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/commons/service/commonServices.js" afterPath="$PROJECT_DIR$/client/commons/service/commonServices.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/index.html" afterPath="$PROJECT_DIR$/client/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/app.js" afterPath="$PROJECT_DIR$/client/modules/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/msg/controllers/msgController.js" afterPath="$PROJECT_DIR$/client/modules/msg/controllers/msgController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/msg/controllers/showController.js" afterPath="$PROJECT_DIR$/client/modules/msg/controllers/showController.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html" afterPath="$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/msg/pages/send.html" afterPath="$PROJECT_DIR$/client/modules/msg/pages/send.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/msg/pages/show.html" afterPath="$PROJECT_DIR$/client/modules/msg/pages/show.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/msg/service/msgService.js" afterPath="$PROJECT_DIR$/client/modules/msg/service/msgService.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -60,28 +52,58 @@
       <file leaf-file-name="msgController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1116">
-              <caret line="62" column="21" lean-forward="false" selection-start-line="62" selection-start-column="21" selection-end-line="62" selection-end-column="21" />
+            <state relative-caret-position="512">
+              <caret line="62" column="51" lean-forward="false" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="headerService.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/commons/service/headerService.js">
+      <file leaf-file-name="msgdetailController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgdetailController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="5" column="125" lean-forward="false" selection-start-line="5" selection-start-column="125" selection-end-line="5" selection-end-column="125" />
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="msgdetail.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dashboardController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/modules/dashboard/controllers/dashboardController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="185">
+              <caret line="232" column="83" lean-forward="false" selection-start-line="232" selection-start-column="20" selection-end-line="232" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="msgService.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/modules/msg/service/msgService.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="noticeServices.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/commons/service/noticeServices.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18">
+              <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="msgdetail.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+            <state relative-caret-position="296">
+              <caret line="21" column="55" lean-forward="false" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -91,20 +113,30 @@
         <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/showController.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="231">
-              <caret line="89" column="41" lean-forward="true" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
+              <caret line="89" column="41" lean-forward="false" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="show.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mainController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/commons/controllers/mainController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="864">
+              <caret line="48" column="35" lean-forward="false" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="show.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/show.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
+            <state relative-caret-position="321">
+              <caret line="117" column="48" lean-forward="false" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
               <folding>
                 <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#span#0;n#div#3;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#2;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -121,10 +153,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>table</find>
-      <find>getTimeData</find>
-      <find>tableData</find>
-      <find>tablepage</find>
       <find>index</find>
       <find>pageset</find>
       <find>isA</find>
@@ -151,6 +179,10 @@
       <find>Rest</find>
       <find>showdetail</find>
       <find>wrapper</find>
+      <find>email-checkbox</find>
+      <find>email-info</find>
+      <find>Notice</find>
+      <find>notice</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -176,16 +208,16 @@
         <option value="$PROJECT_DIR$/client/modules/dashboard/controllers/dashboardController.js" />
         <option value="$PROJECT_DIR$/client/modules/msg/controllers/showController.js" />
         <option value="$PROJECT_DIR$/client/index.html" />
-        <option value="$PROJECT_DIR$/client/modules/msg/service/msgService.js" />
-        <option value="$PROJECT_DIR$/client/modules/msg/controllers/msgController.js" />
         <option value="$PROJECT_DIR$/client/modules/app.js" />
         <option value="$PROJECT_DIR$/client/commons/pages/header.html" />
         <option value="$PROJECT_DIR$/client/commons/controllers/mainController.js" />
         <option value="$PROJECT_DIR$/client/commons/service/commonServices.js" />
         <option value="$PROJECT_DIR$/client/commons/service/headerService.js" />
         <option value="$PROJECT_DIR$/client/modules/msg/pages/send.html" />
-        <option value="$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html" />
         <option value="$PROJECT_DIR$/client/modules/msg/pages/show.html" />
+        <option value="$PROJECT_DIR$/client/modules/msg/service/msgService.js" />
+        <option value="$PROJECT_DIR$/client/modules/msg/controllers/msgController.js" />
+        <option value="$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html" />
       </list>
     </option>
   </component>
@@ -199,8 +231,8 @@
     <handled-path value="$PROJECT_DIR$/server/node_modules" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="142" />
-    <option name="y" value="219" />
+    <option name="x" value="65" />
+    <option name="y" value="478" />
     <option name="width" value="1853" />
     <option name="height" value="1076" />
   </component>
@@ -260,14 +292,6 @@
               <item name="msg" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="yuqingWeb3.24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="msg" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -319,12 +343,12 @@
       <workItem from="1509541531824" duration="180000" />
       <workItem from="1511767220058" duration="265000" />
       <workItem from="1512533216694" duration="375000" />
-      <workItem from="1513085000007" duration="27493000" />
+      <workItem from="1513085000007" duration="32398000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61565000" />
+    <option name="totallyTimeSpent" value="66470000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
@@ -543,14 +567,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/dashboard/controllers/dashboardController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="302" column="30" lean-forward="false" selection-start-line="302" selection-start-column="16" selection-end-line="302" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/dashboard/pages/dashboard.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -579,14 +595,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/commons/service/noticeServices.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/commons/service/settingServices.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -598,14 +606,6 @@
     <entry file="file://$PROJECT_DIR$/client/commons/service/encryptService.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1728">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgdetailController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
@@ -643,14 +643,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/msg/service/msgService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="77" lean-forward="false" selection-start-line="6" selection-start-column="42" selection-end-line="6" selection-end-column="77" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/commons/pages/header.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -678,7 +670,7 @@
     <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/showController.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
-          <caret line="89" column="41" lean-forward="true" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
+          <caret line="89" column="41" lean-forward="false" selection-start-line="89" selection-start-column="41" selection-end-line="89" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -691,26 +683,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/commons/controllers/mainController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="47" column="26" lean-forward="false" selection-start-line="47" selection-start-column="26" selection-end-line="47" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/send.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
           <caret line="16" column="61" lean-forward="false" selection-start-line="16" selection-start-column="61" selection-end-line="16" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1116">
-          <caret line="62" column="21" lean-forward="false" selection-start-line="62" selection-start-column="21" selection-end-line="62" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -723,22 +699,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html">
+    <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/show.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" column="39" lean-forward="false" selection-start-line="2" selection-start-column="39" selection-end-line="2" selection-end-column="39" />
+        <state relative-caret-position="321">
+          <caret line="117" column="48" lean-forward="false" selection-start-line="117" selection-start-column="48" selection-end-line="117" selection-end-column="48" />
+          <folding>
+            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#2;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/msg/service/msgService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="21" lean-forward="true" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/show.html">
+    <entry file="file://$PROJECT_DIR$/client/commons/controllers/mainController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="864">
+          <caret line="48" column="35" lean-forward="false" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/commons/service/noticeServices.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
-          <caret line="1" column="20" lean-forward="false" selection-start-line="1" selection-start-column="20" selection-end-line="1" selection-end-column="20" />
-          <folding>
-            <element signature="n#style#0;n#h2#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#div#3;n#li#0;n#ul#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+          <caret line="1" column="22" lean-forward="false" selection-start-line="1" selection-start-column="16" selection-end-line="1" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/dashboard/controllers/dashboardController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="232" column="83" lean-forward="false" selection-start-line="232" selection-start-column="20" selection-end-line="232" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="62" column="51" lean-forward="false" selection-start-line="62" selection-start-column="51" selection-end-line="62" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgdetailController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/msgdetail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="21" column="55" lean-forward="false" selection-start-line="21" selection-start-column="55" selection-end-line="21" selection-end-column="55" />
+          <folding />
         </state>
       </provider>
     </entry>
