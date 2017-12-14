@@ -1,5 +1,55 @@
-<script src="../../../../../coloradmin2.1/color-admin-v2.1/admin/html/assets/js/email-inbox-v2.demo.min.js"></script>
-<div class="content ">
+<!--<script src="../../../../../coloradmin2.1/color-admin-v2.1/admin/html/assets/js/email-inbox-v2.demo.min.js"></script>-->
+<style>
+    .vertical-box{
+        display: table;
+        table-layout: fixed;
+        border-spacing: 0;
+        height: 100%;
+        width: 100%;
+    }
+    .vertical-box-column{
+        display: table-cell;
+        vertical-align: top;
+        height: 100%;
+    }
+    .bg-silver-lighter{
+        background: #f4f6f7!important;
+    }
+    .p-15, .wrapper{
+        padding: 15px!important;
+    }
+    .list-email{
+        margin-bottom: 0;
+        border-top: 1px solid #e2e7eb;
+        border-bottom: 1px solid #e2e7eb;
+    }
+    .list-group{
+        padding-left: 0;
+        margin-bottom: 20px;
+    }
+    ul{
+        display: block;
+        list-style-type: disc;
+         -webkit-margin-before: 1em;
+         -webkit-margin-after: 1em;
+         -webkit-margin-start: 0px;
+         -webkit-margin-end: 0px;
+         -webkit-padding-start: 40px;
+        margin-top: 0;
+    }
+    .list-group-item{
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+    .list-email .email-checkbox+.email-checkbox+.email-user+.email-info{
+        margin-left: 125px;
+    }
+</style>
+<div class="content">
     <div class="vertical-box">
         <div class="vertical-box-column">
             <div class="wrapper bg-silver-lighter" >
@@ -61,18 +111,16 @@
                         <!--<i class="fa fa-2x fa-envelope" ng-if="!item.is_read"></i>-->
                         <!--<i class="fa fa-2x fa-envelope-o" ></i>-->
                     </div>
-                    <div >
-                        <a href="" ng-click="showdetail(item._id)" class="email-user" style="padding: 5px;">
+                        <a href="" ng-click="showdetail(item._id)" class="email-user">
                             <img src="/static/assets/img/user-13.jpg" alt="" />
                         </a>
-                    </div>
                     <div class="email-info">
-                        <span class="email-time" style="color:black">发送时间：{{item.send_time}}</span>
+                        <span class="email-time">{{item.send_time}}</span>
                         <h5 class="email-title" >
                             <a href="" ng-click="showdetail(item._id)" >{{item.title}}</a>
                             <span class="label f-s-10" ng-class="{'label-primary':item.send_user_role==2,'label-inverse':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
                         </h5>
-                        <p class="email-desc">
+                        <p class="email-desc" style="font-size:12px;font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;color:#707478">
                             {{item.desc}}
                         </p>
                     </div>

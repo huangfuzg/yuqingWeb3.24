@@ -1,7 +1,7 @@
 "use strict";
 CQ.mainApp.msgController
-    .controller("msgController",["$scope","$stateParams","msgService",
-        function($scope,$stateParams,msgService) {
+    .controller("msgController",["$scope","$stateParams","msgService","notice",
+        function($scope,$stateParams,msgService,notice) {
         $scope.recid=[];
         $scope.senduser = null;
             var tmp={};
@@ -59,7 +59,8 @@ CQ.mainApp.msgController
                 msgService.sendMsg(cons).then(function(res) {
                     console.log('+++++++++',res);
                     if(res.success==true){
-                        alert('发送成功');
+                        // alert('发送成功');
+                        notice.notify_info("发送成功！！");
                     }
                 });
             }, false)
