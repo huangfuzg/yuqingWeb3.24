@@ -28,7 +28,7 @@ function login() {
     $.post(CQ.variable.RESTFUL_URL+"/log_in",{"user_account":username,"user_pwd":password_encode(password)},function(data, status){
         // data=JSON.parse(data);
         console.log(data);
-        var userPermissions = {1:['1'],2:['1','2'],3:['1','2','3']};
+        var userPermissions = {1:['1','4'],2:['1','2'],3:['1','3']};
         if(data.success)
         {
             if(data.data.status)
@@ -43,7 +43,14 @@ function login() {
                 userinfo.permissionList = userPermissions[data.data.user_authority]||[];
                 console.log(userinfo); 
                 account_login(userinfo);
-                window.location.href = "index.html";
+                if(data.data.user_authority == 3)
+                {
+                    window.location.href = "admin.html";
+                }
+                else
+                {
+                    window.location.href = "index.html";
+                }
             }
             else
             {

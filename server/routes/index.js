@@ -15,6 +15,10 @@ exports.index = function (app, config) {
         }
     });
     
+    app.all(config.client.baseUrl + "/admin.html*", function (req, res, next) {
+        res.sendfile("admin.html", { root: path.join(config.server.distFolder,"/admin") });
+    });
+
     app.get(config.client.baseUrl + "/login", function (req, res) {
         // Just send the index.html for other files to support HTML5Mode
         console.log("log in!!!");

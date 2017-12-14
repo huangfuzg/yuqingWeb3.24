@@ -4,7 +4,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="email-btn-row hidden-xs f-s-15">
+                
+                
                 <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题 </a>
+
+                <a href="#/manageTopic" class="btn btn-sm btn-primary" ng-permission="2"> 管理组内话题</a>
                 <!-- <span class="dropdown">
                     <a href="email_inbox.html#" class="email-header-link btn btn-sm btn-inverse" data-toggle="dropdown">View All <i class="fa fa-angle-down m-l-5"></i></a>
                     <ul class="dropdown-menu">
@@ -42,7 +46,8 @@
                 <table class="table table-email f-s-14">
                     <thead>
                         <tr>
-                            <th ng-show = "false">ID</th>
+                            <th ng-show = "false"></th>
+                            
                             <th>话题名称</th>
                             <th>查询关键字</th>
                             <th>爬取站点</th>
@@ -52,6 +57,7 @@
                     <tbody>
                         <tr ng-repeat="topicItem in pageData">
                             <td style="width: 10%" ng-show = "false">{{topicItem.topicId}}</td>
+                            
                             <td style="width: 15%">{{topicItem.topicName}}</td>
                             <td style="width: 30%">{{toStr(topicItem.topicKeywords)}}</td>
                             <td style="width: 35%">{{topicItem.sitesStr}}</td>

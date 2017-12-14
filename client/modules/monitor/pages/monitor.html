@@ -105,6 +105,8 @@
                             <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="openModal(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
                         </div>
                         <h4 class="panel-title f-s-15">{{items.topicName}}</h4>
+                        <h4 class = "media-heading f-s-14" title = "发现用户" ng-permission="2">发现用户:{{}} </h4>
+                                           
                     </div>
                     <div class="panel-body">
                         <div  class = "">
@@ -180,6 +182,7 @@
                                             <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
                                             <!--<img src = "/static/assets/img/analy.svg">-->
                                             <!--</a>-->
+                                          
                                             <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id)">
                                                 <img src = "/static/assets/img/add.svg">
                                             </a>

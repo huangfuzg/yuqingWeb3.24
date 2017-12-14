@@ -436,7 +436,27 @@ angular.module('settingservice',[])
                 items:"",
                 permission: "1",
             }
-        ]
+        ];
+        var usermanagement = [
+            {
+                label:"用户管理",
+                link:"#/umanagement",
+                hasShow:true,
+                icon:"",
+                items:"",
+                permission: "2",
+            }
+        ];
+        var groupmanagement = [
+            {
+                label:"用户组管理",
+                link:"#/gmanagement",
+                hasShow:true,
+                icon:"",
+                items:"",
+                permission: "3",
+            }
+        ];
         factories.allLinks = [
             {
                 label:"主页",
@@ -501,6 +521,22 @@ angular.module('settingservice',[])
                 icon: "fa fa-gear",
                 items: "",
                 permission: "1",
+            },
+            {
+                label:"用户管理",
+                link: "#/umanagement",
+                hasShow: true,
+                icon: "fa fa-user",
+                items: "",
+                permission: "2",
+            },
+            {
+                label:"用户组管理",
+                link: "#/gmanagement",
+                hasShow: true,
+                icon: "fa fa-group",
+                items: "",
+                permission: "3",
             }
             // {
             //     label:"友情链接",
