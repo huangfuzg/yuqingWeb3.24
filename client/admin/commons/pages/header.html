@@ -28,60 +28,22 @@
                     <i class="fa fa-question-circle"></i>
                 </a>
             </li>
-            <li class="dropdown">
+            <li class="dropdown" ng-click="delNot()"  >
                 <a href="javascript:;" data-toggle="dropdown" class="dropdown-toggle f-s-14" aria-expanded="false">
                     <i class="fa fa-bell-o"></i>
-                    <span class="label">5</span>
+                    <span id='NotLabel' class="label" ng-if="unReadNum!=0">{{unReadNum}}</span>
                 </a>
                 <ul class="dropdown-menu media-list pull-right animated fadeInDown">
-                    <li class="dropdown-header">Notifications (5)</li>
-                    <li class="media">
-                        <a href="javascript:;">
+                    <li class="dropdown-header">Notifications ({{unReadNum}})</li>
+                    <li class="media" ng-repeat="item in unReadList">
+                        <a href="javascript:;" ng-click="showdetail(item._id)">
                             <div class="media-left"><i class="fa fa-bug media-object bg-red"></i></div>
                             <div class="media-body">
-                                <h6 class="media-heading">Server Error Reports</h6>
-                                <div class="text-muted f-s-11">3 minutes ago</div>
+                                <h6 class="media-heading">{{item.title}}</h6>
+                                <div class="text-muted f-s-11">{{item.send_time}}</div>
                             </div>
                         </a>
                     </li>
-                    <!--<li class="media">-->
-                    <!--<a href="javascript:;">-->
-                    <!--<div class="media-left"><img src="assets/img/user-1.jpg" class="media-object" alt=""></div>-->
-                    <!--<div class="media-body">-->
-                    <!--<h6 class="media-heading">John Smith</h6>-->
-                    <!--<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>-->
-                    <!--<div class="text-muted f-s-11">25 minutes ago</div>-->
-                    <!--</div>-->
-                    <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="media">-->
-                    <!--<a href="javascript:;">-->
-                    <!--<div class="media-left"><img src="assets/img/user-2.jpg" class="media-object" alt=""></div>-->
-                    <!--<div class="media-body">-->
-                    <!--<h6 class="media-heading">Olivia</h6>-->
-                    <!--<p>Quisque pulvinar tellus sit amet sem scelerisque tincidunt.</p>-->
-                    <!--<div class="text-muted f-s-11">35 minutes ago</div>-->
-                    <!--</div>-->
-                    <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="media">-->
-                    <!--<a href="javascript:;">-->
-                    <!--<div class="media-left"><i class="fa fa-plus media-object bg-green"></i></div>-->
-                    <!--<div class="media-body">-->
-                    <!--<h6 class="media-heading"> New User Registered</h6>-->
-                    <!--<div class="text-muted f-s-11">1 hour ago</div>-->
-                    <!--</div>-->
-                    <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="media">-->
-                    <!--<a href="javascript:;">-->
-                    <!--<div class="media-left"><i class="fa fa-envelope media-object bg-blue"></i></div>-->
-                    <!--<div class="media-body">-->
-                    <!--<h6 class="media-heading"> New Email From John</h6>-->
-                    <!--<div class="text-muted f-s-11">2 hour ago</div>-->
-                    <!--</div>-->
-                    <!--</a>-->
-                    <!--</li>-->
                     <li class="dropdown-footer text-center">
                         <a ng-click="viewmore()" href="javascript:;">View more</a>
                     </li>
@@ -154,6 +116,8 @@
                 <ul class="dropdown-menu animated fadeInLeft">
                     <li class="arrow"></li>
                     <li><a href="javascript:;" ng-click="setattr()">个人设置</a></li>
+                    <li class="divider"></li>
+                    <li><a href="javascript:;" ng-click="sendmsg()">发送消息</a></li>
                     <li class="divider"></li>
                     <li><a href="/yuqing/login" ng-click="logout()">退出</a></li>
                 </ul>

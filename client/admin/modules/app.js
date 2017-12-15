@@ -1,13 +1,14 @@
 "use strict";
 CQ.mainApp = {
-    frameController:         angular.module("frame.controller", ["settingservice"]),
+    frameController:         angular.module("frame.controller", ["settingservice","headerService"]),
     frameServices:           angular.module("frame.services", ["commons","Notice", "scrollBottom"]),
     dashboardController:     angular.module("dashboard.Controller", []),
     contentController:       angular.module("content.Controller", []),
     usergroupmanageController:     angular.module("usergroupmanage.Controller", []),
     usermanageController:     angular.module("usermanage.Controller", []),
     errorController:     angular.module("error.Controller", []),
-    systemsettingController:    angular.module("systemsetting.Controller", ["systemsettingService"])
+    systemsettingController:    angular.module("systemsetting.Controller", ["systemsettingService"]),
+    msgController:           angular.module("msg.Controller",["msgService"]),
 };
 angular.module('mainApp', [
     "ui.router",
@@ -22,7 +23,8 @@ angular.module('mainApp', [
     "usergroupmanage.Controller",
     "usermanage.Controller",
     "error.Controller",
-    "systemsetting.Controller"
+    "systemsetting.Controller",
+    "msg.Controller"
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

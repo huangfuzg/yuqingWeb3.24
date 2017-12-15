@@ -1,0 +1,132 @@
+<!--<script src="../../../../../coloradmin2.1/color-admin-v2.1/admin/html/assets/js/email-inbox-v2.demo.min.js"></script>-->
+<style>
+    .vertical-box{
+        display: table;
+        table-layout: fixed;
+        border-spacing: 0;
+        height: 100%;
+        width: 100%;
+    }
+    .vertical-box-column{
+        display: table-cell;
+        vertical-align: top;
+        height: 100%;
+    }
+    .bg-silver-lighter{
+        background: #f4f6f7!important;
+    }
+    .p-15, .wrapper{
+        padding: 15px!important;
+    }
+    .list-email{
+        margin-bottom: 0;
+        border-top: 1px solid #e2e7eb;
+        border-bottom: 1px solid #e2e7eb;
+    }
+    .list-group{
+        padding-left: 0;
+        margin-bottom: 20px;
+    }
+    ul{
+        display: block;
+        list-style-type: disc;
+         -webkit-margin-before: 1em;
+         -webkit-margin-after: 1em;
+         -webkit-margin-start: 0px;
+         -webkit-margin-end: 0px;
+         -webkit-padding-start: 40px;
+        margin-top: 0;
+    }
+    .list-group-item{
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+    .list-email .email-checkbox+.email-checkbox+.email-user+.email-info{
+        margin-left: 125px;
+    }
+
+</style>
+<div class="content">
+    <div class="vertical-box">
+        <div class="vertical-box-column">
+            <div class="wrapper bg-silver-lighter" >
+                <!-- begin btn-toolbar -->
+                <div class="btn-toolbar">
+                    <!-- begin btn-group -->
+                    <!--<div class="btn-group pull-right">-->
+                        <!--<button class="btn btn-white btn-sm">-->
+                            <!--<i class="fa fa-chevron-left"></i>-->
+                        <!--</button>-->
+                        <!--<button class="btn btn-white btn-sm">-->
+                            <!--<i class="fa fa-chevron-right"></i>-->
+                        <!--</button>-->
+                    <!--</div>-->
+                    <!-- end btn-group -->
+                    <!-- begin btn-group -->
+                    <div class="btn-group dropdown">
+                        <button class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown">
+                            {{view}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu text-left text-sm">
+                            <li class="active"><a href="javascript:;" ng-click="getShowData()"><i id='All' class="fa fa-circle f-s-10 fa-fw m-r-5"></i> All</a></li>
+                            <li><a href="javascript:;" ng-click="unreadmsg()"><i id='Unread' class="fa f-s-10 fa-fw m-r-5"></i> Unread</a></li>
+                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Contacts</a></li>-->
+                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Groups</a></li>-->
+                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Newsletters</a></li>-->
+                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Social updates</a></li>-->
+                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Everything else</a></li>-->
+                        </ul>
+                    </div>
+                    <!-- end btn-group -->
+                    <!-- begin btn-group -->
+                    <!--<div class="btn-group">-->
+                        <!--<button class="btn btn-sm btn-white" data-toggle="tooltip" data-placement="top" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>-->
+                    <!--</div>-->
+                    <!-- end btn-group -->
+                    <!-- begin btn-group -->
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-white hide" data-email-action="delete" ng-click="delmsg()"><i class="fa fa-times m-r-3"></i> <span class="hidden-xs">删除</span></button>
+                    </div>
+                    <!-- end btn-group -->
+                </div>
+                <!-- end btn-toolbar -->
+            </div>
+            <h2 ng-if="kong" style="text-align:center">没有未读消息</h2>
+            <ul class="list-group list-group-lg no-radius list-email" ng-if="!kong">
+                <li class="list-group-item" ng-class="{primary:item.send_user_role==2,inverse:item.send_user_role==3,success:item.send_user_role==1}"  ng-repeat="item in showdata">
+                    <div class="email-checkbox">
+                        <label>
+
+                            <i class="fa fa-square-o"></i>
+                            <input type="checkbox" ng-click="select(item)" data-checked="email-checkbox" />
+                        </label>
+
+                    </div>
+                    <div class="email-checkbox">
+                        <img style="height: 18px;width: 18px" src="/static/assets/icon/envolope.svg" ng-if="!item.is_read"/>
+                        <img style="height: 18px;width: 18px" src="/static/assets/icon/envolope-letter.svg" ng-if="item.is_read"/>
+                        <!--<i class="fa fa-2x fa-envelope" ng-if="!item.is_read"></i>-->
+                        <!--<i class="fa fa-2x fa-envelope-o" ></i>-->
+                    </div>
+                        <a href="" ng-click="showdetail(item._id)" class="email-user">
+                            <img src="/static/assets/img/user-13.jpg" alt="" />
+                        </a>
+                    <div class="email-info">
+                        <span class="email-time">{{item.send_time}}</span>
+                        <h5 class="email-title" >
+                            <a href="" ng-click="showdetail(item._id)" >{{item.title}}</a>
+                            <span class="label f-s-10" ng-class="{'label-primary':item.send_user_role==2,'label-inverse':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
+                        </h5>
+                        <p class="email-desc" style="font-size:12px;font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;color:#707478">
+                            {{item.desc}}
+                        </p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

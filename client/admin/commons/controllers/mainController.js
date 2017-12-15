@@ -25,8 +25,44 @@ CQ.mainApp.frameController
 			}
 		});
 	}])
-	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','ngDialog', 'accountManage',
-		function($scope, $rootScope, $state, $http,ngDialog,accountManage) {
+	.controller('headerController', ['$scope', '$rootScope', '$state', '$http','$interval','ngDialog', 'accountManage','headerService',
+		function($scope, $rootScope, $state, $http,$interval,ngDialog,accountManage,headerService) {
+            $scope.viewmore = function () {
+                $state.go("showController")
+            }
+            $scope.delNot = function () {
+                $('#NotLabel').hide();
+            }
+            $scope.showdetail = function(msgid)
+            {
+                $state.go("detailController",{msgid:msgid});
+            }
+            var cons={}
+            headerService.getUnreadNum(cons).then(function (res) {
+                // console.log('aaaaaa'+res);
+                $scope.unReadNum = res.unread_num;
+            })
+            headerService.getUnread(cons).then(function (res) {
+                // console.log('bbbbbb'+res);
+                $scope.unReadList = res;
+            })
+            $interval(function () {
+                var cons={}
+                headerService.getUnreadNum(cons).then(function (res) {
+                    // console.log('aaaaaa'+res);
+                    $scope.unReadNum = res.unread_num;
+                    if($scope.unReadNum!=0){
+                        $('#NotLabel').show();
+                    }
+                })
+                headerService.getUnread(cons).then(function (res) {
+                    // console.log('bbbbbb'+res);
+                    $scope.unReadList = res;
+                })
+            },20000);
+            $scope.sendmsg = function () {
+                $state.go('msgController');
+            }
 			$scope.logout = function()
 			{
 				accountManage.logout();
