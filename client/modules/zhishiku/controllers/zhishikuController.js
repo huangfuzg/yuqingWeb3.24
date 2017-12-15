@@ -742,12 +742,14 @@ CQ.mainApp.zhishikuController
                     $scope.page=1;
                     var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
                     $scope.getTableData=function(page,data){
+
                         if(data)
                             tables=data;
-                        if(page<1||page>$scope.max_page)
+                        if(page<1||page>$scope.max_page&&page!=1)
                             return null;
                         $scope.counts=tables.length;
                         $scope.max_page=Math.ceil(tables.length/page_num);
+                        // console.log(Math.ceil(tables.length/page_num));
                         $scope.senData=tables.slice(page*page_num-page_num,page*page_num);
                         $scope.page=page;
                         if($scope.max_page<5)
@@ -842,7 +844,7 @@ CQ.mainApp.zhishikuController
                         })
                         $scope.getTableData(1,senTmp);
                         $scope.$digest();
-                        // console.log(te)
+                        // console.log(senTmp)
 
                     })
                     mychart.on('click',function (params) {
