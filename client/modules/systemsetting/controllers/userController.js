@@ -694,12 +694,8 @@ CQ.mainApp.systemsettingController
         {
             if(opretion == "save" && $scope.modelName == "添加话题")
             {
-                d.sitesStr = "";
-                for(var i = 0; i < d.siteLists.length-1; i++)
-                {
-                    d.sitesStr += (d.siteLists[i].siteName + ',');
-                }
-                d.sitesStr += d.siteLists[i].siteName;
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
                 $scope.topicList.push(d);
                 $scope.pageData.push(d);
                 if($scope.pageData.length > $scope.pageSize)
@@ -716,12 +712,8 @@ CQ.mainApp.systemsettingController
             }
             else if(opretion == "save" && $scope.modelName == "修改话题")
             {
-                d.sitesStr = "";
-                for(var i = 0; i < d.siteLists.length-1; i++)
-                {
-                    d.sitesStr += (d.siteLists[i].siteName + ',');
-                }
-                d.sitesStr += d.siteLists[i].siteName;
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
                 for(var i = 0; i < $scope.topicList.length; i++)
                 {
                     if($scope.topicList[i].topicName == d.topicName)
