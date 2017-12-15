@@ -34,7 +34,7 @@ CQ.mainApp.msgController
             editor1.customConfig.debug = true
             editor1.customConfig.uploadImgShowBase64 = true
             editor1.customConfig.menus = [
-                'head',         //标题
+                // 'head',         //标题
                 'bold',         //粗体
                 'italic',       //斜体
                 'underline',    //下划线
