@@ -48,7 +48,7 @@ CQ.mainApp.msgController
             editor1.create()
             document.getElementById('btn1').addEventListener('click', function () {
                 // 读取 html
-                console.log(editor1.txt.html())
+                // console.log(editor1.txt.html())
                 // document.getElementById("test").innerHTML=editor1.txt.html()
                 var cons = {
                     content:editor1.txt.html(),
