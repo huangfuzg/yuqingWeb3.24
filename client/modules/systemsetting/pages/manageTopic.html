@@ -269,8 +269,16 @@
                             <div class="wrapper">
                                 <div class="p-30 bg-white">
                                     <!-- begin email form -->
-                                    <form method="POST" name="topicForm" ng-submit="save()" novalidate="false">
+                                    <form method="POST" name="topicForm" ng-submit="addTopics()" novalidate="false">
                                         <!-- begin email to -->
+
+                                        
+                                        <label class="control-label">添加人:</label>
+                                        <div class="m-b-15 ">
+                                            <input type="text" id="users">
+                                        </div>
+                                        
+
                                         <label class="control-label">话题名称:</label>
                                         <div class="m-b-15">
                                             <input type="text" name="topicname" class="form-control" ng-model="topic.topicName" ng-disabled="topicNameEnable == true" nameexist-check required/>
@@ -359,7 +367,7 @@
                                                 </ul>
                                             </div>
 
-                                            <label class="control-label">添加组员:</label>
+                                            <!--<label class="control-label">添加组员:</label>
                                         <div class="m-b-15">
                                             <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
                                                 <ul class="nav nav-pills nav-stacked nav-sm panel-body">
@@ -375,7 +383,7 @@
                                                     </ul>
                                                     </li>
                                                 </ul>
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <!-- end email content -->
                                         <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">提交</button>

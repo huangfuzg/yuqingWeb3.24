@@ -108,6 +108,7 @@ CQ.mainApp.systemsettingController
         $scope.remove = function(d)
         {
             $scope.topic_id = d.topicId;
+            $scope.user_name=d.user_name;
             console.log($scope.topic_id);
             ngDialog.open(
             {
@@ -141,7 +142,7 @@ CQ.mainApp.systemsettingController
             $scope.jsonData = JSON.stringify($scope.jsonData);
             console.log($scope.jsonData);
             $http({
-                url: $scope.submitUrl,
+                url: $scope.submitUrl,dataTypeLists,
                 method: 'post',
                 data: $scope.jsonData,
             }).success(function(data, status, headers, config){
@@ -159,6 +160,57 @@ CQ.mainApp.systemsettingController
                     }
                     $scope.reload($scope.topic,"save");
 
+                }
+                // setTimeout(function(){
+                //     window.location.reload("index.html#/userSetting");
+                // },2000);
+            })
+            .error(function(){
+                //alert("未知的错误!即将为您跳转...");
+                notice.notify_info("您好！", "服务器出错！！" ,"",false,"","");
+            });
+        }
+
+        $scope.addTopics = function()
+        {
+            console.log($scope.topic);
+            $scope.jsonData = {};
+            $scope.jsonData.userId = $scope.userId;
+            // if($scope.topic.topicId)
+            //     $scope.jsonData.topicId = $scope.topic.topicId;
+            $scope.jsonData.topicName = $scope.topic.topicName;
+            // $scope.topic.topicKeywords._and = $scope.topic.topicKeywords.and.toString().split(',');
+            // $scope.topic.topicKeywords._or = $scope.topic.topicKeywords.or.toString().split(',');
+            $scope.jsonData.topicKeywords = $scope.topic.topicKeywords;
+            for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+            {
+                $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
+            }
+            console.log($scope.topic.topicKeywords);
+            $scope.jsonData.sites = $scope.topic.siteLists;
+            $scope.jsonData.user_name=$scope.postuser;
+            $scope.jsonData = JSON.stringify($scope.jsonData);
+            console.log($scope.jsonData);
+            $http({
+                url: $scope.submitUrl,
+                //url:"http://118.190.133.203:8100/yqdata/batchsettopic",
+                method: 'post',
+                data: $scope.jsonData,
+            }).success(function(data, status, headers, config){
+                if(data.success == false) {
+                    //alert("操作失败!即将为您跳转...");
+                    notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
+                }
+                else if(data.success == true){
+                    notice.notify_info("您好！", "话题操作成功！" ,"",false,"","");
+                    if(!!data.data)
+                    {
+                        $scope.topic.topicId = data.data;
+                        console.log("ZYZ");
+                        console.log($scope.topic);
+                    }
+                    $("#myModal2").modal('hide');
+                    window.location.reload("index.html#/manageTopic");
                 }
                 // setTimeout(function(){
                 //     window.location.reload("index.html#/userSetting");
@@ -229,13 +281,50 @@ CQ.mainApp.systemsettingController
         //添加话题
         $scope.newTopics = function()
         {
+            $scope.postuser=[];
+            $scope.senduser = null;
+            var tmp={};
             var url1 = $scope.baseUrl+"/batchsetui";
-            $http.get(url1).success(function(data){
+            $http.get(url1).success(function(data) {
+                $scope.senduser = data.data;
+                console.log("zyz1");
+                console.log($scope.senduser);
+                $scope.senduser2=[];
+                $scope.senduser.forEach(function(s){
+                    var a={user_:s};
+                    $scope.senduser2.push(a);
+                });
+                console.log($scope.senduser2);
+                $('#users').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    create: false,
+                    sortField: {  
+                        field: 'text',  
+                        direction: 'asc'  
+                     },
+                    valueField:'user_',
+                    labelField:'user_',
+                    //options:[{'user_':'yuqing'},{'user_':'admin'}],
+                    options:$scope.senduser2,
+                    onItemAdd:function (v) {
+                        $scope.postuser.push(v);
+                        // console.log($scope.recid);
+                    },
+                    onItemRemove:function (v) {
+                        var index = ($scope.postuser .indexOf(v));
+                        $scope.postuser.splice(index,1);
+                        // console.log($scope.recid);
+                    }
+                });
+           
+                console.log("zyz2");
                 console.log(data);
                 $scope.grouplist=data.data;
                 $scope.modelName = "批量添加话题";
                 $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
                 $scope.topic.topicKeywords.push([]);
+                console.log("allSites");
                 console.log($scope.allsites);
                 $scope.allsites.forEach(function(d1)
                 {
@@ -246,7 +335,7 @@ CQ.mainApp.systemsettingController
                 });
                 console.log($scope.topic);
                 $scope.topicNameEnable = false;
-                $scope.submitUrl  = $scope.baseUrl + "/addtopics";
+                $scope.submitUrl  = $scope.baseUrl + "/batchsettopic";
             });
         }
 
@@ -334,7 +423,24 @@ CQ.mainApp.systemsettingController
             {
                 if($scope.topicList[i].topicId == d)
                 {
+                    console.log(i);
+                    if(i!=$scope.topicList.length-1&&$scope.topicList[i].rowspan&&(!$scope.topicList[i+1].rowspan)){
+                        console.log("1");
+                        $scope.topicList[i+1].rowspan=$scope.topicList[i].rowspan-1;
+                    }
+                    else if(!$scope.topicList[i].rowspan){
+                        console.log("2");
+                        var j=i-1;
+                        while(!$scope.topicList[j].rowspan){
+                            j--;
+                        }
+                        console.log(j);
+                        $scope.topicList[j].rowspan--;
+                    }
+                    
                    $scope.topicList.splice(i,1);
+                   console.log("Here");
+                   console.log($scope.topicList);
                    $scope.getDataByPage($scope.page);
                    $scope.topicCount--;
                    return true; 
@@ -403,9 +509,34 @@ CQ.mainApp.systemsettingController
     $http, ngDialog, notice) {
     console.log("delete topic");
     $scope.deleteTopic = function() {
+        $scope.removeUrl = $scope.baseUrl + "/deletetopicother";
+        $http({
+            params: {topicId : $scope.topic_id, user_name : $scope.user_name},
+            //url:"http://118.190.133.203:8100/yqdata/deletetopicother",
+            url: $scope.removeUrl,
+            method: 'get',
+        })
+        .success(function(data, status, headers, config){
+            ngDialog.closeAll();
+            notice.notify_info("您好！","话题删除成功！","",false,"","");
+            $scope.reload($scope.topic_id,"delete");
+                // setTimeout(function(){
+                //     window.location.reload("index.html#/userSetting");
+                // },2000);
+            })
+        .error(function(error){
+            notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
+        });
+    };
+}])
+.controller("deleteMyTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
+    $http, ngDialog, notice) {
+    console.log("delete topic");
+    $scope.deleteMyTopic = function() {
         $scope.removeUrl = $scope.baseUrl + "/deletetopic";
         $http({
-            params: {topicId : $scope.topic_id, userId : $scope.userId},
+            params: {topicId : $scope.topic_id},
+            //url:"http://118.190.133.203:8100/yqdata/deletetopic",
             url: $scope.removeUrl,
             method: 'get',
         })
@@ -544,8 +675,8 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic_id);
             ngDialog.open(
             {
-                template: '/static/modules/systemsetting/pages/deleteTopic.html',
-                controller: 'deleteTopic',
+                template: '/static/modules/systemsetting/pages/deleteMyTopic.html',
+                controller: 'deleteMyTopic',
                 width:"10%",
                 scope:$scope
             });
