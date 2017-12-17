@@ -155,7 +155,6 @@ CQ.mainApp.systemsettingController
                     if(!!data.data)
                     {
                         $scope.topic.topicId = data.data;
-                        console.log("ZYZ");
                         console.log($scope.topic);
                     }
                     $scope.reload($scope.topic,"save");
@@ -379,12 +378,8 @@ CQ.mainApp.systemsettingController
 
             if(opretion == "save" && $scope.modelName == "添加话题")
             {
-                d.sitesStr = "";
-                for(var i = 0; i < d.siteLists.length-1; i++)
-                {
-                    d.sitesStr += (d.siteLists[i].siteName + ',');
-                }
-                d.sitesStr += d.siteLists[i].siteName;
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
                 $scope.topicList.push(d);
                 $scope.pageData.push(d);
                 if($scope.pageData.length > $scope.pageSize)
@@ -395,6 +390,7 @@ CQ.mainApp.systemsettingController
                 {
                     $scope.getDataByPage($scope.page);
                 }
+                $("#myModal").modal('hide');
                 $scope.topicCount++;
                 return true;
             }
@@ -717,7 +713,8 @@ CQ.mainApp.systemsettingController
                     notice.notify_info("您好！", "话题操作成功！" ,"",false,"","");
                     if(!!data.data)
                     {
-                        $scope.topic.topicId = data.data;
+                        console.log("ZYZ");
+                        $scope.topic.topicId = data.data.topic_id;
                         console.log($scope.topic);
                     }
                     $scope.reload($scope.topic,"save");
