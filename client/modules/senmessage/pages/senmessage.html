@@ -65,7 +65,7 @@
                                                 <input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">
                                                 <a ng-href={{item.url}} target="_blank">{{item.senwords.join('')}}</a>
                                             </td>
-                                            <td class="width-lg" ng-if = "item.board != 'Sina'">
+                                            <td class="width-lg" ng-if = "item.title != 'sina blog'">
                                                 <a ng-href = {{item.url}} target= "_blank" >{{item.title}}</a>
                                             </td>
                                             <td class="width-lg" ng-if = "item.data_type == 2">
