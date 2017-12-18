@@ -26,7 +26,7 @@
         border-top: 2px solid #24B498;
         height: 20px;
         width: 20px;
-        margin: -15px -15px 0 0;
+         : -15px -15px 0 0;
        /* position: absolute;
         top: 10;
         left: 50%;*/
@@ -69,6 +69,14 @@
 </style>
 <!-- begin #content -->
 <div id = "content" class = "content">
+    <div class="btn-group">
+            <label class="control-label" style="font-weight: 1000;font-size:20px;margin-top: 6px;position: absolute;">组内监控:</label>
+                <label style="margin-top: 5px;margin-left: 100px">
+                    <input style="width: 900px" type="text" id="users" style="display: inline-block;" />
+                </label>
+                <button ng-click="groupMonitor()" class="btn btn-primary" style="margin-top: 5px;margin-left: 10px;position: relative;float:right">查看</button>
+        </div>
+
     <div id="topics" class="m-b-5 col-md-12 bg-silver">
         <div class="btn-group m-r-5 m-b-5 m-t-15 "  ng-repeat = "(index, items) in monitorData" id = "monitortopic_{{items.topicId}}">
             <a href="javascript:;" ng-click = "movePosition(items.topicId)" class="btn btn-primary btn-lg">{{items.topicName}}</a>
@@ -81,6 +89,7 @@
                 <li><a href="javascript:;" ng-click = "openDia(items.topicId , items.topicName)" >修改关键词</a></li>
             </ul>
         </div>
+        
         <div class="btn-group m-r-5 m-b-5 m-t-5 pull-right middles text-center">
             <!-- <input type="text" class="form-control" id="datepicker-default" placeholder="选择日期" /> -->
                 <img src = "/static/assets/img/rili.svg" class = "m-b-5 "/>
@@ -95,8 +104,8 @@
         <div class = "col-md-12 bg-black-lighter" id = "topicLists">
             <!-- begin panel -->
                 <div ng-repeat = "(index, items) in monitorData" id = "topic_{{items.topicId}}" class="panel panel-primary col-md-3 p-r-0 p-l-0 b-r-1 topics" data-sortable-id="ui-widget-{{items.topicId}}" >
-                    <div class="panel-heading">
-                        <div class="panel-heading-btn">
+                    <div class="panel-heading"  style="background-color:{{items.bgColor}}">
+                        <div class="panel-heading-btn"  >
                             <!--<a href="javascript:;" class="f-s-20 btn btn-primary btn-sm m-r-5" ng-show="items.topicId!=-1">分析</a>-->
                             <a title="开始" href="javascript:;" class="f-s-15 btn  btn-icon btn-circle btn-success" ng-click = "startfresh(items)" ng-show="!items.fresh"><i class="fa fa-play-circle"></i></a>
                             <a title="暂停" href="javascript:;" class="f-s-15 btn  btn-icon btn-circle btn-success" ng-click = "pausefresh(items)" ng-show="items.fresh"><i class="fa fa-pause"></i></a>
@@ -104,9 +113,7 @@
                             <a title="最小化" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-warning" ng-click="panelCollapse(items.topicId)"><i class="fa fa-minus"></i></a>
                             <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="openModal(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
                         </div>
-                        <h4 class="panel-title f-s-15">{{items.topicName}}</h4>
-                        <h4 class = "media-heading f-s-14" title = "发现用户" ng-permission="2">发现用户:{{}} </h4>
-                                           
+                        <h4  class="panel-title f-s-15" title="发现用户:{{items.username}}">{{items.topicName}}</h4>                                                                
                     </div>
                     <div class="panel-body">
                         <div  class = "">

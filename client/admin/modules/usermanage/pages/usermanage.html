@@ -4,9 +4,10 @@
                     <div class="email-btn-row hidden-xs">
                         <!-- <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-plus m-r-5"></i> 添加组</a> -->
                         <a class="btn btn-sm btn-primary" ng-click="adduser()" data-toggle="modal"><i class="fa fa-plus m-r-5"></i> 添加用户</a>
-                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-minus m-r-5"></i> 删除用户</a>
-                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit m-r-5"></i> 管理用户话题</a>
-                        <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit m-r-5"></i> 修改用户权限</a>
+                        
+                        <!-- <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit m-r-5"></i> 管理用户话题</a> -->
+                        <a class="btn btn-sm btn-primary" ng-show="showbtn"><i class="fa fa-edit m-r-5"></i> 修改用户权限</a>
+                        <a ng-click="delmul()" ng-show="showbtn" class="btn btn-sm btn-primary"><i class="fa fa-minus m-r-5"></i> 删除用户</a> 
                     </div>
                     
                     <div class="email-content">
@@ -19,16 +20,18 @@
                                 <label>
                                     小组
                                 </label>
-                                <select class="form-control input-sm">
-                                    <option>全部</option>
-                                    <option ng-repeat="(key, value) in data">第{{key+1}}组</option>
+                                <!-- <select class="input-sm" ng-options="x.group_id for x in group" ng-model="selectedGroup" ng-change="selectGroup()"> -->
+                                <select class="input-sm" ng-model="selectedGroup" id="select1" ng-change="selectGroup()">
+                                    <option >全部</option>
+                                   
+                                    <option ng-repeat="(key, value) in group"">{{key+1}}</option>
                                 </select>
                             </form>
                             <form class="navbar-form navbar-right">
                                 <div class="form-group">
                                     <input type="text" ng-model="$parent.searchword" class="form-control" placeholder="用户搜索"/>
                                      <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-search m-r-5"></i></a>
-                                    <!-- <button type="submit" class="btn btn-search" ng-click="search()"><i class="fa fa-search"></i></button> -->
+                                     <!-- <button type="submit" class="btn btn-search" ng-click="search()"><i class="fa fa-search"></i></button> -->
                                 </div>
                             </form>
                         </div>
@@ -47,23 +50,25 @@
                                 <tr>
                                 	<th><input class="m-r-2" type="checkbox" ng-model="allselected" ng-click="selectAll()">用户id</th>
                                 	<th>用户名</th>
+                                    <th>用户权限</th>
                                     <th>所属用户组</th>
-                                    <th>注册时间</th>
+                                    <!-- <th>注册时间</th> -->
                                     <th>最近登录时间</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="user in data">
-                                <td style="width: 10%"><input class="m-r-2" type="checkbox" ng-model="user.selected" ng-click="selectBoxChange(user)">{{user.id}}</td>
-                                <td style="width: 20%">{{user.username}}</td>
-                                <td style="width: 20%">{{user.group}}</td>
-                                <td style="width: 20%">{{user.time}}</td>
-                                <td style="width: 20%">{{user.time}}</td>
+                                <tr ng-repeat="user in alluser">
+                                <td style="width: 10%"><input class="m-r-2" type="checkbox" ng-model="user.selected" ng-click="selectBoxChange(user)">{{user.user_id}}</td>
+                                <td style="width: 10%">{{user.user_account}}</td>
+                                <td style="width: 10%">{{user.user_role_id}}</td>
+                                <td style="width: 10%">{{user.user_group_id}}</td>
+                                <!-- <td style="width: 20%">{{user.regtime}}</td> -->
+                                <td style="width: 20%">{{user.user_logintime}}</td>
                                 <td style="width: 10%">
-                                	<a href="" title="查看用户属性" class="email-btn" ng-click="showUserattr(user.username)" ng-model="user.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-eye"></i></a> 
+                                	<a href="" title="查看用户属性" class="email-btn" ng-click="showUserattr(user)" ng-model="user.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-eye"></i></a> 
                                     <a href="" title="修改用户话题" class="email-btn" ng-click="editTopic()" ng-model="user.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> 
-                                    <a href="javascript::void," title="删除用户" class="email-btn" ng-click="remove(user)"><i class="fa fa-trash-o" "></i></a>
+                                    <a href="javascript::void," title="删除用户" class="email-btn" ng-click="delsin(user)"><i class="fa fa-trash-o" "></i></a>
                                 </td>
                         </tr>
 
