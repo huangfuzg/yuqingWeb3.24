@@ -7,6 +7,12 @@ CQ.mainApp.usermanageController
             templateUrl: "/static/admin/modules/usermanage/pages/usermanage.html",
             controller: "usermanageController",
             permission:'3'
-        });
+        })
+        .state('gviewUserController', {
+            url: "/viewUser/:userName",
+            templateUrl: "/static/admin/modules/usermanage/pages/viewUser.html",
+            controller: "gviewUserController",
+            permission:'3'
+        })
 
 }]);

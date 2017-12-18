@@ -515,7 +515,7 @@ angular.module('settingservice',[])
                 permission: "1",
             },
             {
-                label:"系统设置",
+                label:"话题管理",
                 link: "#/userSetting",
                 hasShow: true,
                 icon: "fa fa-gear",

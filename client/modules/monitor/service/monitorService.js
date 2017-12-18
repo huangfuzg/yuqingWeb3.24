@@ -3,6 +3,8 @@
 angular.module('monitorService',['commons'])
     .factory("MonitorFac", ['$resource', 'parseResource', function ($resource, parseResource) {
         var factories = {};
+        //get group monitor data
+        factories.groupMonitorData = $resource(CQ.variable.RESTFUL_URL + "monitor/group", parseResource.params, parseResource.actions);
         // get monitor data
         factories.monitorData = $resource(CQ.variable.RESTFUL_URL + "monitor/all", parseResource.params, parseResource.actions);
         // load data
@@ -13,6 +15,9 @@ angular.module('monitorService',['commons'])
     }])
     .factory("MonitorFacService",['MonitorFac', 'RestService', function(MonitorFac, RestService) {
         var factories = {};
+        factories.getGroupMonitorData = function(params) {
+            return RestService.get(MonitorFac.groupMonitorData, params);
+        };
         factories.getMonitorData = function(params) {
             return RestService.get(MonitorFac.monitorData, params);
         };

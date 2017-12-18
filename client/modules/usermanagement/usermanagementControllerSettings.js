@@ -11,7 +11,8 @@ CQ.mainApp.usermanagementController
 	        .state("viewUserController", {
                 url:"/viewUser/:userName",
                 templateUrl: "/static/modules/usermanagement/pages/viewUser.html",
-                controller: "usermanagementController"
+                controller: "viewUserController",
+                permission:"2"
             })
 	        // .state("usermanagementController", {
 	        //     url:"/management",
@@ -19,4 +20,10 @@ CQ.mainApp.usermanagementController
 	        //     controller: "usermanagementController",
 	        //     permission:"3"
 	        // });
+	        .state("managetopicController", {
+	            url:"/managetopic",
+	            templateUrl: "/static/modules/usermanagement/pages/managetopic.html",
+	            controller: "managetopicController",
+	            permission:"2"
+	        });
 	}]);

@@ -12,7 +12,7 @@ CQ.mainApp = {
     friendLinkController:    angular.module("friendLink.Controller",[]),
     zhishikuController:      angular.module("zhishiku.Controller",["zhishikuService"]),
     errorController:         angular.module("error.Controller",[]),
-    usermanagementController:angular.module("usermanagement.Controller",[]),
+    usermanagementController:angular.module("usermanagement.Controller",["usermanagementService"]),
     groupmanagementController:angular.module("groupmanagement.Controller",[]),
     msgController:           angular.module("msg.Controller",["msgService"]),
     reportController:           angular.module("report.Controller",["reportService"])

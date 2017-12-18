@@ -24,9 +24,45 @@ CQ.mainApp.monitorController
         $scope.lastDate = $scope.date;
         $scope.pics = ["/static/assets/img/news2.svg","/static/assets/img/luntan.svg", "/static/assets/img/weibo.svg"
         ,"/static/assets/img/tieba.svg","/static/assets/img/weixin1.svg","/static/assets/img/baidu.svg"];
+        $scope.newMonitorList=[];
+        $scope.oldMonitorList=[];
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("monitor app start!!!");
+            var url1 = CQ.variable.RESTFUL_URL+"/batchsetui";
+            $http.get(url1).success(function(data) {
+                console.log(data.data);
+                $scope.senduser = data.data;
+                $scope.senduser2=[];
+                var color = d3.scale.category20();
+                $scope.senduser2 = $scope.senduser.map((d,i)=>{return {'user_':d,'color':color(i),'index':i-1}});
+                $scope.senduser2.splice(0,1);
+                console.log($scope.senduser2);
+                $('#users').selectize({
+                    persist: false,
+                    createOnBlur: true,
+                    create: false,
+                    sortField: {  
+                        field: 'user_',  
+                        direction: 'asc'  
+                     },
+                    valueField:'index',
+                    labelField:'user_',
+                    //options:[{'user_':'yuqing'},{'user_':'admin'}],
+                    options:$scope.senduser2,
+                    onItemAdd:function (v,el) {
+                        el.css({'background-color':$scope.senduser2[v].color});
+                        $scope.newMonitorList.push($scope.senduser2[v].user_);
+                        // console.log($scope.recid);
+                    },
+                    onItemRemove:function (v) {
+                        var index = ($scope.newMonitorList .indexOf($scope.senduser2[v].user_));
+                        $scope.newMonitorList.splice(index,1);
+                        // console.log($scope.recid);
+                    }
+                });
+           
+            });
                 App.runui();
                 getMonitorData();
             }
@@ -63,11 +99,11 @@ CQ.mainApp.monitorController
             $scope.cons = angular.copy(cons);
             $(".loader").show();
             MonitorFacService.getMonitorData(cons).then(function(res){
+                console.log("Here");
+                console.log($scope.getColor);
                 console.log(res);
                 res.unshift(res[res.length - 1]);
                 res.splice(res.length - 1, 1);
-                console.log(res);
-                console.log(res);
                 var topicWeight={"十九大":100,"高考":90,"成考":80,"作弊":70,"全部":-100};
                 res.sort(function(a,b){
                     var weight_a = topicWeight[a.topicName] || 0;
@@ -78,6 +114,8 @@ CQ.mainApp.monitorController
                 var topicLists = [];
                 $scope.monitorData.forEach(function (d) {
                     d.fresh = true;
+                    d.username=$rootScope.curentUser;
+                    d.bgColor="#337ab7";
                     // var tl = {};
                     // tl.topicId = d.topicId;
                     // tl.newTime = d.newTime;
@@ -92,6 +130,8 @@ CQ.mainApp.monitorController
                     //     post.poster.img_url = "/static/assets/img/user/user-" + ~~(max_users * Math.random() + 1) + ".jpg"; 
                     // });
                 });
+                $scope.myMonitorData=$scope.monitorData;
+                console.log($scope.monitorData);
                 // $scope.freshTopicLists = topicLists;
                 getFreshData(cons);
             },function(error){
@@ -168,6 +208,55 @@ CQ.mainApp.monitorController
            // console.log(ll);
         }); 
 
+        
+        //查看组内实时监控
+        $scope.groupMonitor=function(){
+            var cons = {};
+            cons.dataType = $scope.dataType ;
+            cons.siteId = $scope.siteId;
+            cons.date = $scope.date;
+            cons.pageCount = 20;
+            cons.userlist="";
+            for(var i=0;i<$scope.newMonitorList.length;i++){
+                cons.userlist=cons.userlist+$scope.newMonitorList[i];
+                if(i!=$scope.newMonitorList.length-1){
+                    cons.userlist=cons.userlist+",";
+                }
+            }
+            $scope.cons = angular.copy(cons);
+            console.log($scope.cons);
+            $(".loader").show();
+            MonitorFacService.getGroupMonitorData(cons).then(function(res){
+                console.log("Here");
+                console.log(res);
+                $scope.groupMonitorData = res;
+                for(var i=0;i<$scope.groupMonitorData.length;i++){
+                    for(var j=0;j<$scope.senduser2.length;j++){
+                        if($scope.groupMonitorData[i].username==$scope.senduser2[j].user_){
+                            $scope.groupMonitorData[i].bgColor=$scope.senduser2[j].color;
+                        }
+                    }
+                }   
+                 
+                $scope.monitorData=[];
+                console.log($scope.myMonitorData);
+                console.log($scope.groupMonitorData);
+                $scope.monitorData=$scope.monitorData.concat($scope.myMonitorData);
+                $scope.monitorData=$scope.monitorData.concat($scope.groupMonitorData);
+                var topicLists = [];
+                $scope.monitorData.forEach(function (d) {
+                    d.fresh = true;
+                });
+                console.log($scope.monitorData);
+                getFreshData(cons);
+            },function(error){
+                console.log(error);
+                notice.notify_info("抱歉！","数据请求出错，请重试！","",false,"","");
+            });
+            $scope.oldMonitorList=$scope.newMonitorList;
+            console.log($scope.oldMonitorList);
+            console.log($scope.newMonitorList);
+        };
         // move positions
         $scope.movePosition = function(topic_id) {
             console.log(topic_id);

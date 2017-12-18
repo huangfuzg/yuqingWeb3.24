@@ -24,7 +24,7 @@
                                     <option ng-repeat="(key, value) in data">第{{key+1}}组</option>
                                 </select> -->
                                 <a ng-click="addgroup()" class="btn btn-sm btn-primary"><i class="fa fa-plus m-r-5"></i> 添加组</a>
-                                <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-minus m-r-5"></i> 删除组</a>
+                                <a class="btn btn-sm btn-primary" ng-show="showbtn"><i class="fa fa-minus m-r-5"></i> 删除组</a>
                      
                             </form>
                             <form class="navbar-form navbar-right">
@@ -50,15 +50,15 @@
                                 <tr>
                                 	<th><input class="m-r-2" type="checkbox" ng-model="allselected" ng-click="selectAll()">组id</th>
                                 	<th>组名</th>
-                                    <th>组备注信息</th>
+                                    
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="user in data">
-                                    <td style="width: 30%"><input class="m-r-2" type="checkbox" ng-model="user.selected" ng-click="selectBoxChange(user)">{{user.id}}</td>
-                                    <td style="width: 30%">{{user.username}}</td>
-                                    <td style="width: 30%">{{user.group}}</td>
+                                <tr ng-repeat="group in data">
+                                    <td style="width: 30%"><input class="m-r-2" type="checkbox" ng-model="group.selected" ng-click="selectBoxChange(group)">{{group.group_id}}</td>
+                                    <td style="width: 30%">{{group.group_name}}</td>
+                                    
                                     <td style="width: 10%">
                                         <a href="" title="管理组" class="email-btn" ng-click="mangroup()" ng-model="item.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> 
                                         <a href="javascript::void," title="删除组" class="email-btn" ng-click="remove(item)"><i class="fa fa-trash-o" "></i></a>
