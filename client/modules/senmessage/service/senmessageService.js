@@ -3,8 +3,9 @@ angular.module("senmessageService", ["commons"])
     .factory("SenFac", ['$resource', 'parseResource', function ($resource, parseResource) {
         var factories = {};
 
-        factories.getSenLists = $resource(CQ.variable.RESTFUL_URL + "senmassage/showmsg", parseResource.params, parseResource.actions);
-    
+        // factories.getSenLists = $resource(CQ.variable.RESTFUL_URL + "senmassage/showmsg", parseResource.params, parseResource.actions);
+        factories.getSenLists = $resource("http://118.190.133.203:8100/yqdata/senmassage/showmsg", parseResource.params, parseResource.actions);
+
         factories.getDetailData = $resource(CQ.variable.RESTFUL_URL + "senmassage/showrawmsg", parseResource.params, parseResource.actions);
 
         factories.removeSenData = $resource(CQ.variable.RESTFUL_URL + "senmassage/delmesg", parseResource.params, parseResource.actions);
@@ -109,8 +110,8 @@ angular.module("senmessageService", ["commons"])
         };*/
 
         factories.addSenMessage = function(data) {
-            return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
-            //return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
+            // return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
+            return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
         };
 
         return factories;
