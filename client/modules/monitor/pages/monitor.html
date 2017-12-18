@@ -69,6 +69,14 @@
 </style>
 <!-- begin #content -->
 <div id = "content" class = "content">
+    <div class="btn-group">
+            <label class="control-label" style="font-weight: 1000;font-size:20px;margin-top: 6px;position: absolute;">组内监控:</label>
+                <label style="margin-top: 5px;margin-left: 100px">
+                    <input style="width: 900px" type="text" id="users" style="display: inline-block;" />
+                </label>
+                <button ng-click="groupMonitor()" class="btn btn-primary" style="margin-top: 5px;margin-left: 10px;position: relative;float:right">查看</button>
+        </div>
+
     <div id="topics" class="m-b-5 col-md-12 bg-silver">
         <div class="btn-group m-r-5 m-b-5 m-t-15 "  ng-repeat = "(index, items) in monitorData" id = "monitortopic_{{items.topicId}}">
             <a href="javascript:;" ng-click = "movePosition(items.topicId)" class="btn btn-primary btn-lg">{{items.topicName}}</a>
@@ -81,13 +89,7 @@
                 <li><a href="javascript:;" ng-click = "openDia(items.topicId , items.topicName)" >修改关键词</a></li>
             </ul>
         </div>
-        <div class="btn-group">
-            <label class="control-label" style="font-weight: 1000;font-size:20px;margin-top: 23px;position: absolute;">组内监控:</label>
-                <label style="width: 150px;margin-top: 22px;margin-left: 100px">
-                    <input style="width: 150px" type="text" id="users" style="display: inline-block;" />
-                </label>
-                <button ng-click="groupMonitor()" class="btn btn-primary" style="float:right;margin-top: 22px;">查看</button>
-        </div>
+        
         <div class="btn-group m-r-5 m-b-5 m-t-5 pull-right middles text-center">
             <!-- <input type="text" class="form-control" id="datepicker-default" placeholder="选择日期" /> -->
                 <img src = "/static/assets/img/rili.svg" class = "m-b-5 "/>
