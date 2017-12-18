@@ -98,15 +98,15 @@
         <div class="page-header m-r-5 m-t-5" style="text-align:center">敏感信息：
         </div>
         <div class="form-group col-md-12">
-            <label class="col-md-2 control-label f-s-14">URL：</label>
-            <div class="col-md-10">
-                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.url"></textarea>
+            <label class="col-md-2 control-label f-s-14">URL：*</label>
+            <div class="col-md-10"  ng-class="{'has-error':detailData.url==''}">
+                <input class="form-control f-s-14 " rows="1" ng-model = "detailData.url" placeholder="required">
             </div>
         </div>
                 <div class="form-group col-md-12">
-            <label class="col-md-2 control-label f-s-14">标题：</label>
-            <div class="col-md-10">
-                <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.title"></textarea>
+            <label class="col-md-2 control-label f-s-14">标题：*</label>
+            <div class="col-md-10" ng-class="{'has-error':detailData.title==''}">
+                <input class="form-control f-s-14 "  rows="1" ng-model = "detailData.title" placeholder="required">
             </div>
         </div>
         <div class="form-group col-md-12">
@@ -120,18 +120,17 @@
         <div class="form-group col-md-12">
             <label class="col-md-2 control-label f-s-14">图片URL：</label>
             <div class="col-md-10">
-                <input class="form-control f-s-14" ng-model = "detailData.img_url" 
-                >
+                <input class="form-control f-s-14" ng-model = "detailData.img_url">
             </div>
         </div>  
         <div class="form-group col-md-12">
             <label class="col-md-2 control-label f-s-14">敏感词：</label>
             <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "detailData.senwords">
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.senwords" placeholder="以','隔开">
             </div>
-            <label class="col-md-2 control-label f-s-14">发帖时间：</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"   ng-model = "detailData.pt_time">
+            <label class="col-md-2 control-label f-s-14">发帖时间：*</label>
+            <div class="col-md-4" ng-class="{'has-error':detailData.pt_time==''}">
+                <input type="text" class="form-control f-s-14"   ng-model = "detailData.pt_time" placeholder="required like:year-month-day">
             </div>
         </div>
         <div class="form-group col-md-12">
@@ -139,14 +138,15 @@
             <div class="col-md-4">
                 <input type="text" class="form-control f-s-14"  ng-model = "detailData.board">
             </div>
-            <label class="col-md-2 control-label f-s-14">话题：</label>
+            <label class="col-md-2 control-label p-r-10 f-s-14">转发数：</label>
             <div class="col-md-4">
-                <select name="selection" class="form-control f-s-14" style="width: 183.33px" ng-model = "detailData.topic_name">
-                <option value="话题1">话题1</option>
-                <option value="话题2">话题2</option>
-                </select>
+                <input type="text" class="form-control f-s-14"  ng-model = "detailData.repost_num">
             </div>
-            </label>
+            <!--<label class="col-md-2 control-label f-s-14">话题：</label>-->
+            <!--<div class="col-md-4">-->
+                <!--<input type="text" class="form-control f-s-14"  ng-model = "detailData.topic_name">-->
+            <!--</div>-->
+            <!--</label>-->
         </div>
         <div class="form-group col-md-12">
             <label class="col-md-2 control-label f-s-14">IP地址：</label>
@@ -163,10 +163,10 @@
             <div class="col-md-4">
                 <input type="text" class="form-control f-s-14"  ng-model = "detailData.comm_num">
             </div>
-            <label class="col-md-2 control-label p-r-10 f-s-14">转发数：</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "detailData.repost_num">
-            </div>
+            <!--<label class="col-md-2 control-label p-r-10 f-s-14">转发数：</label>-->
+            <!--<div class="col-md-4">-->
+                <!--<input type="text" class="form-control f-s-14"  ng-model = "detailData.repost_num">-->
+            <!--</div>-->
         </div>
         
          

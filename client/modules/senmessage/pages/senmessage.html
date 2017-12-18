@@ -63,7 +63,7 @@
                                         <tr class="odd gradeX" ng-repeat="item in sendata">
                                             <td class="width-md">
                                                 <input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">
-                                                <a ng-href={{item.url}} target="_blank">{{item.senwords.join('')}}</a>
+                                                <a ng-href={{item.url}} target="_blank">{{item.senwords.join(',')}}</a>
                                             </td>
                                             <td class="width-lg" ng-if = "item.title != 'sina blog'">
                                                 <a ng-href = {{item.url}} target= "_blank" >{{item.title}}</a>
@@ -75,7 +75,7 @@
     
                                             <td class="width-200">{{item.pt_time}}</td>
                                             <td class="width-200">{{item.add_time}}</td>
-                                            <td class="width-150" ng-permission="2">{{}}</td>
+                                            <td class="width-150" ng-permission="2">{{item.namelist}}</td>
                                             <td class="width-150" ng-if="item.is_report == 0">未上报</td>
                                             <td class="width-150" ng-if="item.is_report == 1">上报未处理</td>
                                             <td class="width-150" ng-if="item.is_report == 2">已处理</td>
