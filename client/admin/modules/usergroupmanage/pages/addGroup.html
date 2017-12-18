@@ -19,34 +19,32 @@
     </div>
     <div class="panel-body">
         
-        <div class="form-group col-md-12">
-            <label class="col-md-2 control-label f-s-14">组id</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.follows">
-            </div>
-            <label class="col-md-2 control-label f-s-14">组名</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "detailData.poster.following">
-            </div>
-        </div>
-        
-       
-
-        <div>
-            
-            <div class="form-group col-md-12">
-                <label class="col-md-2 control-label f-s-14">备注信息</label>
-                <div class="col-md-10">
-                    <textarea class="form-control f-s-14 " rows="1" ng-model = "detailData.url"></textarea>
+        <form class="form-horizontal" role="form" name="myForm" ng-submit="submitgroup()">
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">组名</label>
+                <div class="col-sm-10" >
+                    <input type="text" class="form-control" id="username" name="username" 
+                           placeholder="请输入组名" ng-model="newgroup_name" required>
+                    <span style="color:#c33" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+                        <span ng-show="myForm.username.$error.required"><i class="fa fa-info-circle"></i> 请输入组名</span>
+                    
                 </div>
             </div>
+            <!-- <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">小组信息</label>
+                <div class="col-sm-10">
+                    <input type="text" name="password" class="form-control" id="password" ng-model="newgroup_info" required placeholder="请输入小组信息">
+                    <span style="color:#c33" ng-show="myForm.password.$touched && myForm.password.$invalid">
+                    <span ng-show="myForm.password.$error.required&&myForm.password.$touched"><i class="fa fa-info-circle"></i> 请输入小组信息</span>
                   
-            
-             
-            <div class="form-group col-md-12">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-sm btn-primary pull-right f-s-14" ng-click = "DoaddSen()">确认提交</button>
                 </div>
-            </div> 
-        </div>
+            </div> -->
+            
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" ng-disabled="myForm.username.$dirty && myForm.username.$invalid ">添加</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>

@@ -31,7 +31,7 @@ li{
     <ul class="nav nav-pills">
         <li class="active"><a href="#nav-pills-tab-1" data-toggle="tab">基本资料</a></li>
         <li><a href="#nav-pills-tab-2" data-toggle="tab">账号设置</a></li>
-        <li><a href="#nav-pills-tab-3" data-toggle="tab" ng-show="false">Pills Tab 3</a></li>
+        <li><a href="#nav-pills-tab-3" data-toggle="tab">头像设置</a></li>
         <li><a href="#nav-pills-tab-4" data-toggle="tab" ng-show="false">Pills Tab 4</a></li>
     </ul>
     <div class="tab-content">
@@ -41,56 +41,81 @@ li{
                     <label class="control-label col-md-1">用户名 <span class="text-danger">*</span></label>
                     <div class="col-md-3">
                         <span class="attr">{{fusername}}</span>
-                        <span><input type="text" name="username" id="input1" class="form-control" placeholder="您的用户名" ng-show="changed1" ng-model="username" required></span>
+                        <span><input type="text" name="username" class="form-control" placeholder="您的用户名" ng-show="changed1" ng-model="username" required></span>
                         <span style="color:#c33" ng-show="myForm.username.$dirty && myForm.username.$invalid">
                         <span ng-show="myForm.username.$error.required"><i class="fa fa-info-circle"></i> 用户名是必须的。</span>      
                     </div>
                     <a href="javascript:;" class="button" ng-click="changename()" ng-show="!changed1"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-1">生日 <span class="text-danger">*</span></label>
+                    <label class="control-label col-md-1">姓名 <span class="text-danger">*</span></label>
+                    <div class="col-md-3">
+                        <span class="attr">{{frealname}}</span>
+                        <span><input type="text" name="realname" class="form-control" placeholder="您的用户名" ng-show="changed2" ng-model="realname" required></span>
+                        <span style="color:#c33" ng-show="myForm.realname.$dirty && myForm.realname.$invalid">
+                        <span ng-show="myForm.realname.$error.required"><i class="fa fa-info-circle"></i> 姓名是必须的。</span>      
+                    </div>
+                    <a href="javascript:;" class="button" ng-click="changername()" ng-show="!changed2"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-1">所属组 <span class="text-danger">*</span></label>
+                    <div class="col-md-3">
+                        <span class="attr">{{fgroup}}</span>
+                              
+                    </div>
+                    
+                </div>
+                <!-- <div class="form-group">
+                    <label class="control-label col-md-1">生日 <span class="text-danger"></span></label>
                     
                     <div class="col-md-3">
-                        <span class="attr">{{fbirth}}</span><!-- <a href="javascript:;" class="button" ng-click="changebirth()" ng-show="!changed2"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a> -->
+                        <span class="attr">{{fbirth}}</span>
                         <div class="input-append date form_datetime">
                             <input size="16" type="text" id="input2" class="form-control" placeholder="您的生日" ng-show="changed2" required>
                             <span class="add-on"></span>
                         </div>   
                     </div>
                     <a href="javascript:;" class="button" ng-click="changebirth()" ng-show="!changed2"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label class="control-label col-md-1">Email <span class="text-danger">*</span></label>
                     <div class="col-md-3">
                         <span class="attr">{{femail}}</span>
-                            <input type="email" name="email" id="input3" class="form-control" ng-show="changed3" placeholder="您的邮箱地址" ng-model="email"  required>
+                            <input type="email" name="email" class="form-control" ng-show="changed3" placeholder="您的邮箱地址" ng-model="email"  required>
                             <span style="color:#c33" ng-show="myForm.email.$dirty && myForm.email.$invalid">
                             <span ng-show="myForm.email.$error.required"><i class="fa fa-info-circle"></i> 邮箱是必须的。</span>
                             <span ng-show="myForm.email.$error.email"><i class="fa fa-info-circle"></i> 非法的邮箱地址。</span>
                     </div>
                     <a href="javascript:;" class="button" ng-click="changeemail()" ng-show="!changed3"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
                 </div>
-                
                 <div class="form-group">
+                    <label class="control-label col-md-1">电话号码 <span class="text-danger">*</span></label>
+                    <div class="col-md-3">
+                        <span class="attr">{{ftel}}</span>
+                        <span><input type="text" name="tel" class="form-control" placeholder="您的电话号码" ng-show="changed6" ng-model="tel" required></span>    
+                    </div>
+                    <a href="javascript:;" class="button" ng-click="changetel()" ng-show="!changed6"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
+                </div>
+                <!-- <div class="form-group">
                     <fieldset id="city_china_val">
                     <label class="control-label col-md-1">所在地区 </label>
                     <div id="element_id" class="col-md-3"> 
                             <span class="attr">{{fdistrict}}</span>
                         <div ng-show="changed5"> 
-                            <select class="province cxselect" data-value="陕西省" data-first-title="选择省" disabled="disabled" ng-show="changed5"></select>
-                            <select class="city cxselect" data-value="西安市" data-first-title="选择市" disabled="disabled" ng-show="changed5"></select>
-                            <select class="area cxselect" data-value="碑林区" data-first-title="选择地区" disabled="disabled" ng-show="changed5"></select>
+                            <select class="province cxselect" data-value="陕西省" data-first-title="选择省" disabled="disabled" ng-show="changed5" ng-model="province"></select>
+                            <select class="city cxselect" data-value="西安市" data-first-title="选择市" disabled="disabled" ng-show="changed5" ng-model="city"></select>
+                            <select class="area cxselect" data-value="碑林区" data-first-title="选择地区" disabled="disabled" ng-show="changed5" ng-model="district"></select>
                         </div>
                         
                     </div>
                     <a href="javascript:;" class="button" ng-click="changedistrict()" ng-show="!changed5"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
                     </fieldset>
-                </div>
+                </div> -->
                 <div class="form-group">
-                    <label class="control-label col-md-1">所在单位 </label>
+                    <label class="control-label col-md-1">所在单位  </label>
                     <div class="col-md-3">
                         <span class="attr">{{fwork}}</span><!-- <a href="javascript:;" class="button" ng-click="changename()" ng-show="!changed1"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a> -->
-                        <span><input type="text" name="work" id="input4" class="form-control" placeholder="您的所在单位" ng-show="changed4" ng-model="work" required></span>    
+                        <span><input type="text" name="work" class="form-control" placeholder="您的所在单位" ng-show="changed4" ng-model="work" required></span>    
                     </div>
                     <a href="javascript:;" class="button" ng-click="changework()" ng-show="!changed4"><i class="fa fa-pencil fa-fw m-r-5"></i>修改</a>
                 </div>
@@ -103,7 +128,7 @@ li{
                 <div class="form-group" >
                     <label class="control-label col-md-1"></label>
                     <div class="col-md-1 text-left">
-                        <a href="#modal-dialog1" class="btn btn-sm btn-primary" data-toggle="modal" ng-disabled="myForm.username.$dirty && myForm.username.$invalid ||  myForm.email.$dirty && myForm.email.$invalid">保存</a>
+                        <a ng-click="saveattr()" class="btn btn-sm btn-primary" data-toggle="modal" ng-disabled="myForm.username.$dirty && myForm.username.$invalid ||  myForm.email.$dirty && myForm.email.$invalid">保存</a>
                     </div>
                 </div>              
             </form> 
@@ -114,17 +139,82 @@ li{
                 <div class="form-group">
                     <label class="control-label col-md-1">密码设置 </label>
                     <div class="col-md-3">
-                        <a href="#modal-dialog2" data-toggle="modal" ng-show="pwdyes" >修改密码</a>
-                        <span style="color:#c33" ng-show="pwd"><i class="fa fa-info-circle"></i> 密码错误.</span>
-                        <input type="text" name="username" id="input6" class="form-control" value="" autocomplete="off" placeholder="请输入新密码" ng-show="changed6" " required>
-                        <input type="text" name="username" id="input7" class="form-control" value="" autocomplete="off" placeholder="请再次输入新密码" ng-show="changed6"  required>
-                        <a href="#modal-dialog3" class="btn btn-sm btn-inverse" data-toggle="modal" ng-show="changed6" ng-click="savepwd()">确认</a>
+                        <a href="#modal-dialog2" data-toggle="modal" >修改密码</a>
+                        
                     </div>
                     
                 </div>
             </form>
         </div>
-        <div class="modal fade" id="modal-dialog1">
+        <div class="tab-pane fade" id="nav-pills-tab-3">
+            <!-- <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-1"> 当前头像 </label>
+
+                    <div class="col-md-3">
+                        <img src="/static/assets/img/user-13.jpg" class="img-circle">
+                        
+                        
+                    </div>
+                    <div class="col-md-3">
+                        <a href="javascript:;" data-toggle="modal" >修改头像</a>
+                    </div>
+                    <div class="form-group">
+                        
+                    </div>
+                </div>
+                </div>
+            </form> -->
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="control-label col-md-1">头像设置 </label>
+                    <div class="col-md-3">
+                        <!-- <a href="#modal-dialog2" data-toggle="modal" >修改密码</a> -->
+                        <div class="fileinput fileinput-new" data-provides="fileinput"  id="exampleInputUpload">
+                        <div class="fileinput-new thumbnail" style="width: 150px;height: auto;max-height:150px;">
+                            <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="/static/assets/img/user-13.jpg" alt="" class="img-circle"/>
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                            <div>
+                                <span class="btn btn-primary btn-file">
+                                    <span class="fileinput-new">选择文件</span>
+                                    <span class="fileinput-exists">换一张</span>
+                                    <input type="file" name="pic1" id="picID" accept="image/gif,image/jpeg,image/x-png"/>
+                                </span>
+                                <button type="button" id="uploadSubmit" class="btn btn-primary">提交</button>
+                                <a href="javascript:;" class="btn btn-primary fileinput-exists" data-dismiss="fileinput">移除</a>
+                            </div>
+                        </div>
+                        <!-- <button type="button" id="uploadSubmit" class="btn btn-primary">提交</button> -->
+                    </div>
+
+                    <!-- <div class="col-md-3">
+                        <button type="button" id="uploadSubmit" class="btn btn-primary">提交</button>
+                    </div> -->
+                </div>
+            </form>
+            <!-- <form >
+                <div class="form-group" id="uploadForm" enctype='multipart/form-data'>
+                    <div class="h4">用户头像</div>
+                    <div class="fileinput fileinput-new" data-provides="fileinput"  id="exampleInputUpload">
+                        <div class="fileinput-new thumbnail" style="width: 150px;height: auto;max-height:150px;">
+                            <img id='picImg' style="width: 100%;height: auto;max-height: 140px;" src="/static/assets/img/user-13.jpg" alt="" class="img-circle"/>
+                        </div>
+                        <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+                        <div>
+                            <span class="btn btn-primary btn-file">
+                                <span class="fileinput-new">选择文件</span>
+                                <span class="fileinput-exists">换一张</span>
+                                <input type="file" name="pic1" id="picID" accept="image/gif,image/jpeg,image/x-png"/>
+                            </span>
+                            <a href="javascript:;" class="btn btn-primary fileinput-exists" data-dismiss="fileinput">移除</a>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="uploadSubmit" class="btn btn-primary">提交</button>
+            </form> -->
+        </div>
+      <!--   <div class="modal fade" id="modal-dialog1">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -135,12 +225,11 @@ li{
                         个人信息修改成功！
                     </div>
                     <div class="modal-footer">
-                        <!-- <a href="javascript:;" class="btn btn-sm btn-white" data-dismiss="modal">Close</a> -->
                         <a href="javascript:;" class="btn btn-sm btn-inverse" data-dismiss="modal" ng-click="saveattr()">确认</a>
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     
         <div class="modal" id="modal-dialog2">
             <div class="modal-dialog">
@@ -152,10 +241,10 @@ li{
                     <div class="modal-body" style="height: 120px">
                         <label class="control-label col-md-3">请输入密码 </label>
                         <div class="col-md-5">
-                            <input type="password" id="pwd" class="form-control" autocomplete="off" value="" required>
+                            <input type="password" id="pwd" class="form-control" ng-model="valpwd" autocomplete="off" value="" required>
                             <!-- <span style="color:#c33" ng-show="pwd"><i class="fa fa-info-circle"></i> 密码错误.</span> -->
                         </div>
-                        <a href="javascript:;" class="btn btn-sm btn-success" data-dismiss="modal" ng-click="validatepwd()">验证</a>
+                        <a href="javascript:;" class="btn btn-sm btn-primary" data-dismiss="modal" ng-click="validatepwd()">验证</a>
                         <div></div>
                         <div></div>
                     </div>
@@ -185,7 +274,7 @@ li{
 
 </div>
 
-<script src="/static/assets/js/jquery.cxselect.min.js"></script> 
+<!-- <script src="/static/assets/js/jquery.cxselect.min.js"></script> 
 <script>
 $.cxSelect.defaults.url = '/static/assets/data/cityData.min.json';
 
@@ -193,4 +282,4 @@ $('#city_china_val').cxSelect({
     selects: ['province', 'city', 'area'],
     nodata: 'none'
 });
-</script>
+</script> -->
