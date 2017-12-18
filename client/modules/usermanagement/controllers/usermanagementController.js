@@ -61,72 +61,90 @@ CQ.mainApp.usermanagementController
             console.log(clock);
         } 
 
-     $scope.showUserattr = function(d)
-    {
-         $state.go("viewUserController",{userName:d.user_account}); 
-         console.log(d);  
-            $rootScope.viewtemp=d;
-             //console.log($rootScope.viewtemp)
-    };
-    $scope.editTopic = function()         
+        $scope.showUserattr = function(d)
         {
-        $state.go("manageTopicController"); 
+             $state.go("viewUserController",{userName:d.user_account}); 
+             console.log(d);  
+                $rootScope.viewtemp=d;
+                 //console.log($rootScope.viewtemp)
+        };
+        $scope.editTopic = function()         
+        {
+            $state.go("manageTopicController"); 
         };  
-    $scope.selectBoxChange = function(d){
-        if(d.selected)
-        {
-            $scope.showbtn=true;
-            if($scope.selectList.indexOf(d.user_id)==-1)
+        $scope.selectBoxChange = function(d){
+            if(d.selected)
             {
-               $scope.selectList.push(d.user_id);
-                console.log(d);
-            } 
-        }    
-        else
-        {
-            $scope.showbtn=false;
-            for(var index = 0; index < $scope.selectList.length; index++)   
-            {
-                if($scope.selectList[index] == d.user_id)
+                $scope.showbtn=true;
+                if($scope.selectList.indexOf(d.user_id)==-1)
                 {
-                    $scope.selectList.splice(index,1);
-                    break;
+                   $scope.selectList.push(d.user_id);
+                    console.log(d);
                 } 
+            }    
+            else
+            {
+                $scope.showbtn=false;
+                for(var index = 0; index < $scope.selectList.length; index++)   
+                {
+                    if($scope.selectList[index] == d.user_id)
+                    {
+                        $scope.selectList.splice(index,1);
+                        break;
+                    } 
+                }
             }
+            console.log($scope.selectList);
+        };
+        $scope.selectAll = function()
+        {
+            $scope.data.forEach(function(d){
+                console.log(d);
+                d.selected = $scope.allselected;
+                $scope.selectBoxChange(d);
+            });
+        };
+        $scope.delsin = function(d){
+            $scope.temp=d;
+            // console.log($scope.temp);
+            ngDialog.open(
+                {
+                    template: '/static/modules/usermanagement/pages/deleteUser.html',
+                    controller: 'deleteUser',
+                    appendClassName: "ngdialog-theme-details",
+                    width:"100%",
+                    scope:$scope
+                });
         }
-        console.log($scope.selectList);
-    };
-    $scope.selectAll = function()
-    {
-        $scope.data.forEach(function(d){
-            console.log(d);
-            d.selected = $scope.allselected;
-            $scope.selectBoxChange(d);
-        });
-    };
-    $scope.delsin = function(d){
-        $scope.temp=d;
-        // console.log($scope.temp);
-        ngDialog.open(
-            {
-                template: '/static/modules/usermanagement/pages/deleteUser.html',
-                controller: 'deleteUser',
+        $scope.adduser = function()
+        {
+            ngDialog.open(
+                {
+                    template: '/static/modules/usermanagement/pages/addUser.html',
+                    controller: 'addUser',
+                    appendClassName: "ngdialog-theme-details",
+                    width:"100%",
+                    scope:$scope
+                });
+        }
+        //打开用户属性页面
+        $scope.editUser = function(user)
+        {
+            $scope.editCurUser = user;
+            ngDialog.open({
+                template: '/static/modules/usermanagement/pages/editUser.html',
+                controller: 'editUser',
                 appendClassName: "ngdialog-theme-details",
                 width:"100%",
                 scope:$scope
             });
-    }
-    $scope.adduser = function()
-    {
-        ngDialog.open(
-            {
-                template: '/static/modules/usermanagement/pages/addUser.html',
-                controller: 'addUser',
-                appendClassName: "ngdialog-theme-details",
-                width:"100%",
-                scope:$scope
-            });
-    }
+        }
+        //发送消息
+        $scope.sendMessage = function(userList)
+        {
+            console.log(userList);
+            $state.go('msgController',{'sendUsers':userList});
+        }
     // $scope.selectPage = function (page) {
     //         if (page < 1 || page > $scope.pages) return;
     //         //最多显示分页数5
@@ -282,6 +300,12 @@ CQ.mainApp.usermanagementController
         $http, ngDialog, notice) {
         console.log($scope.temp)
         console.log("delete User");
+       
+    }])
+    .controller("editUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
+        $http, ngDialog, notice) {
+        console.log($scope.editCurUser);
+        console.log("modify User!!!!");
        
     }])
     .controller("viewUserController", ["$rootScope", "$scope", "$http", "ngDialog", "notice","WatchattrService",function($rootScope, $scope, 
