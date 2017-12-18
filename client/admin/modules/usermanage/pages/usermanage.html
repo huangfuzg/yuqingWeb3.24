@@ -3,11 +3,19 @@
                 <div class="col-md-12">
                     <div class="email-btn-row hidden-xs">
                         <!-- <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-plus m-r-5"></i> 添加组</a> -->
-                        <a class="btn btn-sm btn-primary" ng-click="adduser()" data-toggle="modal"><i class="fa fa-plus m-r-5"></i> 添加用户</a>
-                        
-                        <!-- <a href="#" class="btn btn-sm btn-primary"><i class="fa fa-edit m-r-5"></i> 管理用户话题</a> -->
+                        <!-- <a class="btn btn-sm btn-primary" ng-click="adduser()" data-toggle="modal"><i class="fa fa-plus m-r-5"></i> 添加用户</a>
                         <a class="btn btn-sm btn-primary" ng-show="showbtn"><i class="fa fa-edit m-r-5"></i> 修改用户权限</a>
-                        <a ng-click="delmul()" ng-show="showbtn" class="btn btn-sm btn-primary"><i class="fa fa-minus m-r-5"></i> 删除用户</a> 
+                        <a ng-click="delmul()" ng-show="showbtn" class="btn btn-sm btn-primary"><i class="fa fa-minus m-r-5"></i> 删除用户</a>  -->
+                        <ul class="m-b-10 list-unstyled list-inline">
+                            <li><a class="btn btn-sm btn-primary" ng-click="adduser()"><i class="fa fa-plus m-r-5"></i>添加用户</a></li>
+                            <li><a class="btn btn-sm btn-primary" ng-click="editTopic()"><i class="fa fa-edit m-r-5"></i>管理用户话题</a></li> 
+                            <li><a class="btn btn-sm btn-primary" ng-click="delmul()"><i class="fa fa-trash-o m-r-5"></i>删除用户</a></li>
+                            <li>
+                                <a class="btn btn-sm btn-primary" ng-click="sendmul()"><i class="fa fa-envelope-o m-r-5"></i>
+                                    发送消息
+                                </a>
+                            </li>
+                        </ul>   
                     </div>
                     
                     <div class="email-content">
@@ -66,9 +74,17 @@
                                 <!-- <td style="width: 20%">{{user.regtime}}</td> -->
                                 <td style="width: 20%">{{user.user_logintime}}</td>
                                 <td style="width: 10%">
-                                	<a href="" title="查看用户属性" class="email-btn" ng-click="showUserattr(user)" ng-model="user.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-eye"></i></a> 
-                                    <a href="" title="修改用户话题" class="email-btn" ng-click="editTopic()" ng-model="user.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> 
-                                    <a href="javascript::void," title="删除用户" class="email-btn" ng-click="delsin(user)"><i class="fa fa-trash-o" "></i></a>
+                                	<ul class="breadcrumb">
+                                        <li>
+                                            <a href="" title="修改用户属性" class="email-btn" ng-click="editUser(user)" ng-model="item.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="" title="发送消息" class="email-btn" ng-click="sendMessage([user])" ng-model="item.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-envelope-o"></i></a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript::void," title="删除用户" class="email-btn" ng-click="delsin(user)"><i class="fa fa-trash-o"></i></a>
+                                        </li>
+                                    </ul>
                                 </td>
                         </tr>
 
