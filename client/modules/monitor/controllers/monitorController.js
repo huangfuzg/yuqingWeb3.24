@@ -25,7 +25,6 @@ CQ.mainApp.monitorController
         $scope.pics = ["/static/assets/img/news2.svg","/static/assets/img/luntan.svg", "/static/assets/img/weibo.svg"
         ,"/static/assets/img/tieba.svg","/static/assets/img/weixin1.svg","/static/assets/img/baidu.svg"];
         $scope.newMonitorList=[];
-        $scope.oldMonitorList=[];
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("monitor app start!!!");
@@ -116,6 +115,12 @@ CQ.mainApp.monitorController
                     d.fresh = true;
                     d.username=$rootScope.curentUser;
                     d.bgColor="#337ab7";
+                    if(d.postData.length<cons.pageCount){
+                        d.isLoad=false;
+                    }
+                    else{
+                        d.isLoad=true;
+                    }
                     // var tl = {};
                     // tl.topicId = d.topicId;
                     // tl.newTime = d.newTime;
@@ -231,6 +236,12 @@ CQ.mainApp.monitorController
                 console.log(res);
                 $scope.groupMonitorData = res;
                 for(var i=0;i<$scope.groupMonitorData.length;i++){
+                    if($scope.groupMonitorData[i].postData.length<cons.pageCount){
+                        $scope.groupMonitorData[i].isLoad=false;
+                    }
+                    else{
+                        $scope.groupMonitorData[i].isLoad=true;
+                    }
                     for(var j=0;j<$scope.senduser2.length;j++){
                         if($scope.groupMonitorData[i].username==$scope.senduser2[j].user_){
                             $scope.groupMonitorData[i].bgColor=$scope.senduser2[j].color;
@@ -253,8 +264,6 @@ CQ.mainApp.monitorController
                 console.log(error);
                 notice.notify_info("抱歉！","数据请求出错，请重试！","",false,"","");
             });
-            $scope.oldMonitorList=$scope.newMonitorList;
-            console.log($scope.oldMonitorList);
             console.log($scope.newMonitorList);
         };
         // move positions
@@ -366,35 +375,52 @@ CQ.mainApp.monitorController
         };
 
         $scope.showMore = function(topicId) {
-            console.log(topicId);
-            console.log('show more triggered');  
-            var cons = {};
-            cons.dataType = $scope.dataType ;
-            cons.siteId = $scope.siteId;
-            cons.date = $scope.date;
-            cons.pageCount = 20;
-            cons.topicId = topicId;
             $scope.monitorData.forEach(function(d) {
-                console.log(d);
                 if(d.topicId == topicId) {
-                    cons.oldTime = d.oldTime;
-                }
-            });
-            angular.element("#topic_" + topicId).find(".loadsMore").slideDown("slow");
-            MonitorFacService.getLoadData(cons).then(function(res) {
-                angular.element("#topic_" + topicId).find(".loadsMore").slideUp("slow");
-                console.log(res);
-                $scope.monitorData.forEach(function(d) {
-                    if(res[0].topicId == d.topicId){
-                        d.oldTime = res[0].oldTime;
-                        res[0].postData.forEach(function (mm) {
-                            d.postData.push(mm);
-                        });
+                    if(!d.isLoad){
                     }
-                });
-            }, function (error) {
-                console.log(error);
-            });
+                    else{
+                        console.log(topicId);
+                        console.log('show more triggered');  
+                        var cons = {};
+                        cons.dataType = $scope.dataType ;
+                        cons.siteId = $scope.siteId;
+                        cons.date = $scope.date;
+                        cons.pageCount = 20;
+                        cons.topicId = topicId;
+                        $scope.monitorData.forEach(function(d) {
+                            console.log(d);
+                            if(d.topicId == topicId) {
+                                cons.oldTime = d.oldTime;
+                            }
+                        });
+                        angular.element("#topic_" + topicId).find(".loadsMore").slideDown("slow");
+                        //console.log(angular.element("#topic_" + topicId).find(".loadsMore"));
+                        MonitorFacService.getLoadData(cons).then(function(res) {
+                            angular.element("#topic_" + topicId).find(".loadsMore").slideUp("slow");
+                            console.log(res[0]);
+                            $scope.monitorData.forEach(function(d) {
+                                if(res[0].topicId == d.topicId){
+                                    d.oldTime = res[0].oldTime;
+                                    if(res[0].postData.length==0){
+                                        d.isLoad=false;
+                                    }
+                                    else{
+                                        res[0].postData.forEach(function (mm) {
+                                        d.postData.push(mm);
+                                    });
+                                    }
+                                }
+                            });
+                            
+
+                        }, function (error) {
+                            console.log(error);
+                        });                        
+                    }
+                }
+            });            
+            
         };
 
         $scope.panelCollapse = function(topic_id) {
