@@ -91,7 +91,7 @@ CQ.mainApp.senmessageController
         function getData (object) {
             $scope.sendata = [];
             var cons = {
-                        "userId":$scope.dataObj.userId,
+                        // "userId":$scope.dataObj.userId,
                         "pageCounts":$scope.dataObj.pageCounts,
                         "is_report":$scope.dataObj.is_report,
                         "topicId":$scope.dataObj.topicId,
@@ -138,6 +138,7 @@ CQ.mainApp.senmessageController
 
     function getTopic(){
       var cons = {"userId":1};
+      // var cons = {};
       SenFacService.getTopic(cons).then(function(res) {
         for(var i=0;i<res.length;i++){
           $scope.topic.push({"name":res[i].topicName,"value":i});
@@ -172,7 +173,7 @@ CQ.mainApp.senmessageController
         }
         // var url = $scope.baseUrl + "senmassage/delmesg/";
         var Data = {
-            userId: $scope.dataObj.userId,
+            // userId: $scope.dataObj.userId,
             postLists: postLists
         };
         SenFacService.removeSenData(Data).then(function(res) {
@@ -198,7 +199,8 @@ CQ.mainApp.senmessageController
         {
             postLists = $scope.selectList;
         }
-        var Data = {userId: $scope.dataObj.userId,
+        var Data = {
+                    // userId: $scope.dataObj.userId,
                     postLists: postLists};
 
         if(state != 1 && state != 2)
@@ -326,7 +328,7 @@ CQ.mainApp.senmessageController
                 url: CQ.variable.RESTFUL_URL+ 'senmassage/evidence',
                 method: "get",
                 params: {
-                    userId: $scope.dataObj.userId,
+                    // userId: $scope.dataObj.userId,
                     id: d
                 },
                 responseType: 'blob'
@@ -378,7 +380,7 @@ CQ.mainApp.senmessageController
             console.log("$scope.detailData");
             console.log($scope.detailData);
             var cons = {};
-            cons.userId = 1;
+            // cons.userId = 1;
             //$scope.detailData.url=" ";
             $scope.detailData.site_id=0;
             $scope.detailData.site_name=$scope.detailData.board;
@@ -419,7 +421,7 @@ CQ.mainApp.senmessageController
         //console.log($scope.detailDataId);
         $scope.detailData = null;
         var cons = {
-            userId: 1,
+            // userId: 1,
             id: $scope.detailDataId
         };
         SenFacService.getDetailData(cons).then(function(res) {
@@ -563,7 +565,7 @@ CQ.mainApp.senmessageController
         var getAll = function()
         {
             var cons = {
-                        "userId":$scope.dataObj.userId,
+                        // "userId":$scope.dataObj.userId,
                         "pageCounts":"all",
                         "is_report":$scope.dataObj.is_report,
                         "topicId":$scope.dataObj.topicId,
@@ -610,7 +612,7 @@ CQ.mainApp.senmessageController
         {
             console.log(starttime,endtime);
             var cons = {
-                "userId":$scope.dataObj.userId,
+                // "userId":$scope.dataObj.userId,
                 "pageCounts":"all",
                 "is_report":$scope.dataObj.is_report,
                 "topicId":$scope.dataObj.topicId,
