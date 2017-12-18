@@ -1,7 +1,7 @@
 "use strict";
 CQ.mainApp.msgController
-    .controller("showController",["$scope","$state","$stateParams","msgService",
-        function($scope,$state,$stateParams,msgService) {
+    .controller("showController", ["$scope", "$state", "$stateParams", "msgService",  
+        function($scope, $state, $stateParams, msgService) {
         $scope.selectList = [];
         $scope.view = 'View All';
         $scope.kong = false;
@@ -93,9 +93,20 @@ CQ.mainApp.msgController
                 }
             })};
         $scope.showdetail = function(msgid)
-            {
-                $state.go("detailController",{msgid:msgid});
-            }
+        {
+            $state.go("detailController",{msgid:msgid});
+        }
+        //发送消息
+        $scope.sendMessage = function()
+        {
+            $state.go('msgController');
+        }
+        //回复消息
+        $scope.replyMessage = function()
+        {
+            console.log($scope.selectList);
+            $state.go('msgController',{'sendUsers':$scope.selectList.map(d=>d.user_)});
+        }
         handleEmailCheckboxChecked();
         handleEmailAction();
     }]);

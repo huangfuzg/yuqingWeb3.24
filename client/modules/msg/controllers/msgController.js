@@ -1,10 +1,11 @@
 "use strict";
 CQ.mainApp.msgController
-    .controller("msgController",["$scope","$stateParams","msgService","notice",
-        function($scope,$stateParams,msgService,notice) {
-        var sendUsers = $stateParams.sendUsers.map(d=>d.user_account);
-        $scope.recid=[];
-        $scope.senduser = null;
+    .controller("msgController",["$scope","$stateParams","msgService","notice","$state",
+        function($scope,$stateParams,msgService,notice,$state) {
+            var sendUsers = $stateParams.sendUsers;
+            console.log(sendUsers);
+            $scope.recid=[];
+            $scope.senduser = null;
             var tmp={};
             msgService.getuser(tmp).then(function (res) {
                 $scope.senduser = res;
@@ -66,5 +67,4 @@ CQ.mainApp.msgController
                     }
                 });
             }, false)
-
         }]);

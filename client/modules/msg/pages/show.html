@@ -1,5 +1,5 @@
 <!--<script src="../../../../../coloradmin2.1/color-admin-v2.1/admin/html/assets/js/email-inbox-v2.demo.min.js"></script>-->
-<style>
+<!-- <style>
     .vertical-box{
         display: table;
         table-layout: fixed;
@@ -49,88 +49,7 @@
         margin-left: 125px;
     }
 
-</style>
-<div class="content">
-    <div class="vertical-box">
-        <div class="vertical-box-column">
-            <div class="wrapper bg-silver-lighter" >
-                <!-- begin btn-toolbar -->
-                <div class="btn-toolbar">
-                    <!-- begin btn-group -->
-                    <!--<div class="btn-group pull-right">-->
-                        <!--<button class="btn btn-white btn-sm">-->
-                            <!--<i class="fa fa-chevron-left"></i>-->
-                        <!--</button>-->
-                        <!--<button class="btn btn-white btn-sm">-->
-                            <!--<i class="fa fa-chevron-right"></i>-->
-                        <!--</button>-->
-                    <!--</div>-->
-                    <!-- end btn-group -->
-                    <!-- begin btn-group -->
-                    <div class="btn-group dropdown">
-                        <button class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown">
-                            {{view}} <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu text-left text-sm">
-                            <li class="active"><a href="javascript:;" ng-click="getShowData()"><i id='All' class="fa fa-circle f-s-10 fa-fw m-r-5"></i> All</a></li>
-                            <li><a href="javascript:;" ng-click="unreadmsg()"><i id='Unread' class="fa f-s-10 fa-fw m-r-5"></i> Unread</a></li>
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Contacts</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Groups</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Newsletters</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Social updates</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Everything else</a></li>-->
-                        </ul>
-                    </div>
-                    <!-- end btn-group -->
-                    <!-- begin btn-group -->
-                    <!--<div class="btn-group">-->
-                        <!--<button class="btn btn-sm btn-white" data-toggle="tooltip" data-placement="top" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>-->
-                    <!--</div>-->
-                    <!-- end btn-group -->
-                    <!-- begin btn-group -->
-                    <div class="btn-group">
-                        <button class="btn btn-sm btn-white hide" data-email-action="delete" ng-click="delmsg()"><i class="fa fa-times m-r-3"></i> <span class="hidden-xs">删除</span></button>
-                    </div>
-                    <!-- end btn-group -->
-                </div>
-                <!-- end btn-toolbar -->
-            </div>
-            <h2 ng-if="kong" style="text-align:center">没有未读消息</h2>
-            <ul class="list-group list-group-lg no-radius list-email" ng-if="!kong">
-                <li class="list-group-item" ng-class="{primary:item.send_user_role==2,inverse:item.send_user_role==3,success:item.send_user_role==1}"  ng-repeat="item in showdata">
-                    <div class="email-checkbox">
-                        <label>
-
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" ng-click="select(item)" data-checked="email-checkbox" />
-                        </label>
-
-                    </div>
-                    <div class="email-checkbox">
-                        <img style="height: 18px;width: 18px" src="/static/assets/icon/envolope.svg" ng-if="!item.is_read"/>
-                        <img style="height: 18px;width: 18px" src="/static/assets/icon/envolope-letter.svg" ng-if="item.is_read"/>
-                        <!--<i class="fa fa-2x fa-envelope" ng-if="!item.is_read"></i>-->
-                        <!--<i class="fa fa-2x fa-envelope-o" ></i>-->
-                    </div>
-                        <a href="" ng-click="showdetail(item._id)" class="email-user">
-                            <img src="/static/assets/img/user-13.jpg" alt="" />
-                        </a>
-                    <div class="email-info">
-                        <span class="email-time">{{item.send_time}}</span>
-                        <h5 class="email-title" >
-                            <a href="" ng-click="showdetail(item._id)" >{{item.title}}</a>
-                            <span class="label f-s-10" ng-class="{'label-primary':item.send_user_role==2,'label-inverse':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
-                        </h5>
-                        <p class="email-desc" style="font-size:12px;font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;color:#707478">
-                            {{item.desc}}
-                        </p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
+</style> -->
 <!-- begin #content -->
 <div id="content" class="content content-full-width">
     <!-- begin vertical-box -->
@@ -156,17 +75,17 @@
                     <!-- begin btn-group -->
                     <div class="btn-group dropdown">
                         <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
-                            View All <span class="caret"></span>
+                            {{view}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu text-left text-sm">
-                            <li class="active"><a href="email_inbox_v2.html#"><i class="fa fa-circle f-s-10 fa-fw m-r-5"></i> All</a></li>
-                            <li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Unread</a></li>
-                            <li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Contacts</a></li>
-                            <li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Groups</a></li>
-                            <li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Newsletters</a></li>
-                            <li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Social updates</a></li>
-                            <li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Everything else</a></li>
+                            <li class="active"><a href="javascript:;" ng-click="getShowData()"><i id='All' class="fa fa-circle f-s-10 fa-fw m-r-5"></i> All</a></li>
+                            <li><a href="javascript:;" ng-click="unreadmsg()"><i id='Unread' class="fa f-s-10 fa-fw m-r-5"></i> Unread</a></li>
                         </ul>
+                    </div>
+                    <!-- end btn-group -->
+                    <!-- begin btn-group -->
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-white" ng-click="sendMessage()"><i class="fa fa-envelope-o"></i> 发送消息</button>
                     </div>
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
@@ -176,9 +95,8 @@
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
                     <div class="btn-group">
-                        <button class="btn btn-sm btn-white hide" data-email-action="delete"><i class="fa fa-times m-r-3"></i> <span class="hidden-xs">Delete</span></button>
-                        <button class="btn btn-sm btn-white hide" data-email-action="archive"><i class="fa fa-folder m-r-3"></i> <span class="hidden-xs">Archive</span></button>
-                        <button class="btn btn-sm btn-white hide" data-email-action="archive"><i class="fa fa-trash m-r-3"></i> <span class="hidden-xs">Junk</span></button>
+                        <button class="btn btn-sm btn-white hide" data-email-action="delete" ng-click="delmsg()"><i class="fa fa-times m-r-3"></i> <span class="hidden-xs">删除</span></button>
+                        <button class="btn btn-sm btn-white hide" data-email-action="archive" ng-click="replyMessage()"><i class="fa fa-mail-reply m-r-3"></i> <span class="hidden-xs">回复</span></button>
                     </div>
                     <!-- end btn-group -->
                 </div>
@@ -186,185 +104,26 @@
             </div>
             <!-- end wrapper -->
             <!-- begin list-email -->
-            <ul class="list-group list-group-lg no-radius list-email">
-                <li class="list-group-item inverse">
+            <ul class="list-group list-group-lg no-radius list-email" style="margin-bottom: 0">
+                <li class="list-group-item" ng-class="{primary:item.send_user_role==2,danger:item.send_user_role==3,success:item.send_user_role==1}" ng-repeat="item in showdata">
                     <div class="email-checkbox">
                         <label>
                             <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
+                            <input type="checkbox" data-checked="email-checkbox" ng-click="select(item)" />
                         </label>
                     </div>
                     <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-14.jpg" alt="" />
+                        <img src="/static/assets/img/user-13.jpg" alt="用户头像" />
                     </a>
-                    <div class="email-info">
-                        <span class="email-time">Today</span>
+                    <div class="email-info" ng-click="showdetail(item._id)" style="cursor: pointer;">
+                        <span class="email-time">{{item.send_time}}</span>
                         <h5 class="email-title">
-                            <a href="email_detail.html">Bootstrap v4.0 is coming soon</a>
-                            <span class="label label-inverse f-s-10">admin</span>
+                            <a href="email_detail.html">{{item.title}}</a>
+                            <span class="label f-s-10"  ng-class="{'label-primary':item.send_user_role==2,'label-danger':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
                         </h5>
+                        <div class="pull-right"  ng-show="!item.is_read" style="width: 10px; height:10px; border-radius: 50%; background-color: red; margin-right: 10px"></div>
                         <p class="email-desc">
-                            Praesent id pulvinar orci. Donec ac metus non ligula faucibus venenatis. Suspendisse tortor est, placerat eu dui sed...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item primary">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-13.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            2 days ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">Color Admin dashboard v2 is ready for live</a>
-                            <span class="label label-primary f-s-10">designer</span>
-                        </h5>
-                        <p class="email-desc">Proin interdum aliquam urna, quis lobortis magna tincidunt ac. Integer sed pulvinar neque...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item primary">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-11.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            1 week ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">Sidebar animation bugfix</a>
-                            <span class="label label-primary f-s-10">employer</span>
-                        </h5>
-                        <p class="email-desc">
-                            Nam sit amet lacinia massa, sit amet blandit urna. Duis pharetra ex id ipsum posuere...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item success">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-12.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            1 week ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">Bootstrap Framework is awesome</a>
-                            <span class="label label-success f-s-10">staff</span>
-                        </h5>
-                        <p class="email-desc">
-                            Etiam enim ipsum, malesuada in consectetur interdum, malesuada et lacus. Aenean faucibus turpis lorem...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item inverse">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-9.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            2 months ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">Handlebars help you to build semantic template </a>
-                            <span class="label label-inverse f-s-10">admin</span>
-                        </h5>
-                        <p class="email-desc">
-                            Proin consectetur accumsan rhoncus. Nulla porta orci ultricies lectus consequat fringilla. Vestibulum ante ipsum primis in faucibus...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item inverse">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-10.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            2 months ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">jQuery 2++ no longer compatibility with the old browser</a>
-                            <span class="label label-inverse f-s-10">admin</span>
-                        </h5>
-                        <p class="email-desc">
-                            Suspendisse ut urna orci. Vivamus ac diam sollicitudin, consequat mauris id, facilisis ipsum. Nam feugiat nisl a justo...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item warning">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-8.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            2 months ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">LESS & SASS, which one is good?</a>
-                            <span class="label label-warning f-s-10">sponsorer</span>
-                        </h5>
-                        <p class="email-desc">
-                            Nam vulputate cursus imperdiet. Sed sodales urna vitae ipsum iaculis, at fermentum...
-                        </p>
-                    </div>
-                </li>
-                <li class="list-group-item danger">
-                    <div class="email-checkbox">
-                        <label>
-                            <i class="fa fa-square-o"></i>
-                            <input type="checkbox" data-checked="email-checkbox" />
-                        </label>
-                    </div>
-                    <a href="email_detail.html" class="email-user">
-                        <img src="assets/img/user-7.jpg" alt="" />
-                    </a>
-                    <div class="email-info">
-                        <span class="email-time">
-                            3 months ago
-                        </span>
-                        <h5 class="email-title">
-                            <a href="email_detail.html">Simple Line Icons is available on Color Admin v1.4</a>
-                            <span class="label label-danger f-s-10">client</span>
-                        </h5>
-                        <p class="email-desc">
-                            Maecenas auctor dui sit amet tristique congue. Pellentesque lobortis nulla quam. Etiam in vulputate magna...
+                            {{item.desc}}
                         </p>
                     </div>
                 </li>
@@ -380,7 +139,7 @@
                         <i class="fa fa-chevron-right"></i>
                     </button>
                 </div>
-                <div class="m-t-5">1,232 messages</div>
+                <div class="m-t-5">{{showdata.length}} messages</div>
             </div>
             <!-- end wrapper -->
         </div>

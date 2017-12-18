@@ -143,7 +143,7 @@ CQ.mainApp.usermanagementController
         $scope.sendMessage = function(userList)
         {
             console.log(userList);
-            $state.go('msgController',{'sendUsers':userList});
+            $state.go('msgController',{'sendUsers':userList.map(d=>d.user_account)});
         }
     // $scope.selectPage = function (page) {
     //         if (page < 1 || page > $scope.pages) return;
