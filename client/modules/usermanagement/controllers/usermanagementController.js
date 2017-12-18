@@ -270,10 +270,10 @@ CQ.mainApp.usermanagementController
                 cons.user_role_id=1;
                 cons.user_group_id=$rootScope.regdata.user_group_id;
                 //$scope.userData.logintime = CurentTime();
-                cons.real_name="";
+                cons.real_name=$scope.add.realname;
                 cons.topic_kwd=[];
-                cons.phone_num="";
-                cons.email="";
+                cons.phone_num=$scope.add.phonenum;
+                cons.email=$scope.add.email;
                 cons.user_logintime="";
                 cons.img_url=$rootScope.regdata.head_img;
                 console.log(cons);
@@ -298,15 +298,37 @@ CQ.mainApp.usermanagementController
     }])
     .controller("deleteUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
         $http, ngDialog, notice) {
-        console.log($scope.temp)
+        console.log($scope.temp);
         console.log("delete User");
+        
        
     }])
-    .controller("editUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
-        $http, ngDialog, notice) {
+    .controller("editUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice","UpuserattrService",function($rootScope, $scope, 
+        $http, ngDialog, notice,UpuserattrService) {
         console.log($scope.editCurUser);
         console.log("modify User!!!!");
-       
+        $scope.edituser = function()
+        {
+            var cons={};
+            cons.user_account=$scope.editCurUser.user_account;
+            //cons.user_passwd=$scope.editCurUser.user_passwd;
+            cons.user_role_id=$scope.editCurUser.user_role_id;
+            cons.user_group_id=$scope.editCurUser.user_group_id;
+            cons.real_name=$scope.editCurUser.real_name;
+            cons.topic_kws=$scope.editCurUser.topic_kws;
+            cons.phone_num=$scope.editCurUser.phone_num;
+            cons.email=$scope.editCurUser.email;
+            cons.user_logintime="";
+            cons.img_url=$scope.editCurUser.img_url;
+            console.log(cons);
+            UpuserattrService.updUserAttr(cons).then(function(res){
+                console.log(res);
+                if(res.data.success=true){
+                    ngDialog.closeAll();
+                    notice.notify_info("您好","用户属性修改成功！","",false,"","");
+                }
+            })
+        }
     }])
     .controller("viewUserController", ["$rootScope", "$scope", "$http", "ngDialog", "notice","WatchattrService",function($rootScope, $scope, 
         $http, ngDialog, notice,WatchattrService) {
