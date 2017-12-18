@@ -3,9 +3,9 @@ CQ.mainApp = {
     frameController:         angular.module("frame.controller", ["settingservice"]),
     frameServices:           angular.module("frame.services", ["commons","Notice", "scrollBottom"]),
     dashboardController:     angular.module("dashboard.Controller", []),
-    contentController:       angular.module("content.Controller", []),
+    contentController:       angular.module("content.Controller", ['usergroupmanageService']),
     usergroupmanageController:     angular.module("usergroupmanage.Controller", []),
-    usermanageController:     angular.module("usermanage.Controller", []),
+    usermanageController:     angular.module("usermanage.Controller", ['usermanageService']),
     errorController:     angular.module("error.Controller", []),
     systemsettingController:    angular.module("systemsetting.Controller", ["systemsettingService"])
 };

@@ -2,9 +2,9 @@
 CQ.mainApp.systemsettingController
     .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){
         $stateProvider
-            .state("roleSettingController", {
+            .state("adminroleSettingController", {
                 url:"/userattr/:userName",
-                templateUrl: "/static/modules/systemsetting/pages/roleSetting.html",
-                controller: "roleSettingController"
+                templateUrl: "/static/admin/modules/systemsetting/pages/roleSetting.html",
+                controller: "adminroleSettingController"
             });    
 }]);

@@ -13,22 +13,19 @@ angular.module('systemsettingService',['commons'])
         factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "user_attr", parseResource.params, parseResource.actions);
         return factories;
     }])
-    .factory("UserattrService",['Userattr', 'RestService', function(Userattr, RestService) {
+    .factory("UserattrService",['Userattr', 'RestService', '$http',function(Userattr, RestService,$http) {
         var factories = {};
         factories.getUserattrData = function(params) {
             return RestService.get(Userattr.userattrData, params);
         };
-        return factories;
-    }])
-    .factory('Watchattr', ['$resource','parseResource',function($resource,parseResource){
-        var factories = {};
-        factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "watch_user_attr", parseResource.params, parseResource.actions);
-        return factories;
-    }])
-    .factory("WatchattrService",['Watchattr', 'RestService', function(Watchattr, RestService) {
-        var factories = {};
-        factories.getUserattrData = function(params) {
-            return RestService.get(Watchattr.userattrData, params);
+        factories.updUserAttr = function(data){
+            return $http.post(CQ.variable.RESTFUL_URL + "", data);
         };
         return factories;
     }])
+    // .factory('PostuserattrService', ['$http', function($http){
+    //     var factories={};
+    //     factories.updUserAttr = function(data){
+    //         return $http.post(CQ.variable.RESTFUL_URL + "user_attr", data);
+    //     };
+    // }]);

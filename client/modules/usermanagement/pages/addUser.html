@@ -19,30 +19,50 @@
     </div>
     <div class="panel-body">
         
-        <div class="form-group col-md-12">
-            <label class="col-md-2 control-label f-s-14">用户名</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "add.username">
+        <form class="form-horizontal" role="form" name="myForm" ng-submit="submituser()">
+            <div class="form-group">
+                <label for="username" class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10" >
+                    <input type="text" class="form-control" id="username" name="username" 
+                           placeholder="请输入用户名" ng-model="add.username" ng-minlength="4" ng-maxlength="32" required>
+                    <span style="color:#c33" ng-show="myForm.username.$touched && myForm.username.$invalid">
+                    <span ng-show="myForm.username.$error.required&&myForm.username.$touched"><i class="fa fa-info-circle"></i> 请输入用户名</span>
+                    <span ng-show="myForm.username.$error.minlength||myForm.username.$error.maxlength)&&myForm.username.$touched"><i class="fa fa-info-circle"></i> 用户名应在4到32位之间</span>
+                </div>
             </div>
-            <label class="col-md-2 control-label f-s-14">密码</label>
-            <div class="col-md-4">
-                <input type="password" class="form-control f-s-14"  ng-model = "add.password">
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" id="password" ng-model="add.password" ng-minlength="4" ng-maxlength="64" required placeholder="请输入密码">
+                    <span style="color:#c33" ng-show="myForm.password.$touched && myForm.password.$invalid">
+                    <span ng-show="myForm.password.$error.required&&myForm.password.$touched"><i class="fa fa-info-circle"></i> 请输入密码</span>
+                    <span ng-show="myForm.password.$error.minlength||myForm.password.$error.maxlength)&&myForm.password.$touched"><i class="fa fa-info-circle"></i> 密码应在4到32位之间</span>
+                </div>
             </div>
-        </div>
-        <div class="form-group col-md-12">
-            <label class="col-md-2 control-label f-s-14">所属组</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "add.group">
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">重复输入密码</label>
+                <div class="col-sm-10">
+                    <input type="password" name="repassword" class="form-control" id="repassword" ng-model="add.repassword" ng-minlength="4" ng-maxlength="64" required placeholder="请输入密码">
+                    <span style="color:#c33" ng-show="myForm.repassword.$touched && myForm.repassword.$invalid">
+                    <span ng-show="myForm.repassword.$error.required&&myForm.repassword.$touched"><i class="fa fa-info-circle"></i> 请再次输入密码</span>
+                    <span ng-show="notsame"><i class="fa fa-info-circle"></i> 两次输入密码不一致</span>   
+                </div>
             </div>
-            <label class="col-md-2 control-label f-s-14">权限</label>
-            <div class="col-md-4">
-                <input type="text" class="form-control f-s-14"  ng-model = "add.auth">
+            <div class="form-group">
+                <label  class="col-sm-2 control-label">所属组</label>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" disabled="disabled" ng-model="regdata.user_group_id">
+                </div>
+                <label  class="col-sm-2 control-label">用户权限</label>
+                <div class="col-lg-4">
+                    <input type="text" class="form-control" value="1" disabled="disabled">
+                </div>
             </div>
-        </div>
-        <div class="form-group col-md-12">
-            <div class="col-md-12">
-                <button type="submit" class="btn btn-sm btn-primary pull-right f-s-14" ng-click = "submituser()">确认提交</button>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" ng-disabled="myForm.username.$dirty && myForm.username.$invalid ||  myForm.password.$dirty && myForm.password.$invalid ||myForm.repassword.$dirty && myForm.repassword.$invalid">注册</button>
+                </div>
             </div>
-        </div> 
+        </form>
     </div>
 </div>

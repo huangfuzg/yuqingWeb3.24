@@ -38,7 +38,7 @@ CQ.mainApp.frameController
 			}
 			$scope.setattr = function()
 			{
-				$state.go("roleSettingController",{userName:$rootScope.curentUser});
+				$state.go("adminroleSettingController",{userName:$rootScope.curentUser});
 			}
 			console.log("headerController", "start!");
 	}])

@@ -11,7 +11,8 @@ CQ.mainApp.usermanagementController
 	        .state("viewUserController", {
                 url:"/viewUser/:userName",
                 templateUrl: "/static/modules/usermanagement/pages/viewUser.html",
-                controller: "usermanagementController"
+                controller: "viewUserController",
+                permission:"2"
             })
 	        // .state("usermanagementController", {
 	        //     url:"/management",

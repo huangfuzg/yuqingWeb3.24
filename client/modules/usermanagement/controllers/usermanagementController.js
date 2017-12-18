@@ -1,113 +1,176 @@
 "use strict";
 CQ.mainApp.usermanagementController
-    .controller('usermanagementController', ['$scope', '$rootScope', '$state','$http','ngDialog', function($scope, $rootScope, $state,$http,ngDialog){
+    .controller('usermanagementController', ['$scope', '$rootScope', '$state','$http','ViewuserService','ngDialog', function($scope, $rootScope, $state,$http,ViewuserService,ngDialog){
         //$rootScope.usermanagementController = true;
         console.log("usermanagementController started");
         $scope.pagelist = [];
         $scope.selectList = [];
         $scope.pages = 10;
+        $scope.pageSize = 5;
+        $scope.pageNum = 1;
         $scope.newpage = $scope.pages > 5 ? 5:$scope.pages;       
         $scope.data=[];
-        $http({
-            method:"get",
-            url:"/static/assets/data/user.json"
-        }).then(function(res){
-            $scope.data=res.data;
-            $scope.search = function()
-            {
-                console.log($scope.data);
-                $scope.result = [];
-                angular.forEach($scope.data, function(array){
-                    console.log(array.username);
-                    if(array.username===$scope.searchname)
-                    {
-                        $scope.data = array;
-                        console.log($scope.data);
-                    }
-                });
-         
-                console.log($scope.result);
-
-            }
-        },function(res) {
-            console.log(res);
-        });
-        $scope.adduser = function()
-        {
-            ngDialog.open(
-                {
-                    template: '/static/modules/usermanagement/pages/addUser.html',
-                    controller: 'addUser',
-                    width:"20%",
-                    scope:$scope
-                });
-        }
-        $scope.showUserattr = function(d)
-        {
-             $state.go("viewUserController",{userName:d}); 
-             console.log(d);  
-        };
-        $scope.editTopic = function()
-        {
-             $state.go("manageTopicController");
-        };
-        $scope.selectBoxChange = function(d){
-            if(d.selected)
-            {
-                $scope.selectList.push(d.id);
-            }
-            else
-            {
-                for(var index = 0; index < $scope.selectList.length; index++)   
-                {
-                    if($scope.selectList[index] == d.id)
-                    {
-                        $scope.selectList.splice(index,1);
-                        break;
-                    } 
+        
+            ViewuserService.getUserData({user_name:$rootScope.curentUser}).then(function(res)
+            {         
+                console.log(res);         
+                $scope.data=res; 
+                // $scope.pages = Math.ceil(res.length/10);
+                // $scope.newpage = Math.ceil(res.length/5);
+                console.log($scope.newpage);
+                for(var i=0;i<$scope.newpage;i++){
+                    $scope.pagelist[i]=i+1;
                 }
-            }
-            console.log($scope.selectList);
-        };
-        $scope.selectAll = function()
-        {
-            $scope.data.forEach(function(d){
-                console.log(d);
-                d.selected = $scope.allselected;
-                $scope.selectBoxChange(d);
-            });
-        };
-        $scope.addUser = function()
-        {
-            $scope.jsonData={};
-            $scope.jsonData.username = $scope.detailData.username;
-            $scope.jsonData.password = $scope.detailData.password;
-            $scope.jsonData.group = $scope.detailData.group;
-            $scope.jsonData.auth = $scope.detailData.auth;
-            console.log($scope.jsonData);
-            $http.post("http://localhost:8091/static/assets/data/user.json", $scope.jsonData).then(function(res) {
-                console.log(res);
-            });
-        };
+                for(var i = $scope.data.length - 1; i >= 0; i--) {
 
-        $scope.remove = function(d)
+                $scope.data[i].user_logintime=CurentTime($scope.data[i].user_logintime*1000) 
+            }
+        });      
+        
+        
+        function CurentTime(d)
+        { 
+            var now = new Date(d);
+           
+            var year = now.getFullYear();       //年
+            var month = now.getMonth() + 1;     //月
+            var day = now.getDate();            //日
+           
+            var hh = now.getHours();            //时
+            var mm = now.getMinutes();          //分
+           
+            var clock = year + "-";
+           
+            if(month < 10)
+                clock += "0";
+           
+            clock += month + "-";
+           
+            if(day < 10)
+                clock += "0";
+               
+            clock += day + " ";
+           
+            if(hh < 10)
+                clock += "0";
+               
+            clock += hh + ":";
+            if (mm < 10) clock += '0'; 
+            clock += mm; 
+            return clock; 
+            console.log(clock);
+        } 
+
+     $scope.showUserattr = function(d)
+    {
+         $state.go("viewUserController",{userName:d.user_account}); 
+         console.log(d);  
+            $rootScope.viewtemp=d;
+             //console.log($rootScope.viewtemp)
+    };
+    $scope.editTopic = function()         
         {
-            $scope.user_id = d.auth;
-            console.log($scope.topic_id);
-            ngDialog.open(
+        $state.go("manageTopicController"); 
+        };  
+    $scope.selectBoxChange = function(d){
+        if(d.selected)
+        {
+            $scope.showbtn=true;
+            if($scope.selectList.indexOf(d.user_id)==-1)
+            {
+               $scope.selectList.push(d.user_id);
+                console.log(d);
+            } 
+        }    
+        else
+        {
+            $scope.showbtn=false;
+            for(var index = 0; index < $scope.selectList.length; index++)   
+            {
+                if($scope.selectList[index] == d.user_id)
+                {
+                    $scope.selectList.splice(index,1);
+                    break;
+                } 
+            }
+        }
+        console.log($scope.selectList);
+    };
+    $scope.selectAll = function()
+    {
+        $scope.data.forEach(function(d){
+            console.log(d);
+            d.selected = $scope.allselected;
+            $scope.selectBoxChange(d);
+        });
+    };
+    $scope.delsin = function(d){
+        $scope.temp=d;
+        // console.log($scope.temp);
+        ngDialog.open(
             {
                 template: '/static/modules/usermanagement/pages/deleteUser.html',
-                controller: 'deleteTopic',
-                width:"10%",
+                controller: 'deleteUser',
+                appendClassName: "ngdialog-theme-details",
+                width:"100%",
                 scope:$scope
             });
-        };
+    }
+    $scope.adduser = function()
+    {
+        ngDialog.open(
+            {
+                template: '/static/modules/usermanagement/pages/addUser.html',
+                controller: 'addUser',
+                appendClassName: "ngdialog-theme-details",
+                width:"100%",
+                scope:$scope
+            });
+    }
+    // $scope.selectPage = function (page) {
+    //         if (page < 1 || page > $scope.pages) return;
+    //         //最多显示分页数5
+    //         if (page > 2) {
+    //             //因为只显示5个页数，大于2页开始分页转换
+    //             var newpageList = [];
+    //             for (var i = (page - 3) ; i < ((page + 2) > $scope.pages ? $scope.pages : (page + 2)) ; i++) {
+    //                 newpageList.push(i + 1);
+    //             }
+    //             $scope.pageList = newpageList;
+    //         }
+    //         $scope.pageNum = page;
+    //         $scope.dataObj.pageNum = page;
+    //         $scope.isActivePage(page);
+    //         console.log("选择的页：" + page);
+    //         getData();
+    //     };
+    //     $scope.isActivePage = function (page) {
+    //         if($scope.pageNum==page){
+    //             return "btn btn-primary";
+    //         }else return "btn";
+    //     };
+
+    //     //上一页
+    //     $scope.Previous = function () {
+    //     $scope.selectPage($scope.pageNum - 1);
+    //     };
+    //     //下一页
+    //     $scope.Next = function () {
+    //     $scope.selectPage($scope.pageNum + 1);
+    //     };
         
     }])
-    .controller("addUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
-        $http, ngDialog, notice) {
-        console.log("addUser");
-        var password_encode = function(pwd)
+    .controller("addUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice","gaddUserService",function($rootScope, $scope, 
+        $http, ngDialog, notice,gaddUserService) {
+        console.log("add User");
+        $http({
+                method:"get",
+                url:CQ.variable.RESTFUL_URL + "usersignupui",
+            }).then(function(res){
+                $rootScope.regdata=res.data.data;
+                console.log($rootScope.regdata);
+            });
+         var password_encode = function(pwd)
         {
             var secret = CQ.variable.SECRET,
             secret_arr = secret.split(''),
@@ -121,29 +184,201 @@ CQ.mainApp.usermanagementController
             });
             return hash.join('');
         }
+        function CurentTime()
+        { 
+            var now = new Date();
+           
+            var year = now.getFullYear();       //年
+            var month = now.getMonth() + 1;     //月
+            var day = now.getDate();            //日
+           
+            var hh = now.getHours();            //时
+            var mm = now.getMinutes();          //分
+           
+            var clock = year + "-";
+           
+            if(month < 10)
+                clock += "0";
+           
+            clock += month + "-";
+           
+            if(day < 10)
+                clock += "0";
+               
+            clock += day + " ";
+           
+            if(hh < 10)
+                clock += "0";
+               
+            clock += hh + ":";
+            if (mm < 10) clock += '0'; 
+            clock += mm; 
+            return clock; 
+            console.log(clock);
+        } 
+        $scope.submituser=function()
+        {
+            console.log($scope.add.password);
+            console.log($scope.add.repassword);
+
+            if($scope.add.password!=$scope.add.repassword)
+            {
+                $scope.notsame=true;
+                notice.notify_info("您好","两次输入密码不一致！请重试","",false,"","");
+            }
+            else
+            {
+                console.log(password_encode($scope.add.password));
+                var cons = {};
+                var postData = [];
+                // $scope.add.password=password_encode($scope.add.password);
+                // console.log($scope.add);
+                $scope.userData={};
+                $scope.userData.user_account=$scope.add.username;
+                $scope.userData.user_passwd=password_encode($scope.add.password);
+                $scope.userData.user_role_id=1;
+                $scope.userData.user_group_id=$rootScope.regdata.user_group_id;
+                //$scope.userData.logintime = CurentTime();
+                $scope.userData.real_name="yuqing";
+                $scope.userData.topic_kwd=[];
+                $scope.userData.phone_num="";
+                $scope.userData.email="";
+                $scope.userData.user_logintime="";
+                $scope.userData.img_url=$rootScope.regdata.head_img;
+                postData.push($scope.userData);
+                //cons.postData=postData;
+                cons.user_account=$scope.add.username;
+                cons.user_passwd=password_encode($scope.add.password);
+                cons.user_role_id=1;
+                cons.user_group_id=$rootScope.regdata.user_group_id;
+                //$scope.userData.logintime = CurentTime();
+                cons.real_name="";
+                cons.topic_kwd=[];
+                cons.phone_num="";
+                cons.email="";
+                cons.user_logintime="";
+                cons.img_url=$rootScope.regdata.head_img;
+                console.log(cons);
+                // ngDialog.closeAll();
+                // notice.notify_info("您好","添加成功！","",false,"","");
+                gaddUserService.addUser(cons).then(function(res) {
+                console.log(res);
+                if(res.data.success===false){
+                         notice.notify_info("您好","用户名已经存在！","",false,"","");
+                    }
+                    else
+                    {
+                        ngDialog.closeAll();
+                        notice.notify_info("您好","添加成功！","",false,"","");
+                    }
+                },function(err) {
+                    console.log(err);
+                    notice.notify_info("您好","添加失败！请重试","",false,"","");
+                });
+            }
+        }
     }])
     .controller("deleteUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
         $http, ngDialog, notice) {
-        console.log("delete topic");
-        $scope.deleteUser = function() {
-            $scope.removeUrl = $scope.baseUrl + "/deletetopic";
-            $http({
-                params: {topicId : $scope.topic_id, userId : $scope.userId},
-                url: $scope.removeUrl,
-                method: 'get',
-            })
-            .success(function(data, status, headers, config){
-                ngDialog.closeAll();
-                notice.notify_info("您好！","话题删除成功！","",false,"","");
-                $scope.reload($scope.topic_id,"delete");
-                // setTimeout(function(){
-                //     window.location.reload("index.html#/userSetting");
-                // },2000);
-            })
-            .error(function(error){
-                notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
-            });
-        };
+        console.log($scope.temp)
+        console.log("delete User");
+       
+    }])
+    .controller("viewUserController", ["$rootScope", "$scope", "$http", "ngDialog", "notice","WatchattrService",function($rootScope, $scope, 
+        $http, ngDialog, notice,WatchattrService) {
+        console.log("viewUserController start!!!");
+        console.log($rootScope.viewtemp);
+        WatchattrService.getUserattrData({user_name:$scope.viewtemp.user_account}).then(function(res){
+            console.log(res);
+            $scope.fusername=res.user_account;
+            $scope.pwd = res.user_passwd;
+            $scope.frealname=res.real_name;
+            $scope.femail=res.email;
+            $scope.ftel=res.phone_num;
+            $scope.fgroup=res.user_group_id;
+        })
+        //再来一次上面的显示fusername和存储
+         $scope.changename = function(){
+                $scope.changed1 = true;
+            }
+            $scope.changername = function(){
+                $scope.changed2 = true;
+            }
+            $scope.changeemail = function(){
+                $scope.changed3 = true;
+            }
+            $scope.changework = function(){
+                $scope.changed4 = true;
+            }
+            $scope.changedistrict = function(){
+                $scope.changed5 = true;
+            }
+            $scope.changetel = function(){
+                $scope.changed6 = true;
+            }
+            $scope.saveattr = function(){
+                var cons={};
+                var postData=[];
+                $scope.userAttr=[];
+                if($scope.username||$scope.realname||$scope.email||$scope.tel||$scope.work)
+                {
+                    console.log("5555");
+                    if($scope.username){
+                        $scope.userAttr.username=$scope.username;
+                    }
+                    else{
+                        $scope.userAttr.username=$scope.fusername;
+                    }
+                    if($scope.realname){
+                        $scope.userAttr.realname=$scope.realname;
+                    }
+                    else{
+                        $scope.userAttr.realname=$scope.frealname;
+                    }
+                    if($scope.email){
+                        $scope.userAttr.email=$scope.email;
+                    }
+                    else{
+                        $scope.userAttr.email=$scope.femail;
+                    }
+                    if($scope.tel){
+                        $scope.userAttr.tel=$scope.tel;
+                    }
+                    else{
+                        $scope.userAttr.tel=$scope.ftel;
+                    }
+                    if($scope.work){
+                        $scope.userAttr.work=$scope.work;
+                    }
+                    else{
+                        $scope.userAttr.work=$scope.fwork;
+                    }
+                    console.log($scope.userAttr);
+                    postData.push($scope.userAttr);
+                    cons.postData=postData;
+                    // UpuserattrService.updUserAttr(cons).then(function(res){
+                    //     console.log(res);
+                    //     notice.notify_info("您好！", " 用户属性被更新！" ,"",false,"","");
+                    // },function(err){
+                    //     console.log(err);
+                    //      notice.notify_info("您好！", " 用户属性更新失败！请重试" ,"",false,"","");
+                    // });
+                    
+                }
+                else
+                {
+                     notice.notify_info("您好！", "没有属性被更新！" ,"",false,"","");
+                }
+                console.log($scope.province+$scope.city+$scope.district);
+                $scope.fdistrict=$scope.province+$scope.city+$scope.district;
+                $scope.changed1 = false;
+                $scope.changed2 = false;
+                $scope.changed3 = false;
+                $scope.changed4 = false;
+                $scope.changed5 = false;
+                $scope.changed6 = false;
+            }   
+
     }])
     .controller("managetopicController", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function ($rootScope, 
     $scope, $http, ngDialog, notice) 
