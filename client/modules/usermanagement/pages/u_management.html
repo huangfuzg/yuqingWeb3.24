@@ -51,16 +51,16 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="item in data">
-                            <td><input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">{{item.user_id}}</td>
-                            <td>{{item.user_account}}</td>
-                            <td>{{item.user_role_id}}</td>
-                            <td>{{item.user_group_id}}</td>
+                            <td><input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">{{item.user_account}}</td>
+                            <td>{{item.email}}</td>
+                            <td>{{item.phone_num}}</td>
+                            <td>{{item.topic_kws}}</td>
                             <!-- <td>{{item.regtime}}</td> -->
                             <td>{{item.user_logintime}}</td>
                             <td>
                                 <ul class="breadcrumb">
                                     <li>
-                                        <a href="" title="修改用户属性" class="email-btn" ng-click="editUser()" ng-model="item.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a>
+                                        <a href="" title="修改用户属性" class="email-btn" ng-click="editUser(item)" ng-model="item.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a>
                                     </li>
                                     <li>
                                         <a href="" title="发送消息" class="email-btn" ng-click="sendMessage([item])" ng-model="item.username" data-toggle="modal" data-backdrop="false"><i class="fa fa-envelope-o"></i></a>
