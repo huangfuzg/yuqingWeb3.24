@@ -3,8 +3,7 @@ angular.module("senmessageService", ["commons"])
     .factory("SenFac", ['$resource', 'parseResource', function ($resource, parseResource) {
         var factories = {};
 
-        // factories.getSenLists = $resource(CQ.variable.RESTFUL_URL + "senmassage/showmsg", parseResource.params, parseResource.actions);
-        factories.getSenLists = $resource("http://118.190.133.203:8100/yqdata/senmassage/showmsg", parseResource.params, parseResource.actions);
+        factories.getSenLists = $resource(CQ.variable.RESTFUL_URL + "senmassage/showmsg", parseResource.params, parseResource.actions);
 
         factories.getDetailData = $resource(CQ.variable.RESTFUL_URL + "senmassage/showrawmsg", parseResource.params, parseResource.actions);
 
@@ -55,7 +54,16 @@ angular.module("senmessageService", ["commons"])
         var ret = {};
         ret.saveExcel = function(table,Cols,theads,filename)
         {
-            var outStr = "<tr>";
+            var format = function(date)
+            {
+                var year = date.getFullYear(),
+                    month = date.getMonth()+1,
+                    day = date.getDate();
+                    month = month < 10 ? '0' + month : month;
+                    day = day < 10 ? '0' + day : day;
+                return '(' + month + '月' + day + '日' + ')';
+            }
+            var outStr = "<tr><td rowspan='2' style='text-align:center; font-size:1.5em; font-weight:800;' colspan=" + theads.length + ">2017年研考互联网信息安全专项监测情况通报" + format(new Date()) +"</td></tr><tr></tr><tr><td colspan=" + theads.length + ">现将2017年" + format(new Date(new Date().getTime() - 7*24*60*60*1000)) + "XX时至" + format(new Date()) + "XX时监测到的自考有害信息通报如下：</td></tr><tr>";
             for(var i = 0; i < theads.length; i++)
             {
                 outStr += "<td>" + theads[i] + "</td>";
@@ -110,8 +118,8 @@ angular.module("senmessageService", ["commons"])
         };*/
 
         factories.addSenMessage = function(data) {
-            // return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
-            return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
+            return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
+            // return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
         };
 
         return factories;
