@@ -2,6 +2,7 @@
 CQ.mainApp.msgController
     .controller("msgController",["$scope","$stateParams","msgService","notice",
         function($scope,$stateParams,msgService,notice) {
+        var sendUsers = $stateParams.sendUsers.map(d=>d.user_account);
         $scope.recid=[];
         $scope.senduser = null;
             var tmp={};
@@ -14,6 +15,7 @@ CQ.mainApp.msgController
                     create: false,
                     valueField:'user_',
                     labelField:'user_',
+                    items:sendUsers,
                     // options:[{name:'yuqing'},{name:'admin'}],
                     options:$scope.senduser,
                     onItemAdd:function (v) {

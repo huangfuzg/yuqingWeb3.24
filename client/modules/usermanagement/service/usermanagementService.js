@@ -56,4 +56,11 @@ angular.module("usermanagementService", ["commons"])
             return $http.post(CQ.variable.RESTFUL_URL + "modifyuserinfo", data);
         };
         return factories;
-    }]);
+    }])
+    .factory('deleteUserService', ['$http', function($http){
+        var factories={};
+        factories.delUser = function(data){
+            return $http.post(CQ.variable.RESTFUL_URL + "deleteuser", data);
+        };
+        return factories;
+    }])

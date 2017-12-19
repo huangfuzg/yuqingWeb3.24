@@ -19,14 +19,15 @@ angular.module('usermanageService',['commons'])
         factories.showUser = $resource(CQ.variable.RESTFUL_URL+"", parseResource.params, parseResource.actions);
         return factories;
     }])
-    .factory("userService", ["userFac", "RestService", function(userFac, RestService) {
+    .factory("userService", ["userFac", "RestService",'$http',function(userFac, RestService,$http) {
         var factories = {};
-        factories.delUser = function(params) {
-            return RestService.create(userFac.deluserMsg,params);
+        factories.delUser = function(data) {
+            return $http.post(CQ.variable.RESTFUL_URL + "deleteuser", data);
         }
         factories.showUserInfo = function(params){
             return RestService.get(userFac.showUser, params);
         }
+        return factories;
     }])
     .factory('Watchattr', ['$resource','parseResource',function($resource,parseResource){
         var factories = {};
@@ -37,6 +38,20 @@ angular.module('usermanageService',['commons'])
         var factories = {};
         factories.getUserattrData = function(params) {
             return RestService.get(Watchattr.userattrData, params);
+        };
+        return factories;
+    }])
+    .factory('upuserattrService', ['$http', function($http){
+        var factories={};
+        factories.updUserAttr = function(data){
+            return $http.post(CQ.variable.RESTFUL_URL + "modifyuserinfo", data);
+        };
+        return factories;
+    }])
+    .factory('DeleteUserService', ['$http', function($http){
+        var factories={};
+        factories.delUser = function(data){
+            return $http.post(CQ.variable.RESTFUL_URL + "deleteuser", data);
         };
         return factories;
     }])
