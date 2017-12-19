@@ -106,6 +106,7 @@ CQ.mainApp.senmessageController
                     if(d.content.length > 40) {
                         d.content = d.content.substring(0, 40) + "...";
                     }
+                    d.infoType="";
                 });
                 $scope.sendata = res.postData;
                 $scope.sendata.forEach(function (t) {
@@ -520,9 +521,9 @@ CQ.mainApp.senmessageController
                 $scope.pageset=pageset_min.map(d=>d+page-3);
         }
         $scope.getTableData(1);
-        var $cols = ["senwords","board","title","url","ip_addr","qq_num","phone_num","pt_time","add_time","is_report"];
-        $scope.theads = ["敏感词","网站名称","标题","网站URL","网站IP","QQ号码","联系电话","发布时间","添加时间","状态"];
-        $scope.showCols = [true,true,true,true,true];
+        var $cols = ["board","infoType","url","ip_addr","qq_num","phone_num"];
+        $scope.theads = ["网站名称","信息类型","网站URL","网站IP","QQ号码","联系电话"];
+        $scope.showCols = [true,true,true,true,true,true];
         $scope.exportAll = function()
         {
             for(var i = 0; i < $scope.tableData.length; i++)

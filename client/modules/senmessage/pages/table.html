@@ -62,21 +62,23 @@
                                     <th style="width:10px;">
                                         <input type="checkbox" value="true" ng-model="allRows" ng-click="exportAll()">
                                     </th>
-                                    <th ng-if="showCols[4]"><input type="text" value="敏感词" class="cell-input" ng-model="theads[4]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(4)"></i></th>
-                                    <th ng-if="showCols[0]"><input type="text" value="标题" class="cell-input" ng-model="theads[0]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(0)"></i></th>
-                                    <th ng-if="showCols[1]"><input type="text" value="发布时间" class="cell-input" ng-model="theads[1]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(1)"></i></th>
-                                    <th ng-if="showCols[2]"><input type="text" value="添加时间" class="cell-input" ng-model="theads[2]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(2)"></i></th>
-                                    <th ng-if="showCols[3]"><input type="text" value="状态" class="cell-input" ng-model="theads[3]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(3)"></i></th>
+                                    <th ng-if="showCols[0]"><input type="text" value="网站名称" class="cell-input" ng-model="theads[0]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(0)"></i></th>
+                                    <th ng-if="showCols[1]"><input type="text" value="信息类型" class="cell-input" ng-model="theads[1]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(1)"></i></th>
+                                    <th ng-if="showCols[2]"><input type="text" value="网站URL" class="cell-input" ng-model="theads[2]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(2)"></i></th>
+                                    <th ng-if="showCols[3]"><input type="text" value="网站IP" class="cell-input" ng-model="theads[3]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(3)"></i></th>
+                                    <th ng-if="showCols[4]"><input type="text" value="QQ号码" class="cell-input" ng-model="theads[4]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(4)"></i></th>
+                                    <th ng-if="showCols[5]"><input type="text" value="联系电话" class="cell-input" ng-model="theads[5]"><i class="fa fa-times-circle fa-remove" title="删除此列" ng-click="removeCol(5)"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="odd gradeX" ng-repeat="item in showTableData">
                                     <td style="width:10px;"><input type="checkbox" ng-model="item.export"></td>
-                                    <td ng-if="showCols[4]">{{item.senwords.join('')}}</td>
-                                    <td ng-if="showCols[0]">{{item.title}}</td>
-                                    <td ng-if="showCols[1]">{{item.pt_time}}</td>
-                                    <td ng-if="showCols[2]">{{item.add_time}}</td>
-                                    <td ng-if="showCols[3]">{{item.is_report}}</td>
+                                    <td ng-if="showCols[0]">{{item.board}}</td>
+                                    <td ng-if="showCols[1]">{{item.infoType}}</td>
+                                    <td ng-if="showCols[2]">{{item.url}}</td>
+                                    <td ng-if="showCols[3]">{{item.ip_addr}}</td>
+                                    <td ng-if="showCols[4]">{{item.qq_num}}</td> 
+                                    <td ng-if="showCols[5]">{{item.phone_num}}</td>
                                 </tr>
                             </tbody>
                         </table>
