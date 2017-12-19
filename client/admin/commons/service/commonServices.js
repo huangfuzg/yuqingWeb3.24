@@ -1,24 +1,5 @@
 "use strict";
 angular.module('commons',[])
-    .factory('Userattr', ['$resource','parseResource',function($resource,parseResource){
-        var factories = {};
-        factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "user_attr", parseResource.params, parseResource.actions);
-        return factories;
-    }])
-    // .factory("UserattrService",['Userattr', 'RestService', function(Userattr, RestService) {
-    //     var factories = {};
-    //     factories.getUserattrData = function(params) {
-    //         return RestService.get(Userattr.userattrData, params);
-    //     };
-    //     return factories;
-    // }])
-    .factory('UserattrService', ['$http', function($http){
-        var factories = {};
-        factories.getUserattrData = function() {
-            return $http.get("http://118.190.133.203:8899/yqdata/user_attr");
-        };
-        return factories;
-    }])
     .factory('crypto', function () {
         var ret = {};
         ret.md5 = function(str)
@@ -54,7 +35,7 @@ angular.module('commons',[])
                 mode: CryptoJS.mode.CBC,
                 padding: CryptoJS.pad.Pkcs7
             }).toString();
-        }
+        } 
         ret.aesDecrypt = function(str)
         {
             var secret = CQ.variable.SECRET,
@@ -246,29 +227,33 @@ angular.module('commons',[])
     }])
     .factory("RestService", ['$q', '$state', 'accountManage', 'crypto', function($q,$state,accountManage,crypto) {
         var factories = {};
-        factories.get = function(resource, params) {
-            $("#load").show();
+        factories.get = function(resource, params, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(params);
             var deferred = $q.defer();
             get(resource, params, deferred);
             return deferred.promise;
         };
-        factories.update = function(resource, params, data) {
-            $("#load").show();
+        factories.update = function(resource, params, data, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(data);
             var deferred = $q.defer();
             update(resource, params, data, deferred);
             return deferred.promise;
         };
-        factories.remove = function(resource, params) {
-            $("#load").show();
+        factories.remove = function(resource, params, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(params);
             var deferred = $q.defer();
             remove(resource, params, deferred);
             return deferred.promise;
         };
-        factories.create = function(resource, data) {
-            $("#load").show();
+        factories.create = function(resource, data, not_load) {
+            if(!not_load)
+                $("#load").show();
             // addToken(data);
             var deferred = $q.defer();
             create(resource, data, deferred);
@@ -356,3 +341,4 @@ angular.module('commons',[])
         }
         return factories;
     }]);
+
