@@ -20,7 +20,11 @@ CQ.mainApp.msgController
 
                     return b.send_time>a.send_time?1:-1;
                 })
-                $scope.showdata=(res);
+                $scope.alldata = res;
+                $scope.page = 1;
+                $scope.page_num = 10;//一页显示的消息数量
+                $scope.max_page = Math.ceil($scope.alldata.length/$scope.page_num);
+                $scope.showdata = getDataBypage(1);
                 $scope.kong=false;
                 // $scope.showdata = res;
                 console.log('+++++++',$scope.showdata);
@@ -111,6 +115,21 @@ CQ.mainApp.msgController
         {
             console.log($scope.selectItems);
             $state.go('msgController',{'sendUsers':$scope.selectItems.map(d=>d.send_user_acc)});
+        }
+        //分页功能
+        function getDataBypage(page)
+        {
+            return $scope.alldata.slice(page*$scope.page_num-$scope.page_num,page*$scope.page_num);
+        }
+        $scope.perPage = function()
+        {
+            $scope.page = $scope.page == 1 ? 1 : $scope.page - 1;
+            $scope.showdata = getDataBypage($scope.page);
+        }
+        $scope.nextPage = function()
+        {
+            $scope.page = $scope.page == $scope.max_page ? $scope.max_page : $scope.page + 1;
+            $scope.showdata = getDataBypage($scope.page);
         }
         handleEmailCheckboxChecked();
         handleEmailAction();
