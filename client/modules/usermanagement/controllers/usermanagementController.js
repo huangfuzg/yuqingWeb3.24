@@ -1,10 +1,11 @@
 "use strict";
 CQ.mainApp.usermanagementController
-    .controller('usermanagementController', ['$scope', '$rootScope', '$state','$http','ViewuserService','ngDialog', function($scope, $rootScope, $state,$http,ViewuserService,ngDialog){
+    .controller('usermanagementController', ['$scope', '$rootScope', '$state','$http','ViewuserService','ngDialog','notice','deleteUserService',function($scope, $rootScope, $state,$http,ViewuserService,ngDialog,notice,deleteUserService){
         //$rootScope.usermanagementController = true;
         console.log("usermanagementController started");
         $scope.pagelist = [];
         $scope.selectList = [];
+        $scope.selectobj=[];
         $scope.pages = 10;
         $scope.pageSize = 5;
         $scope.pageNum = 1;
@@ -17,7 +18,7 @@ CQ.mainApp.usermanagementController
                 $scope.data=res; 
                 // $scope.pages = Math.ceil(res.length/10);
                 // $scope.newpage = Math.ceil(res.length/5);
-                console.log($scope.newpage);
+                //console.log($scope.newpage);
                 for(var i=0;i<$scope.newpage;i++){
                     $scope.pagelist[i]=i+1;
                 }
@@ -60,104 +61,118 @@ CQ.mainApp.usermanagementController
             return clock; 
             console.log(clock);
         } 
-
-     $scope.showUserattr = function(d)
-    {
-         $state.go("viewUserController",{userName:d.user_account}); 
-         console.log(d);  
-            $rootScope.viewtemp=d;
-             //console.log($rootScope.viewtemp)
-    };
-    $scope.editTopic = function()         
+        $scope.editTopic = function()         
         {
-        $state.go("manageTopicController"); 
+            $state.go("manageTopicController"); 
         };  
-    $scope.selectBoxChange = function(d){
-        if(d.selected)
-        {
-            $scope.showbtn=true;
-            if($scope.selectList.indexOf(d.user_id)==-1)
+        $scope.selectBoxChange = function(d){
+            if(d.selected)
             {
-               $scope.selectList.push(d.user_id);
-                console.log(d);
-            } 
-        }    
-        else
-        {
-            $scope.showbtn=false;
-            for(var index = 0; index < $scope.selectList.length; index++)   
-            {
-                if($scope.selectList[index] == d.user_id)
+                //$scope.showbtn=true;
+                if($scope.selectList.indexOf(d.user_account)==-1)
                 {
-                    $scope.selectList.splice(index,1);
-                    break;
+                   $scope.selectList.push(d.user_account);
+                   $scope.selectobj.push(d);
+                    console.log(d);
                 } 
+            }    
+            else
+            {
+                //$scope.showbtn=false;
+                for(var index = 0; index < $scope.selectList.length; index++)   
+                {
+                    if($scope.selectList[index] == d.user_account)
+                    {
+                        $scope.selectList.splice(index,1);
+                        $scope.selectobj.splice(index,1);
+                        break;
+                    } 
+                }
+            }
+            
+            console.log($scope.selectList);
+            console.log($scope.selectobj);
+        };
+        $scope.selectAll = function()
+        {
+            $scope.data.forEach(function(d){
+                console.log(d);
+                d.selected = $scope.allselected;
+                $scope.selectBoxChange(d);
+            });
+        };
+        $scope.delsin = function(d){
+            $scope.temp=d;
+            // console.log($scope.temp);
+            ngDialog.open(
+                {
+                    template: '/static/modules/usermanagement/pages/deleteUser.html',
+                    controller: 'deleteUser',
+                    appendClassName: "ngdialog-theme-details",
+                    width:"100%",
+                    scope:$scope
+                });
+        }
+        $scope.delmul = function(){
+            if($scope.selectList.length>0){
+                //console.log($scope.dellistmul);
+                 var cons = {
+                        user_name:$scope.selectList
+                    };
+                    //cons.user_account = d.user_account;
+                    deleteUserService.delUser(cons).then(function(res){
+                        console.log(res);
+                        if(res.data.success===true){
+                        notice.notify_info("您好！", "删除成功！" ,"",false,"","");
+                        ngDialog.closeAll();
+                        }
+                        else{
+                            notice.notify_info("您好！", "删除失败！" ,"",false,"","");
+                        }
+                    })
+            }
+            else{
+                 notice.notify_info("您好！", "未选择操作对象！" ,"",false,"","");
             }
         }
-        console.log($scope.selectList);
-    };
-    $scope.selectAll = function()
-    {
-        $scope.data.forEach(function(d){
-            console.log(d);
-            d.selected = $scope.allselected;
-            $scope.selectBoxChange(d);
-        });
-    };
-    $scope.delsin = function(d){
-        $scope.temp=d;
-        // console.log($scope.temp);
-        ngDialog.open(
-            {
-                template: '/static/modules/usermanagement/pages/deleteUser.html',
-                controller: 'deleteUser',
-                appendClassName: "ngdialog-theme-details",
-                width:"100%",
-                scope:$scope
-            });
-    }
-    $scope.adduser = function()
-    {
-        ngDialog.open(
-            {
-                template: '/static/modules/usermanagement/pages/addUser.html',
-                controller: 'addUser',
-                appendClassName: "ngdialog-theme-details",
-                width:"100%",
-                scope:$scope
-            });
-    }
-    // $scope.selectPage = function (page) {
-    //         if (page < 1 || page > $scope.pages) return;
-    //         //最多显示分页数5
-    //         if (page > 2) {
-    //             //因为只显示5个页数，大于2页开始分页转换
-    //             var newpageList = [];
-    //             for (var i = (page - 3) ; i < ((page + 2) > $scope.pages ? $scope.pages : (page + 2)) ; i++) {
-    //                 newpageList.push(i + 1);
-    //             }
-    //             $scope.pageList = newpageList;
-    //         }
-    //         $scope.pageNum = page;
-    //         $scope.dataObj.pageNum = page;
-    //         $scope.isActivePage(page);
-    //         console.log("选择的页：" + page);
-    //         getData();
-    //     };
-    //     $scope.isActivePage = function (page) {
-    //         if($scope.pageNum==page){
-    //             return "btn btn-primary";
-    //         }else return "btn";
-    //     };
+        $scope.sendmul = function(){
+            if($scope.selectobj.length>0){
 
-    //     //上一页
-    //     $scope.Previous = function () {
-    //     $scope.selectPage($scope.pageNum - 1);
-    //     };
-    //     //下一页
-    //     $scope.Next = function () {
-    //     $scope.selectPage($scope.pageNum + 1);
-    //     };
+                $state.go('msgController',{'sendUsers':$scope.selectobj.map(d=>d.user_account)});
+            }
+            else{
+                notice.notify_info("您好！", "未选择操作对象！" ,"",false,"","");
+            }
+        }
+        $scope.adduser = function()
+        {
+            ngDialog.open(
+                {
+                    template: '/static/modules/usermanagement/pages/addUser.html',
+                    controller: 'addUser',
+                    appendClassName: "ngdialog-theme-details",
+                    width:"100%",
+                    scope:$scope
+                });
+        }
+        //打开用户属性页面
+        $scope.editUser = function(user)
+        {
+            $scope.editCurUser = user;
+            ngDialog.open({
+                template: '/static/modules/usermanagement/pages/editUser.html',
+                controller: 'editUser',
+                appendClassName: "ngdialog-theme-details",
+                width:"100%",
+                scope:$scope
+            });
+        }
+        //发送消息
+        $scope.sendMessage = function(userList)
+        {
+            console.log(userList);
+            $state.go('msgController',{'sendUsers':userList.map(d=>d.user_account)});
+        }
         
     }])
     .controller("addUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice","gaddUserService",function($rootScope, $scope, 
@@ -184,38 +199,6 @@ CQ.mainApp.usermanagementController
             });
             return hash.join('');
         }
-        function CurentTime()
-        { 
-            var now = new Date();
-           
-            var year = now.getFullYear();       //年
-            var month = now.getMonth() + 1;     //月
-            var day = now.getDate();            //日
-           
-            var hh = now.getHours();            //时
-            var mm = now.getMinutes();          //分
-           
-            var clock = year + "-";
-           
-            if(month < 10)
-                clock += "0";
-           
-            clock += month + "-";
-           
-            if(day < 10)
-                clock += "0";
-               
-            clock += day + " ";
-           
-            if(hh < 10)
-                clock += "0";
-               
-            clock += hh + ":";
-            if (mm < 10) clock += '0'; 
-            clock += mm; 
-            return clock; 
-            console.log(clock);
-        } 
         $scope.submituser=function()
         {
             console.log($scope.add.password);
@@ -230,32 +213,14 @@ CQ.mainApp.usermanagementController
             {
                 console.log(password_encode($scope.add.password));
                 var cons = {};
-                var postData = [];
-                // $scope.add.password=password_encode($scope.add.password);
-                // console.log($scope.add);
-                $scope.userData={};
-                $scope.userData.user_account=$scope.add.username;
-                $scope.userData.user_passwd=password_encode($scope.add.password);
-                $scope.userData.user_role_id=1;
-                $scope.userData.user_group_id=$rootScope.regdata.user_group_id;
-                //$scope.userData.logintime = CurentTime();
-                $scope.userData.real_name="yuqing";
-                $scope.userData.topic_kwd=[];
-                $scope.userData.phone_num="";
-                $scope.userData.email="";
-                $scope.userData.user_logintime="";
-                $scope.userData.img_url=$rootScope.regdata.head_img;
-                postData.push($scope.userData);
-                //cons.postData=postData;
                 cons.user_account=$scope.add.username;
                 cons.user_passwd=password_encode($scope.add.password);
                 cons.user_role_id=1;
                 cons.user_group_id=$rootScope.regdata.user_group_id;
-                //$scope.userData.logintime = CurentTime();
-                cons.real_name="";
+                cons.real_name=$scope.add.realname;
                 cons.topic_kwd=[];
-                cons.phone_num="";
-                cons.email="";
+                cons.phone_num=$scope.add.phonenum;
+                cons.email=$scope.add.email;
                 cons.user_logintime="";
                 cons.img_url=$rootScope.regdata.head_img;
                 console.log(cons);
@@ -264,7 +229,7 @@ CQ.mainApp.usermanagementController
                 gaddUserService.addUser(cons).then(function(res) {
                 console.log(res);
                 if(res.data.success===false){
-                         notice.notify_info("您好","用户名已经存在！","",false,"","");
+                         notice.notify_info("您好","添加失败","",false,"","");
                     }
                     else
                     {
@@ -278,107 +243,57 @@ CQ.mainApp.usermanagementController
             }
         }
     }])
-    .controller("deleteUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
-        $http, ngDialog, notice) {
-        console.log($scope.temp)
+    .controller("deleteUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice","deleteUserService",function($rootScope, $scope, 
+        $http, ngDialog, notice,deleteUserService) {
+        console.log($scope.temp);
         console.log("delete User");
+        $scope.delete = function(d){
+            $scope.dellist=[];
+            $scope.dellist.push(d.user_account);
+            console.log($scope.dellist);
+            var cons = {
+                user_name:$scope.dellist
+            };
+            //cons.user_account = d.user_account;
+            deleteUserService.delUser(cons).then(function(res){
+                console.log(res);
+                if(res.data.success===true){
+                notice.notify_info("您好！", "删除成功！" ,"",false,"","");
+                ngDialog.closeAll();
+                }
+                else{
+                    notice.notify_info("您好！", "删除失败！" ,"",false,"","");
+                }
+            })
+        }
        
     }])
-    .controller("viewUserController", ["$rootScope", "$scope", "$http", "ngDialog", "notice","WatchattrService",function($rootScope, $scope, 
-        $http, ngDialog, notice,WatchattrService) {
-        console.log("viewUserController start!!!");
-        console.log($rootScope.viewtemp);
-        WatchattrService.getUserattrData({user_name:$scope.viewtemp.user_account}).then(function(res){
-            console.log(res);
-            $scope.fusername=res.user_account;
-            $scope.pwd = res.user_passwd;
-            $scope.frealname=res.real_name;
-            $scope.femail=res.email;
-            $scope.ftel=res.phone_num;
-            $scope.fgroup=res.user_group_id;
-        })
-        //再来一次上面的显示fusername和存储
-         $scope.changename = function(){
-                $scope.changed1 = true;
-            }
-            $scope.changername = function(){
-                $scope.changed2 = true;
-            }
-            $scope.changeemail = function(){
-                $scope.changed3 = true;
-            }
-            $scope.changework = function(){
-                $scope.changed4 = true;
-            }
-            $scope.changedistrict = function(){
-                $scope.changed5 = true;
-            }
-            $scope.changetel = function(){
-                $scope.changed6 = true;
-            }
-            $scope.saveattr = function(){
-                var cons={};
-                var postData=[];
-                $scope.userAttr=[];
-                if($scope.username||$scope.realname||$scope.email||$scope.tel||$scope.work)
-                {
-                    console.log("5555");
-                    if($scope.username){
-                        $scope.userAttr.username=$scope.username;
-                    }
-                    else{
-                        $scope.userAttr.username=$scope.fusername;
-                    }
-                    if($scope.realname){
-                        $scope.userAttr.realname=$scope.realname;
-                    }
-                    else{
-                        $scope.userAttr.realname=$scope.frealname;
-                    }
-                    if($scope.email){
-                        $scope.userAttr.email=$scope.email;
-                    }
-                    else{
-                        $scope.userAttr.email=$scope.femail;
-                    }
-                    if($scope.tel){
-                        $scope.userAttr.tel=$scope.tel;
-                    }
-                    else{
-                        $scope.userAttr.tel=$scope.ftel;
-                    }
-                    if($scope.work){
-                        $scope.userAttr.work=$scope.work;
-                    }
-                    else{
-                        $scope.userAttr.work=$scope.fwork;
-                    }
-                    console.log($scope.userAttr);
-                    postData.push($scope.userAttr);
-                    cons.postData=postData;
-                    // UpuserattrService.updUserAttr(cons).then(function(res){
-                    //     console.log(res);
-                    //     notice.notify_info("您好！", " 用户属性被更新！" ,"",false,"","");
-                    // },function(err){
-                    //     console.log(err);
-                    //      notice.notify_info("您好！", " 用户属性更新失败！请重试" ,"",false,"","");
-                    // });
-                    
+    .controller("editUser", ["$rootScope", "$scope", "$http", "ngDialog", "notice","UpuserattrService",function($rootScope, $scope, 
+        $http, ngDialog, notice,UpuserattrService) {
+        console.log($scope.editCurUser);
+        console.log("modify User!!!!");
+        $scope.edituser = function()
+        {
+            var cons={};
+            cons.user_account=$scope.editCurUser.user_account;
+            cons.user_passwd=$scope.editCurUser.user_passwd;
+            cons.user_role_id=$scope.editCurUser.user_role_id;
+            cons.user_group_id=$scope.editCurUser.user_group_id;
+            cons.real_name=$scope.editCurUser.real_name;
+            cons.topic_kws=$scope.editCurUser.topic_kws;
+            cons.phone_num=$scope.editCurUser.phone_num;
+            cons.email=$scope.editCurUser.email;
+            cons.user_logintime="";
+            cons.img_url=$scope.editCurUser.img_url;
+            console.log(cons);
+            UpuserattrService.updUserAttr(cons).then(function(res){
+                console.log(res);
+                if(res.data.success=true){
+                    ngDialog.closeAll();
+                    notice.notify_info("您好","用户属性修改成功！","",false,"","");
                 }
-                else
-                {
-                     notice.notify_info("您好！", "没有属性被更新！" ,"",false,"","");
-                }
-                console.log($scope.province+$scope.city+$scope.district);
-                $scope.fdistrict=$scope.province+$scope.city+$scope.district;
-                $scope.changed1 = false;
-                $scope.changed2 = false;
-                $scope.changed3 = false;
-                $scope.changed4 = false;
-                $scope.changed5 = false;
-                $scope.changed6 = false;
-            }   
-
+            })
+        }
     }])
     .controller("managetopicController", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function ($rootScope, 
     $scope, $http, ngDialog, notice) 

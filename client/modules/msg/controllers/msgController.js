@@ -1,23 +1,27 @@
 "use strict";
 CQ.mainApp.msgController
-    .controller("msgController",["$scope","$stateParams","msgService","notice",
-        function($scope,$stateParams,msgService,notice) {
-        $scope.recid=[];
-        $scope.senduser = null;
+    .controller("msgController",["$scope","$stateParams","msgService","notice","$state",
+        function($scope,$stateParams,msgService,notice,$state) {
+            var sendUsers = $stateParams.sendUsers;
+            console.log(sendUsers);
+            $scope.recid=[];
+            $scope.senduser = null;
             var tmp={};
             msgService.getuser(tmp).then(function (res) {
                 $scope.senduser = res;
                 console.log($scope.senduser);
-                $('#users').selectize({
+               var user_selectize = $('#users').selectize({
                     persist: false,
                     createOnBlur: true,
                     create: false,
                     valueField:'user_',
                     labelField:'user_',
+                    items:sendUsers,
                     // options:[{name:'yuqing'},{name:'admin'}],
                     options:$scope.senduser,
                     onItemAdd:function (v) {
                         $scope.recid.push(v);
+                        console.log(user_selectize[0].selectize);
                         // console.log($scope.recid);
                     },
                     onItemRemove:function (v) {
@@ -27,7 +31,6 @@ CQ.mainApp.msgController
                     }
                 });
             })
-        console.log('start')
 
             var E = window.wangEditor
             var editor1 = new E('#input')
@@ -64,5 +67,4 @@ CQ.mainApp.msgController
                     }
                 });
             }, false)
-
         }]);
