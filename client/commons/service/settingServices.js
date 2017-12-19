@@ -447,16 +447,16 @@ angular.module('settingservice',[])
                 permission: "2",
             }
         ];
-        var groupmanagement = [
-            {
-                label:"用户组管理",
-                link:"#/gmanagement",
-                hasShow:true,
-                icon:"",
-                items:"",
-                permission: "3",
-            }
-        ];
+        // var groupmanagement = [
+        //     {
+        //         label:"用户组管理",
+        //         link:"#/gmanagement",
+        //         hasShow:true,
+        //         icon:"",
+        //         items:"",
+        //         permission: "3",
+        //     }
+        // ];
         factories.allLinks = [
             {
                 label:"主页",
@@ -530,14 +530,14 @@ angular.module('settingservice',[])
                 items: "",
                 permission: "2",
             },
-            {
-                label:"用户组管理",
-                link: "#/gmanagement",
-                hasShow: true,
-                icon: "fa fa-group",
-                items: "",
-                permission: "3",
-            }
+            // {
+            //     label:"用户组管理",
+            //     link: "#/gmanagement",
+            //     hasShow: true,
+            //     icon: "fa fa-group",
+            //     items: "",
+            //     permission: "3",
+            // }
             // {
             //     label:"友情链接",
             //     link: "#/friendLink",

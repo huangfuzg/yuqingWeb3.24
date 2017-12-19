@@ -15,7 +15,18 @@ CQ.mainApp.usermanagementController
             ViewuserService.getUserData({user_name:$rootScope.curentUser}).then(function(res)
             {         
                 console.log(res);         
-                $scope.data=res; 
+                $scope.data=res;
+                for (var i = $scope.data.length - 1; i >= 0; i--) {
+                    if($scope.data[i].user_role_id===2){
+                        $scope.data.splice(i,1);
+                    }
+                    
+                }
+                for (var i = res.length - 1; i >= 0; i--) {
+                     console.log(res[i].topic_kws.toString());
+                     $scope.data[i].topic_kws=res[i].topic_kws.toString();
+                 } 
+                //console.log($scope.data.topic_kws.toString();
                 // $scope.pages = Math.ceil(res.length/10);
                 // $scope.newpage = Math.ceil(res.length/5);
                 //console.log($scope.newpage);
@@ -125,6 +136,15 @@ CQ.mainApp.usermanagementController
                         if(res.data.success===true){
                         notice.notify_info("您好！", "删除成功！" ,"",false,"","");
                         ngDialog.closeAll();
+                        for (var i = $scope.selectList.length - 1; i >= 0; i--) {
+                            for (var j = $scope.data.length - 1; j >= 0; j--) {
+                                    if($scope.selectList[i]===$scope.data[j].user_account)
+                                    {
+                                        $scope.data.splice(j,1);
+                                    }
+                                }
+                            }
+                           console.log($scope.data); 
                         }
                         else{
                             notice.notify_info("您好！", "删除失败！" ,"",false,"","");
@@ -235,6 +255,9 @@ CQ.mainApp.usermanagementController
                     {
                         ngDialog.closeAll();
                         notice.notify_info("您好","添加成功！","",false,"","");
+                        
+                        $scope.data.push(cons);
+                        console.log($scope.data);
                     }
                 },function(err) {
                     console.log(err);
@@ -259,7 +282,14 @@ CQ.mainApp.usermanagementController
                 console.log(res);
                 if(res.data.success===true){
                 notice.notify_info("您好！", "删除成功！" ,"",false,"","");
+                for (var i = $scope.data.length - 1; i >= 0; i--) {
+                    if($scope.data[i].user_account===d.user_account){
+                        console.log("666");
+                        $scope.data.splice(i,1);
+                    }
+                }
                 ngDialog.closeAll();
+                console.log($scope.data);
                 }
                 else{
                     notice.notify_info("您好！", "删除失败！" ,"",false,"","");
@@ -276,11 +306,11 @@ CQ.mainApp.usermanagementController
         {
             var cons={};
             cons.user_account=$scope.editCurUser.user_account;
-            cons.user_passwd=$scope.editCurUser.user_passwd;
+            //cons.user_passwd=$scope.editCurUser.user_passwd;
             cons.user_role_id=$scope.editCurUser.user_role_id;
             cons.user_group_id=$scope.editCurUser.user_group_id;
             cons.real_name=$scope.editCurUser.real_name;
-            cons.topic_kws=$scope.editCurUser.topic_kws;
+            cons.topic_kws=$scope.editCurUser.topic_kws.split(',');
             cons.phone_num=$scope.editCurUser.phone_num;
             cons.email=$scope.editCurUser.email;
             cons.user_logintime="";
