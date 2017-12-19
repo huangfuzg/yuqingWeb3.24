@@ -30,13 +30,18 @@ CQ.mainApp.msgController
             $("i#Unread").removeClass('fa-circle');
         };
         $scope.getShowData();
+        $scope.selectItems = [];
         $scope.select = function(item){
             console.log(item);
             if($scope.selectList.indexOf(item._id)==-1)
-            $scope.selectList.push(item._id);
+            {
+                $scope.selectList.push(item._id);
+                $scope.selectItems.push(item);
+            }   
             else{
                 var index = ($scope.selectList.indexOf(item._id));
                 $scope.selectList.splice(index,1);
+                $scope.selectItems.splice(index,1);
             }
             console.log($scope.selectList);
         }
@@ -104,8 +109,8 @@ CQ.mainApp.msgController
         //回复消息
         $scope.replyMessage = function()
         {
-            console.log($scope.selectList);
-            $state.go('msgController',{'sendUsers':$scope.selectList.map(d=>d.user_)});
+            console.log($scope.selectItems);
+            $state.go('msgController',{'sendUsers':$scope.selectItems.map(d=>d.send_user_acc)});
         }
         handleEmailCheckboxChecked();
         handleEmailAction();
