@@ -451,9 +451,10 @@ CQ.mainApp.monitorController
             }
             );
         };
-        $scope.AddSenmessage = function(post_id) {
+        $scope.AddSenmessage = function(post_id,site_id) {
             console.log(post_id);
             $scope.post_id = post_id;
+            $scope.site_id = site_id;
             ngDialog.open(
             {
                 template: '/static/modules/monitor/pages/addsenmessage.html',
@@ -1310,7 +1311,7 @@ CQ.mainApp.monitorController
             });
             
         };
-        MonitorFacService.getPostDetail({id: $scope.post_id, userId: 1}).then(function(res) {
+        MonitorFacService.getPostDetail({id: $scope.post_id, site_id:$scope.site_id}).then(function(res) {
             console.log(res);
             $scope.detailData = res[0];
             $scope.detailData.content = $scope.detailData.content.trim();
