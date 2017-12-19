@@ -13,9 +13,10 @@ CQ.mainApp.msgController
                 templateUrl: "/static/modules/msg/pages/msgdetail.html",
                 controller: "msgdetailController"
             })
-            .state('msgController', {
+            .state('gmsgController', {
                 url: "/msg/",
-                templateUrl: "/static/modules/msg/pages/send.html",
-                controller: "msgController"
+                templateUrl: "/static/admin/modules/msg/pages/send.html",
+                controller: "msgController",
+                params:{"sendUsers":[]}
             });
     }]);

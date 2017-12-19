@@ -23,11 +23,11 @@ angular.module('monitorService',['commons'])
         };
        
         factories.getLoadData = function(params) {
-            return RestService.get(MonitorFac.loadData, params);
+            return RestService.get(MonitorFac.loadData, params, true);
         };
 
         factories.getPostDetail = function(params) {
-            return RestService.get(MonitorFac.getPostDetail, params);
+            return RestService.get(MonitorFac.getPostDetail, params, true);
         };
 
         return factories;

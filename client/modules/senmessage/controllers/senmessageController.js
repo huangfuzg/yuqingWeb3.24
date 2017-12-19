@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 CQ.mainApp.senmessageController
    .controller("senmessageController", ["$rootScope", "$scope","$http","ngDialog", "SenFacService", "notice", 
     function ($rootScope, $scope, $http, ngDialog, SenFacService, notice) {
@@ -106,6 +106,7 @@ CQ.mainApp.senmessageController
                     if(d.content.length > 40) {
                         d.content = d.content.substring(0, 40) + "...";
                     }
+                    d.infoType="";
                 });
                 $scope.sendata = res.postData;
                 $scope.sendata.forEach(function (t) {
@@ -406,8 +407,8 @@ CQ.mainApp.senmessageController
             $scope.detailData.st_time=today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
             $scope.detailData.text_type=null;
             // $scope.detailData.title = "";
-            $scope.detailData.topic_id=-1;
-            $scope.detailData.topic_name=" ";
+            $scope.detailData.topic_id=[];
+            $scope.detailData.topic_name=[];
             $scope.detailData.img_url=" ";
             // $scope.detailData.url="";
             $scope.detailData.poster = {};
@@ -520,9 +521,9 @@ CQ.mainApp.senmessageController
                 $scope.pageset=pageset_min.map(d=>d+page-3);
         }
         $scope.getTableData(1);
-        var $cols = ["senwords","title","pt_time","add_time","is_report"];
-        $scope.theads = ["敏感词","标题","发布时间","添加时间","状态"];
-        $scope.showCols = [true,true,true,true,true];
+        var $cols = ["board","infoType","url","ip_addr","qq_num","phone_num"];
+        $scope.theads = ["网站名称","信息类型","网站URL","网站IP","QQ号码","联系电话"];
+        $scope.showCols = [true,true,true,true,true,true];
         $scope.exportAll = function()
         {
             for(var i = 0; i < $scope.tableData.length; i++)

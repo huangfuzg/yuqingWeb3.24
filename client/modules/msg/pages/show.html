@@ -1,5 +1,5 @@
 <!--<script src="../../../../../coloradmin2.1/color-admin-v2.1/admin/html/assets/js/email-inbox-v2.demo.min.js"></script>-->
-<style>
+<!-- <style>
     .vertical-box{
         display: table;
         table-layout: fixed;
@@ -49,84 +49,102 @@
         margin-left: 125px;
     }
 
-</style>
-<div class="content">
+</style> -->
+<!-- begin #content -->
+<div id="content" class="content content-full-width">
+    <!-- begin vertical-box -->
     <div class="vertical-box">
+        <!-- begin vertical-box-column -->
+        <!-- end vertical-box-column -->
+        <!-- begin vertical-box-column -->
         <div class="vertical-box-column">
-            <div class="wrapper bg-silver-lighter" >
+            <!-- begin wrapper -->
+            <div class="wrapper bg-silver-lighter">
                 <!-- begin btn-toolbar -->
                 <div class="btn-toolbar">
                     <!-- begin btn-group -->
-                    <!--<div class="btn-group pull-right">-->
-                        <!--<button class="btn btn-white btn-sm">-->
-                            <!--<i class="fa fa-chevron-left"></i>-->
-                        <!--</button>-->
-                        <!--<button class="btn btn-white btn-sm">-->
-                            <!--<i class="fa fa-chevron-right"></i>-->
-                        <!--</button>-->
-                    <!--</div>-->
+                    <div class="btn-group pull-right">
+                        <button class="btn btn-white btn-sm">
+                            <i class="fa fa-chevron-left"></i>
+                        </button>
+                        <button class="btn btn-white btn-sm">
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
+                    </div>
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
                     <div class="btn-group dropdown">
-                        <button class="btn btn-inverse btn-sm dropdown-toggle" data-toggle="dropdown">
+                        <button class="btn btn-white btn-sm dropdown-toggle" data-toggle="dropdown">
                             {{view}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu text-left text-sm">
                             <li class="active"><a href="javascript:;" ng-click="getShowData()"><i id='All' class="fa fa-circle f-s-10 fa-fw m-r-5"></i> All</a></li>
                             <li><a href="javascript:;" ng-click="unreadmsg()"><i id='Unread' class="fa f-s-10 fa-fw m-r-5"></i> Unread</a></li>
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Contacts</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Groups</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Newsletters</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Social updates</a></li>-->
-                            <!--<li><a href="javascript:;"><i class="fa f-s-10 fa-fw m-r-5"></i> Everything else</a></li>-->
                         </ul>
                     </div>
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
-                    <!--<div class="btn-group">-->
-                        <!--<button class="btn btn-sm btn-white" data-toggle="tooltip" data-placement="top" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>-->
-                    <!--</div>-->
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-white" ng-click="sendMessage()"><i class="fa fa-envelope-o"></i> 发送消息</button>
+                    </div>
+                    <!-- end btn-group -->
+                    <!-- begin btn-group -->
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-white" data-toggle="tooltip" data-placement="top" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>
+                    </div>
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
                     <div class="btn-group">
                         <button class="btn btn-sm btn-white hide" data-email-action="delete" ng-click="delmsg()"><i class="fa fa-times m-r-3"></i> <span class="hidden-xs">删除</span></button>
+                        <button class="btn btn-sm btn-white hide" data-email-action="archive" ng-click="replyMessage()"><i class="fa fa-mail-reply m-r-3"></i> <span class="hidden-xs">回复</span></button>
                     </div>
                     <!-- end btn-group -->
                 </div>
                 <!-- end btn-toolbar -->
             </div>
-            <h2 ng-if="kong" style="text-align:center">没有未读消息</h2>
-            <ul class="list-group list-group-lg no-radius list-email" ng-if="!kong">
-                <li class="list-group-item" ng-class="{primary:item.send_user_role==2,inverse:item.send_user_role==3,success:item.send_user_role==1}"  ng-repeat="item in showdata">
+            <!-- end wrapper -->
+            <!-- begin list-email -->
+            <ul class="list-group list-group-lg no-radius list-email" style="margin-bottom: 0">
+                <li class="list-group-item" ng-class="{primary:item.send_user_role==2,danger:item.send_user_role==3,success:item.send_user_role==1}" ng-repeat="item in showdata">
                     <div class="email-checkbox">
                         <label>
-
                             <i class="fa fa-square-o"></i>
-                            <input type="checkbox" ng-click="select(item)" data-checked="email-checkbox" />
+                            <input type="checkbox" data-checked="email-checkbox" ng-click="select(item)" />
                         </label>
-
                     </div>
-                    <div class="email-checkbox">
-                        <img style="height: 18px;width: 18px" src="/static/assets/icon/envolope.svg" ng-if="!item.is_read"/>
-                        <img style="height: 18px;width: 18px" src="/static/assets/icon/envolope-letter.svg" ng-if="item.is_read"/>
-                        <!--<i class="fa fa-2x fa-envelope" ng-if="!item.is_read"></i>-->
-                        <!--<i class="fa fa-2x fa-envelope-o" ></i>-->
-                    </div>
-                        <a href="" ng-click="showdetail(item._id)" class="email-user">
-                            <img src="/static/assets/img/user-13.jpg" alt="" />
-                        </a>
-                    <div class="email-info">
+                    <a href="email_detail.html" class="email-user">
+                        <img src="/static/assets/img/user-13.jpg" alt="用户头像" />
+                    </a>
+                    <div class="email-info" ng-click="showdetail(item._id)" style="cursor: pointer;">
                         <span class="email-time">{{item.send_time}}</span>
-                        <h5 class="email-title" >
-                            <a href="" ng-click="showdetail(item._id)" >{{item.title}}</a>
-                            <span class="label f-s-10" ng-class="{'label-primary':item.send_user_role==2,'label-inverse':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
+                        <h5 class="email-title">
+                            <a href="email_detail.html">{{item.title}}</a>
+                            <span class="label f-s-10"  ng-class="{'label-primary':item.send_user_role==2,'label-danger':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
                         </h5>
-                        <p class="email-desc" style="font-size:12px;font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;color:#707478">
+                        <div class="pull-right"  ng-show="!item.is_read" style="width: 10px; height:10px; border-radius: 50%; background-color: red; margin-right: 10px"></div>
+                        <p class="email-desc">
                             {{item.desc}}
                         </p>
                     </div>
                 </li>
             </ul>
+            <!-- end list-email -->
+            <!-- begin wrapper -->
+            <div class="wrapper bg-silver-lighter clearfix">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-white btn-sm">
+                        <i class="fa fa-chevron-left"></i>
+                    </button>
+                    <button class="btn btn-white btn-sm">
+                        <i class="fa fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="m-t-5">{{showdata.length}} messages</div>
+            </div>
+            <!-- end wrapper -->
         </div>
+        <!-- end vertical-box-column -->
     </div>
+    <!-- end vertical-box -->
 </div>
+<!-- end #content -->
