@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 CQ.mainApp.senmessageController
    .controller("senmessageController", ["$rootScope", "$scope","$http","ngDialog", "SenFacService", "notice", 
     function ($rootScope, $scope, $http, ngDialog, SenFacService, notice) {
@@ -91,7 +91,7 @@ CQ.mainApp.senmessageController
         function getData (object) {
             $scope.sendata = [];
             var cons = {
-                        "userId":$scope.dataObj.userId,
+                        // "userId":$scope.dataObj.userId,
                         "pageCounts":$scope.dataObj.pageCounts,
                         "is_report":$scope.dataObj.is_report,
                         "topicId":$scope.dataObj.topicId,
@@ -109,6 +109,9 @@ CQ.mainApp.senmessageController
                     d.infoType="";
                 });
                 $scope.sendata = res.postData;
+                $scope.sendata.forEach(function (t) {
+                    t.namelist = t.user_name_list.join(',')
+                })
                 $scope.pages = Math.ceil(res.totalCount/10);
                 $scope.newpage = Math.ceil(res.totalCount/10);
                 for(var i=0;i<$scope.newpage;i++){
@@ -139,6 +142,7 @@ CQ.mainApp.senmessageController
 
     function getTopic(){
       var cons = {"userId":1};
+      // var cons = {};
       SenFacService.getTopic(cons).then(function(res) {
         for(var i=0;i<res.length;i++){
           $scope.topic.push({"name":res[i].topicName,"value":i});
@@ -173,7 +177,7 @@ CQ.mainApp.senmessageController
         }
         // var url = $scope.baseUrl + "senmassage/delmesg/";
         var Data = {
-            userId: $scope.dataObj.userId,
+            // userId: $scope.dataObj.userId,
             postLists: postLists
         };
         SenFacService.removeSenData(Data).then(function(res) {
@@ -199,7 +203,8 @@ CQ.mainApp.senmessageController
         {
             postLists = $scope.selectList;
         }
-        var Data = {userId: $scope.dataObj.userId,
+        var Data = {
+                    // userId: $scope.dataObj.userId,
                     postLists: postLists};
 
         if(state != 1 && state != 2)
@@ -327,7 +332,7 @@ CQ.mainApp.senmessageController
                 url: CQ.variable.RESTFUL_URL+ 'senmassage/evidence',
                 method: "get",
                 params: {
-                    userId: $scope.dataObj.userId,
+                    // userId: $scope.dataObj.userId,
                     id: d
                 },
                 responseType: 'blob'
@@ -367,6 +372,7 @@ CQ.mainApp.senmessageController
      function($rootScope, $scope, ngDialog, PostDataService, notice) {
         console.log("addSenMessage","start!!!");
         //console.log($scope.post_id);
+         $scope.detailData = {};
         $scope.DoaddSen = function() {
             if($scope.detailData.senwords&&$scope.detailData.senwords.split)
             {
@@ -379,40 +385,64 @@ CQ.mainApp.senmessageController
             console.log("$scope.detailData");
             console.log($scope.detailData);
             var cons = {};
-            cons.userId = 1;
-            //$scope.detailData.url=" ";
-            $scope.detailData.site_id=0;
-            $scope.detailData.site_name=$scope.detailData.board;
-            $scope.detailData.topic_id=0;
-            $scope.detailData.dataType=0;
-            //$scope.detailData.topic_name=" ";
+            var today = new Date();
+            // cons.userId = 1;
+            $scope.detailData.Ip = "";
+            $scope.detailData.QQ="";
+            $scope.detailData.add_time=today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
+            $scope.detailData.board = "";
+            $scope.detailData.cellphone="";
+            $scope.detailData.comm_num=null;
+            $scope.detailData.content = "";
+            $scope.detailData.dataType=-1;
             $scope.detailData.html=" ";
-            $scope.detailData.st_time="2017-11-28";
-            $scope.detailData.add_time="2017-11-28";
-            //$scope.detailData.read_num=0;
-            //$scope.detailData.comm_num=0;
-            //$scope.detailData.img_url=" "; 
-            //$scope.detailData.repost_num=0;
-            $scope.detailData.lan_type=0;
-            $scope.detailData.repost_pt_id=" ";
-            $scope.detailData.text_type=0;
             $scope.detailData.is_report=0;
-            //$scope.detailData.poster.home_url=" ";
-            //$scope.detailData.poster.id=" ";
-            //$scope.detailData.poster.img_url=" ";
-            
+            $scope.detailData.lan_type=0;
+            $scope.detailData.read_num=null;
+            $scope.detailData.repost_num=null;
+            $scope.detailData.repost_pt_id=" ";
+            // $scope.detailData.url=" ";
+            $scope.detailData.site_id=-1;
+            $scope.detailData.site_name=$scope.detailData.board;
+            $scope.detailData.st_time=today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
+            $scope.detailData.text_type=null;
+            // $scope.detailData.title = "";
+            $scope.detailData.topic_id=[];
+            $scope.detailData.topic_name=[];
+            $scope.detailData.img_url=" ";
+            // $scope.detailData.url="";
+            $scope.detailData.poster = {};
+            $scope.detailData.poster.authentication=null;
+            $scope.detailData.poster.birthday="";
+            $scope.detailData.poster.following=null;
+            $scope.detailData.poster.follows = null;
+            $scope.detailData.poster.home_url="";
+            $scope.detailData.poster.id="";
+            $scope.detailData.poster.img_url="";
+            $scope.detailData.poster.intro=null;
+            $scope.detailData.poster.level=null;
+            $scope.detailData.poster.location = "";
+            $scope.detailData.poster.name = "";
+            $scope.detailData.poster.post_num = null;
             var postData = [];
             postData.push($scope.detailData);
             cons.postData = postData;
-            PostDataService.addSenMessage(cons).then(function(res) {
-                console.log(res);
-                ngDialog.closeAll();
-                notice.notify_info("您好","添加成功！","",false,"","");
-            },function(err) {
-                console.log(err);
-                notice.notify_info("您好","添加失败！请重试","",false,"","");
-            });
-            
+            cons.postData.forEach(function (d) {
+                if(!d.title||d.title==""||d.url==""||!d.url||!d.pt_time||d.pt_time==""){
+                    notice.notify_info("required字段不能为空！");
+                }
+                else {
+                    PostDataService.addSenMessage(cons).then(function (res) {
+                        console.log(cons);
+                        ngDialog.closeAll();
+                        notice.notify_info("您好", "添加成功！", "", false, "", "");
+                    }, function (err) {
+                        console.log(err);
+                        notice.notify_info("您好", "添加失败！请重试", "", false, "", "");
+                    });
+                }
+            })
+
         };
         
    }])
@@ -420,7 +450,7 @@ CQ.mainApp.senmessageController
         //console.log($scope.detailDataId);
         $scope.detailData = null;
         var cons = {
-            userId: 1,
+            // userId: 1,
             id: $scope.detailDataId
         };
         SenFacService.getDetailData(cons).then(function(res) {
@@ -564,7 +594,7 @@ CQ.mainApp.senmessageController
         var getAll = function()
         {
             var cons = {
-                        "userId":$scope.dataObj.userId,
+                        // "userId":$scope.dataObj.userId,
                         "pageCounts":"all",
                         "is_report":$scope.dataObj.is_report,
                         "topicId":$scope.dataObj.topicId,
@@ -611,7 +641,7 @@ CQ.mainApp.senmessageController
         {
             console.log(starttime,endtime);
             var cons = {
-                "userId":$scope.dataObj.userId,
+                // "userId":$scope.dataObj.userId,
                 "pageCounts":"all",
                 "is_report":$scope.dataObj.is_report,
                 "topicId":$scope.dataObj.topicId,
