@@ -181,6 +181,9 @@
                                                  </a>
                                                 )
                                             </p>
+                                            <p ng-if="it.is_read">
+                                                (已添加)
+                                            </p>
                                         </div>
                                     </div>
                                     <div class = "pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists"
@@ -190,7 +193,7 @@
                                             <!--<img src = "/static/assets/img/analy.svg">-->
                                             <!--</a>-->
                                           
-                                            <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id)">
+                                            <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id,it.site_id)">
                                                 <img src = "/static/assets/img/add.svg">
                                             </a>
                                             <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->

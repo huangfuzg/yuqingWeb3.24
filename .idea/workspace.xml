@@ -3,10 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="48ea3db1-9eba-4424-9362-02041f89af53" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/senmessage/controllers/senmessageController.js" afterPath="$PROJECT_DIR$/client/modules/senmessage/controllers/senmessageController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/senmessage/pages/addSenMessage.html" afterPath="$PROJECT_DIR$/client/modules/senmessage/pages/addSenMessage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/senmessage/pages/senmessage.html" afterPath="$PROJECT_DIR$/client/modules/senmessage/pages/senmessage.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js" afterPath="$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/modules/monitor/pages/monitor.html" afterPath="$PROJECT_DIR$/client/modules/monitor/pages/monitor.html" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -20,41 +17,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="show.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/show.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="293">
-              <caret line="121" column="63" lean-forward="false" selection-start-line="121" selection-start-column="55" selection-end-line="121" selection-end-column="63" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="msgController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" column="45" lean-forward="false" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
+            <state relative-caret-position="396">
+              <caret line="22" column="45" lean-forward="false" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="senmessageController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="senmessageController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/modules/senmessage/controllers/senmessageController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="375" column="0" lean-forward="false" selection-start-line="375" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
+            <state relative-caret-position="6768">
+              <caret line="376" column="28" lean-forward="false" selection-start-line="376" selection-start-column="28" selection-end-line="376" selection-end-column="28" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="senmessage.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/client/modules/senmessage/pages/senmessage.html">
+      <file leaf-file-name="monitor.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/monitor.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="65" column="111" lean-forward="false" selection-start-line="65" selection-start-column="111" selection-end-line="65" selection-end-column="111" />
+            <state relative-caret-position="439">
+              <caret line="184" column="50" lean-forward="false" selection-start-line="184" selection-start-column="50" selection-end-line="184" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="monitor(copy).html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/monitor(copy).html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addsenmessage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/addsenmessage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="40" column="128" lean-forward="false" selection-start-line="40" selection-start-column="123" selection-end-line="40" selection-end-column="128" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="monitorController.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client/modules/monitor/controllers/monitorController.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="324">
+              <caret line="36" column="54" lean-forward="false" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -63,8 +80,8 @@
       <file leaf-file-name="addSenMessage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/modules/senmessage/pages/addSenMessage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="132" column="95" lean-forward="false" selection-start-line="132" selection-start-column="88" selection-end-line="132" selection-end-column="95" />
+            <state relative-caret-position="1656">
+              <caret line="92" column="86" lean-forward="false" selection-start-line="92" selection-start-column="76" selection-end-line="92" selection-end-column="86" />
               <folding />
             </state>
           </provider>
@@ -73,9 +90,11 @@
       <file leaf-file-name="senmessageService.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="6" column="87" lean-forward="true" selection-start-line="6" selection-start-column="87" selection-end-line="6" selection-end-column="87" />
-              <folding />
+            <state relative-caret-position="216">
+              <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding>
+                <marker date="1513683690448" expanded="true" signature="2929:2981" ph="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -101,11 +120,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>mapData</find>
-      <find>drawMap</find>
-      <find>drop</find>
-      <find>data-email-action</find>
-      <find>getFreshData</find>
       <find>dropdown</find>
       <find>Rest</find>
       <find>showdetail</find>
@@ -131,6 +145,11 @@
       <find>DoaddSen</find>
       <find>url</find>
       <find>board</find>
+      <find>==</find>
+      <find>站</find>
+      <find>add</find>
+      <find>PostDataService</find>
+      <find>AddSenmessage</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -148,7 +167,6 @@
         <option value="$PROJECT_DIR$/client/modules/senmessage/pages/table.html" />
         <option value="$PROJECT_DIR$/client/modules/history/controllers/historyController.js" />
         <option value="$PROJECT_DIR$/client/modules/monitor/pages/topicAnalys.html" />
-        <option value="$PROJECT_DIR$/client/modules/monitor/controllers/monitorController.js" />
         <option value="$PROJECT_DIR$/client/modules/dashboard/service/dashboardService.js" />
         <option value="$PROJECT_DIR$/client/modules/dashboard/pages/dashboard.html" />
         <option value="$PROJECT_DIR$/client/modules/dashboard/controllers/dashboardController.js" />
@@ -171,10 +189,12 @@
         <option value="$PROJECT_DIR$/client/admin/modules/app.js" />
         <option value="$PROJECT_DIR$/client/admin/admin.html" />
         <option value="$PROJECT_DIR$/client/admin/commons/controllers/mainController.js" />
-        <option value="$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js" />
         <option value="$PROJECT_DIR$/client/modules/senmessage/pages/addSenMessage.html" />
         <option value="$PROJECT_DIR$/client/modules/senmessage/pages/senmessage.html" />
         <option value="$PROJECT_DIR$/client/modules/senmessage/controllers/senmessageController.js" />
+        <option value="$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js" />
+        <option value="$PROJECT_DIR$/client/modules/monitor/controllers/monitorController.js" />
+        <option value="$PROJECT_DIR$/client/modules/monitor/pages/monitor.html" />
       </list>
     </option>
   </component>
@@ -187,7 +207,7 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/server/node_modules" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="589" />
     <option name="y" value="270" />
     <option name="width" value="1394" />
@@ -233,29 +253,14 @@
               <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="msg" type="462c0819:PsiDirectoryNode" />
+              <item name="monitor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="yuqingWeb3.24" type="b2602c69:ProjectViewProjectNode" />
               <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="msg" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="yuqingWeb3.24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="senmessage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="yuqingWeb3.24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="senmessage" type="462c0819:PsiDirectoryNode" />
+              <item name="monitor" type="462c0819:PsiDirectoryNode" />
               <item name="controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -263,16 +268,8 @@
               <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
               <item name="client" type="462c0819:PsiDirectoryNode" />
               <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="senmessage" type="462c0819:PsiDirectoryNode" />
+              <item name="monitor" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="yuqingWeb3.24" type="b2602c69:ProjectViewProjectNode" />
-              <item name="yuqingWeb3.24" type="462c0819:PsiDirectoryNode" />
-              <item name="client" type="462c0819:PsiDirectoryNode" />
-              <item name="modules" type="462c0819:PsiDirectoryNode" />
-              <item name="senmessage" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -331,14 +328,18 @@
       <workItem from="1513323683512" duration="536000" />
       <workItem from="1513326917353" duration="401000" />
       <workItem from="1513346488628" duration="1587000" />
+      <workItem from="1513670215545" duration="349000" />
+      <workItem from="1513671118692" duration="675000" />
+      <workItem from="1513681422667" duration="4200000" />
+      <workItem from="1513689238153" duration="1241000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="83293000" />
+    <option name="totallyTimeSpent" value="90449000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="589" y="270" width="1855" height="1084" extended-state="6" />
+    <frame x="589" y="270" width="1857" height="1092" extended-state="7" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18678318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -350,21 +351,12 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26519915" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18678318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -396,27 +388,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/client/modules/zhishiku/pages/evolutionary.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="45" column="6" lean-forward="false" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/zhishiku/pages/viewpoint.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/topic/pages/topicAnalys.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1440">
-          <caret line="31" column="63" lean-forward="false" selection-start-line="31" selection-start-column="54" selection-end-line="31" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/senmessage/pages/table.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
@@ -435,13 +406,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2970">
           <caret line="165" column="42" lean-forward="false" selection-start-line="165" selection-start-column="29" selection-end-line="165" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/monitor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1530">
-          <caret line="85" column="57" lean-forward="false" selection-start-line="85" selection-start-column="39" selection-end-line="85" selection-end-column="57" />
         </state>
       </provider>
     </entry>
@@ -470,13 +434,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="422">
           <caret line="146" column="4" lean-forward="false" selection-start-line="146" selection-start-column="4" selection-end-line="147" selection-end-column="102" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/monitor/controllers/monitorController.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2407">
-          <caret line="116" column="29" lean-forward="false" selection-start-line="116" selection-start-column="17" selection-end-line="116" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -706,9 +663,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/msg/pages/show.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="121" column="63" lean-forward="false" selection-start-line="121" selection-start-column="55" selection-end-line="121" selection-end-column="63" />
-          <folding />
+        <state relative-caret-position="2178">
+          <caret line="121" column="63" lean-forward="false" selection-start-line="121" selection-start-column="63" selection-end-line="121" selection-end-column="63" />
         </state>
       </provider>
     </entry>
@@ -722,40 +678,80 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/msg/controllers/msgController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="45" lean-forward="false" selection-start-line="19" selection-start-column="45" selection-end-line="19" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="87" lean-forward="true" selection-start-line="6" selection-start-column="87" selection-end-line="6" selection-end-column="87" />
+        <state relative-caret-position="396">
+          <caret line="22" column="45" lean-forward="false" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/senmessage/pages/senmessage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
+        <state relative-caret-position="16">
           <caret line="65" column="111" lean-forward="false" selection-start-line="65" selection-start-column="111" selection-end-line="65" selection-end-column="111" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/senmessage/pages/addSenMessage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="132" column="95" lean-forward="false" selection-start-line="132" selection-start-column="88" selection-end-line="132" selection-end-column="95" />
+        <state relative-caret-position="1656">
+          <caret line="92" column="86" lean-forward="false" selection-start-line="92" selection-start-column="76" selection-end-line="92" selection-end-column="86" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/senmessage/service/senmessageService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="0" lean-forward="true" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <marker date="1513683690448" expanded="true" signature="2929:2981" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/client/modules/senmessage/controllers/senmessageController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="375" column="0" lean-forward="false" selection-start-line="375" selection-start-column="0" selection-end-line="375" selection-end-column="0" />
+        <state relative-caret-position="6768">
+          <caret line="376" column="28" lean-forward="false" selection-start-line="376" selection-start-column="28" selection-end-line="376" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/monitor(copy).html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/addsenmessage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="40" column="128" lean-forward="false" selection-start-line="40" selection-start-column="123" selection-end-line="40" selection-end-column="128" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/monitor/service/monitorService.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-434">
+          <caret line="12" column="31" lean-forward="false" selection-start-line="12" selection-start-column="18" selection-end-line="12" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/monitor/controllers/monitorController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="36" column="54" lean-forward="false" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client/modules/monitor/pages/monitor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="184" column="50" lean-forward="false" selection-start-line="184" selection-start-column="50" selection-end-line="184" selection-end-column="50" />
           <folding />
         </state>
       </provider>
