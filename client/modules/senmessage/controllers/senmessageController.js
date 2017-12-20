@@ -373,18 +373,6 @@ CQ.mainApp.senmessageController
         console.log("addSenMessage","start!!!");
         //console.log($scope.post_id);
          $scope.detailData = {};
-        $scope.DoaddSen = function() {
-            if($scope.detailData.senwords&&$scope.detailData.senwords.split)
-            {
-                $scope.detailData.senwords = $scope.detailData.senwords.split(',');
-            }
-            else
-            {
-                $scope.detailData.senwords = [];
-            }
-            console.log("$scope.detailData");
-            console.log($scope.detailData);
-            var cons = {};
             var today = new Date();
             // cons.userId = 1;
             $scope.detailData.Ip = "";
@@ -423,7 +411,19 @@ CQ.mainApp.senmessageController
             $scope.detailData.poster.level=null;
             $scope.detailData.poster.location = "";
             $scope.detailData.poster.name = "";
-            $scope.detailData.poster.post_num = null;
+            $scope.detailData.poster.post_num = null;         
+        $scope.DoaddSen = function() {
+            if($scope.detailData.senwords&&$scope.detailData.senwords.split)
+            {
+                $scope.detailData.senwords = $scope.detailData.senwords.split(',');
+            }
+            else
+            {
+                $scope.detailData.senwords = [];
+            }
+            console.log("$scope.detailData");
+            console.log($scope.detailData);
+            var cons = {};
             var postData = [];
             postData.push($scope.detailData);
             cons.postData = postData;

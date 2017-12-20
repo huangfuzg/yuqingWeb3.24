@@ -1,8 +1,8 @@
 "use strict";
 CQ.mainApp.monitorController
    .controller("monitorController", ["$rootScope", "$scope", "$interval", "ngDialog","MonitorFacService",
-    "$location","$stateParams","$state", "$http", "PostDataService", "$timeout", "notice",function ($rootScope, $scope, $interval,
-        ngDialog, MonitorFacService, $location, $stateParams,$state, $http, PostDataService,
+    "$location","$stateParams","$state", "$http", "PostDataService_", "$timeout", "notice",function ($rootScope, $scope, $interval,
+        ngDialog, MonitorFacService, $location, $stateParams,$state, $http, PostDataService_,
         $timeout, notice) {
         console.log("monitorController", "start!!!");
         //页面UI初始化；
@@ -341,8 +341,9 @@ CQ.mainApp.monitorController
                     }
                 });
             $scope.cons.topicLists = topicLists;
-            //console.log(JSON.stringify($scope.cons));
-            PostDataService.flushData($scope.cons).then(function(freshdata) {
+            var cons=$scope.cons;
+            console.log(JSON.stringify($scope.cons));
+            PostDataService_.flushData(cons).then(function(freshdata) {
                 // console.log(freshdata.data.data);
                 var res = freshdata.data.data;
                 $scope.monitorData.forEach(function(d) {
@@ -1263,8 +1264,8 @@ CQ.mainApp.monitorController
                 };
             }
         }])
-    .controller("addSenmessage", ["$rootScope","$scope","ngDialog", "MonitorFacService", "PostDataService", "notice",
-     function($rootScope, $scope, ngDialog, MonitorFacService, PostDataService, notice) {
+    .controller("addSenmessage", ["$rootScope","$scope","ngDialog", "MonitorFacService", "PostDataService_", "notice",
+     function($rootScope, $scope, ngDialog, MonitorFacService, PostDataService_, notice) {
         console.log("addSenmessage","start!!!");
         //console.log($scope.post_id);
         $scope.detailData = null;
@@ -1300,7 +1301,7 @@ CQ.mainApp.monitorController
             var postData = [];
             postData.push($scope.detailData);
             cons.postData = postData;
-            PostDataService.addSenMessage(cons).then(function(res) {
+            PostDataService_.addSenMessage(cons).then(function(res) {
                 console.log(res);
                 ngDialog.closeAll();
                 notice.notify_info("您好","添加成功！","",false,"","");
