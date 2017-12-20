@@ -434,6 +434,9 @@ CQ.mainApp.senmessageController
                     PostDataService.addSenMessage(cons).then(function (res) {
                         console.log(cons);
                         ngDialog.closeAll();
+                        setTimeout(function() {
+                            getData();
+                        }, 2000);
                         notice.notify_info("您好", "添加成功！", "", false, "", "");
                     }, function (err) {
                         console.log(err);
