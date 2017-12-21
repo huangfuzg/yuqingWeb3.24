@@ -412,40 +412,7 @@ CQ.mainApp.senmessageController
          $scope.detailData.poster.name = "";
          $scope.detailData.poster.post_num = null;
 
-         //get data
-        function getData (object) {
-            $scope.sendata = [];
-            var cons = {
-                        // "userId":$scope.dataObj.userId,
-                        "pageCounts":$scope.dataObj.pageCounts,
-                        "is_report":$scope.dataObj.is_report,
-                        "topicId":$scope.dataObj.topicId,
-                        "dataType":$scope.dataObj.dataType,
-                        "pageNum":$scope.dataObj.pageNum,
-                        "startDate":$scope.dataObj.startDate == "" ? '""' : $scope.dataObj.startDate,
-                        "endDate":$scope.dataObj.endDate == "" ? '""' : $scope.dataObj.endDate
-                };
-            SenFacService.getSenLists(cons).then(function(res) {
-                console.log("Here");
-                console.log(res);
-                res.postData.forEach(function(d) {
-                    if(d.content.length > 40) {
-                        d.content = d.content.substring(0, 40) + "...";
-                    }
-                    d.infoType="";
-                });
-                $scope.sendata = res.postData;
-                console.log($scope.sendata);
-                $scope.sendata.forEach(function (t) {
-                    t.namelist = t.user_name_list.join(',')
-                })
-                $scope.pages = Math.ceil(res.totalCount/10);
-                $scope.newpage = Math.ceil(res.totalCount/10);
-                for(var i=0;i<$scope.newpage;i++){
-                    $scope.pageList[i]=i+1;
-                }
-            });
-        }
+        
 
         $scope.DoaddSen = function() {
             if($scope.detailData.senwords&&$scope.detailData.senwords.split)
