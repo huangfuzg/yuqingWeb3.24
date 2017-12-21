@@ -484,6 +484,7 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic);
                     // console.log(new d.constructor());
                     $scope.submitUrl = $scope.baseUrl + "/modifytopic";
+                    // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
                     $scope.allsites.forEach(function(d3){
                         console.log(d3);
                         d3.selected = false;
@@ -895,6 +896,7 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic);
                     // console.log(new d.constructor());
                     $scope.submitUrl = $scope.baseUrl + "/modifytopic";
+                    // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
                     $scope.allsites.forEach(function(d3){
                         console.log(d3);
                         d3.selected = false;
