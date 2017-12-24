@@ -368,8 +368,8 @@ CQ.mainApp.senmessageController
         );
     };
    }])
-    .controller("addSenMessage", ["$rootScope","$scope","ngDialog","PostDataService","SenFacService","notice",
-     function($rootScope, $scope, ngDialog, PostDataService, SenFacService, notice) {
+    .controller("addSenMessage", ["$rootScope","$scope","ngDialog","PostDataService","notice",
+     function($rootScope, $scope, ngDialog, PostDataService, notice) {
         console.log("addSenMessage","start!!!");
         //console.log($scope.post_id);
          $scope.detailData = {};
@@ -423,8 +423,8 @@ CQ.mainApp.senmessageController
             {
                 $scope.detailData.senwords = [];
             }
-            console.log("$scope.detailData");
-            console.log($scope.detailData);
+            // console.log("$scope.detailData");
+            // console.log($scope.detailData);
             var cons = {};
             var postData = [];
             postData.push($scope.detailData);
@@ -436,7 +436,7 @@ CQ.mainApp.senmessageController
                 else {
                     PostDataService.addSenMessage(cons).then(function (res) {
                         console.log(cons);
-                        window.location.reload("index.html#/senmessages");
+                        // window.location.reload("index.html#/senmessages");
                         ngDialog.closeAll();
                         window.location.reload("index.html#/senmessages");
                         notice.notify_info("您好", "添加成功！", "", false, "", "");

@@ -34,6 +34,7 @@ CQ.mainApp.monitorController
                 $scope.senduser = data.data;
                 $scope.senduser2=[];
                 var color = d3.scale.category20();
+                if($scope.senduser!='普通用户权限不足')
                 $scope.senduser2 = $scope.senduser.map((d,i)=>{return {'user_':d,'color':color(i),'index':i-1}});
                 $scope.senduser2.splice(0,1);
                 console.log($scope.senduser2);
