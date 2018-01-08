@@ -418,6 +418,7 @@ CQ.mainApp.monitorController
                             }
                             $timeout(function(){
                                 d.postData = d.bufferData.concat(d.postData);
+                                d.bufferData = [];
                             }, 0);
                         }
                     });
