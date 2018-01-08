@@ -14,6 +14,7 @@ CQ.mainApp.monitorController
         $scope.dataType = $stateParams.dataType;
         $scope.siteId = $stateParams.siteId;
         $rootScope.freshLists = $rootScope.freshLists || [];
+        $scope.bufferData = {};
         $rootScope.freshLists.forEach(function(d,i){
             while($interval.cancel(d));
             console.log($interval.cancel(d));
@@ -163,13 +164,14 @@ CQ.mainApp.monitorController
         // fresh data
         function getFreshData(cons) {
             var ll = $interval(function(){
-                console.log($scope.monitorData);
+                var topicLists = [];
                 $scope.monitorData.forEach(function(topic){
                     if(topic.fresh)
-                    {
-                        $scope.refreshData(topic.topicId);
+                    {  
+                        topicLists.push({topicId:topic.topicId,newTime:topic.newTime}); 
                     }
                 });
+                $scope.getDataToBuffer(topicLists);
             //     $(".loads").slideDown("slow");
             //     var topicLists = [];
             //     $scope.monitorData.forEach(function (d) {
@@ -329,9 +331,64 @@ CQ.mainApp.monitorController
             // }
         }
 
+        //标记为已读
+        $scope.markRead = function(post)
+        {
+            post.is_read = 1;
+            console.log(post);
+        }
+
+        //把数据读入到缓存
+        $scope.getDataToBuffer = function(topic_list)
+        {
+            // var topicLists = [];
+            // $scope.monitorData.forEach(function (d) {
+            //     if(d.topicId == topic_id) {
+            //         var tl = {};
+            //         tl.topicId = d.topicId;
+            //         tl.newTime = d.newTime;
+            //         topicLists.push(tl);
+            //     }
+            // });
+            $scope.cons.topicLists = topic_list;
+            var cons=$scope.cons;
+            console.log(cons);
+            PostDataService_.flushData(cons).then(function(freshdata) {
+                // console.log(freshdata.data.data);
+                var res = freshdata.data.data;
+                  $scope.monitorData.forEach(function(d) {
+                    res.forEach(function(rr) {
+                        if(rr.topicId == d.topicId){
+                            var doms = "#topic_" + rr.topicId;
+                            d.newTime = rr.newTime;
+                            if(rr.postData.length != 0) {
+                                d.bufferData = d.bufferData || [];
+                                d.bufferData = rr.postData.concat(d.bufferData);
+                                console.log(d.topicName+"buffer");
+                                console.log(d);
+                                $timeout(function(){
+                                    d.count = d.bufferData.length;
+                                },0)
+                                angular.element(doms).find(".addnums").fadeIn();
+                                // angular.element(doms).find(".addnums").slideDown("slow");
+                                //     $timeout(function(){
+                                //         d.postData = rr.postData.concat(d.postData);
+                                //     }, 100);
+                                    //d.postData = rr.postData.concat(d.postData);
+                                    //angular.element(doms).find(".addnums").slideUp("slow");
+                                }
+                            }
+                        });
+                    });
+            },function(error) {
+                console.log(error);
+            });
+        }
+
         $scope.refreshData = function(topic_id) {
             var doms = "#topic_" + topic_id;
             angular.element(doms).find(".loads").slideDown("slow");
+            angular.element(doms).find(".addnums").fadeOut();
                 var topicLists = [];
                 $scope.monitorData.forEach(function (d) {
                     if(d.topicId == topic_id) {
@@ -351,26 +408,28 @@ CQ.mainApp.monitorController
                     res.forEach(function(rr) {
                         if(rr.topicId == d.topicId){
                             d.newTime = rr.newTime;
+                            d.bufferData = d.bufferData || [];
                             if(rr.postData.length != 0) {
-                                d.count = rr.count;
-                                angular.element(doms).find(".addnums").slideDown("slow");
-                                $timeout(function(){
-                                    d.postData = rr.postData.concat(d.postData);
-                                }, 100);
+                                // d.count = rr.count;
+                                // angular.element(doms).find(".addnums").slideDown("slow");
+                                d.bufferData = rr.postData.concat(d.bufferData);
                                 //d.postData = rr.postData.concat(d.postData);
                                 //angular.element(doms).find(".addnums").slideUp("slow");
                             }
+                            $timeout(function(){
+                                d.postData = d.bufferData.concat(d.postData);
+                            }, 0);
                         }
                     });
                 });
                 //console.log($scope.monitorData);
                 angular.element(doms).find(".loads").slideUp("slow");
-                $timeout(function(){
-                        angular.element(doms).find(".addnums").slideUp("slow");
-                }, 4000);
+                // $timeout(function(){
+                //         angular.element(doms).find(".addnums").slideUp("slow");
+                // }, 4000);
             },function(error) {
                 angular.element(doms).find(".loads").slideUp("slow");
-                angular.element(doms).find(".addnums").slideUp("slow");
+                // angular.element(doms).find(".addnums").slideUp("slow");
                 console.log(error);
             });
             
