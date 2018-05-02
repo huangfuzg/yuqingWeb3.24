@@ -10,7 +10,8 @@ angular.module("senmessageService", ["commons"])
         factories.removeSenData = $resource(CQ.variable.RESTFUL_URL + "senmassage/delmesg", parseResource.params, parseResource.actions);
         
         factories.reportData = $resource(CQ.variable.RESTFUL_URL + "senmassage/markmesg", parseResource.params, parseResource.actions);
-        
+        // factories.reportData = $resource("http://118.190.133.203:8200/yqdata/senmassage/markmesg", parseResource.params, parseResource.actions);
+
         factories.getTopic = $resource(CQ.variable.RESTFUL_URL + "topic_statistics",parseResource.params,parseResource.actions);
 
         factories.handleData = $resource(CQ.variable.RESTFUL_URL + "senmassage/handlemesg", parseResource.params, parseResource.actions);

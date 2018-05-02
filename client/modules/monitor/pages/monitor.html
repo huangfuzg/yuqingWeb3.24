@@ -47,6 +47,9 @@
     .monitor-bg-color{
         background-color: #FFF8EB;
     }
+    .visited{
+        background-color: rgb(252,157,154) !important;
+    }
     .w-32 {
         width: 42px !important;
     }
@@ -126,16 +129,16 @@
                                 </div>
                                 <div class = "width-full m-t-10 m-b-10 addnums" style = "display:none">
                                     <p class = "text-center">
-                                        <i class = "fa fa-bullhorn">
-                                            更新{{items.count || 0}}条帖子！！！
+                                        <i class = "fa fa-bullhorn text-info">
+                                            有{{items.count || 0}}条新帖子，点击<a style="color:blue; cursor: pointer;" ng-click="refreshData(items.topicId)">此处</a>刷新。
                                         </i>
                                     </p>
                                 </div>
                                 <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in items.postData" 
-                                 ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)">
+                                 ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)" ng-class="{'visited':it.is_read!=0}">
                                     <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">
-                                    <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''" class="media-object rounded-corner w-32">
-                                    <img ng-src="{{pics[it.data_type]}}" ng-if = "!(it.poster.img_url&&it.poster.img_url !== '')" class="media-object rounded-corner w-32">
+                                    <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" class="media-object rounded-corner w-32">
+                                    <img ng-src="{{pics[it.data_type]}}" ng-if = "!(it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' ')" class="media-object rounded-corner w-32">
                                     </a>
                                     <div class="media-body">
                                         <a class = "m-b-10 h-32" ng-href = "{{it.url}}" target="_blank">
@@ -150,7 +153,7 @@
                                             </h4>
                                         </a>
                                         <p class="m-b-5 m-t-5 f-s-14">
-                                        <a ng-href = "{{it.url}}" target="_blank" style="color: #333">
+                                        <a ng-href = "{{it.url}}" target="_blank" style="color: #333" ng-click="markRead(it)">
                                         <h4 class="media-heading f-s-15" ng-if = "(!it.poster||it.poster.name == '')&&it.title"
                                          ng-show = "it.board != 'Sina'">{{it.title}}</h4>
                                          </a>
@@ -181,6 +184,9 @@
                                                  </a>
                                                 )
                                             </p>
+                                            <p ng-if="it.is_read">
+                                                (已添加)
+                                            </p>
                                         </div>
                                     </div>
                                     <div class = "pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists"
@@ -190,7 +196,7 @@
                                             <!--<img src = "/static/assets/img/analy.svg">-->
                                             <!--</a>-->
                                           
-                                            <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id)">
+                                            <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id,it.site_id)">
                                                 <img src = "/static/assets/img/add.svg">
                                             </a>
                                             <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->

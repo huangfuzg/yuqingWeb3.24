@@ -64,10 +64,10 @@
                 <div class="btn-toolbar">
                     <!-- begin btn-group -->
                     <div class="btn-group pull-right">
-                        <button class="btn btn-white btn-sm">
+                        <button class="btn btn-white btn-sm" ng-click="perPage()" ng-disabled="page<2">
                             <i class="fa fa-chevron-left"></i>
                         </button>
-                        <button class="btn btn-white btn-sm">
+                        <button class="btn btn-white btn-sm" ng-click="nextPage()" ng-disabled="page>max_page-1">
                             <i class="fa fa-chevron-right"></i>
                         </button>
                     </div>
@@ -132,14 +132,14 @@
             <!-- begin wrapper -->
             <div class="wrapper bg-silver-lighter clearfix">
                 <div class="btn-group pull-right">
-                    <button class="btn btn-white btn-sm">
+                    <button class="btn btn-white btn-sm" ng-click="perPage()" ng-disabled="page<2">
                         <i class="fa fa-chevron-left"></i>
                     </button>
-                    <button class="btn btn-white btn-sm">
+                    <button class="btn btn-white btn-sm" ng-click="nextPage()" ng-disabled="page>max_page-1">
                         <i class="fa fa-chevron-right"></i>
                     </button>
                 </div>
-                <div class="m-t-5">{{showdata.length}} messages</div>
+                <div class="m-t-5">{{alldata.length}} messages</div>
             </div>
             <!-- end wrapper -->
         </div>
