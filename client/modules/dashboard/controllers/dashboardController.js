@@ -13,7 +13,7 @@ CQ.mainApp.dashboardController
         function($scope, $rootScope, $http,$timeout, $state, ChartService, notice, SearchFacService) {
             $rootScope.dashboardController = true;
             console.log("dashboardController", "start!");
-            option = {  
+            var option = {  
                 tooltip : {},  
                 series: [
                 {
