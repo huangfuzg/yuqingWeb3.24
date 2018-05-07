@@ -6407,6 +6407,12 @@ body.flat-black {
   animation: pace-spinner 400ms linear infinite
 }
 
+.mobile-show {
+  display: none;
+}
+.mobile-hide {
+  display: inline-block;
+}
 @-webkit-keyframes pace-spinner {
   0% {
     -webkit-transform: rotate(0deg);
