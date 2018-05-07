@@ -52,7 +52,7 @@ angular.module('monitorService',['commons'])
         };
         return factories;
     }])
-    .factory("PostDataService", ["$http", function($http) {
+    .factory("PostDataService_", ["$http", function($http) {
         var factories = {};
         // flush data every 30s
         factories.flushData = function(data) {
