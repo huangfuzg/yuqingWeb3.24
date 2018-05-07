@@ -1,3 +1,11 @@
+<style>
+    @media (max-width: 767px)
+    {
+        .mobile-search{
+            width: 100px;
+        }
+    }
+</style>
 <!-- begin #header -->
 <div id="header" class="header navbar navbar-default navbar-fixed-top">
     <!-- begin container-fluid -->
@@ -15,7 +23,7 @@
 
         <!-- begin header navigation right -->
         <ul class="nav navbar-nav navbar-right">
-            <li>
+            <li class="">
                 <form class="navbar-form full-width f-s-15">
                     <div class="form-group">
                         <input type="text" ng-model="$parent.searchword" class="form-control" placeholder="请输入搜索词"/>
