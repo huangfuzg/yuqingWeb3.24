@@ -79,6 +79,24 @@
                 </label>
                 <button ng-click="groupMonitor()" class="btn btn-primary" style="margin-top: 5px;margin-left: 10px;position: relative;float:right">查看</button>
         </div>
+        <div id="min-topics" class="m-b-15 col-md-12 bg-silver" style="display: none;">
+          <div class="btn-group m-r-5 m-b-5 m-t-5 pull-right middles text-center" id="minDatePicker">
+
+                  <img src = "/static/assets/img/rili.svg" class = "m-b-5 "/>
+                  <input style="width:70%;font-size:1.5em;text-align:center;" type="text" id="datepicker-default1" placeholder="选择日期" class = "datestyles"
+                  ng-model = "date"/>
+
+          </div>
+
+            <select name="senmes_source" style="height:24px" ng-model="selectedItem">
+               <option value="{{items.topicId}},{{items.topicName}}" ng-repeat = "(index, items) in monitorData">{{items.topicName}}</option>
+           </select>
+
+         <div class="btn-group m-r-3 m-b-5 m-t-5"><a href="javascript:;" ng-click="pauseTop(selectedItem.split(',')[0])" class="btn btn-primary btn-sm">隐藏</a></div>
+         <div class="btn-group m-r-3 m-b-5 m-t-5"><a href="javascript:;" ng-click="startTop(selectedItem.split(',')[0])" class="btn btn-primary btn-sm">显示</a></div>
+         <div class="btn-group m-r-3 m-b-5 m-t-5"><a href="javascript:;" ng-click="openDia(selectedItem.split(',')[0], selectedItem.split(',')[1])" class="btn btn-primary btn-sm">修改关键词</a></div>
+
+        </div>
 
     <div id="topics" class="m-b-5 col-md-12 bg-silver">
         <div class="btn-group m-r-5 m-b-5 m-t-15"  ng-repeat = "(index, items) in monitorData" id = "monitortopic_{{items.topicId}}">

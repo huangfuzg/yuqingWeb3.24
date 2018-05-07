@@ -43,9 +43,9 @@ CQ.mainApp.monitorController
                     persist: false,
                     createOnBlur: true,
                     create: false,
-                    sortField: {  
-                        field: 'user_',  
-                        direction: 'asc'  
+                    sortField: {
+                        field: 'user_',
+                        direction: 'asc'
                      },
                     valueField:'index',
                     labelField:'user_',
@@ -62,7 +62,7 @@ CQ.mainApp.monitorController
                         // console.log($scope.recid);
                     }
                 });
-           
+
             });
                 App.runui();
                 getMonitorData();
@@ -91,6 +91,28 @@ CQ.mainApp.monitorController
                 });
                 },1000);
             });
+            $("#datepicker-default1")
+                .datepicker({todayHighlight:true, autoclose:true, format: 'yyyy-mm-dd'})
+                .datepicker('setEndDate', getFormatData())
+                .on('changeDate', function(ev){
+                    $scope.monitorData = [];
+                    if($scope.date == "")
+                    {
+                        $scope.date =$scope.lastDate;
+                    }
+                    else
+                    {
+                        $scope.lastDate = $scope.date;
+                    }
+                    $rootScope.freshLists.forEach(function (d) {
+                        $interval.cancel(d);
+                    });
+                    setTimeout(function(){
+                    $scope.$apply(function(){
+                        getMonitorData();　　　//在这里去手动触发脏检查
+                    });
+                    },1000);
+                });
         function getMonitorData() {
             var cons = {};
             cons.dataType = $scope.dataType ;
@@ -132,9 +154,9 @@ CQ.mainApp.monitorController
                     //     var max_users = 20;
                     //     var max_display = 18;
                     //     if(Math.random() < 0.8)
-                    //         post.img_url = "/static/assets/img/display/" + ~~(max_display * Math.random() + 1) + ".jpg"; 
+                    //         post.img_url = "/static/assets/img/display/" + ~~(max_display * Math.random() + 1) + ".jpg";
                     //     post.poster = post.poster || {};
-                    //     post.poster.img_url = "/static/assets/img/user/user-" + ~~(max_users * Math.random() + 1) + ".jpg"; 
+                    //     post.poster.img_url = "/static/assets/img/user/user-" + ~~(max_users * Math.random() + 1) + ".jpg";
                     // });
                 });
                 $scope.myMonitorData=$scope.monitorData;
@@ -149,17 +171,17 @@ CQ.mainApp.monitorController
 
         // get format data
         function getFormatData() {
-            var datetime = new Date();  
-            var year=datetime.getFullYear();//获取完整的年份(4位,1970)  
-            var month=datetime.getMonth()+1;//获取月份(0-11,0代表1月,用的时候记得加上1)  
-            if(month<=9){  
-                month="0"+month;  
-            }  
-            var date=datetime.getDate();//获取日(1-31)  
-            if(date<=9){  
-                date="0"+date;  
-            }  
-            return year+"-"+month+"-"+date;  
+            var datetime = new Date();
+            var year=datetime.getFullYear();//获取完整的年份(4位,1970)
+            var month=datetime.getMonth()+1;//获取月份(0-11,0代表1月,用的时候记得加上1)
+            if(month<=9){
+                month="0"+month;
+            }
+            var date=datetime.getDate();//获取日(1-31)
+            if(date<=9){
+                date="0"+date;
+            }
+            return year+"-"+month+"-"+date;
         }
         // fresh data
         function getFreshData(cons) {
@@ -167,8 +189,8 @@ CQ.mainApp.monitorController
                 var topicLists = [];
                 $scope.monitorData.forEach(function(topic){
                     if(topic.fresh)
-                    {  
-                        topicLists.push({topicId:topic.topicId,newTime:topic.newTime}); 
+                    {
+                        topicLists.push({topicId:topic.topicId,newTime:topic.newTime});
                     }
                 });
                 $scope.getDataToBuffer(topicLists);
@@ -214,9 +236,9 @@ CQ.mainApp.monitorController
                 while($interval.cancel(d));
            });
            // console.log(ll);
-        }); 
+        });
 
-        
+
         //查看组内实时监控
         $scope.groupMonitor=function(){
             var cons = {};
@@ -250,8 +272,8 @@ CQ.mainApp.monitorController
                             $scope.groupMonitorData[i].bgColor=$scope.senduser2[j].color;
                         }
                     }
-                }   
-                 
+                }
+
                 $scope.monitorData=[];
                 console.log($scope.myMonitorData);
                 console.log($scope.groupMonitorData);
@@ -433,7 +455,7 @@ CQ.mainApp.monitorController
                 // angular.element(doms).find(".addnums").slideUp("slow");
                 console.log(error);
             });
-            
+
         };
 
         $scope.showMore = function(topicId) {
@@ -443,7 +465,7 @@ CQ.mainApp.monitorController
                     }
                     else{
                         console.log(topicId);
-                        console.log('show more triggered');  
+                        console.log('show more triggered');
                         var cons = {};
                         cons.dataType = $scope.dataType ;
                         cons.siteId = $scope.siteId;
@@ -474,15 +496,15 @@ CQ.mainApp.monitorController
                                     }
                                 }
                             });
-                            
+
 
                         }, function (error) {
                             console.log(error);
-                        });                        
+                        });
                     }
                 }
-            });            
-            
+            });
+
         };
 
         $scope.panelCollapse = function(topic_id) {
@@ -490,6 +512,7 @@ CQ.mainApp.monitorController
             angular.element(doms).find(".panel-body").slideToggle();
         };
         $scope.pauseTop = function(topic_id) {
+          console.log(topic_id);
             $scope.topic_id = "topic_" + topic_id;
             $scope.monitortopic_id = "monitortopic_" + topic_id;
              ngDialog.open(
@@ -549,7 +572,7 @@ CQ.mainApp.monitorController
             angular.element(topicDom).after(angular.element(anaDom));
             angular.element(anaDom).removeClass("hidden").show("normal");
             var width = angular.element(topicDom).width();
-            // time 
+            // time
             var timeAna = c3.generate({
                 bindto:"#timeAna",
                 size:{
@@ -617,8 +640,8 @@ CQ.mainApp.monitorController
             }
             ngDialog.closeAll();
         };
-       
-        
+
+
    }])
     .controller("startTopic", ["$rootScope","$scope","ngDialog", function($rootScope, $scope, ngDialog) {
         console.log("startTopic","start!!!");
@@ -634,8 +657,8 @@ CQ.mainApp.monitorController
             }
             ngDialog.closeAll();
         };
-       
-        
+
+
    }])
     .controller("sentopicAnalysController", ["$rootScope", "$scope", "$http", "$stateParams", "TopicFacService_", "SearchFacService", "$state",
         function($rootScope, $scope, $http, $stateParams, TopicFacService_, SearchFacService, $state) {
@@ -761,7 +784,7 @@ CQ.mainApp.monitorController
                     //         $scope.imgs = imgs2;
                     //     }else if(res.topicId == 3) {
                     //         $scope.imgs = imgs12;
-                        // if(res.topicId == 9) 
+                        // if(res.topicId == 9)
                         //     $scope.imgs = imgs99;
                     //     }else if(res.topicId == 8) {
                     //         $scope.imgs = imgs8;
@@ -797,7 +820,7 @@ CQ.mainApp.monitorController
                     //         $scope.imgs = imgs2;
                     //     }else if(res.topicId == 3) {
                     //         $scope.imgs = imgs12;
-                        // if(res.topicId == 9) 
+                        // if(res.topicId == 9)
                         //     $scope.imgs = imgs99;
                         }
                         img.onerror=function()
@@ -1122,7 +1145,7 @@ CQ.mainApp.monitorController
                         {}
                         else if(months>0)//按星期显示
                         {
-                            
+
                         }
                         else if(days>0)//按天显示
                         {}
@@ -1371,7 +1394,7 @@ CQ.mainApp.monitorController
                 console.log(err);
                 notice.notify_info("您好","添加失败！请重试","",false,"","");
             });
-            
+
         };
         MonitorFacService.getPostDetail({id: $scope.post_id, site_id:$scope.site_id}).then(function(res) {
             console.log(res);

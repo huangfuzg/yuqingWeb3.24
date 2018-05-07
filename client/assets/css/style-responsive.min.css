@@ -611,12 +611,13 @@ Website: http://www.seantheme.com/color-admin-v1.5/admin/
         top: 120px
     }
 }
-@media (max-width:480px){
-  #topics .btn-group{
-    /* width:100%; */
+@media (max-width:767px){
+  #topics {
+    display: none;
   }
-  #timePicker{
-    float: None !important;
-    text-align: left !important;
+  #min-topics{
+    display: block !important;
+
   }
+
 }
