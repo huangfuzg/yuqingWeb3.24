@@ -79,9 +79,27 @@
                 </label>
                 <button ng-click="groupMonitor()" class="btn btn-primary" style="margin-top: 5px;margin-left: 10px;position: relative;float:right">查看</button>
         </div>
+        <div id="min-topics" class="m-b-15 col-md-12 bg-silver" style="display: none;">
+          <div class="btn-group m-r-5 m-b-5 m-t-5 pull-right middles text-center" id="minDatePicker">
+
+                  <img src = "/static/assets/img/rili.svg" class = "m-b-5 "/>
+                  <input style="width:70%;font-size:1.5em;text-align:center;" type="text" id="datepicker-default1" placeholder="选择日期" class = "datestyles"
+                  ng-model = "date"/>
+
+          </div>
+
+            <select name="senmes_source" style="height:24px" ng-model="selectedItem">
+               <option value="{{items.topicId}},{{items.topicName}}" ng-repeat = "(index, items) in monitorData">{{items.topicName}}</option>
+           </select>
+
+         <div class="btn-group m-r-3 m-b-5 m-t-5"><a href="javascript:;" ng-click="pauseTop(selectedItem.split(',')[0])" class="btn btn-primary btn-sm">隐藏</a></div>
+         <div class="btn-group m-r-3 m-b-5 m-t-5"><a href="javascript:;" ng-click="startTop(selectedItem.split(',')[0])" class="btn btn-primary btn-sm">显示</a></div>
+         <div class="btn-group m-r-3 m-b-5 m-t-5"><a href="javascript:;" ng-click="openDia(selectedItem.split(',')[0], selectedItem.split(',')[1])" class="btn btn-primary btn-sm">修改关键词</a></div>
+
+        </div>
 
     <div id="topics" class="m-b-5 col-md-12 bg-silver">
-        <div class="btn-group m-r-5 m-b-5 m-t-15 "  ng-repeat = "(index, items) in monitorData" id = "monitortopic_{{items.topicId}}">
+        <div class="btn-group m-r-5 m-b-5 m-t-15"  ng-repeat = "(index, items) in monitorData" id = "monitortopic_{{items.topicId}}">
             <a href="javascript:;" ng-click = "movePosition(items.topicId)" class="btn btn-primary btn-lg">{{items.topicName}}</a>
             <a href="javascript:;" data-toggle="dropdown" class="btn btn-primary btn-lg dropdown-toggle" aria-expanded="false">
                 <span class="caret"></span>
@@ -92,8 +110,8 @@
                 <li><a href="javascript:;" ng-click = "openDia(items.topicId , items.topicName)" >修改关键词</a></li>
             </ul>
         </div>
-        
-        <div class="btn-group m-r-5 m-b-5 m-t-5 pull-right middles text-center">
+
+        <div class="btn-group m-r-5 m-b-5 m-t-5 pull-right middles text-center" id="timePicker">
             <!-- <input type="text" class="form-control" id="datepicker-default" placeholder="选择日期" /> -->
                 <img src = "/static/assets/img/rili.svg" class = "m-b-5 "/>
                 <input type="text" id="datepicker-default" placeholder="选择日期" class = "datestyles"
@@ -116,7 +134,7 @@
                             <a title="最小化" href="javascript:;" class="f-s-18 btn  btn-icon btn-circle btn-warning" ng-click="panelCollapse(items.topicId)"><i class="fa fa-minus"></i></a>
                             <a title="话题分析" class="f-s-18 btn  btn-icon btn-circle btn-success" ng-click="openModal(items.topicId)" ng-show="items.topicId!=-1"><i class="fa fa-bar-chart-o"></i></a>
                         </div>
-                        <h4  class="panel-title f-s-15" title="发现用户:{{items.username}}">{{items.topicName}}</h4>                                                                
+                        <h4  class="panel-title f-s-15" title="发现用户:{{items.username}}">{{items.topicName}}</h4>
                     </div>
                     <div class="panel-body">
                         <div  class = "">
@@ -134,7 +152,7 @@
                                         </i>
                                     </p>
                                 </div>
-                                <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in items.postData" 
+                                <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in items.postData"
                                  ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)" ng-class="{'visited':it.is_read!=0}">
                                     <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">
                                     <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" class="media-object rounded-corner w-32">
@@ -177,7 +195,7 @@
                                                  <a href="javascript:;">
                                                     {{it.repost_num || 0}}
                                                  </a>
-                                                ) 
+                                                )
                                                 点赞(
                                                 <a href="javascript:;">
                                                     {{it.read_num || 0}}
@@ -195,7 +213,7 @@
                                             <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
                                             <!--<img src = "/static/assets/img/analy.svg">-->
                                             <!--</a>-->
-                                          
+
                                             <a class = "addsen" title = "添加敏感信息" ng-click = "AddSenmessage(it._id,it.site_id)">
                                                 <img src = "/static/assets/img/add.svg">
                                             </a>
