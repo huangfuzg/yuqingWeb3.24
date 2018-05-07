@@ -1,5 +1,5 @@
 <style>
-.font-w-600 {
+    .font-w-600 {
 	font-weight: 650;
 }
 .bg-c-primary {
@@ -12,181 +12,254 @@
 #topicDist text{
 	fill:#333;
 }
+@media (max-width: 767px)
+    {
+        .period{
+            font-size:0.6em;
+        }
+    }
 </style>
 <!-- begin #content -->
-<div id="content" class="content"  ng-resize="reDraw()">
-	<!-- begin row -->
-	<div class="">
-		<div class="page-header m-r-5 m-t-5">日期：{{startTime}}至{{enddate}}
-			<div class="btn-group pull-right text-center">
-				<!-- <input type="text" class="form-control" id="datepicker-default" placeholder="选择日期" /> -->
-
-				<div class="" style="position: relative">
-					<small>选择日期：</small>
-					<img src="/static/assets/img/rili.svg" class="m-b-5 " style="position: absolute;top: 0;right:0;z-index: -1;">
-					<input type="text" id="datepicker-default" placeholder="" class="datestyles ng-valid ng-touched ng-dirty ng-valid-date" ng-model="date" style="height: 45px;width: 45px;border: 0;background: transparent;color: transparent;cursor: pointer" ng-change="changeTime()">
-				</div>
-			</div></div>
-
-	<div class="row">
-		<!-- begin col-3 -->
-		<div class="col-md-2 col-sm-4 animated fadeInDown">
-			<a href="javascript::void" style="text-decoration: none;" ng-click="findPost(0)">
-				<div class="widget widget-stats bg-green">
-					<div class="stats-icon"><img src="/static/assets/img/news.svg" alt="" class="" /></div>
-					<div class="stats-info ">
-						<h4 class = "f-s-15 font-w-600">新闻类</h4>
-						<p ng-bind = "dataTypeLists[0]"></p>	
-					</div>
-					
-					<!-- <div class="stats-link">
+<div class="content" id="content" ng-resize="reDraw()">
+    <!-- begin row -->
+    <div class="">
+        <div class="page-header m-r-5 m-t-5 row" style="margin: 8px 0px">
+            <span class="mobile-hide">日期：</span><span class="period">{{startTime}}至{{enddate}}</span>
+            <div class="btn-group pull-right text-center">
+                <!-- <input type="text" class="form-control" id="datepicker-default" placeholder="选择日期" /> -->
+                <div class="" style="position: relative">
+                    <small class="mobile-hide">
+                        选择日期：
+                    </small>
+                    <img class="m-b-5 " src="/static/assets/img/rili.svg" style="position: absolute;top: 0;right:0;z-index: -1;">
+                        <input class="datestyles ng-valid ng-touched ng-dirty ng-valid-date" id="datepicker-default" ng-change="changeTime()" ng-model="date" placeholder="" style="height: 45px;width: 45px;border: 0;background: transparent;color: transparent;cursor: pointer" type="text">
+                        </input>
+                    </img>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- begin col-3 -->
+            <div class="col-md-2 col-sm-4 animated fadeInDown">
+                <a href="javascript::void" ng-click="findPost(0)" style="text-decoration: none;">
+                    <div class="widget widget-stats bg-green">
+                        <div class="stats-icon">
+                            <img alt="" class="" src="/static/assets/img/news.svg"/>
+                        </div>
+                        <div class="stats-info ">
+                            <h4 class="f-s-15 font-w-600">
+                                新闻类
+                            </h4>
+                            <p ng-bind="dataTypeLists[0]">
+                            </p>
+                        </div>
+                        <!-- <div class="stats-link">
 						<a href="javascript:;">更多 <i class="fa fa-arrow-circle-o-right"></i></a>
 					</div> -->
-				</div>
-			</a>
-		</div>
-		<!-- end col-3 -->
-		<!-- begin col-3 -->
-		<div class="col-md-2 col-sm-4 animated fadeInDown">
-			<a href="javascript::void" style="text-decoration: none;" ng-click="findPost(1)">
-				<div class="widget widget-stats bg-blue">
-
-					<div class="stats-icon"><i class="fa fa-comments-o"></i></div>
-					<div class="stats-info">
-						<h4 class = "f-s-15 font-w-600">论坛</h4>
-						<p ng-bind = "dataTypeLists[1]"></p>	
-					</div>
-					<!-- <div class="stats-link">
+                    </div>
+                </a>
+            </div>
+            <!-- end col-3 -->
+            <!-- begin col-3 -->
+            <div class="col-md-2 col-sm-4 animated fadeInDown">
+                <a href="javascript::void" ng-click="findPost(1)" style="text-decoration: none;">
+                    <div class="widget widget-stats bg-blue">
+                        <div class="stats-icon">
+                            <i class="fa fa-comments-o">
+                            </i>
+                        </div>
+                        <div class="stats-info">
+                            <h4 class="f-s-15 font-w-600">
+                                论坛
+                            </h4>
+                            <p ng-bind="dataTypeLists[1]">
+                            </p>
+                        </div>
+                        <!-- <div class="stats-link">
 						<a href="javascript:;">更多 <i class="fa fa-arrow-circle-o-right"></i></a>
 					</div> -->
-				</div>
-			</a>
-		</div>
-		<!-- end col-3 -->
-		<!-- begin col-3 -->
-		<div class="col-md-2 col-sm-4 animated fadeInDown">
-			<a href="javascript::void" style="text-decoration: none;" ng-click="findPost(2)">
-				<div class="widget widget-stats bg-purple">
-					<div class="stats-icon"><i class="fa fa-weibo"></i></div>
-					<div class="stats-info">
-						<h4 class = "f-s-15 font-w-600">微博</h4>
-						<p ng-bind = "dataTypeLists[2]"></p>	
-					</div>
-					<!-- <div class="stats-link">
+                    </div>
+                </a>
+            </div>
+            <!-- end col-3 -->
+            <!-- begin col-3 -->
+            <div class="col-md-2 col-sm-4 animated fadeInDown">
+                <a href="javascript::void" ng-click="findPost(2)" style="text-decoration: none;">
+                    <div class="widget widget-stats bg-purple">
+                        <div class="stats-icon">
+                            <i class="fa fa-weibo">
+                            </i>
+                        </div>
+                        <div class="stats-info">
+                            <h4 class="f-s-15 font-w-600">
+                                微博
+                            </h4>
+                            <p ng-bind="dataTypeLists[2]">
+                            </p>
+                        </div>
+                        <!-- <div class="stats-link">
 						<a href="javascript:;">更多 <i class="fa fa-arrow-circle-o-right"></i></a>
 					</div> -->
-				</div>
-			</a>
-		</div>
-		<!-- end col-3 -->
-		<!-- begin col-3 -->
-		<div class="col-md-2 col-sm-4 animated fadeInDown">
-			<a href="javascript::void" style="text-decoration: none;" ng-click="findPost(3)">
-				<div class="widget widget-stats bg-red">
-					<div class="stats-icon"><img src="/static/assets/img/tiebawhite.svg" alt="" class="" /></div>
-					<div class="stats-info">
-						<h4 class = "f-s-15 font-w-600">贴吧</h4>
-						<p ng-bind = "dataTypeLists[3]"></p>	
-					</div>
-					<!-- <div class="stats-link">
+                    </div>
+                </a>
+            </div>
+            <!-- end col-3 -->
+            <!-- begin col-3 -->
+            <div class="col-md-2 col-sm-4 animated fadeInDown">
+                <a href="javascript::void" ng-click="findPost(3)" style="text-decoration: none;">
+                    <div class="widget widget-stats bg-red">
+                        <div class="stats-icon">
+                            <img alt="" class="" src="/static/assets/img/tiebawhite.svg"/>
+                        </div>
+                        <div class="stats-info">
+                            <h4 class="f-s-15 font-w-600">
+                                贴吧
+                            </h4>
+                            <p ng-bind="dataTypeLists[3]">
+                            </p>
+                        </div>
+                        <!-- <div class="stats-link">
 						<a href="javascript:;">更多 <i class="fa fa-arrow-circle-o-right"></i></a>
 					</div> -->
-				</div>
-			</a>
-		</div>
-		<!-- end col-3 -->
-		<!-- begin col-3 -->
-		<div class="col-md-2 col-sm-4 animated fadeInDown">
-			<a href="javascript::void" style="text-decoration: none;" ng-click="findPost(4)">
-				<div class="widget widget-stats bg-blue">
-					<div class="stats-icon"><img src="/static/assets/img/weixin.svg" alt="" class="" /></div>
-					<div class="stats-info">
-						<h4 class = "f-s-15 font-w-600">微信公众号</h4>
-						<p ng-bind = "dataTypeLists[4]"></p>	
-					</div>
-					<!-- <div class="stats-link">
+                    </div>
+                </a>
+            </div>
+            <!-- end col-3 -->
+            <!-- begin col-3 -->
+            <div class="col-md-2 col-sm-4 animated fadeInDown">
+                <a href="javascript::void" ng-click="findPost(4)" style="text-decoration: none;">
+                    <div class="widget widget-stats bg-blue">
+                        <div class="stats-icon">
+                            <img alt="" class="" src="/static/assets/img/weixin.svg"/>
+                        </div>
+                        <div class="stats-info">
+                            <h4 class="f-s-15 font-w-600">
+                                微信公众号
+                            </h4>
+                            <p ng-bind="dataTypeLists[4]">
+                            </p>
+                        </div>
+                        <!-- <div class="stats-link">
 						<a href="javascript:;">更多 <i class="fa fa-arrow-circle-o-right"></i></a>
 					</div> -->
-				</div>
-			</a>
-		</div>
-		<!-- end col-3 -->
-		<!-- begin col-3 -->
-		<div class="col-md-2 col-sm-4 animated fadeInDown">
-			<a href="javascript::void" style="text-decoration: none;" ng-click="findPost(5)">
-				<div class="widget widget-stats bg-purple">
-					<div class="stats-icon"><img src="/static/assets/img/search.svg" alt="" class="" /></div>
-					<div class="stats-info">
-						<h4 class = "f-s-15 font-w-600">全网搜索</h4>
-						<p ng-bind = "dataTypeLists[5]"></p>	
-					</div>
-					<!-- <div class="stats-link">
+                    </div>
+                </a>
+            </div>
+            <!-- end col-3 -->
+            <!-- begin col-3 -->
+            <div class="col-md-2 col-sm-4 animated fadeInDown">
+                <a href="javascript::void" ng-click="findPost(5)" style="text-decoration: none;">
+                    <div class="widget widget-stats bg-purple">
+                        <div class="stats-icon">
+                            <img alt="" class="" src="/static/assets/img/search.svg"/>
+                        </div>
+                        <div class="stats-info">
+                            <h4 class="f-s-15 font-w-600">
+                                全网搜索
+                            </h4>
+                            <p ng-bind="dataTypeLists[5]">
+                            </p>
+                        </div>
+                        <!-- <div class="stats-link">
 						<a href="javascript:;">更多 <i class="fa fa-arrow-circle-o-right"></i></a>
 					</div> -->
-				</div>
-			</a>
-		</div>
-		<!-- end col-3 -->
-	</div>
-	<!-- end row -->
-	<!-- begin row -->
-	<div class="row">
-		<!-- begin col-4 -->
-		<div class = "col-md-4 animated fadeInLeft">
-			<div class="panel panel-primary" data-sortable-id="index-7">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title f-s-14 font-w-600">
-					<img src = "/static/assets/img/topic.svg" class = "fa">
-				一周热词</h4>
-				</div>
-				<div class="panel-body">
-					<div id="wordsCloud" class="height-sm">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="panel panel-primary" data-sortable-id="index-1">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a href="javascript:dc.filterAll(); dc.renderAll();" class="btn btn-xs btn-icon btn-circle btn-success"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title f-s-14 font-w-600">
-					<i class = "fa fa-bar-chart-o"></i>
-					 一周时间分布</h4>
-				</div>
-				<div class="panel-body">
-					<div id="dayDist" class="height-sm width-full" ng-dblclick="selectGraphPost()">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="panel panel-primary" data-sortable-id="index-6">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title f-s-14 font-w-600">
-					<img src = "/static/assets/img/topic.svg" class = "fa">
-				 一周热点话题</h4>
-				</div>
-				<div class="panel-body">
-
-					<div id="topicDist" class="height-sm width-full" ng-dblclick="selectGraphPost()"></div>
-				</div>
-			</div>
-		</div>
-		<!-- <div class="col-md-4">
+                    </div>
+                </a>
+            </div>
+            <!-- end col-3 -->
+        </div>
+        <!-- end row -->
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-4 -->
+            <div class="col-md-4 animated fadeInLeft">
+                <div class="panel panel-primary" data-sortable-id="index-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();">
+                                <i class="fa fa-repeat">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" href="javascript:;">
+                                <i class="fa fa-minus">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove" href="javascript:;">
+                                <i class="fa fa-times">
+                                </i>
+                            </a>
+                        </div>
+                        <h4 class="panel-title f-s-14 font-w-600">
+                            <img class="fa" src="/static/assets/img/topic.svg">
+                                一周热词
+                            </img>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="height-sm" id="wordsCloud">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary" data-sortable-id="index-1">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();">
+                                <i class="fa fa-repeat">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" href="javascript:;">
+                                <i class="fa fa-minus">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove" href="javascript:;">
+                                <i class="fa fa-times">
+                                </i>
+                            </a>
+                        </div>
+                        <h4 class="panel-title f-s-14 font-w-600">
+                            <i class="fa fa-bar-chart-o">
+                            </i>
+                            一周时间分布
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="height-sm width-full" id="dayDist" ng-dblclick="selectGraphPost()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary" data-sortable-id="index-6">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();">
+                                <i class="fa fa-repeat">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" href="javascript:;">
+                                <i class="fa fa-minus">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove" href="javascript:;">
+                                <i class="fa fa-times">
+                                </i>
+                            </a>
+                        </div>
+                        <h4 class="panel-title f-s-14 font-w-600">
+                            <img class="fa" src="/static/assets/img/topic.svg">
+                                一周热点话题
+                            </img>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div class="height-sm width-full" id="topicDist" ng-dblclick="selectGraphPost()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4">
 			<div class="panel panel-primary" data-sortable-id="index-6">
 				<div class="panel-heading">
 					<div class="panel-heading-btn">
@@ -204,181 +277,267 @@
 				</div>
 			</div>
 		</div> -->
-		<div class = "col-md-12 animated fadeInUp">
-			<ul class="nav nav-tabs nav-tabs-primary nav-justified nav-justified-mobile" data-sortable-id="index-2">
-				<li class="active"><a href="index.html#email" data-toggle="tab"><i class="fa fa-weibo m-r-5"></i> <span class="hidden-xs f-s-14 font-w-600"> 一周热门微博</span></a></li>
-				<li class=""><a href="index.html#weiboposter" data-toggle="tab"><i class="fa fa-users m-r-5"></i> <span class="hidden-xs f-s-14 font-w-600"> 一周热门博主</span></a></li>
-				<li class=""><a href="index.html#latest-post" data-toggle="tab"><i class="fa fa-comment-o
- 				m-r-5"></i> <span class="hidden-xs f-s-14 font-w-600"> 一周热门帖子</span></a></li>
-				<li class="" ng-show="false"><a href="index.html#purchase" data-toggle="tab"><i class="fa fa-users m-r-5"></i> <span class="hidden-xs f-s-14 font-w-600">热门发帖人</span></a></li>
-				
-			</ul>
-			<div class="tab-content" data-sortable-id="index-3">
-				<!-- 热门帖子 -->
-				<div class="tab-pane fade" id="latest-post">
-					<div class="height-sm" data-scrollbar="true">
-						<ul class="media-list media-list-with-divider">
-							<li class="media media-sm" ng-repeat = "(index, items) in HotPost">
-								<a href="{{items.url}}" target="_blank" class="pull-left" ng-if = "items.board != 'Sina'">
-									<img src="/static/assets/img/tieba.svg" alt="" class="media-object rounded-corner" />
-								</a>
-								<a href="{{items.url}}" target="_blank" class="pull-left" ng-if = "items.board == 'Sina'">
-									<img src="/static/assets/img/weibo.svg" alt="" class="media-object rounded-corner" />
-								</a>
-								<div class="media-body">
-									<a href="javascript:;"><h4 class="media-heading f-s-15" ng-bind = "items.title"></h4></a>
-									<p class="m-b-5 f-s-14" ng-bind = "items.content"></p>
-									<div class="m-t-5">
-										<a ng-bind = "items.pt_time" href = "{{items.url}}" target="_blank" ></a>
-										&nbsp;
-										<i class="text-muted" ng-bind = "items.board"></i>
-										&nbsp;
-										<span>
-											<i ng-if="items.comm_num&&items.comm_num!=''">
-					                            评论(
-					                             <a href="javascript:;">
-					                                {{items.comm_num || 0}}
-					                             </a>
-					                            )
-					                        </i>
-					                        <i ng-if="items.repost_num&&items.repost_num!=''">
-					                             回帖(
-					                             <a href="javascript:;">
-					                                {{items.repost_num || 0}}
-					                             </a>
-					                            )
-					                        </i>
-					                        <i ng-if="items.read_num&&items.read_num!=''">
-					                            点赞(
-					                            <a href="javascript:;">
-					                                {{items.read_num || 0}}
-					                             </a>
-					                            )
-					                        </i>
-				                        </span>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- 热门发帖人 -->
-				<div class="tab-pane fade" id="purchase">
-					<div class="height-sm" data-scrollbar="true">
-						<ul class="media-list media-list-with-divider">
-							<li class="media media-sm" ng-repeat = "(index, items) in HotPoster">
-								<a href="{{items.home_url}}" target="_blank" class="pull-left">
-									<img src="/static/assets/img/people.svg" alt="" class="media-object rounded-corner" />
-								</a>
-								<div class="media-body">
-									<a href="{{items.home_url}}" target="_blank"><h4 class="media-heading f-s-15" ng-bind = "items.name"></h4></a>
-									<ul class="f-s-14 breadcrumb">
-										<li><a href="{{items.home_url}}" target="_blank" title="查看用户详细信息">来自：{{items.board}}</a></li>
-										<li><a ui-sref="yuqingTrendsController({poster:[items.name]})" title="查看详细帖子">发帖：{{items.post_num}}</a></li>
-										<!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
-									</ul>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- 热门微博 -->
-				<div class="tab-pane fade active in" id="email">
-					<div class="height-sm" data-scrollbar="true">
-						<ul class="media-list media-list-with-divider">
-							<li class="media media-sm" ng-repeat = "(index, items) in HotWeibo">
-								<a href="javascript:;" class="pull-left">
-									<img src="/static/assets/img/weibo.svg" alt="" class="media-object rounded-corner" />
-								</a>
-								<div class="media-body">
-									<a href="{{items.url}}"><h4 class="media-heading f-s-15" ng-bind = "items.name"></h4></a>
-									<p class="m-b-5 f-s-14" ng-bind = "items.content">
-									</p>
-									<div class="m-t-5">
-										<a ng-bind = "items.pt_time" href = "{{items.url}}" target="_blank" ></a>
-										&nbsp;
-										<i class="text-muted" ng-bind = "items.board"></i>
-										&nbsp;
-										<span>
-											<i ng-if="items.comm_num&&items.comm_num!=''">
-					                            评论(
-					                             <a href="javascript:;">
-					                                {{items.comm_num || 0}}
-					                             </a>
-					                            )
-					                        </i>
-					                        <i ng-if="items.repost_num&&items.repost_num!=''">
-					                             回帖(
-					                             <a href="javascript:;">
-					                                {{items.repost_num || 0}}
-					                             </a>
-					                            )
-					                        </i>
-					                        <i ng-if="items.read_num&&items.read_num!=''">
-					                            点赞(
-					                            <a href="javascript:;">
-					                                {{items.read_num || 0}}
-					                             </a>
-					                            )
-					                        </i>
-				                        </span>
-									</div>
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<!-- 热门博主 -->
-				<div class="tab-pane fade" id="weiboposter">
-					<div class="height-sm" data-scrollbar="true">
-						<ul class="media-list media-list-with-divider">
-							<li class="media media-sm" ng-repeat = "(index, items) in HotWeiboUser">
-								<a href="{{items.home_url}}" target="_blank" class="pull-left">
-									<img src="{{items.img_url}}" alt="" class="media-object rounded-corner" />
-								</a>
-								<div class="media-body">
-									<a href="{{items.home_url}}" target="_blank"><h4 class="media-heading f-s-15" ng-bind = "items.name"></h4></a>
-									<ul class="breadcrumb">
-										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">关注：{{items.Follows}}</a></li>
-										<li><a ui-sref="{{items.home_url}}" title="查看详细博主信息">粉丝：{{items.Following}}</a></li>
-										<li><a href="{{items.home_url}}" target="_blank" title="查看博主微博">微博数：{{items.post_num}}</a></li>
-										<!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
-									</ul>
-										<ul class="breadcrumb">
-										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">所在地：{{items.location}}</a></li>
-										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">用户id：{{items.id}}</a></li>
-									</ul>
-									<ul class="breadcrumb">
-										<li><a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">简介：{{items.intro}}</a></li>
-									</ul>
-
-								</div>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class = "col-md-12 animated fadeInDown">
-			<div class="panel panel-primary" data-sortable-id="index-7">
-				<div class="panel-heading">
-					<div class="panel-heading-btn">
-						<a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();"><i class="fa fa-repeat"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
-					</div>
-					<h4 class="panel-title f-s-14 font-w-600">
-					<img src = "/static/assets/img/map.svg" class = "fa">
-					 关键词地域分布</h4>
-				</div>
-				<div class="panel-body">
-					<div id="allmap" style="width: 100%;height: 800px;overflow: hidden;margin:0;font-family:'微软雅黑';">
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- end col-4 -->
-	</div>
-	<!-- end row -->
+            <div class="col-md-12 animated fadeInUp">
+                <ul class="nav nav-tabs nav-tabs-primary nav-justified nav-justified-mobile" data-sortable-id="index-2">
+                    <li class="active">
+                        <a data-toggle="tab" href="index.html#email">
+                            <i class="fa fa-weibo m-r-5">
+                            </i>
+                            <span class="hidden-xs f-s-14 font-w-600">
+                                一周热门微博
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="index.html#weiboposter">
+                            <i class="fa fa-users m-r-5">
+                            </i>
+                            <span class="hidden-xs f-s-14 font-w-600">
+                                一周热门博主
+                            </span>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a data-toggle="tab" href="index.html#latest-post">
+                            <i class="fa fa-comment-o m-r-5">
+                            </i>
+                            <span class="hidden-xs f-s-14 font-w-600">
+                                一周热门帖子
+                            </span>
+                        </a>
+                    </li>
+                    <li class="" ng-show="false">
+                        <a data-toggle="tab" href="index.html#purchase">
+                            <i class="fa fa-users m-r-5">
+                            </i>
+                            <span class="hidden-xs f-s-14 font-w-600">
+                                热门发帖人
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content" data-sortable-id="index-3">
+                    <!-- 热门帖子 -->
+                    <div class="tab-pane fade" id="latest-post">
+                        <div class="height-sm" data-scrollbar="true">
+                            <ul class="media-list media-list-with-divider">
+                                <li class="media media-sm" ng-repeat="(index, items) in HotPost">
+                                    <a class="pull-left" href="{{items.url}}" ng-if="items.board != 'Sina'" target="_blank">
+                                        <img alt="" class="media-object rounded-corner" src="/static/assets/img/tieba.svg"/>
+                                    </a>
+                                    <a class="pull-left" href="{{items.url}}" ng-if="items.board == 'Sina'" target="_blank">
+                                        <img alt="" class="media-object rounded-corner" src="/static/assets/img/weibo.svg"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="javascript:;">
+                                            <h4 class="media-heading f-s-15" ng-bind="items.title">
+                                            </h4>
+                                        </a>
+                                        <p class="m-b-5 f-s-14" ng-bind="items.content">
+                                        </p>
+                                        <div class="m-t-5">
+                                            <a href="{{items.url}}" ng-bind="items.pt_time" target="_blank">
+                                            </a>
+                                            <i class="text-muted" ng-bind="items.board">
+                                            </i>
+                                            <span>
+                                                <i ng-if="items.comm_num&&items.comm_num!=''">
+                                                    评论(
+                                                    <a href="javascript:;">
+                                                        {{items.comm_num || 0}}
+                                                    </a>
+                                                    )
+                                                </i>
+                                                <i ng-if="items.repost_num&&items.repost_num!=''">
+                                                    回帖(
+                                                    <a href="javascript:;">
+                                                        {{items.repost_num || 0}}
+                                                    </a>
+                                                    )
+                                                </i>
+                                                <i ng-if="items.read_num&&items.read_num!=''">
+                                                    点赞(
+                                                    <a href="javascript:;">
+                                                        {{items.read_num || 0}}
+                                                    </a>
+                                                    )
+                                                </i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 热门发帖人 -->
+                    <div class="tab-pane fade" id="purchase">
+                        <div class="height-sm" data-scrollbar="true">
+                            <ul class="media-list media-list-with-divider">
+                                <li class="media media-sm" ng-repeat="(index, items) in HotPoster">
+                                    <a class="pull-left" href="{{items.home_url}}" target="_blank">
+                                        <img alt="" class="media-object rounded-corner" src="/static/assets/img/people.svg"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="{{items.home_url}}" target="_blank">
+                                            <h4 class="media-heading f-s-15" ng-bind="items.name">
+                                            </h4>
+                                        </a>
+                                        <ul class="f-s-14 breadcrumb">
+                                            <li>
+                                                <a href="{{items.home_url}}" target="_blank" title="查看用户详细信息">
+                                                    来自：{{items.board}}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a title="查看详细帖子" ui-sref="yuqingTrendsController({poster:[items.name]})">
+                                                    发帖：{{items.post_num}}
+                                                </a>
+                                            </li>
+                                            <!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 热门微博 -->
+                    <div class="tab-pane fade active in" id="email">
+                        <div class="height-sm" data-scrollbar="true">
+                            <ul class="media-list media-list-with-divider">
+                                <li class="media media-sm" ng-repeat="(index, items) in HotWeibo">
+                                    <a class="pull-left" href="javascript:;">
+                                        <img alt="" class="media-object rounded-corner" src="/static/assets/img/weibo.svg"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="{{items.url}}">
+                                            <h4 class="media-heading f-s-15" ng-bind="items.name">
+                                            </h4>
+                                        </a>
+                                        <p class="m-b-5 f-s-14" ng-bind="items.content">
+                                        </p>
+                                        <div class="m-t-5">
+                                            <a href="{{items.url}}" ng-bind="items.pt_time" target="_blank">
+                                            </a>
+                                            <i class="text-muted" ng-bind="items.board">
+                                            </i>
+                                            <span>
+                                                <i ng-if="items.comm_num&&items.comm_num!=''">
+                                                    评论(
+                                                    <a href="javascript:;">
+                                                        {{items.comm_num || 0}}
+                                                    </a>
+                                                    )
+                                                </i>
+                                                <i ng-if="items.repost_num&&items.repost_num!=''">
+                                                    回帖(
+                                                    <a href="javascript:;">
+                                                        {{items.repost_num || 0}}
+                                                    </a>
+                                                    )
+                                                </i>
+                                                <i ng-if="items.read_num&&items.read_num!=''">
+                                                    点赞(
+                                                    <a href="javascript:;">
+                                                        {{items.read_num || 0}}
+                                                    </a>
+                                                    )
+                                                </i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- 热门博主 -->
+                    <div class="tab-pane fade" id="weiboposter">
+                        <div class="height-sm" data-scrollbar="true">
+                            <ul class="media-list media-list-with-divider">
+                                <li class="media media-sm" ng-repeat="(index, items) in HotWeiboUser">
+                                    <a class="pull-left" href="{{items.home_url}}" target="_blank">
+                                        <img alt="" class="media-object rounded-corner" src="{{items.img_url}}"/>
+                                    </a>
+                                    <div class="media-body">
+                                        <a href="{{items.home_url}}" target="_blank">
+                                            <h4 class="media-heading f-s-15" ng-bind="items.name">
+                                            </h4>
+                                        </a>
+                                        <ul class="breadcrumb">
+                                            <li>
+                                                <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+                                                    关注：{{items.Follows}}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a title="查看详细博主信息" ui-sref="{{items.home_url}}">
+                                                    粉丝：{{items.Following}}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{items.home_url}}" target="_blank" title="查看博主微博">
+                                                    微博数：{{items.post_num}}
+                                                </a>
+                                            </li>
+                                            <!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
+                                        </ul>
+                                        <ul class="breadcrumb">
+                                            <li>
+                                                <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+                                                    所在地：{{items.location}}
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+                                                    用户id：{{items.id}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul class="breadcrumb">
+                                            <li>
+                                                <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+                                                    简介：{{items.intro}}
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 animated fadeInDown">
+                <div class="panel panel-primary" data-sortable-id="index-7">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a class="btn btn-xs btn-icon btn-circle btn-success" href="javascript:dc.filterAll(); dc.renderAll();">
+                                <i class="fa fa-repeat">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse" href="javascript:;">
+                                <i class="fa fa-minus">
+                                </i>
+                            </a>
+                            <a class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove" href="javascript:;">
+                                <i class="fa fa-times">
+                                </i>
+                            </a>
+                        </div>
+                        <h4 class="panel-title f-s-14 font-w-600">
+                            <img class="fa" src="/static/assets/img/map.svg">
+                                关键词地域分布
+                            </img>
+                        </h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="allmap" style="width: 100%;height: 800px;overflow: hidden;margin:0;font-family:'微软雅黑';">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end col-4 -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
 </div>
-<!-- end #content -->

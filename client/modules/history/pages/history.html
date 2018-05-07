@@ -2,6 +2,13 @@
     table{
         font-size: 1.2em;
     }
+    @media (max-width: 767px)
+    {
+        table th,td{
+        padding: 5px 1px !important;
+        font-size: 1.0em;
+    }
+    }
 </style>
 <div id="content" class="content">
 	<!-- begin row -->
@@ -17,10 +24,10 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th style="max-width: 2.2em;min-width: 1.2em">#</th>
                                 <th>事件</th>
-                                <th>时间</th>
-                                <th>所属话题</th>
+                                <th style="min-width: 3em;max-width: 6em">时间</th>
+                                <th style="min-width: 3em;max-width: 6em">所属话题</th>
                             </tr>
                         </thead>
                         <tbody>
