@@ -239,10 +239,14 @@ CQ.mainApp.dashboardController
 
             // map.addOverlay(myCompOverlay);
 
+           var time=new Date();
            
-           
-          map.addEventListener("tilesloaded",function(){
+          map.addEventListener("tilesloaded",function(e){
             map.clearOverlays();
+            time = new Date();
+            var thistime=new Date();
+            console.log(time,thistime);
+            console.log(time.getTime() == thistime.getTime());
             var data=null;
             if(map.getZoom()<8){
               data="country";
@@ -266,111 +270,114 @@ CQ.mainApp.dashboardController
             console.log(lng1,lng2,lat1,lat2);
             var geoc = new BMap.Geocoder();
             var result={};
-            var d1 = new Date();
             for(var i=0;i<10;i++){
               var lng=lng1;
               for(var j=0;j<20;j++){
-                var p=new BMap.Point(lng,lat);
-                geoc.getLocation(p, function(rs){
-                  counter++;
-                  // console.log(counter);
-                  var addComp = rs.addressComponents;
-                  var address="";
-                  if(data=="country"){
-
-                  }
-                  else if(data=="province"){
-                    address=address+addComp.province;
-                  }
-                  else if(data=="city"){
-                    address=address+addComp.province+addComp.city;
-                  }
-                  else{
-                    address=address+addComp.province+addComp.city+addComp.district;
-                  }
-                  if(address!=""){
-                    if(!result[address]){
-                              result[address]={
-                                level:data,
-                                  number:1,
-                                  lng:1,
-                                  lat:1,
-                                  minwidth:rs.point.lng,
-                                  maxwidth:rs.point.lng,
-                                  minheight:rs.point.lat,
-                                  maxheight:rs.point.lat,
-                                  width:0,
-                                  height:0
-                              };
-                              if(data=="province"){
-                                  result[address].province=addComp.province;
-                              }
-                              if(data=="city"){
-                                  result[address].province=addComp.province;
-                                  result[address].city=addComp.city;
-                              }
-                              if(data=="district"){
-                                  result[address].province=addComp.province;
-                                  result[address].city=addComp.city;
-                                  result[address].district=addComp.district;
-                              }
-                              // var myGeo = new BMap.Geocoder();
-                              // myGeo.getPoint(address, function(point){
-                              //   result[address].lng=point.lng;
-                              //   result[address].lat=point.lat;
-                              // });
-                          }
-                    else{
-                      if(Math.abs(rs.point.lng-lng1)<Math.abs(result[address].minwidth-lng1)){
-
-                        result[address].minwidth=rs.point.lng;
-                      }
-                      if(Math.abs(rs.point.lng-lng1)>Math.abs(result[address].maxwidth-lng1)){
-
-                        result[address].maxwidth=rs.point.lng;
-                      }
-                      if(Math.abs(rs.point.lat-lat1)<Math.abs(result[address].minheight-lat1)){
-
-                        result[address].minheight=rs.point.lat;
-                      }
-                      if(Math.abs(rs.point.lat-lat1)>Math.abs(result[address].maxheight-lat1)){
-
-                        result[address].maxheight=rs.point.lat;
-                      }
-                      result[address].number++;
-                      result[address].width=Math.abs((result[address].maxwidth-result[address].minwidth)/(lng2-lng1))*1920;
-                      result[address].height=Math.abs((result[address].maxheight-result[address].minheight)/(lat2-lat1))*949;
+                  var p=new BMap.Point(lng,lat);
+                  geoc.getLocation(p, function(rs){
+                    counter++;
+                    // console.log(counter);
+                    var addComp = rs.addressComponents;
+                    var address="";
+                    if(data=="country"){
 
                     }
-                  }
-                  if(counter==190){
-                        for(var key in result){
-                          if(result[key].number<1){
-                            delete result[key];
-                          }
-                        }
-                        for(var key in result){
-                          result[key].lng=(result[key].maxwidth+result[key].minwidth)/2;
-                          result[key].lat=(result[key].maxheight+result[key].minheight)/2;
-                        }
-                        console.log(result);
-                        $.getJSON("/static/assets/data/map/"+data+".json", function (data){
-                          $.each(data, function (infoIndex, info){
-                            console.log(info);
-                            for(var key in result){
-                              if(key==info["place"]){
-                                
-                                option.series[0].data=info["keywords"];
-                         
-                                var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(result[key].lng,result[key].lat),result[key].width*0.4,result[key].height*0.4);
-                                map.addOverlay(myCompOverlay);
-                              }
+                    else if(data=="province"){
+                      address=address+addComp.province;
+                    }
+                    else if(data=="city"){
+                      address=address+addComp.province+addComp.city;
+                    }
+                    else{
+                      address=address+addComp.province+addComp.city+addComp.district;
+                    }
+                    if(address!=""){
+                      if(!result[address]){
+                                result[address]={
+                                  level:data,
+                                    number:1,
+                                    lng:1,
+                                    lat:1,
+                                    minwidth:rs.point.lng,
+                                    maxwidth:rs.point.lng,
+                                    minheight:rs.point.lat,
+                                    maxheight:rs.point.lat,
+                                    width:0,
+                                    height:0
+                                };
+                                if(data=="province"){
+                                    result[address].province=addComp.province;
+                                }
+                                if(data=="city"){
+                                    result[address].province=addComp.province;
+                                    result[address].city=addComp.city;
+                                }
+                                if(data=="district"){
+                                    result[address].province=addComp.province;
+                                    result[address].city=addComp.city;
+                                    result[address].district=addComp.district;
+                                }
+                                // var myGeo = new BMap.Geocoder();
+                                // myGeo.getPoint(address, function(point){
+                                //   result[address].lng=point.lng;
+                                //   result[address].lat=point.lat;
+                                // });
                             }
+                      else{
+                        if(Math.abs(rs.point.lng-lng1)<Math.abs(result[address].minwidth-lng1)){
+
+                          result[address].minwidth=rs.point.lng;
+                        }
+                        if(Math.abs(rs.point.lng-lng1)>Math.abs(result[address].maxwidth-lng1)){
+
+                          result[address].maxwidth=rs.point.lng;
+                        }
+                        if(Math.abs(rs.point.lat-lat1)<Math.abs(result[address].minheight-lat1)){
+
+                          result[address].minheight=rs.point.lat;
+                        }
+                        if(Math.abs(rs.point.lat-lat1)>Math.abs(result[address].maxheight-lat1)){
+
+                          result[address].maxheight=rs.point.lat;
+                        }
+                        result[address].number++;
+                        result[address].width=Math.abs((result[address].maxwidth-result[address].minwidth)/(lng2-lng1))*1920;
+                        result[address].height=Math.abs((result[address].maxheight-result[address].minheight)/(lat2-lat1))*949;
+
+                      }
+                    }
+                    if(counter==190){
+                    
+
+                          for(var key in result){
+                            if(result[key].number<1){
+                              delete result[key];
+                            }
+                          }
+                          for(var key in result){
+                            result[key].lng=(result[key].maxwidth+result[key].minwidth)/2;
+                            result[key].lat=(result[key].maxheight+result[key].minheight)/2;
+                          }
+                          console.log(result);
+                          $.getJSON("/static/assets/data/map/"+data+".json", function (data){
+                            $.each(data, function (infoIndex, info){
+                              console.log(info);
+                              for(var key in result){
+                                if(key==info["place"]){
+                                  
+                                  option.series[0].data=info["keywords"];
                            
+                                  var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(result[key].lng,result[key].lat),result[key].width*0.4,result[key].height*0.4);
+                                  if(time.getTime() == thistime.getTime()){
+                                    map.addOverlay(myCompOverlay);
+                                  }
+                                }
+                              }
+                             
+                            }) 
                           }) 
-                        }) 
-                      }    
-                }); 
+                        }    
+                  });
                 lng=lng+(lng2-lng1)/20;
               }
               lat=lat+(lat2-lat1)/10;    
