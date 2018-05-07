@@ -10,6 +10,16 @@
         z-index:1000;
         pointer-events: none;
     }
+    @media (max-width: 990px) {
+    .col-md-6 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 0;
+        padding-left: 0; 
+        padding-top: 5px;
+        }
+    }
+
 </style>
 <div id="content" class="content" ng-resize="drawClouds()">
     <div class='row'>
