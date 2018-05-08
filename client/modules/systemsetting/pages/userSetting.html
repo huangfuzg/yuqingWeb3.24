@@ -1,9 +1,44 @@
+<style>
+    @media (max-width: 767px)
+    {
+        table td,th{
+            padding: 5px 2px !important;
+        }
+        .mobile-width-20{
+            width: 20%;
+        }
+        .mobile-width-60{
+            width: 60%;
+        }
+        .mobile-width-0{
+            display: none;
+        }
+    }
+    @media (min-width: 768px)
+    {
+        .pc-width-15{
+            width:15%;
+        }
+        .pc-width-25{
+            width: 25%;
+        }
+        .pc-width-35{
+            width: 35%;
+        }
+        .pc-width-45{
+            width: 45%;
+        }
+        .pc-width-10{
+            width:10%;
+        }
+    }
+</style>
 <div id="content" class="content content-full-width">
     <div class="p-20">
     <!-- begin row -->
     <div class="row">
         <div class="col-md-12">
-            <div class="email-btn-row hidden-xs f-s-15">
+            <div class="email-btn-row f-s-15">
                 
                 
                 <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题 </a>
@@ -50,18 +85,18 @@
                             
                             <th>话题名称</th>
                             <th>查询关键字</th>
-                            <th>爬取站点</th>
+                            <th class="mobile-width-0">爬取站点</th>
                             <th>操作</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="topicItem in pageData">
-                            <td style="width: 10%" ng-show = "false">{{topicItem.topicId}}</td>
+                            <td style="min-width:5em;max-width:15em;" ng-show = "false">{{topicItem.topicId}}</td>
                             
-                            <td style="width: 15%;vertical-align: middle">{{topicItem.topicName}}</td>
-                            <td style="width: 30%;vertical-align: middle">{{toStr(topicItem.topicKeywords)}}</td>
-                            <td style="width: 35%;vertical-align: middle">{{topicItem.sitesStr}}</td>
-                            <td style="width: 10%;vertical-align: middle"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
+                            <td class="mobile-width-20 pc-width-15" style="min-width:6em;max-width:20em;vertical-align: middle">{{topicItem.topicName}}</td>
+                            <td class="mobile-width-60 pc-width-25" style="min-width:6em;vertical-align: middle"><span class="mobile-hide">{{toStr(topicItem.topicKeywords)}}</span><span class="mobile-show">{{toStr(topicItem.topicKeywords)}}</span></td>
+                            <td class="mobile-width-0 pc-width-45" style="vertical-align: middle"><span class="mobile-hide">{{topicItem.sitesStr}}</span></span><span class="mobile-show">{{topicItem.sitesStr}}</span></td>
+                            <td class="mobile-width-20 pc-width-15" style="min-width:6em;max-width: 15em;vertical-align: middle"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
