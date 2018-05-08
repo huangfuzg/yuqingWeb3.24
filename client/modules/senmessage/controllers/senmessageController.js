@@ -13,8 +13,8 @@ CQ.mainApp.senmessageController
         $scope.selectList = [];
         $scope.date = getFormatData();
         $scope.dataObj = new DataObj();
-        $scope.topic = [{"name":"--所有话题--","value":"-1"},{"name":"交大","value":0},{"name":"校庆","value":1},{"name":"买答案","value":2}];
-        $scope.state = [{"name":"--所有状态--","value":-1},{"name":"未上报","value":0},{"name":"上报未处理","value":1},{"name":"上报已处理","value":2}];
+        $scope.topic = [{"name":"-所有话题-","value":"-1"},{"name":"交大","value":0},{"name":"校庆","value":1},{"name":"买答案","value":2}];
+        $scope.state = [{"name":"-所有状态-","value":-1},{"name":"未上报","value":0},{"name":"上报未处理","value":1},{"name":"上报已处理","value":2}];
         getData();
         getTopic();
         $scope.selectPage = function (page) {
