@@ -1,6 +1,6 @@
 "use strict";
 CQ.mainApp.msgController
-    .controller("showController", ["$scope", "$state", "$stateParams", "msgService",  
+    .controller("showController", ["$scope", "$state", "$stateParams", "msgService",
         function($scope, $state, $stateParams, msgService) {
         $scope.selectList = [];
         $scope.view = 'View All';
@@ -33,6 +33,24 @@ CQ.mainApp.msgController
             $("i#All").addClass('fa-circle');
             $("i#Unread").removeClass('fa-circle');
         };
+        $scope.getAlertData = function(){
+          var cons = {}
+          msgService.pushAlertMsg(cons).then(function(res) {
+              // console.log(res[0]['is_read'])
+
+              res.sort(function (a,b) {
+                  return b.send_time>a.send_time?1:-1;
+              })
+              $scope.alldata = res;
+              $scope.page = 1;
+              $scope.page_num = 10;//一页显示的消息数量
+              $scope.max_page = Math.ceil($scope.alldata.length/$scope.page_num);
+              $scope.showdata = getDataBypage(1);
+              $scope.kong=false;
+              // $scope.showdata = res;
+              console.log('+++++++',$scope.showdata);
+          });
+        }
         $scope.getShowData();
         $scope.selectItems = [];
         $scope.select = function(item){
@@ -41,7 +59,7 @@ CQ.mainApp.msgController
             {
                 $scope.selectList.push(item._id);
                 $scope.selectItems.push(item);
-            }   
+            }
             else{
                 var index = ($scope.selectList.indexOf(item._id));
                 $scope.selectList.splice(index,1);
