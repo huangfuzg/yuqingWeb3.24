@@ -63,14 +63,14 @@
                 <!-- begin btn-toolbar -->
                 <div class="btn-toolbar">
                     <!-- begin btn-group -->
-                    <div class="btn-group pull-right">
+                    <!-- <div class="btn-group pull-right">
                         <button class="btn btn-white btn-sm" ng-click="perPage()" ng-disabled="page<2">
                             <i class="fa fa-chevron-left"></i>
                         </button>
                         <button class="btn btn-white btn-sm" ng-click="nextPage()" ng-disabled="page>max_page-1">
                             <i class="fa fa-chevron-right"></i>
                         </button>
-                    </div>
+                    </div> -->
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
                     <div class="btn-group dropdown">
@@ -92,6 +92,12 @@
                     <div class="btn-group">
                         <button class="btn btn-sm btn-white" data-toggle="tooltip" data-placement="top" data-title="Refresh" data-original-title="" title=""><i class="fa fa-refresh"></i></button>
                     </div>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-white" ng-click="getShowData()"> 信箱</button>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-sm btn-white" ng-click="getAlertData()"> 警报</button>
+                    </div>
                     <!-- end btn-group -->
                     <!-- begin btn-group -->
                     <div class="btn-group">
@@ -112,13 +118,13 @@
                             <input type="checkbox" data-checked="email-checkbox" ng-click="select(item)" />
                         </label>
                     </div>
-                    <a href="email_detail.html" class="email-user">
+                    <a href="" class="email-user">
                         <img src="/static/assets/img/user-13.jpg" alt="用户头像" />
                     </a>
                     <div class="email-info" ng-click="showdetail(item._id)" style="cursor: pointer;">
                         <span class="email-time">{{item.send_time}}</span>
                         <h5 class="email-title">
-                            <a href="email_detail.html">{{item.title}}</a>
+                            <a href="">{{item.title}}</a>
                             <span class="label f-s-10"  ng-class="{'label-primary':item.send_user_role==2,'label-danger':item.send_user_role==3,'label-success':item.send_user_role==1}">{{item.send_user_acc}}</span>
                         </h5>
                         <div class="pull-right"  ng-show="!item.is_read" style="width: 10px; height:10px; border-radius: 50%; background-color: red; margin-right: 10px"></div>

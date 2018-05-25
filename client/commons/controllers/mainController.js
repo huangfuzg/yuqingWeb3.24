@@ -8,8 +8,10 @@ CQ.mainApp.frameController
 	//                 controller: "headerController"
 	//             });
 	// 	}])
-	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree', 
+	.controller('mainController', ['$scope', '$rootScope', '$state', '$http', 'DataSourceTree',
 		function($scope, $rootScope, $state, $http, DataSourceTreem) {
+
+
 		console.log("mainController", "start!");
 		$rootScope.mainController = false;
 		$scope.cardNums = 0;
@@ -61,6 +63,45 @@ CQ.mainApp.frameController
 			$scope.sendmsg = function () {
 				$state.go('msgController');
             }
+						// request Notifications permission
+						if (Notification && Notification.permission !== "granted") {
+				    Notification.requestPermission(function (status) {
+				      if (Notification.permission !== status) {
+				        Notification.permission = status;
+				      }
+				    });
+				  }
+					// create websocket
+					var ws = new WebSocket("ws://118.190.133.203:8899/websocketdata/pull_post");
+					ws.onmessage = function(evt){
+
+						var res = JSON.parse(evt.data)
+						console.log(res);
+						if (Notification && Notification.permission === "granted" && document.hidden==true) {
+				          //const title = r.title.substring(0,12)+'...';
+									res.data.forEach(function(d){
+										const title = d.title.substring(0,12)+'...';
+										const options = {
+					            //body: r.content.substring(0,21)+'...',
+					            // body:"abdfsljglhalnlbnalunaiojoldsjnl;jnbl;aj;好...",
+					            icon:d.poster_img,
+											body:d.content.substring(0,21)+'...',
+					            dir:'auto',
+					            // timestamp: Date.parse('01 Jan 2000 00:00:00')
+					            // tag:"test",
+					            // data:r.url
+					         };
+					          var n = new Notification(title,options);
+					          n.onclick = function(e){
+					            e.preventDefault();
+											window.focus();
+					            // window.open(n.data);
+					          }
+									})
+
+				        };
+					};
+
 			// $scope.$watch($rootScope.curentUser,function(newValue,oldValue){
 			// 	$scope.curentUser = newValue;
 			// 	console.log($scope.curentUser);
@@ -168,10 +209,12 @@ CQ.mainApp.frameController
 	  //           $scope.changed3 = false;
 	  //           $scope.changed4 = false;
 	  //           $scope.changed5 = false;
-   //      	}	
+   //      	}
 			console.log("headerController", "start!");
+
+
 	}])
-	.controller('leftbarController', ['$scope', '$rootScope', '$state', 'DataSourceTree',"$http", 
+	.controller('leftbarController', ['$scope', '$rootScope', '$state', 'DataSourceTree',"$http",
 		function($scope, $rootScope, $state, DataSourceTree,$http) {
 			//console.log(DataSourceTree.allLinks);
 			$scope.allLinks = null;
@@ -181,7 +224,7 @@ CQ.mainApp.frameController
 	                App.runui();
 	            }
         	});
-        	
+
         	$scope.reload = function()
 	        {
 	            $state.reload();
@@ -212,7 +255,7 @@ CQ.mainApp.frameController
 				console.log(DataSourceTree.allLinks[2].items);
 				$scope.allLinks = DataSourceTree.allLinks;
 				$rootScope.leftbartree = true;
-				
+
 			});
 			$scope.allLinks = DataSourceTree.allLinks;
 			//console.log(DataSourceTree.allLinks[2].items);
@@ -251,11 +294,10 @@ CQ.mainApp.frameController
 				});
 				//console.log(item);
 			};
-			console.log("leftbarController", "start!"); 
+			console.log("leftbarController", "start!");
 	}])
-	.controller('themeController', ['$scope', '$rootScope', '$state', 
+	.controller('themeController', ['$scope', '$rootScope', '$state',
 		function($scope, $rootScope, $state) {
 			$rootScope.themeController = true;
 			console.log("themeController", "start!");
 	}]);
-	
