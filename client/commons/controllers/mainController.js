@@ -72,7 +72,7 @@ CQ.mainApp.frameController
 				    });
 				  }
 					// create websocket
-					var ws = new WebSocket("ws://118.190.133.203:8899/websocketdata/pull_post");
+					var ws = new WebSocket("ws://118.190.133.203:8200/websocketdata/pull_post");
 					ws.onmessage = function(evt){
 
 						var res = JSON.parse(evt.data)
