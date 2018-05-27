@@ -74,7 +74,7 @@ CQ.mainApp.frameController
 					// create websocket
 					var ws = new WebSocket("ws://118.190.133.203:8200/websocketdata/pull_post");
 					ws.onmessage = function(evt){
-
+					var imgs = ['/static/assets/img/news.png','/static/assets/img/luntan.png','/static/assets/img/weibo.png','/static/assets/img/tieba.png','/static/assert/img/weixin.png','/static/assets/img/search.png'];
 						var res = JSON.parse(evt.data)
 						console.log(res);
 						if (Notification && Notification.permission === "granted" && document.hidden==true) {
@@ -84,7 +84,7 @@ CQ.mainApp.frameController
 										const options = {
 					            //body: r.content.substring(0,21)+'...',
 					            // body:"abdfsljglhalnlbnalunaiojoldsjnl;jnbl;aj;好...",
-					            icon:d.poster_img,
+					            icon:imgs[+d.type],
 											body:d.content.substring(0,21)+'...',
 					            dir:'auto',
 					            // timestamp: Date.parse('01 Jan 2000 00:00:00')
