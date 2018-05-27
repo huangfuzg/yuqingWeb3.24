@@ -89,13 +89,14 @@ CQ.mainApp.frameController
 					            dir:'auto',
 					            // timestamp: Date.parse('01 Jan 2000 00:00:00')
 					            // tag:"test",
-					            // data:r.url
+					            data:d.url
 					         };
 					          var n = new Notification(title,options);
 					          n.onclick = function(e){
 					            e.preventDefault();
 											window.focus();
-					            // window.open(n.data);
+											console.log(n.data);
+					            window.open(n.data);
 					          }
 									})
 
