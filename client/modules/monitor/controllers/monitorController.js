@@ -439,6 +439,8 @@ CQ.mainApp.monitorController
                                 //angular.element(doms).find(".addnums").slideUp("slow");
                             }
                             $timeout(function(){
+                                d.postData.forEach(d=>{if(d.flag){d.flag=false}});
+                                d.bufferData.push({'flag':true,'is_read':0})
                                 d.postData = d.bufferData.concat(d.postData);
                                 d.bufferData = [];
                             }, 0);
