@@ -52,6 +52,7 @@
     }
     .w-32 {
         width: 42px !important;
+        height: 42px !important;
     }
     .datestyles {
         border-width: 0px;
@@ -155,7 +156,7 @@
                                 <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in items.postData"
                                  ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)" ng-class="{'visited':it.is_read!=0}">
                                     <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">
-                                    <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" class="media-object rounded-corner w-32">
+                                    <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" class="media-object rounded-corner w-32 ">
                                     <img ng-src="{{pics[it.data_type]}}" ng-if = "!(it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' ')" class="media-object rounded-corner w-32">
                                     </a>
                                     <div class="media-body">
