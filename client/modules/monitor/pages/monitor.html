@@ -160,7 +160,7 @@
                                     </p>
                                 </div> -->
                                 <li class="media media-sm p-r-10" ng-repeat = "(ii, it) in items.postData"
-                                 ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)" ng-class="{'visited':it.is_read!=0}">
+                                 ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)" ng-class="{'visited':it.is_read!=0}" >
                                     <div style="width: 100%;font-size: 1.5em; line-height: 2.0em;text-align: center;background: #ffffff" ng-if="it.flag">下面已读</div>
                                     <div ng-if="it.flag==undefine">
                                         <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">

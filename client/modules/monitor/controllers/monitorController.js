@@ -442,7 +442,7 @@ CQ.mainApp.monitorController
                                 }
                                 if(d.bufferData.length>0){
                                     $timeout(function(){
-                                        d.postData.forEach(d=>{if(d.flag){d.flag=false}});
+                                        d.postData.forEach(d=>{if(d.flag){d.flag=true}});
                                         d.bufferData.push({'flag':true,'is_read':0})
                                         d.postData = d.bufferData.concat(d.postData);
                                         d.bufferData = [];
