@@ -8,7 +8,7 @@ angular.module("senmessageService", ["commons"])
         factories.getDetailData = $resource(CQ.variable.RESTFUL_URL + "senmassage/showrawmsg", parseResource.params, parseResource.actions);
 
         factories.removeSenData = $resource(CQ.variable.RESTFUL_URL + "senmassage/delmesg", parseResource.params, parseResource.actions);
-        
+
         factories.reportData = $resource(CQ.variable.RESTFUL_URL + "senmassage/markmesg", parseResource.params, parseResource.actions);
         // factories.reportData = $resource("http://118.190.133.203:8200/yqdata/senmassage/markmesg", parseResource.params, parseResource.actions);
 
@@ -109,7 +109,7 @@ angular.module("senmessageService", ["commons"])
             a.download = filename || 'test.xls';
             a.click();
         }
-        return ret;      
+        return ret;
     })
     .factory("PostDataService", ["$http", function($http) {
         var factories = {};
@@ -119,8 +119,8 @@ angular.module("senmessageService", ["commons"])
         };*/
 
         factories.addSenMessage = function(data) {
-            //return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
-             return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
+            return $http.post(CQ.variable.RESTFUL_URL + "senmassage/addmsg", data);
+             // return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
         };
 
         return factories;
