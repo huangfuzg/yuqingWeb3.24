@@ -52,6 +52,7 @@
     }
     .w-32 {
         width: 42px !important;
+        height: 42px !important;
     }
     .datestyles {
         border-width: 0px;
@@ -163,9 +164,29 @@
                                  ng-mouseover = "addBg($event)" ng-mouseout = "removeBg($event)" ng-class="{'visited':it.is_read!=0}" >
                                     <div style="width: 100%;font-size: 1.5em; line-height: 2.0em;text-align: center;background: #ffffff" ng-if="it.flag">下面已读</div>
                                     <div ng-if="it.flag==undefine">
-                                        <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">
-                                        <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" class="media-object rounded-corner w-32">
-                                        <img ng-src="{{pics[it.data_type]}}" ng-if = "!(it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' ')" class="media-object rounded-corner w-32">
+                                    <a href = "{{it.poster.home_url}}" target = "_blank" class="pull-left">
+                                    <img ng-src="{{it.poster.img_url}}" ng-if = "it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" class="media-object rounded-corner w-32 ">
+                                    <img ng-src="{{pics[it.data_type]}}" ng-if = "!(it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' ')" class="media-object rounded-corner w-32">
+                                    </a>
+                                    <div class="media-body">
+                                        <a class = "m-b-10 h-32" ng-href = "{{it.url}}" target="_blank">
+                                            <!-- <h4 class="media-heading" ng-if = "it.board != 'Sina'">{{it.title}}</h4> -->
+                                            <h4 class="media-heading f-s-16" ng-if = "it.data_type!=3&&it.poster.name != ''"
+                                            >
+                                                 {{it.poster.name}}
+                                            </h4>
+                                            <h4 class="media-heading f-s-16" ng-if = "it.data_type==3"
+                                            >
+                                                 {{it.title}}
+                                            </h4>
+                                        </a>
+                                        <p class="m-b-5 m-t-5 f-s-14">
+                                        <a ng-href = "{{it.url}}" target="_blank" style="color: #333" ng-click="markRead(it)">
+                                        <h4 class="media-heading f-s-15" ng-if = "(!it.poster||it.poster.name == '')&&it.title"
+                                         ng-show = "it.board != 'Sina'">{{it.title}}</h4>
+                                         </a>
+                                        <a  ng-if = "it.content" ng-href = "{{it.url}}" target="_blank" class = "f-s-14">
+                                            {{it.content}}
                                         </a>
                                         <div class="media-body">
                                             <a class = "m-b-10 h-32" ng-href = "{{it.url}}" target="_blank">
