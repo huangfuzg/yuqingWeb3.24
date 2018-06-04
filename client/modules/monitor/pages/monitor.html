@@ -188,27 +188,7 @@
                                         <a  ng-if = "it.content" ng-href = "{{it.url}}" target="_blank" class = "f-s-14">
                                             {{it.content}}
                                         </a>
-                                        <div class="media-body">
-                                            <a class = "m-b-10 h-32" ng-href = "{{it.url}}" target="_blank">
-                                                <!-- <h4 class="media-heading" ng-if = "it.board != 'Sina'">{{it.title}}</h4> -->
-                                                <h4 class="media-heading f-s-16" ng-if = "it.data_type!=3&&it.poster.name != ''"
-                                                >
-                                                     {{it.poster.name}}
-                                                </h4>
-                                                <h4 class="media-heading f-s-16" ng-if = "it.data_type==3"
-                                                >
-                                                     {{it.title}}
-                                                </h4>
-                                            </a>
-                                            <p class="m-b-5 m-t-5 f-s-14">
-                                            <a ng-href = "{{it.url}}" target="_blank" style="color: #333" ng-click="markRead(it)">
-                                            <h4 class="media-heading f-s-15" ng-if = "(!it.poster||it.poster.name == '')&&it.title"
-                                             ng-show = "it.board != 'Sina'">{{it.title}}</h4>
-                                             </a>
-                                            <a  ng-if = "it.content" ng-href = "{{it.url}}" target="_blank" class = "f-s-14">
-                                                {{it.content}}
-                                            </a>
-                                            <a  ng-if = "!it.content&&it.title" ng-href = "{{it.url}}" target="_blank" class = "f-s-14">
+                                         <a  ng-if = "!it.content&&it.title" ng-href = "{{it.url}}" target="_blank" class = "f-s-14">
                                                 {{it.title}}
                                             </a>
                                             </p>
@@ -237,6 +217,7 @@
                                                 </p>
                                             </div>
                                         </div>
+                                  
                                         <div class = "pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists"
                                         ng-show = "false">
                                                 <!--<a title = "帖子分析"-->
