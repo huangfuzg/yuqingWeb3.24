@@ -64,7 +64,7 @@ angular.module("senmessageService", ["commons"])
                     day = day < 10 ? '0' + day : day;
                 return '(' + month + '月' + day + '日' + ')';
             }
-            var outStr = "<tr><td rowspan='2' style='text-align:center; font-size:1.5em; font-weight:800;' colspan=" + theads.length + ">2017年研考互联网信息安全专项监测情况通报" + format(new Date()) +"</td></tr><tr></tr><tr><td colspan=" + theads.length + ">现将2017年" + format(new Date(new Date().getTime() - 7*24*60*60*1000)) + "XX时至" + format(new Date()) + "XX时监测到的自考有害信息通报如下：</td></tr><tr>";
+            var outStr = "<tr><td rowspan='2' style='text-align:center; font-size:1.5em; font-weight:800;' colspan=" + theads.length + ">2018年高考互联网信息安全专项监测情况通报" + format(new Date()) +"</td></tr><tr></tr><tr><td colspan=" + theads.length + ">现将2018年" + format(new Date(new Date().getTime())) + "XX时至" + format(new Date()) + "XX时监测到的高考有害信息通报如下：</td></tr><tr>";
             for(var i = 0; i < theads.length; i++)
             {
                 outStr += "<td>" + theads[i] + "</td>";
