@@ -504,7 +504,7 @@ angular.module('settingservice',[])
                 hasShow: true,
                 icon: "fa fa-star",
                 items: "",
-                permission: "1",
+                permission: "5",
             },
             {
                 label:"舆情知识库",
@@ -512,7 +512,7 @@ angular.module('settingservice',[])
                 hasShow:true,
                 icon:"fa fa-database",
                 items:"",
-                permission: "1",
+                permission: "5",
             },
             {
                 label:"话题管理",
