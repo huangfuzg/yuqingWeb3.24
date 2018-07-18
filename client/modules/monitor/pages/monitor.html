@@ -215,20 +215,30 @@
                                             </img>
                                         </img>
                                     </a>
-                                    <p class="m-b-5 m-t-5 f-s-14">
-                                        <a ng-click="markRead(it)" ng-href="{{it.url}}" style="color: #333" target="_blank">
-                                            <h4 class="media-heading f-s-15" ng-if="(!it.poster||it.poster.name == '')&&it.title" ng-show="it.board != 'Sina'">
+                                    <div class="media-body">
+                                        <a class="m-b-10 h-32" ng-href="{{it.url}}" target="_blank">
+                                            <!-- <h4 class="media-heading" ng-if = "it.board != 'Sina'">{{it.title}}</h4> -->
+                                            <h4 class="media-heading f-s-16" ng-if="it.data_type!=3&&it.poster.name != ''">
+                                                {{it.poster.name}}
+                                            </h4>
+                                            <h4 class="media-heading f-s-16" ng-if="it.data_type==3">
                                                 {{it.title}}
                                             </h4>
                                         </a>
-                                        <a class="f-s-14" ng-href="{{it.url}}" ng-if="it.content" target="_blank">
-                                            {{it.content}}
-                                        </a>
-                                        <a class="f-s-14" ng-href="{{it.url}}" ng-if="!it.content&&it.title" target="_blank">
-                                            {{it.title}}
-                                        </a>
-                                    </p>
-                                    <img class="m-b-10" ng-if="it.img_url!=''" src="{{it.img_url}}" style="width: 100%;max-height: 200px">
+                                        <p class="m-b-5 m-t-5 f-s-14">
+                                            <a ng-click="markRead(it)" ng-href="{{it.url}}" style="color: #333" target="_blank">
+                                                <h4 class="media-heading f-s-15" ng-if="(!it.poster||it.poster.name == '')&&it.title" ng-show="it.board != 'Sina'">
+                                                    {{it.title}}
+                                                </h4>
+                                            </a>
+                                            <a class="f-s-14" ng-href="{{it.url}}" ng-if="it.content" target="_blank">
+                                                {{it.content}}
+                                            </a>
+                                            <a class="f-s-14" ng-href="{{it.url}}" ng-if="!it.content&&it.title" target="_blank">
+                                                {{it.title}}
+                                            </a>
+                                        </p>
+                                        <img ng-if="it.img_url!=''" src={{it.img_url}} class="m-b-10" style="width: 100%;max-height: 200px">
                                         <i class="text-muted">
                                             {{it.pt_time}}, {{it.board}}
                                         </i>
@@ -254,113 +264,100 @@
                                                 (已添加)
                                             </p>
                                         </div>
-                                    </img>
-                                </div>
-                                <div class="pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists" ng-show="false">
-                                    <!--<a title = "帖子分析"-->
-                                    <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
-                                    <!--<img src = "/static/assets/img/analy.svg">-->
-                                    <!--</a>-->
-                                    <a class="addsen" ng-click="AddSenmessage(it._id,it.site_id)" title="添加敏感信息">
-                                        <img src="/static/assets/img/add.svg">
-                                        </img>
-                                    </a>
-                                    <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->
-                                    <!--<img src = "/static/assets/img/save.svg">-->
-                                    <!--</a>-->
+                                    </div>
+                                    <div class="pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists" ng-show="false">
+                                        <!--<a title = "帖子分析"-->
+                                        <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
+                                        <!--<img src = "/static/assets/img/analy.svg">-->
+                                        <!--</a>-->
+                                        <a class="addsen" ng-click="AddSenmessage(it._id,it.site_id)" title="添加敏感信息">
+                                            <img src="/static/assets/img/add.svg">
+                                            </img>
+                                        </a>
+                                        <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->
+                                        <!--<img src = "/static/assets/img/save.svg">-->
+                                        <!--</a>-->
+                                    </div>
                                 </div>
                             </li>
+                            <div>
+                            </div>
+                            <div class="width-full m-t-20 loadsMore" style="display:none">
+                                <p class="text-center">
+                                    <i class="fa post_loading">
+                                    </i>
+                                </p>
+                            </div>
+                            <div class="alert alert-info fade in m-b-15 m-t-15 width-full" ng-if="!items.isLoad">
+                                <p class="text-center">
+                                    <strong>
+                                        没有更多消息啦!
+                                    </strong>
+                                </p>
+                            </div>
                         </ul>
                     </div>
                 </div>
-                <div class="pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists" ng-show="false">
-                    <!--<a title = "帖子分析"-->
-                    <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
-                    <!--<img src = "/static/assets/img/analy.svg">-->
-                    <!--</a>-->
-                    <a class="addsen" ng-click="AddSenmessage(it._id,it.site_id)" title="添加敏感信息">
-                        <img src="/static/assets/img/add.svg">
-                        </img>
-                    </a>
-                    <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->
-                    <!--<img src = "/static/assets/img/save.svg">-->
-                    <!--</a>-->
-                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div>
-</div>
-<div class="width-full m-t-20 loadsMore" style="display:none">
-    <p class="text-center">
-        <i class="fa post_loading">
-        </i>
-    </p>
-</div>
-<div class="alert alert-info fade in m-b-15 m-t-15 width-full" ng-if="!items.isLoad">
-    <p class="text-center">
-        <strong>
-            没有更多消息啦!
-        </strong>
-    </p>
-</div>
-<!-- end panel -->
-<!-- begin panel -->
-<div class="panel panel-primary col-md-3 p-r-0 p-l-0 b-r-1 analy animate fadeIn" data-sortable-id="ui-widget-7" id="analy_1" style="display:none">
-    <div class="panel-heading">
-        <div class="panel-heading-btn">
-            <a class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload" href="javascript:;">
-                <i class="fa fa-repeat">
-                </i>
-            </a>
-            <a class="btn btn-xs btn-icon btn-circle btn-danger" href="javascript:;" ng-click="stopAnaly('analy_1')">
-                <i class="fa fa-times">
-                </i>
-            </a>
-        </div>
-        <h4 class="panel-title">
-            话题分析
-        </h4>
-    </div>
-    <div class="panel-body">
-        <div data-height="800px" data-scrollbar="true">
-            <div class="width-full height-sm m-b-20">
-                <h4>
-                    帖子时序分析
-                </h4>
-                <div class="" id="timeAna">
-                </div>
-            </div>
-            <hr>
-                <div class="width-full height-sm">
-                    <h4>
-                        博主分析
+            <!-- end panel -->
+            <!-- begin panel -->
+            <div class="panel panel-primary col-md-3 p-r-0 p-l-0 b-r-1 analy animate fadeIn" data-sortable-id="ui-widget-7" id="analy_1" style="display:none">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload" href="javascript:;">
+                            <i class="fa fa-repeat">
+                            </i>
+                        </a>
+                        <a class="btn btn-xs btn-icon btn-circle btn-danger" href="javascript:;" ng-click="stopAnaly('analy_1')">
+                            <i class="fa fa-times">
+                            </i>
+                        </a>
+                    </div>
+                    <h4 class="panel-title">
+                        话题分析
                     </h4>
-                    <div id="posterAna">
-                    </div>
                 </div>
-                <hr>
-                    <div class="width-full height-sm">
-                        <h4>
-                            传播路径分析
-                        </h4>
-                        <div id="broadcastAna">
-                        </div>
-                    </div>
-                    <hr>
-                        <div class="width-full height-sm">
+                <div class="panel-body">
+                    <div data-height="800px" data-scrollbar="true">
+                        <div class="width-full height-sm m-b-20">
                             <h4>
-                                关键词云分析
+                                帖子时序分析
                             </h4>
-                            <div id="keywordsAna">
+                            <div class="" id="timeAna">
                             </div>
                         </div>
-                    </hr>
-                </hr>
-            </hr>
+                        <hr>
+                            <div class="width-full height-sm">
+                                <h4>
+                                    博主分析
+                                </h4>
+                                <div id="posterAna">
+                                </div>
+                            </div>
+                            <hr>
+                                <div class="width-full height-sm">
+                                    <h4>
+                                        传播路径分析
+                                    </h4>
+                                    <div id="broadcastAna">
+                                    </div>
+                                </div>
+                                <hr>
+                                    <div class="width-full height-sm">
+                                        <h4>
+                                            关键词云分析
+                                        </h4>
+                                        <div id="keywordsAna">
+                                        </div>
+                                    </div>
+                                </hr>
+                            </hr>
+                        </hr>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- end panel -->
+        <!-- end monitor content-->
     </div>
 </div>
-<!-- end panel -->
-<!-- end monitor content-->

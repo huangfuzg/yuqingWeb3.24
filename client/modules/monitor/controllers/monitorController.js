@@ -5,7 +5,7 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
     console.log($stateParams);
     $scope.topic_id = null;
     $scope.monitortopic_id = null;
-    $scope.monitorData = null; //所有话题帖子列表
+    $scope.monitorData = null;
     $scope.topicLists = null;
     $scope.dataType = $stateParams.dataType;
     $scope.siteId = $stateParams.siteId;
@@ -450,53 +450,6 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             angular.element(doms).find(".loads").slideUp("slow");
             // angular.element(doms).find(".addnums").slideUp("slow");
             console.log(error);
-            // $scope.refreshData = function(topic_id) {
-            //     var doms = "#topic_" + topic_id;
-            //     angular.element(doms).find(".loads").slideDown("slow");
-            //     angular.element(doms).find(".addnums").fadeOut();
-            //     var topicLists = [];
-            //     $scope.monitorData.forEach(function(d) {
-            //         if (d.topicId == topic_id) {
-            //             var tl = {};
-            //             tl.topicId = d.topicId;
-            //             tl.newTime = d.newTime;
-            //             topicLists.push(tl);
-            //         }
-            //     });
-            //     $scope.cons.topicLists = topicLists;
-            //     var cons = $scope.cons;
-            //     console.log(JSON.stringify($scope.cons));
-            //     PostDataService_.flushData(cons).then(function(freshdata) {
-            //         // console.log(freshdata.data.data);
-            //         var res = freshdata.data.data;
-            //         $scope.monitorData.forEach(function(d) {
-            //             res.forEach(function(rr) {
-            //                 if (rr.topicId == d.topicId) {
-            //                     d.newTime = rr.newTime;
-            //                     d.bufferData = d.bufferData || [];
-            //                     if (rr.postData.length != 0) {
-            //                         // d.count = rr.count;
-            //                         // angular.element(doms).find(".addnums").slideDown("slow");
-            //                         d.bufferData = rr.postData.concat(d.bufferData);
-            //                         //d.postData = rr.postData.concat(d.postData);
-            //                         //angular.element(doms).find(".addnums").slideUp("slow");
-            //                     }
-            //                     $timeout(function() {
-            //                         d.postData = d.bufferData.concat(d.postData);
-            //                         d.bufferData = [];
-            //                     }, 0);
-            //                 }
-            //             });
-            //         });
-            //         //console.log($scope.monitorData);
-            //         angular.element(doms).find(".loads").slideUp("slow");
-            //         // $timeout(function(){
-            //         //         angular.element(doms).find(".addnums").slideUp("slow");
-            //         // }, 4000);
-            //     }, function(error) {
-            //         angular.element(doms).find(".loads").slideUp("slow");
-            //         // angular.element(doms).find(".addnums").slideUp("slow");
-            //         console.log(error);
         });
     };
     $scope.showMore = function(topicId) {
