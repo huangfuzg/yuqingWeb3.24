@@ -52,6 +52,7 @@
     }
     .w-32 {
         width: 42px !important;
+        height: 42px !important;
     }
     .datestyles {
         border-width: 0px;
@@ -177,6 +178,17 @@
                     </h4>
                 </div>
                 <div class="panel-body">
+                    <div class="width-full m-t-10 m-b-10 addnums" style="display:none">
+                        <p class="text-center">
+                            <i class="fa fa-bullhorn text-info">
+                                有{{items.count || 0}}条新帖子，点击
+                                <a ng-click="refreshData(items.topicId)" style="color:blue; cursor: pointer;">
+                                    此处
+                                </a>
+                                刷新。
+                            </i>
+                        </p>
+                    </div>
                     <div class="">
                         <ul class="media-list media-list-with-divider overflow-y-scroll h-800" scrolly="showMore({{items.topicId}})">
                             <div class="width-full m-t-10 m-b-10 loads" style="display:none">
@@ -185,33 +197,23 @@
                                     </i>
                                 </p>
                             </div>
-                            <div class="width-full m-t-10 m-b-10 addnums" style="display:none">
-                                <p class="text-center">
-                                    <i class="fa fa-bullhorn text-info">
-                                        有{{items.count || 0}}条新帖子，点击
-                                        <a ng-click="refreshData(items.topicId)" style="color:blue; cursor: pointer;">
-                                            此处
-                                        </a>
-                                        刷新。
-                                    </i>
-                                </p>
-                            </div>
+                            <!--     <div class = "width-full m-t-10 m-b-10 addnums" style = "display:none">
+                                    <p class = "text-center">
+                                        <i class = "fa fa-bullhorn text-info">
+                                            有{{items.count || 0}}条新帖子，点击<a style="color:blue; cursor: pointer;" ng-click="refreshData(items.topicId)">此处</a>刷新。
+                                        </i>
+                                    </p>
+                                </div> -->
                             <li class="media media-sm p-r-10" ng-class="{'visited':it.is_read!=0}" ng-mouseout="removeBg($event)" ng-mouseover="addBg($event)" ng-repeat="(ii, it) in items.postData">
-                                <a class="pull-left" href="{{it.poster.home_url}}" target="_blank">
-                                    <img class="media-object rounded-corner w-32" ng-if="it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" ng-src="{{it.poster.img_url}}">
-                                        <img class="media-object rounded-corner w-32" ng-if="!(it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' ')" ng-src="{{pics[it.data_type]}}">
+                                <div ng-if="it.flag" style="width: 100%;font-size: 1.5em; line-height: 2.0em;text-align: center;background: #ffffff">
+                                    下面已读
+                                </div>
+                                <div ng-if="it.flag==undefine">
+                                    <a class="pull-left" href="{{it.poster.home_url}}" target="_blank">
+                                        <img class="media-object rounded-corner w-32 " ng-if="it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' '" ng-src="{{it.poster.img_url}}">
+                                            <img class="media-object rounded-corner w-32" ng-if="!(it.poster.img_url&&it.poster.img_url !== ''&&it.poster.img_url !== ' ')" ng-src="{{pics[it.data_type]}}">
+                                            </img>
                                         </img>
-                                    </img>
-                                </a>
-                                <div class="media-body">
-                                    <a class="m-b-10 h-32" ng-href="{{it.url}}" target="_blank">
-                                        <!-- <h4 class="media-heading" ng-if = "it.board != 'Sina'">{{it.title}}</h4> -->
-                                        <h4 class="media-heading f-s-16" ng-if="it.data_type!=3&&it.poster.name != ''">
-                                            {{it.poster.name}}
-                                        </h4>
-                                        <h4 class="media-heading f-s-16" ng-if="it.data_type==3">
-                                            {{it.title}}
-                                        </h4>
                                     </a>
                                     <p class="m-b-5 m-t-5 f-s-14">
                                         <a ng-click="markRead(it)" ng-href="{{it.url}}" style="color: #333" target="_blank">
@@ -226,32 +228,33 @@
                                             {{it.title}}
                                         </a>
                                     </p>
-                                    <img class="m-b-10" ng-if="it.img_url!=''" src="{{it.img_url}}" style="width: 100%;max-height: 200px"/>
-                                    <i class="text-muted">
-                                        {{it.pt_time}}, {{it.board}}
-                                    </i>
-                                    <div>
-                                        <p ng-if="it.data_type == 2">
-                                            评论(
-                                            <a href="javascript:;">
-                                                {{it.comm_num || 0}}
-                                            </a>
-                                            )
-                                                 回帖(
-                                            <a href="javascript:;">
-                                                {{it.repost_num || 0}}
-                                            </a>
-                                            )
-                                                点赞(
-                                            <a href="javascript:;">
-                                                {{it.read_num || 0}}
-                                            </a>
-                                            )
-                                        </p>
-                                        <p ng-if="it.is_read">
-                                            (已添加)
-                                        </p>
-                                    </div>
+                                    <img class="m-b-10" ng-if="it.img_url!=''" src="{{it.img_url}}" style="width: 100%;max-height: 200px">
+                                        <i class="text-muted">
+                                            {{it.pt_time}}, {{it.board}}
+                                        </i>
+                                        <div>
+                                            <p ng-if="it.data_type == 2">
+                                                评论(
+                                                <a href="javascript:;">
+                                                    {{it.comm_num || 0}}
+                                                </a>
+                                                )
+                                                     回帖(
+                                                <a href="javascript:;">
+                                                    {{it.repost_num || 0}}
+                                                </a>
+                                                )
+                                                    点赞(
+                                                <a href="javascript:;">
+                                                    {{it.read_num || 0}}
+                                                </a>
+                                                )
+                                            </p>
+                                            <p ng-if="it.is_read">
+                                                (已添加)
+                                            </p>
+                                        </div>
+                                    </img>
                                 </div>
                                 <div class="pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists" ng-show="false">
                                     <!--<a title = "帖子分析"-->
@@ -267,84 +270,97 @@
                                     <!--</a>-->
                                 </div>
                             </li>
-                            <div>
-                            </div>
-                            <div class="width-full m-t-20 loadsMore" style="display:none">
-                                <p class="text-center">
-                                    <i class="fa post_loading">
-                                    </i>
-                                </p>
-                            </div>
-                            <div class="alert alert-info fade in m-b-15 m-t-15 width-full" ng-if="!items.isLoad">
-                                <p class="text-center">
-                                    <strong>
-                                        没有更多消息啦!
-                                    </strong>
-                                </p>
-                            </div>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <!-- end panel -->
-            <!-- begin panel -->
-            <div class="panel panel-primary col-md-3 p-r-0 p-l-0 b-r-1 analy animate fadeIn" data-sortable-id="ui-widget-7" id="analy_1" style="display:none">
-                <div class="panel-heading">
-                    <div class="panel-heading-btn">
-                        <a class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload" href="javascript:;">
-                            <i class="fa fa-repeat">
-                            </i>
-                        </a>
-                        <a class="btn btn-xs btn-icon btn-circle btn-danger" href="javascript:;" ng-click="stopAnaly('analy_1')">
-                            <i class="fa fa-times">
-                            </i>
-                        </a>
-                    </div>
-                    <h4 class="panel-title">
-                        话题分析
-                    </h4>
-                </div>
-                <div class="panel-body">
-                    <div data-height="800px" data-scrollbar="true">
-                        <div class="width-full height-sm m-b-20">
-                            <h4>
-                                帖子时序分析
-                            </h4>
-                            <div class="" id="timeAna">
-                            </div>
-                        </div>
-                        <hr>
-                            <div class="width-full height-sm">
-                                <h4>
-                                    博主分析
-                                </h4>
-                                <div id="posterAna">
-                                </div>
-                            </div>
-                            <hr>
-                                <div class="width-full height-sm">
-                                    <h4>
-                                        传播路径分析
-                                    </h4>
-                                    <div id="broadcastAna">
-                                    </div>
-                                </div>
-                                <hr>
-                                    <div class="width-full height-sm">
-                                        <h4>
-                                            关键词云分析
-                                        </h4>
-                                        <div id="keywordsAna">
-                                        </div>
-                                    </div>
-                                </hr>
-                            </hr>
-                        </hr>
-                    </div>
+                <div class="pull-right p-t-1 p-r-5 width-full f-s-14 text-right iconslists" ng-show="false">
+                    <!--<a title = "帖子分析"-->
+                    <!--ng-click = "OpenAnaly('analy_1',items.topicId)">-->
+                    <!--<img src = "/static/assets/img/analy.svg">-->
+                    <!--</a>-->
+                    <a class="addsen" ng-click="AddSenmessage(it._id,it.site_id)" title="添加敏感信息">
+                        <img src="/static/assets/img/add.svg">
+                        </img>
+                    </a>
+                    <!--<a class = "save" title = "标记为已读" ng-click = "MarkRead(this)">-->
+                    <!--<img src = "/static/assets/img/save.svg">-->
+                    <!--</a>-->
                 </div>
             </div>
         </div>
-        <!-- end panel -->
-        <!-- end monitor content-->
     </div>
 </div>
+<div>
+</div>
+<div class="width-full m-t-20 loadsMore" style="display:none">
+    <p class="text-center">
+        <i class="fa post_loading">
+        </i>
+    </p>
+</div>
+<div class="alert alert-info fade in m-b-15 m-t-15 width-full" ng-if="!items.isLoad">
+    <p class="text-center">
+        <strong>
+            没有更多消息啦!
+        </strong>
+    </p>
+</div>
+<!-- end panel -->
+<!-- begin panel -->
+<div class="panel panel-primary col-md-3 p-r-0 p-l-0 b-r-1 analy animate fadeIn" data-sortable-id="ui-widget-7" id="analy_1" style="display:none">
+    <div class="panel-heading">
+        <div class="panel-heading-btn">
+            <a class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload" href="javascript:;">
+                <i class="fa fa-repeat">
+                </i>
+            </a>
+            <a class="btn btn-xs btn-icon btn-circle btn-danger" href="javascript:;" ng-click="stopAnaly('analy_1')">
+                <i class="fa fa-times">
+                </i>
+            </a>
+        </div>
+        <h4 class="panel-title">
+            话题分析
+        </h4>
+    </div>
+    <div class="panel-body">
+        <div data-height="800px" data-scrollbar="true">
+            <div class="width-full height-sm m-b-20">
+                <h4>
+                    帖子时序分析
+                </h4>
+                <div class="" id="timeAna">
+                </div>
+            </div>
+            <hr>
+                <div class="width-full height-sm">
+                    <h4>
+                        博主分析
+                    </h4>
+                    <div id="posterAna">
+                    </div>
+                </div>
+                <hr>
+                    <div class="width-full height-sm">
+                        <h4>
+                            传播路径分析
+                        </h4>
+                        <div id="broadcastAna">
+                        </div>
+                    </div>
+                    <hr>
+                        <div class="width-full height-sm">
+                            <h4>
+                                关键词云分析
+                            </h4>
+                            <div id="keywordsAna">
+                            </div>
+                        </div>
+                    </hr>
+                </hr>
+            </hr>
+        </div>
+    </div>
+</div>
+<!-- end panel -->
+<!-- end monitor content-->

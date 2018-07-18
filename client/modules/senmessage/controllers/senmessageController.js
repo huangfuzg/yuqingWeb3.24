@@ -531,9 +531,9 @@ CQ.mainApp.senmessageController
                 $scope.pageset=pageset_min.map(d=>d+page-3);
         }
         $scope.getTableData(1);
-        var $cols = ["board","infoType","url","ip_addr","qq_num","phone_num"];
-        $scope.theads = ["网站名称","信息类型","网站URL","网站IP","QQ号码","联系电话"];
-        $scope.showCols = [true,true,true,true,true,true];
+        var $cols = ["board","infoType","title","url","ip_addr","ip_addr","qq_num","phone_num"];
+        $scope.theads = ["网站名称","信息类型","信息标题","网站URL","网站物理属地","网站IP","QQ号码","联系电话"];
+        $scope.showCols = [true,true,true,true,true,true,true,true];
         $scope.exportAll = function()
         {
             for(var i = 0; i < $scope.tableData.length; i++)

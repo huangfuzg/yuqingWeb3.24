@@ -408,8 +408,8 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
         var cons = $scope.cons;
         console.log(JSON.stringify($scope.cons));
         PostDataService_.flushData(cons).then(function(freshdata) {
-            // console.log(freshdata.data.data);
             var res = freshdata.data.data;
+            // if(res[0].postData.length>0){
             $scope.monitorData.forEach(function(d) {
                 res.forEach(function(rr) {
                     if (rr.topicId == d.topicId) {
@@ -422,13 +422,25 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
                             //d.postData = rr.postData.concat(d.postData);
                             //angular.element(doms).find(".addnums").slideUp("slow");
                         }
-                        $timeout(function() {
-                            d.postData = d.bufferData.concat(d.postData);
-                            d.bufferData = [];
-                        }, 0);
+                        if (d.bufferData.length > 0) {
+                            $timeout(function() {
+                                d.postData.forEach(d => {
+                                    if (d.flag) {
+                                        d.flag = true
+                                    }
+                                });
+                                d.bufferData.push({
+                                    'flag': true,
+                                    'is_read': 0
+                                })
+                                d.postData = d.bufferData.concat(d.postData);
+                                d.bufferData = [];
+                            }, 0);
+                        }
                     }
                 });
             });
+            // }
             //console.log($scope.monitorData);
             angular.element(doms).find(".loads").slideUp("slow");
             // $timeout(function(){
@@ -438,6 +450,53 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             angular.element(doms).find(".loads").slideUp("slow");
             // angular.element(doms).find(".addnums").slideUp("slow");
             console.log(error);
+            // $scope.refreshData = function(topic_id) {
+            //     var doms = "#topic_" + topic_id;
+            //     angular.element(doms).find(".loads").slideDown("slow");
+            //     angular.element(doms).find(".addnums").fadeOut();
+            //     var topicLists = [];
+            //     $scope.monitorData.forEach(function(d) {
+            //         if (d.topicId == topic_id) {
+            //             var tl = {};
+            //             tl.topicId = d.topicId;
+            //             tl.newTime = d.newTime;
+            //             topicLists.push(tl);
+            //         }
+            //     });
+            //     $scope.cons.topicLists = topicLists;
+            //     var cons = $scope.cons;
+            //     console.log(JSON.stringify($scope.cons));
+            //     PostDataService_.flushData(cons).then(function(freshdata) {
+            //         // console.log(freshdata.data.data);
+            //         var res = freshdata.data.data;
+            //         $scope.monitorData.forEach(function(d) {
+            //             res.forEach(function(rr) {
+            //                 if (rr.topicId == d.topicId) {
+            //                     d.newTime = rr.newTime;
+            //                     d.bufferData = d.bufferData || [];
+            //                     if (rr.postData.length != 0) {
+            //                         // d.count = rr.count;
+            //                         // angular.element(doms).find(".addnums").slideDown("slow");
+            //                         d.bufferData = rr.postData.concat(d.bufferData);
+            //                         //d.postData = rr.postData.concat(d.postData);
+            //                         //angular.element(doms).find(".addnums").slideUp("slow");
+            //                     }
+            //                     $timeout(function() {
+            //                         d.postData = d.bufferData.concat(d.postData);
+            //                         d.bufferData = [];
+            //                     }, 0);
+            //                 }
+            //             });
+            //         });
+            //         //console.log($scope.monitorData);
+            //         angular.element(doms).find(".loads").slideUp("slow");
+            //         // $timeout(function(){
+            //         //         angular.element(doms).find(".addnums").slideUp("slow");
+            //         // }, 4000);
+            //     }, function(error) {
+            //         angular.element(doms).find(".loads").slideUp("slow");
+            //         // angular.element(doms).find(".addnums").slideUp("slow");
+            //         console.log(error);
         });
     };
     $scope.showMore = function(topicId) {

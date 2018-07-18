@@ -12,7 +12,7 @@ CQ.variable = {
     USER_PRIVILEGES_DEPTS: "",
     USERNAME_ADMIN: "admin",
     SECRET:"nicai",
-    MAX_LOGIN_TIME:60*60*1000,
+    MAX_LOGIN_TIME:0,
     APIKEY: null,
     RESTFUL_URL: "http://118.190.133.203:8899/yqdata/"
 };
