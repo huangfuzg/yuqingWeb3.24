@@ -111,7 +111,7 @@
             </a>
         </div>
         <div class="btn-group m-r-3 m-b-5 m-t-5">
-            <a class="btn btn-primary btn-sm" href="javascript:;" ng-click="openDia(selectedItem.split(',')[0], selectedItem.split(',')[1])">
+            <a class="btn btn-primary btn-sm" href="javascript:;" ng-click="changeTopic(selectedItem.split(',')[0])">
                 修改关键词
             </a>
         </div>
@@ -142,7 +142,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:;" ng-click="openDia(items.topicId , items.topicName)">
+                    <a href="#myModal" ng-click="changeTopic(items)" data-toggle="modal" data-backdrop="false">
                         修改关键词
                     </a>
                 </li>
