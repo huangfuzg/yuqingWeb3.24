@@ -869,52 +869,45 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
         //刷新
         $scope.reload = function(d,opretion)
         {
-            console.log("test==========",$scope.monitorData);
-            console.log("d=========",d);
             if(opretion == "save" && $scope.modelName == "添加话题")
             {
                 d.siteLists = d.siteLists || [];
                 d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+                // var con = {"topicId":d.topicId,"topicName"}
                 $scope.topicList.push(d);
                 $scope.monitorData.push(d);
                 $("#myModal").modal('hide');
                 return true;
             }
-           //  else if(opretion == "save" && $scope.modelName == "修改话题")
-           //  {
-           //      d.siteLists = d.siteLists || [];
-           //      d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
-           //      for(var i = 0; i < $scope.topicList.length; i++)
-           //      {
-           //          if($scope.topicList[i].topicName == d.topicName)
-           //          {
-           //             $scope.topicList[i] = d;
-           //             $scope.pageData[i%$scope.pageSize] = d;
-           //             $("#myModal").modal('hide');
-           //             return true;
-           //         }
-           //     }
-           // }
+            else if(opretion == "save" && $scope.modelName == "修改话题")
+            {
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+                for(var i = 0; i < $scope.topicList.length; i++)
+                {
+                    if($scope.topicList[i].topicName == d.topicName)
+                    {
+                       $scope.topicList[i] = d;
+                       // $scope.pageData[i%$scope.pageSize] = d;
+                       $("#myModal").modal('hide');
+                       return true;
+                   }
+               }
+           }
            else if(opretion == "delete")
            {
-             for(var i = 0; i < $scope.topicList.length; i++)
-             {
-                 if($scope.topicList[i].topicId == d)
-                 {
-                     $scope.topicList.splice(i,1);
-                     $scope.getDataByPage($scope.page);
-                     $scope.topicCount--;
-                     return true;
-                 }
-             }
                 for(var i = 0; i < $scope.monitorData.length; i++)
                 {
                     if($scope.monitorData[i].topicId == d)
                     {
                         $scope.monitorData.splice(i,1);
-                        // $scope.getDataByPage($scope.page);
-                        // $scope.topicCount--;
-                        $scope.$digest();
+                    }
+                }
+                for(var i = 0; i < $scope.topicList.length; i++)
+                {
+                    if($scope.topicList[i].topicId == d)
+                    {
+                        $scope.topicList.splice(i,1);
                         return true;
                     }
                 }
@@ -922,36 +915,40 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             return false;
         }
         //修改话题
-        // $scope.changeTopic = function(d)
-        // {
-        //     console.log(d);
-        //     $scope.modelName = "修改话题";
-        //     $scope.topicNameEnable = true;
-        //     $scope.topic = JSON.parse(JSON.stringify(d)) || {};
-        //     for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
-        //     {
-        //         $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
-        //     }
-        //     console.log($scope.topic);
-        //             // console.log(new d.constructor());
-        //             $scope.submitUrl = $scope.baseUrl + "/modifytopic";
-        //             // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
-        //             $scope.allsites.forEach(function(d3){
-        //                 console.log(d3);
-        //                 d3.selected = false;
-        //                 d3.detail_sites.forEach(function(d1)
-        //                 {
-        //                     d1.selected = false;
-        //                     $scope.topic.siteLists.forEach(function(d2){
-        //                         if(d2.siteId == d1.siteId)
-        //                         {
-        //                             d1.selected = true;
-        //                         }
-        //                     });
-        //                 });
-        //                 update(d3);
-        //             });
-        // };
+        $scope.changeTopic = function(d)
+        {
+            $scope.modelName = "修改话题";
+            $scope.topicNameEnable = true;
+            // $scope.topic = JSON.parse(JSON.stringify(d)) || {};
+            for(var i = 0; i < $scope.topicList.length; i++)
+            {
+                if($scope.topicList[i].topicId==d.topicId){
+                  $scope.topic = $scope.topicList[i];
+
+                }
+            }
+            for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+            {
+                $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
+            }
+                    // console.log(new d.constructor());
+                    $scope.submitUrl = $scope.baseUrl + "/modifytopic";
+                    // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
+                    $scope.allsites.forEach(function(d3){
+                        d3.selected = false;
+                        d3.detail_sites.forEach(function(d1)
+                        {
+                            d1.selected = false;
+                            $scope.topic.siteLists.forEach(function(d2){
+                                if(d2.siteId == d1.siteId)
+                                {
+                                    d1.selected = true;
+                                }
+                            });
+                        });
+                        update(d3);
+                    });
+        };
 }]).controller("openTopic", ["$rootScope", "$scope", "ngDialog", function($rootScope, $scope, ngDialog) {
     console.log("openTopic", "start!!!");
 }]).controller("pauseTopic", ["$rootScope", "$scope", "ngDialog", function($rootScope, $scope, ngDialog) {
@@ -1659,7 +1656,6 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
                 $scope.topic.topicKeywords.push(newKeywords);
             }
         }
-        console.log($scope.topic.topicKeywords);
         $scope.closeThisDialog();
     }
 }])
