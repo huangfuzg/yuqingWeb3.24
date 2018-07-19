@@ -7,6 +7,11 @@ CQ.mainApp.monitorController
                 templateUrl: "/static/modules/monitor/pages/monitor.html",
                 controller: "monitorController"
             })
+            // .state("manageTopicController", {
+            //     url:"/manageTopic",
+            //     templateUrl: "/static/modules/monitor/pages/manageTopic.html",
+            //     controller: "manageTopicController"
+            // })
             .state("sentopicAnalysController", {
                 url:"/topicAnalys/:topicId",
                 templateUrl: "/static/modules/monitor/pages/topicAnalys.html",
