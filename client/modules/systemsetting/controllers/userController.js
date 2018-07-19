@@ -18,7 +18,7 @@ CQ.mainApp.systemsettingController
                     var dic=data.data.topic;
                     $scope.topicList=[];
                     for (var key in dic){
-                        var topiclist=dic[key]; 
+                        var topiclist=dic[key];
                         if(topiclist.length!=0)
                         {
                             topiclist[0].rowspan=topiclist.length;
@@ -40,11 +40,11 @@ CQ.mainApp.systemsettingController
                             });
                         }
                     };
-                    console.log($scope.topicList);                                               
+                    console.log($scope.topicList);
                     $scope.topicCount = $scope.topicList.length;
                     $scope.allsites = data.data.allSites;
                     $scope.getDataByPage($scope.page);
-                    
+
                 });
                 console.log("userSetting app start!!!");
                 App.runui();
@@ -298,9 +298,9 @@ CQ.mainApp.systemsettingController
                     persist: false,
                     createOnBlur: true,
                     create: false,
-                    sortField: {  
-                        field: 'text',  
-                        direction: 'asc'  
+                    sortField: {
+                        field: 'text',
+                        direction: 'asc'
                      },
                     valueField:'user_',
                     labelField:'user_',
@@ -316,7 +316,7 @@ CQ.mainApp.systemsettingController
                         // console.log($scope.recid);
                     }
                 });
-           
+
                 console.log("zyz2");
                 console.log(data);
                 $scope.grouplist=data.data;
@@ -409,7 +409,7 @@ CQ.mainApp.systemsettingController
                        $scope.topicList[i] = d;
                        $scope.pageData[i%$scope.pageSize] = d;
                        $("#myModal").modal('hide');
-                       return true; 
+                       return true;
                    }
                }
            }
@@ -433,13 +433,13 @@ CQ.mainApp.systemsettingController
                         console.log(j);
                         $scope.topicList[j].rowspan--;
                     }
-                    
+
                    $scope.topicList.splice(i,1);
                    console.log("Here");
                    console.log($scope.topicList);
                    $scope.getDataByPage($scope.page);
                    $scope.topicCount--;
-                   return true; 
+                   return true;
                }
            }
        }
@@ -468,7 +468,7 @@ CQ.mainApp.systemsettingController
                 }
 
             }
-            
+
             console.log($scope.pageData);
         };
         //修改话题
@@ -502,7 +502,7 @@ CQ.mainApp.systemsettingController
                     });
                 };
             }])
-.controller("deleteTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
+.controller("deleteTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope,
     $http, ngDialog, notice) {
     console.log("delete topic");
     $scope.deleteTopic = function() {
@@ -526,7 +526,7 @@ CQ.mainApp.systemsettingController
         });
     };
 }])
-.controller("deleteMyTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope, 
+.controller("deleteMyTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope,
     $http, ngDialog, notice) {
     console.log("delete topic");
     $scope.deleteMyTopic = function() {
@@ -571,8 +571,8 @@ CQ.mainApp.systemsettingController
         $scope.closeThisDialog();
     }
 }])
-.controller("userSettingController", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function ($rootScope, 
-    $scope, $http, ngDialog, notice) 
+.controller("userSettingController", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function ($rootScope,
+    $scope, $http, ngDialog, notice)
     {
     console.log("userSettingController", "start!!!");
     $scope.topic_id = null;
@@ -850,7 +850,7 @@ CQ.mainApp.systemsettingController
                        $scope.topicList[i] = d;
                        $scope.pageData[i%$scope.pageSize] = d;
                        $("#myModal").modal('hide');
-                       return true; 
+                       return true;
                    }
                }
            }
@@ -863,7 +863,7 @@ CQ.mainApp.systemsettingController
                         $scope.topicList.splice(i,1);
                         $scope.getDataByPage($scope.page);
                         $scope.topicCount--;
-                        return true; 
+                        return true;
                     }
                 }
             }
@@ -925,13 +925,13 @@ function nameexistCheck(){
             ctrl.$validators.exist = function(modelValue, viewValue) {
                 if($scope.modelName!='添加话题' || $scope.topicList == undefined)
                     return true;
-                var value = modelValue || viewValue; 
+                var value = modelValue || viewValue;
                 for(var index = 0; index<$scope.topicList.length; index++)
                 {
                     if($scope.topicList[index].topicName == value)
                     {
                         return false;
-                    }    
+                    }
                 }
                 return true;
             };

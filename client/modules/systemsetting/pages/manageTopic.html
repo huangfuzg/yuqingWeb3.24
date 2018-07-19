@@ -1,16 +1,29 @@
+<style>
+.dia_warning{
+    color: #f59c1a;
+}
+
+.ngdialog.ngdialog-theme-enginesetting {
+    padding: 5% !important;
+}
+
+.ngdialog.ngdialog-theme-enginesetting .ngdialog-content {
+    width: 800px !important;
+}
+</style>
 <div id="content" class="content content-full-width">
     <div class="p-20">
     <!-- begin row -->
     <div class="row">
         <div class="col-md-12">
             <div class="email-btn-row hidden-xs f-s-15">
-                
+
                 <a href="#myModal2" class="btn btn-sm btn-primary" ng-permission="2" ng-click="newTopics()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 批量添加话题 </a>
 
                 <a href="#/userSetting" class="btn btn-sm btn-primary" ng-permission="2"> 查看我的话题</a>
 
 
-                
+
 
                 <!-- <span class="dropdown">
                     <a href="email_inbox.html#" class="email-header-link btn btn-sm btn-inverse" data-toggle="dropdown">View All <i class="fa fa-angle-down m-l-5"></i></a>
@@ -60,8 +73,8 @@
                     <tbody>
                         <tr ng-repeat="topicItem in pageData">
                             <td style="width: 10%" ng-show = "false">{{topicItem.topicId}}</td>
-                            <td  style="width: 15%;vertical-align: middle"  
-                            ng-if = "topicItem.rowspan" 
+                            <td  style="width: 15%;vertical-align: middle"
+                            ng-if = "topicItem.rowspan"
                             rowspan={{topicItem.rowspan}}>{{topicItem.username}}</td>
                             <td style="width: 15%;vertical-align: middle">{{topicItem.topicName}}</td>
                             <td style="width: 30%;vertical-align: middle">{{toStr(topicItem.topicKeywords)}}</td>
@@ -156,36 +169,36 @@
                                                 </div>
                                                 <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.required
                                                 &&topicForm.keywords_{{i}}.$dirty" style="position: relative; left: 80%">
-                                                关键词组不能为空   
+                                                关键词组不能为空
                                                 </span>
                                                 <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.pattern" style="position: relative; left: 70%">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
                                             </div>
-                                            <!-- <div style="width: 100%;" class="m-b-15"> 
+                                            <!-- <div style="width: 100%;" class="m-b-15">
                                                 <i class="" style="width: 4%; display: inline-block;">
-                                                    AND: 
+                                                    AND:
                                                 </i>
                                                 <textarea type="text" name="andkeywords" class="form-control" ng-model="topic.topicKeywords._and" required="" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" style="width: 95%; display: inline-block; vertical-align: middle;"/>
                                                 </textarea>
                                                 <span class="pull-right text-danger" ng-show="topicForm.andkeywords.$error.require
                                                 &&topicForm.andkeywords.$dirty">
-                                                必须含有一个关键词   
+                                                必须含有一个关键词
                                                 </span>
                                                 <span class="pull-right text-danger" ng-show="topicForm.andkeywords.$error.pattern">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
                                             </div>
-                                            <div style="width: 100%;" class="m-b-15"> 
+                                            <div style="width: 100%;" class="m-b-15">
                                                 <i class="" style="width: 4%; display: inline-block;">
-                                                    OR: 
+                                                    OR:
                                                 </i>
                                                 <textarea type="text" name="orkeywords" class="form-control" ng-model="topic.topicKeywords._or" required="" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" style="width: 95%; display: inline-block; vertical-align: middle;"/>
                                                 </textarea>
                                                 <span class="pull-right text-danger" ng-show="topicForm.orkeywords.$error.require
                                                 &&topicForm.orkeywords.$dirty">
-                                                必须含有一个关键词   
-                                                </span>   
+                                                必须含有一个关键词
+                                                </span>
                                                 <span class="pull-right text-danger" ng-show="topicForm.orkeywords.$error.pattern">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
@@ -198,7 +211,7 @@
                                                 <ul class="nav nav-pills nav-stacked nav-sm panel-body">
                                                     <li ng-repeat="oneTypeSite in allsites">
                                                     <span><input type="checkbox" ng-model="oneTypeSite.selected" ng-click="onAllSelected(oneTypeSite)"/></span>
-                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i>
                                                     {{ oneTypeSite.siteTypeName }}</a>
                                                     <ul id="{{oneTypeSite.siteTypeId}}" class="collapse list-inline in">
                                                         <li ng-repeat="node in oneTypeSite.detail_sites">
@@ -272,12 +285,12 @@
                                     <form method="POST" name="topicForm" ng-submit="addTopics()" novalidate="false">
                                         <!-- begin email to -->
 
-                                        
+
                                         <label class="control-label">添加人:</label>
                                         <div class="m-b-15 ">
                                             <input type="text" id="users">
                                         </div>
-                                        
+
 
                                         <label class="control-label">话题名称:</label>
                                         <div class="m-b-15">
@@ -313,36 +326,36 @@
                                                 </div>
                                                 <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.required
                                                 &&topicForm.keywords_{{i}}.$dirty" style="position: relative; left: 80%">
-                                                关键词组不能为空   
+                                                关键词组不能为空
                                                 </span>
                                                 <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.pattern" style="position: relative; left: 70%">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
                                             </div>
-                                            <!-- <div style="width: 100%;" class="m-b-15"> 
+                                            <!-- <div style="width: 100%;" class="m-b-15">
                                                 <i class="" style="width: 4%; display: inline-block;">
-                                                    AND: 
+                                                    AND:
                                                 </i>
                                                 <textarea type="text" name="andkeywords" class="form-control" ng-model="topic.topicKeywords._and" required="" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" style="width: 95%; display: inline-block; vertical-align: middle;"/>
                                                 </textarea>
                                                 <span class="pull-right text-danger" ng-show="topicForm.andkeywords.$error.require
                                                 &&topicForm.andkeywords.$dirty">
-                                                必须含有一个关键词   
+                                                必须含有一个关键词
                                                 </span>
                                                 <span class="pull-right text-danger" ng-show="topicForm.andkeywords.$error.pattern">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
                                             </div>
-                                            <div style="width: 100%;" class="m-b-15"> 
+                                            <div style="width: 100%;" class="m-b-15">
                                                 <i class="" style="width: 4%; display: inline-block;">
-                                                    OR: 
+                                                    OR:
                                                 </i>
                                                 <textarea type="text" name="orkeywords" class="form-control" ng-model="topic.topicKeywords._or" required="" ng-pattern="/^(([\u4e00-\u9fa5]|\w)+\,)*(([\u4e00-\u9fa5]|\w)+)$/" style="width: 95%; display: inline-block; vertical-align: middle;"/>
                                                 </textarea>
                                                 <span class="pull-right text-danger" ng-show="topicForm.orkeywords.$error.require
                                                 &&topicForm.orkeywords.$dirty">
-                                                必须含有一个关键词   
-                                                </span>   
+                                                必须含有一个关键词
+                                                </span>
                                                 <span class="pull-right text-danger" ng-show="topicForm.orkeywords.$error.pattern">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
@@ -355,7 +368,7 @@
                                                 <ul class="nav nav-pills nav-stacked nav-sm panel-body">
                                                     <li ng-repeat="oneTypeSite in allsites">
                                                     <span><input type="checkbox" ng-model="oneTypeSite.selected" ng-click="onAllSelected(oneTypeSite)"/></span>
-                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i>
                                                     {{ oneTypeSite.siteTypeName }}</a>
                                                     <ul id="{{oneTypeSite.siteTypeId}}" class="collapse list-inline in">
                                                         <li ng-repeat="node in oneTypeSite.detail_sites">
@@ -373,7 +386,7 @@
                                                 <ul class="nav nav-pills nav-stacked nav-sm panel-body">
                                                     <li>
                                                     <span><input type="checkbox" ng-model="oneTypeSite.selected" ng-click="onAllSelected(oneTypeSite)"/></span>
-                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                                                    <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i>
                                                     添加人</a>
                                                     <ul id="{{oneTypeSite.siteTypeId}}" class="collapse list-inline in">
                                                         <li ng-repeat="people in grouplist">

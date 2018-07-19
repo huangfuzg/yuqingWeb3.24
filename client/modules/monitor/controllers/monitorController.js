@@ -509,6 +509,7 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             scope: $scope
         });
     };
+
     $scope.startTop = function(topic_id) {
         $scope.topic_id = "topic_" + topic_id;
         $scope.monitortopic_id = "monitortopic_" + topic_id;
@@ -531,6 +532,17 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             scope: $scope
         });
     };
+    // $scope.SetTopic = function() {
+    //     console.log("set Topic");
+    //     ngDialog.open({
+    //         template: '/static/modules/monitor/pages/manageTopic.html',
+    //         controller: 'manageTopicController',
+    //         appendClassName: "ngdialog-theme-enginesetting",
+    //         width: "100%",
+    //         scope: $scope
+    //     });
+    // };
+
     // $scope.ShowSenAnalys = function(topic_id){
     //     // console.log(topic_id);
     //     $scope.topic_id = topic_id;
@@ -606,6 +618,340 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             topicId: topicId
         });
     };
+    $scope.topic_id = null;
+        //页面UI初始化；
+        $scope.$on('$viewContentLoaded', function() {
+            if($rootScope.mainController) {
+                $scope.userId = 1;
+                $scope.baseUrl = CQ.variable.RESTFUL_URL ;
+                var url = $scope.baseUrl+"/settopic";
+                //?userId=" + $scope.userId;
+                // var url = "/static/setup.json";
+                var sites = "";
+                $scope.page = 0;
+                $http.get(url).success(function(data){
+                    console.log(data);
+                    data.data.topicData.forEach(function(d){
+                        sites = "";
+                        d.siteLists.forEach(function(site){
+                            if(sites != "")
+                            {
+                                sites += ",";
+                            }
+                            if(site.siteName)
+                            {
+                                sites += site.siteName;
+                            }
+                        });
+                        d.sitesStr = sites;
+                    });
+                    $scope.topicList = data.data.topicData;
+                    $scope.topicCount = $scope.topicList.length;
+                    $scope.allsites = data.data.allSites;
+                    // $scope.getDataByPage($scope.page);
+                });
+                console.log("userSetting app start!!!");
+                App.runui();
+            }
+        });
+
+        $scope.onDragComplete = function($data,$event)
+        {
+
+        };
+
+        $scope.onDropComplete = function($data,$event)
+        {
+            for(var i = 0; i < $scope.allsites.length; i++)
+            {
+                for(var j = 0; j < $scope.allsites[i].detail_sites.length; j++)
+                {
+                    if($scope.allsites[i].detail_sites[j].siteId == $data.siteId)
+                    {
+                        if($scope.allsites[i].detail_sites[j].selected)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            $scope.allsites[i].detail_sites[j].selected = true;
+                            $scope.topic.siteLists.push($data);
+                            return;
+                        }
+                    }
+                }
+            }
+        };
+        //拖动全选
+        $scope.onAllDrag = function($data,$event)
+        {
+            //$event.stopPropagation();
+            for(var i = 0; i < $scope.allsites.length; i++)
+            {
+                if($scope.allsites[i].siteTypeId ==$data.siteTypeId)
+                {
+                    $scope.allsites[i].selected = true;
+                    $scope.allsites[i].detail_sites.forEach(function(d1){
+                        d1.selected = $scope.allsites[i].selected;
+                        $scope.checkBoxChange(d1);
+                    });
+                    return;
+                }
+            }
+        };
+
+        //全选
+        $scope.onAllSelected = function(d)
+        {
+            d.detail_sites.forEach(function(d1){
+                d1.selected = d.selected;
+                $scope.checkBoxChange(d1);
+            });
+        }
+        //删除话题
+        $scope.remove = function(d)
+        {
+          // console.log("test==============",d);
+            $scope.topic_id = d.topicId;
+
+            ngDialog.open(
+            {
+                template: '/static/modules/monitor/pages/deleteMyTopic.html',
+                controller: 'deleteMyTopic',
+                width:"10%",
+                scope:$scope,
+                // closePromise.then(function(){
+                //   window.location.reload("index.html#/monitor/-1/-1");
+                // })
+            });
+        };
+        $scope.toggle = function (scope) {
+            scope.toggle();
+        };
+        //修改、添加话题
+        $scope.save = function()
+        {
+            console.log($scope.topic);
+            $scope.jsonData = {};
+            $scope.jsonData.userId = $scope.userId;
+            // if($scope.topic.topicId)
+            //     $scope.jsonData.topicId = $scope.topic.topicId;
+            $scope.jsonData.topicName = $scope.topic.topicName;
+            // $scope.topic.topicKeywords._and = $scope.topic.topicKeywords.and.toString().split(',');
+            // $scope.topic.topicKeywords._or = $scope.topic.topicKeywords.or.toString().split(',');
+            $scope.jsonData.topicKeywords = $scope.topic.topicKeywords;
+            for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+            {
+                $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
+            }
+            console.log($scope.topic.topicKeywords);
+            $scope.jsonData.sites = $scope.topic.siteLists;
+            $scope.jsonData = JSON.stringify($scope.jsonData);
+            console.log($scope.jsonData);
+            $http({
+                url: $scope.submitUrl,
+                method: 'post',
+                data: $scope.jsonData,
+            }).success(function(data, status, headers, config){
+                if(data.success == false) {
+                    //alert("操作失败!即将为您跳转...");
+                    notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
+                }
+                else if(data.success == true){
+                  // setTimeout(function(){
+                  //     window.location.reload("index.html#/monitor/-1/-1");
+                  // },2000);
+                    notice.notify_info("您好！", "话题操作成功！" ,"",false,"","");
+                    if(!!data.data)
+                    {
+                        console.log("ZYZ");
+                        $scope.topic.topicId = data.data.topic_id;
+                        console.log($scope.topic);
+                    }
+                    $scope.reload($scope.topic,"save");
+                }
+
+            })
+            .error(function(){
+                //alert("未知的错误!即将为您跳转...");
+                notice.notify_info("您好！", "服务器出错！！" ,"",false,"","");
+            });
+        }
+        $scope.openBatchPage = function()
+        {
+            ngDialog.open(
+            {
+                template: '/static/modules/monitor/pages/batchKeywords.html',
+                controller: 'batchKeywords',
+                appendClassName: "ngdialog-theme-form",
+                width: "100%",
+                scope: $scope
+            }
+            );
+        }
+        //添加与关键词组
+        $scope.addAndKeywords = function()
+        {
+            var andKeywords = [];
+            $scope.topic.topicKeywords.push(andKeywords);
+            console.log($scope.topic.topicKeywords);
+        }
+        //删除与关键词组
+        $scope.delAndKeywords = function(i)
+        {
+            $scope.topic.topicKeywords.splice(i,1);
+        }
+        //关键词显示
+        $scope.toStr = function(kw)
+        {
+            if(!(kw instanceof Array))
+            {
+                return console.error("kw is not a array");
+            }
+            var result = kw[0].toString();
+            for(var i = 1; i < kw.length; i++)
+            {
+                result += ";" + kw[i].toString();
+            }
+            return result;
+        }
+        //添加话题
+        $scope.newTopic = function()
+        {
+            $scope.modelName = "添加话题";
+            $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
+            $scope.topic.topicKeywords.push([]);
+            $scope.allsites.forEach(function(d1)
+            {
+                d1.selected = false;
+                d1.detail_sites.forEach(function(d){
+                    d.selected = false;
+                });
+            });
+            console.log($scope.topic);
+            $scope.topicNameEnable = false;
+            $scope.submitUrl  = $scope.baseUrl + "/addtopic";
+        }
+        //选择站点
+        $scope.checkBoxChange = function(d,typesite)
+        {
+            if(typesite)
+            {
+                update(typesite);
+            }
+            if(d.selected)
+            {
+                for(var index = 0; index < $scope.topic.siteLists.length; index++)
+                {
+                    if($scope.topic.siteLists[index].siteId == d.siteId)
+                        return;
+                }
+                $scope.topic.siteLists.push({"siteId":d.siteId,"siteName":d.siteName});
+            }
+            else
+            {
+                for(var index = 0; index < $scope.topic.siteLists.length; index++)
+                {
+                    if($scope.topic.siteLists[index].siteId == d.siteId)
+                        $scope.topic.siteLists.splice(index, 1);
+                }
+            }
+            // console.log($scope.topic.siteLists);
+        }
+        function update(d)
+        {
+            d.selected = true;
+            for(var i = 0; i < d.detail_sites.length; i++)
+            {
+                d.selected = (d.selected && d.detail_sites[i].selected);
+            }
+        }
+        //刷新
+        $scope.reload = function(d,opretion)
+        {
+            console.log("test==========",$scope.monitorData);
+            console.log("d=========",d);
+            if(opretion == "save" && $scope.modelName == "添加话题")
+            {
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+                $scope.topicList.push(d);
+                $scope.monitorData.push(d);
+                $("#myModal").modal('hide');
+                return true;
+            }
+           //  else if(opretion == "save" && $scope.modelName == "修改话题")
+           //  {
+           //      d.siteLists = d.siteLists || [];
+           //      d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+           //      for(var i = 0; i < $scope.topicList.length; i++)
+           //      {
+           //          if($scope.topicList[i].topicName == d.topicName)
+           //          {
+           //             $scope.topicList[i] = d;
+           //             $scope.pageData[i%$scope.pageSize] = d;
+           //             $("#myModal").modal('hide');
+           //             return true;
+           //         }
+           //     }
+           // }
+           else if(opretion == "delete")
+           {
+             for(var i = 0; i < $scope.topicList.length; i++)
+             {
+                 if($scope.topicList[i].topicId == d)
+                 {
+                     $scope.topicList.splice(i,1);
+                     $scope.getDataByPage($scope.page);
+                     $scope.topicCount--;
+                     return true;
+                 }
+             }
+                for(var i = 0; i < $scope.monitorData.length; i++)
+                {
+                    if($scope.monitorData[i].topicId == d)
+                    {
+                        $scope.monitorData.splice(i,1);
+                        // $scope.getDataByPage($scope.page);
+                        // $scope.topicCount--;
+                        $scope.$digest();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        //修改话题
+        // $scope.changeTopic = function(d)
+        // {
+        //     console.log(d);
+        //     $scope.modelName = "修改话题";
+        //     $scope.topicNameEnable = true;
+        //     $scope.topic = JSON.parse(JSON.stringify(d)) || {};
+        //     for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+        //     {
+        //         $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
+        //     }
+        //     console.log($scope.topic);
+        //             // console.log(new d.constructor());
+        //             $scope.submitUrl = $scope.baseUrl + "/modifytopic";
+        //             // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
+        //             $scope.allsites.forEach(function(d3){
+        //                 console.log(d3);
+        //                 d3.selected = false;
+        //                 d3.detail_sites.forEach(function(d1)
+        //                 {
+        //                     d1.selected = false;
+        //                     $scope.topic.siteLists.forEach(function(d2){
+        //                         if(d2.siteId == d1.siteId)
+        //                         {
+        //                             d1.selected = true;
+        //                         }
+        //                     });
+        //                 });
+        //                 update(d3);
+        //             });
+        // };
 }]).controller("openTopic", ["$rootScope", "$scope", "ngDialog", function($rootScope, $scope, ngDialog) {
     console.log("openTopic", "start!!!");
 }]).controller("pauseTopic", ["$rootScope", "$scope", "ngDialog", function($rootScope, $scope, ngDialog) {
@@ -1273,7 +1619,51 @@ CQ.mainApp.monitorController.controller("monitorController", ["$rootScope", "$sc
             };
         }
     }
-]).controller("addSenmessage", ["$rootScope", "$scope", "ngDialog", "MonitorFacService", "PostDataService_", "notice",
+])
+.controller("deleteMyTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope,
+    $http, ngDialog, notice) {
+    console.log("delete topic");
+    $scope.deleteMyTopic = function() {
+        $scope.removeUrl = $scope.baseUrl + "/deletetopic";
+        $http({
+            params: {topicId : $scope.topic_id},
+            //url:"http://118.190.133.203:8100/yqdata/deletetopic",
+            url: $scope.removeUrl,
+            method: 'get',
+        })
+        .success(function(data, status, headers, config){
+            // window.location.reload("index.html#/monitor/-1/-1");
+            ngDialog.closeAll();
+            notice.notify_info("您好！","话题删除成功！","",false,"","");
+            $scope.reload($scope.topic_id,"delete");
+            })
+        .error(function(error){
+            notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
+        });
+    };
+}])
+.controller("batchKeywords", ["$scope",function($scope) {
+    console.log("batchKeywords");
+    $scope.must_keywords = {"keywords":"","info":"关键词组1","error":{"null":"不能为空","pattern":"关键词之间需以英文,隔开"}};
+    $scope.should_keywords = {"keywords":"","info":"关键词组2","error":{"null":"不能为空","pattern":"关键词之间需以英文,隔开"}};
+    $scope.combination = function()
+    {
+        var keywords1 = $scope.must_keywords.keywords.split(","),
+        keywords2 = $scope.should_keywords.keywords.split(",");
+        for(var i = 0; i < keywords1.length; i++)
+        {
+            for(var j = 0; j < keywords2.length; j++)
+            {
+                var newKeywords = [keywords1[i],keywords2[j]];
+                newKeywords.str = newKeywords.toString();
+                $scope.topic.topicKeywords.push(newKeywords);
+            }
+        }
+        console.log($scope.topic.topicKeywords);
+        $scope.closeThisDialog();
+    }
+}])
+.controller("addSenmessage", ["$rootScope", "$scope", "ngDialog", "MonitorFacService", "PostDataService_", "notice",
     function($rootScope, $scope, ngDialog, MonitorFacService, PostDataService_, notice) {
         console.log("addSenmessage", "start!!!");
         //console.log($scope.post_id);
