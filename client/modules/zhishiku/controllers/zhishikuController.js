@@ -848,7 +848,7 @@ CQ.mainApp.zhishikuController
 
                     })
                     mychart.on('click',function (params) {
-                        // console.log(params)
+                         console.log(params)
                         if(params.seriesIndex!='undefined'){
 
 
@@ -1066,15 +1066,17 @@ CQ.mainApp.zhishikuController
             var leg = [],ti=[],dat=[];
             var topics=[]
             for(var i=0;i<6;i++){
-                dat[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];}
+                dat[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+            }
             ex.forEach(function (d) {
+                console.log(d);
                 if(leg.indexOf(d.topic)==-1)
                     leg.push(d.topic);
                 if(ti.indexOf(d.time)==-1)
                     ti.push(d.time);
                 ti.sort();
                 var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
-                // console.log(tmp)
+                console.log(tmp)
                 dat[d.type-1][tmp-15]=d.num;
                 if(topics[topics.length-1]!=d.topic)
                     topics.push(d.topic);
@@ -1196,4 +1198,189 @@ CQ.mainApp.zhishikuController
                 });
             }
         });
+    }]).controller("evaluationController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
+    function($rootScope, $scope, $http, ngDialog, $state) {
+        console.log("guidanceController", "start!!!");
+        $rootScope.modelName="引导评估";
+        //页面UI初始化；
+        $scope.evaluation = {};
+        var evaluation = {};
+        $scope.yd_data = {};
+        $http({
+                method:"get",
+                url:"/static/assets/data/zhishiku/evaluation.json",
+            }).then(function (res) {
+                evaluation = res.data;
+                $scope.evaluation = evaluation[0];
+                })
+        // $http({
+        //             method:"get",
+        //             url:"/static/assets/data/zhishiku/yindao.json"
+        //         }).then(function(res){
+        //             $scope.guideData = res.data;
+        //             console.log($scope.guideData);
+        //         },function (res) {
+
+        //         });
+        $scope.getData = function(){
+            console.log($scope.yd_data);
+            angular.forEach(evaluation,function(index,item){
+                        console.log(index,item)
+                        if($scope.yd_data.name!=undefined){
+                            console.log($scope.yd_data.name);
+                            if($scope.yd_data.name===index.time){
+                                console.log(item);
+                                 $scope.evaluation = evaluation[item];
+                            }
+                        }
+                    })
+        }
+        var mychart = echarts.init(document.getElementById('yqts'));
+        var option = {
+            tooltip: {
+                trigger: 'axis',
+                triggerOn:'click|mousemove',
+                // {
+                //     click:function(params){
+                //         console.log(params);
+                //     }
+                // },
+                position: function(pt) {
+                    return [pt[0], '10%'];
+                },
+                axisPointer : { // 坐标轴指示器，坐标轴触发有效
+                            type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+                        },
+                formatter:function(params){
+                    // console.log(params[0])
+                    $scope.yd_data = params[0];
+                    var str = '<div>当前时间:'+params[0].axisValue+'</div><div>舆情态势值:'+params[0].data+'</div>'
+                    return str
+                }
+            },
+            title: {
+                left: '',
+                text: '舆情态势值走势',
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            legend: {
+                data:['当前舆情态势值','安全态势','爆发']
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ["2017/8/15","2017/8/16","2017/8/17","2017/8/18","2017/8/19","2017/8/20","2017/8/21","2017/8/22","2017/8/23","2017/8/24","2017/8/25"]
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '100%']
+            },
+            dataZoom: [{
+                type: 'inside',
+                start: 0,
+                end: 10
+            }, {
+                start: 0,
+                end: 10,
+                handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                handleSize: '80%',
+                handleStyle: {
+                    color: '#fff',
+                    shadowBlur: 3,
+                    shadowColor: 'rgba(0, 0, 0, 0.6)',
+                    shadowOffsetX: 2,
+                    shadowOffsetY: 2
+                }
+            }],
+            series: [
+            {
+                name: '当前舆情态势值',
+                type: 'line',
+                smooth: true,
+                symbol: 'circle',
+                symbolSize: 8,
+                sampling: 'average',
+                itemStyle: {
+                    normal: {
+                        color: 'rgb(255, 70, 131)'
+                    }
+                },
+                // areaStyle: {
+                //     normal: {
+                //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                //             offset: 0,
+                //             color: 'rgb(255, 158, 68)'
+                //         }, {
+                //             offset: 1,
+                //             color: 'rgb(255, 70, 131)'
+                //         }])
+                //     }
+                // },
+                data: [66,37,53,64,58,41,43,46,54,55,58]
+            },
+            {
+                name:'安全态势',
+                type:'line',
+                smooth:true,
+                stack: 'a',
+                symbol: 'none',
+                symbolSize: 5,
+                sampling: 'average',
+                itemStyle: {
+                    normal: {
+                        color: '#8ec6ad'
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#8ec6ad'
+                        }, {
+                            offset: 1,
+                            color: '#ffe'
+                        }])
+                    }
+                },
+                data: [60,60,60,60,60,60,60,60,60,60,60]
+            },
+            {
+                name:'爆发',
+                type:'line',
+                smooth:true,
+                stack: 'b',
+                symbol: 'none',
+                symbolSize: 5,
+                sampling: 'average',
+                itemStyle: {
+                    normal: {
+                        color: '#d68262'
+                    }
+                },
+                areaStyle: {
+                    normal: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                            offset: 0,
+                            color: '#d68262'
+                        }, {
+                            offset: 1,
+                            color: '#ffe'
+                        }])
+                    }
+                },
+                data: [50,50,50,50,50,50,50,50,50,50,50]
+            }]
+        };
+        mychart.setOption(option);
+        // mychart.on('click',function () {
+        //     console.log($scope.yd_data);
+        // })
     }]);
