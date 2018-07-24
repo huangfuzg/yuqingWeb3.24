@@ -1225,12 +1225,12 @@ CQ.mainApp.zhishikuController
         $scope.getData = function(){
             console.log($scope.yd_data);
             angular.forEach(evaluation,function(index,item){
-                        console.log(index,item)
                         if($scope.yd_data.name!=undefined){
-                            console.log($scope.yd_data.name);
+                            // console.log($scope.yd_data.name);
                             if($scope.yd_data.name===index.time){
-                                console.log(item);
+                                // console.log(item);
                                  $scope.evaluation = evaluation[item];
+                                 console.log($scope.evaluation);
                             }
                         }
                     })
@@ -1252,15 +1252,46 @@ CQ.mainApp.zhishikuController
                             type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                         },
                 formatter:function(params){
-                    // console.log(params[0])
+                    //console.log(params[0])
                     $scope.yd_data = params[0];
-                    var str = '<div>当前时间:'+params[0].axisValue+'</div><div>舆情态势值:'+params[0].data+'</div>'
+                    angular.forEach(evaluation,function(index,item){
+                        if($scope.yd_data.name!=undefined){
+                            // console.log($scope.yd_data.name);
+                            if($scope.yd_data.name===index.time){
+                                // console.log(item);
+                                 $scope.evaluation = evaluation[item];
+                                 //console.log($scope.evaluation);
+                            }
+                        }
+                    })
+                    var str = '\
+                            <table class="table table-bordered">\
+                                <tbody>\
+                                    <tr>\
+                                        <th>当前时间</th>\
+                                        <td>'+$scope.evaluation.time+'</td>\
+                                    </tr>\
+                                    <tr>\
+                                        <th>舆情态势值</th>\
+                                        <td>'+$scope.evaluation.value+'</td>\
+                                    </tr>\
+                                    <tr>\
+                                        <th>时间发展状态</th>\
+                                        <td>'+$scope.evaluation.state+'</td>\
+                                    </tr>\
+                                    <tr>\
+                                        <th>对应引导策略</th>\
+                                        <td>'+$scope.evaluation.method+'</td>\
+                                    </tr>\
+                                </tbody>\
+                            </table>'
+
                     return str
                 }
             },
             title: {
                 left: '',
-                text: '舆情态势值走势',
+                // text: '舆情态势值走势',
             },
             toolbox: {
                 feature: {
@@ -1286,7 +1317,7 @@ CQ.mainApp.zhishikuController
             dataZoom: [{
                 type: 'inside',
                 start: 0,
-                end: 10
+                end: 60
             }, {
                 start: 0,
                 end: 10,
