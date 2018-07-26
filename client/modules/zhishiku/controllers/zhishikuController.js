@@ -1201,9 +1201,10 @@ CQ.mainApp.zhishikuController
     }]).controller("evaluationController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("guidanceController", "start!!!");
-        $rootScope.modelName="引导评估";
+        $rootScope.modelName="舆情导控";
         //页面UI初始化；
         $scope.evaluation = {};
+        $scope.scenedata = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
         var evaluation = {};
         $scope.yd_data = {};
         $http({
@@ -1222,6 +1223,63 @@ CQ.mainApp.zhishikuController
         //         },function (res) {
 
         //         });
+        var mychart1 = echarts.init(document.getElementById('scene'));
+                    var option1 = {
+                        title: {
+                            // text: '基础雷达图'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data: ['舆情场景'],
+                            x:'left',
+                            y:'top'
+                        },
+                        radar: {
+                            // shape: 'circle',
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    backgroundColor: '#999',
+                                    borderRadius: 3,
+                                    padding: [3, 5]
+                               }
+                            },
+                            indicator: [
+                               { name: '话题集中度', max: 5},
+                               { name: '年龄分布', max: 5},
+                               { name: '地域分布 ', max: 5},
+                               { name: '平台分布 ', max: 5},
+                               { name: '参与人敏感度', max: 5},
+                               { name: '粉丝数量', max: 5},
+                               { name: '已产生时间', max: 5},
+                               { name: '识别准确率', max: 5},
+                               { name: '平台数', max: 5},
+                               { name: '主题集中度', max: 5},
+                               { name: '数据类型分布', max: 5},
+                               { name: '事件敏感度', max: 5},
+                               { name: '传播速度', max: 5},
+                               { name: '人群活跃度', max: 5},
+                               { name: '传播飙升度', max: 5},
+                               { name: '人群飙升度', max: 5},
+                               { name: '话题倾向性', max: 5},
+                               { name: '平台活跃度', max: 5},
+                               { name: '话题敏感度', max: 5}
+
+                            ]
+                        },
+                        series: [{
+                            // name: '预算 vs 开销（Budget vs spending）',
+                            type: 'radar',
+                            // areaStyle: {normal: {}},
+                            data : [
+                                {
+                                    value : $scope.scenedata,
+                                    name : '舆情场景'
+                                },
+                            ]
+                        }]
+                    };
+                    mychart1.setOption(option1);
         $scope.getData = function(){
             console.log($scope.yd_data);
             angular.forEach(evaluation,function(index,item){
@@ -1230,10 +1288,74 @@ CQ.mainApp.zhishikuController
                             if($scope.yd_data.name===index.time){
                                 // console.log(item);
                                  $scope.evaluation = evaluation[item];
-                                 console.log($scope.evaluation);
+                                //console.log($scope.evaluation);
                             }
                         }
                     })
+             $scope.scenedata = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                    angular.forEach($scope.evaluation.scene,function(index,item){
+                        console.log(index,item);
+                        $scope.scenedata.push(+index)
+                    })
+                    $scope.scenedata = $scope.scenedata.slice(19)
+                    console.log($scope.scenedata)
+                    var mychart1 = echarts.init(document.getElementById('scene'));
+                    var option1 = {
+                        title: {
+                            // text: '基础雷达图'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data: [`舆情场景 ${$scope.evaluation.time}`],
+                            x:'left',
+                            y:'top'
+                        },
+                        radar: {
+                            // shape: 'circle',
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    backgroundColor: '#999',
+                                    borderRadius: 3,
+                                    padding: [3, 5]
+                               }
+                            },
+                            indicator: [
+                               { name: '话题集中度', max: 5},
+                               { name: '年龄分布', max: 5},
+                               { name: '地域分布 ', max: 5},
+                               { name: '平台分布 ', max: 5},
+                               { name: '参与人敏感度', max: 5},
+                               { name: '粉丝数量', max: 5},
+                               { name: '已产生时间', max: 5},
+                               { name: '识别准确率', max: 5},
+                               { name: '平台数', max: 5},
+                               { name: '主题集中度', max: 5},
+                               { name: '数据类型分布', max: 5},
+                               { name: '事件敏感度', max: 5},
+                               { name: '传播速度', max: 5},
+                               { name: '人群活跃度', max: 5},
+                               { name: '传播飙升度', max: 5},
+                               { name: '人群飙升度', max: 5},
+                               { name: '话题倾向性', max: 5},
+                               { name: '平台活跃度', max: 5},
+                               { name: '话题敏感度', max: 5}
+
+                            ]
+                        },
+                        series: [{
+                            // name: '预算 vs 开销（Budget vs spending）',
+                            type: 'radar',
+                            // areaStyle: {normal: {}},
+                            data : [
+                                {
+                                    value : $scope.scenedata,
+                                    name : `舆情场景 ${$scope.evaluation.time}`
+                                },
+                            ]
+                        }]
+                    };
+                    mychart1.setOption(option1);
         }
         var mychart = echarts.init(document.getElementById('yqts'));
         var option = {
@@ -1245,9 +1367,10 @@ CQ.mainApp.zhishikuController
                 //         console.log(params);
                 //     }
                 // },
-                position: function(pt) {
-                    return [pt[0], '10%'];
-                },
+                // position: function(pt) {
+                //     return [pt[0], '10%'];
+                // },
+
                 axisPointer : { // 坐标轴指示器，坐标轴触发有效
                             type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                         },
@@ -1260,7 +1383,7 @@ CQ.mainApp.zhishikuController
                             if($scope.yd_data.name===index.time){
                                 // console.log(item);
                                  $scope.evaluation = evaluation[item];
-                                 //console.log($scope.evaluation);
+                                 console.log($scope.evaluation);
                             }
                         }
                     })
@@ -1272,11 +1395,11 @@ CQ.mainApp.zhishikuController
                                         <td>'+$scope.evaluation.time+'</td>\
                                     </tr>\
                                     <tr>\
-                                        <th>舆情态势值</th>\
+                                        <th>当前舆情态势值</th>\
                                         <td>'+$scope.evaluation.value+'</td>\
                                     </tr>\
                                     <tr>\
-                                        <th>时间发展状态</th>\
+                                        <th>事件发展状态</th>\
                                         <td>'+$scope.evaluation.state+'</td>\
                                     </tr>\
                                     <tr>\
@@ -1411,6 +1534,9 @@ CQ.mainApp.zhishikuController
             }]
         };
         mychart.setOption(option);
+        
+        
+
         // mychart.on('click',function () {
         //     console.log($scope.yd_data);
         // })
