@@ -59,5 +59,11 @@ CQ.mainApp.zhishikuController
                 templateUrl: "/static/modules/zhishiku/pages/guidance.html",
                 params:{"event":null},
                 controller: "guidanceController"
+            })
+            .state("zhishiku.evaluation", {
+                url:"/evaluation",
+                templateUrl: "/static/modules/zhishiku/pages/evaluation.html",
+                params:{"event":null},
+                controller: "evaluationController"
             });
 }]);

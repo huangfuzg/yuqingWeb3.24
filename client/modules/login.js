@@ -28,7 +28,7 @@ function login() {
     $.post(CQ.variable.RESTFUL_URL+"/log_in",{"user_account":username,"user_pwd":password_encode(password)},function(data, status){
         // data=JSON.parse(data);
         console.log(data);
-        var userPermissions = {1:['1','4'],2:['1','2'],3:['1','3']};
+        var userPermissions = {1:['1','4'],2:['1','2'],3:['1','3','5']};
         if(data.success)
         {
             if(data.data.status)

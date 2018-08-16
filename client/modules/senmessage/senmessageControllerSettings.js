@@ -7,4 +7,5 @@ CQ.mainApp.senmessageController
                 templateUrl: "/static/modules/senmessage/pages/senmessage.html",
                 controller: "senmessageController"
             });
+            
     }]);
