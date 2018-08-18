@@ -97,6 +97,7 @@ select {
                                     <button type="button" class="btn btn-md btn-primary m-l-5" ng-click="search()"><i class="fa fa-search"></i>搜索</button>
                                     </span>
                                     
+                                    
                                 </span>
                                 </div>
                                 <table id="data-table" class="table table-striped table-bordered nowrap f-s-14" width="100%">
@@ -112,7 +113,7 @@ select {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="odd gradeX" ng-repeat="item in sendata">
+                                        <tr class="odd gradeX" ng-repeat="item in pagesendata">
                                             <td class="width-md">
                                                 <input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">
                                                 <a ng-href={{item.url}} target="_blank">{{item.senwords.join(',')}}</a>
@@ -143,16 +144,17 @@ select {
                             <nav>
                                 
                                 <div class="btn-group m-b-10 f-s-14 max" >
-                                    <button type="button" class="btn btn-white page" ng-click="Previous()">上一页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Firstpage()">首页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Previous()" ng-class="{disabled:pageNum<=1}">上一页</button>
                                     <button type="button" class="btn btn-white {{isActivePage(page)}} list" ng-repeat="page in pageList"
                                      ng-click = "selectPage(page)">
                                         {{page}}
                                     </button>
-                                    
-                                    <button type="button" class="btn btn-white page" ng-click="Next()">下一页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Next()" ng-class="{disabled:pageNum>=pages}">下一页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Lastpage()">尾页</button>
                                 </div>
 
-                                <div class="btn-group m-b-10 f-s-14 min" style="display: none;">
+                                <!-- <div class="btn-group m-b-10 f-s-14 min" style="display: none;">
                                     <button type="button" class="btn btn-white page" ng-click="Previous()">上一页</button>
                             
                                     <button type="button" class="btn btn-white page" ng-click="Next()">下一页</button>
@@ -162,7 +164,7 @@ select {
                                     <button type="button" class="btn btn-white" ng-click="selectPage(dataObj.pageNum)">跳转</button>
                                     </div>
                                     
-                                </div>
+                                </div> -->
 
                                <ul class="list-inline f-s-14 pull-right">
                                     <li>

@@ -1247,9 +1247,11 @@ CQ.mainApp.zhishikuController
     }]).controller("evaluationController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("guidanceController", "start!!!");
-        $rootScope.modelName="引导评估";
+        $rootScope.modelName="舆情导控";
         //页面UI初始化；
         $scope.evaluation = {};
+        $scope.time = "2017/8/15";
+        $scope.scenedata = [4, 2, 4, 5, 3, 4, 5, 5, 5, 4, 5, 4, 5, 5, 5, 5, 4, 5, 4];
         var evaluation = {};
         $scope.yd_data = {};
         $http({
@@ -1259,41 +1261,101 @@ CQ.mainApp.zhishikuController
                 evaluation = res.data;
                 $scope.evaluation = evaluation[0];
                 })
-        // $http({
-        //             method:"get",
-        //             url:"/static/assets/data/zhishiku/yindao.json"
-        //         }).then(function(res){
-        //             $scope.guideData = res.data;
-        //             console.log($scope.guideData);
-        //         },function (res) {
-
-        //         });
+        var mychart1 = echarts.init(document.getElementById('scene'));
+        var option1 = {
+                        title: {
+                        },
+                        tooltip: {},
+                        legend: {
+                            data: [`舆情场景 ${$scope.time}`],
+                            x:'left',
+                            y:'top'
+                        },
+                        radar: {
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    backgroundColor: '#999',
+                                    borderRadius: 3,
+                                    padding: [3, 5]
+                               }
+                            },
+                            indicator: [
+                               { name: '话题集中度', max: 5},
+                               { name: '年龄分布', max: 5},
+                               { name: '地域分布 ', max: 5},
+                               { name: '平台分布 ', max: 5},
+                               { name: '参与人敏感度', max: 5},
+                               { name: '粉丝数量', max: 5},
+                               { name: '已产生时间', max: 5},
+                               { name: '识别准确率', max: 5},
+                               { name: '平台数', max: 5},
+                               { name: '主题集中度', max: 5},
+                               { name: '数据类型分布', max: 5},
+                               { name: '事件敏感度', max: 5},
+                               { name: '传播速度', max: 5},
+                               { name: '人群活跃度', max: 5},
+                               { name: '传播飙升度', max: 5},
+                               { name: '人群飙升度', max: 5},
+                               { name: '话题倾向性', max: 5},
+                               { name: '平台活跃度', max: 5},
+                               { name: '话题敏感度', max: 5}
+                            ]
+                        },
+                        series: [{
+                            type: 'radar',
+                            data : [
+                                {
+                                    value : $scope.scenedata,
+                                    name : `舆情场景 ${$scope.time}`
+                                },
+                            ]
+                        }]
+                    };
+        mychart1.setOption(option1);
         $scope.getData = function(){
             console.log($scope.yd_data);
+            console.log(evaluation);
             angular.forEach(evaluation,function(index,item){
                         if($scope.yd_data.name!=undefined){
-                            // console.log($scope.yd_data.name);
                             if($scope.yd_data.name===index.time){
-                                // console.log(item);
                                  $scope.evaluation = evaluation[item];
-                                 console.log($scope.evaluation);
                             }
                         }
                     })
+                    angular.forEach($scope.evaluation.scene,function(index,item){
+                        $scope.scenedata.push(+index)
+                    })
+                    $scope.scenedata = $scope.scenedata.slice(19);  
+   
+                    $scope.time = $scope.evaluation.time;       
+                    mychart1.setOption({
+                        legend: {
+                            data: [`舆情场景 ${$scope.time}`],
+                        },
+                        series: [{
+                            data : [
+                                {
+                                    value : $scope.scenedata,
+                                    name : `舆情场景 ${$scope.time}`
+                                },
+                            ]
+                        }]
+                    });
         }
         var mychart = echarts.init(document.getElementById('yqts'));
         var option = {
             tooltip: {
                 trigger: 'axis',
-                triggerOn:'click|mousemove',
+                triggerOn:'mousemove|click',
                 // {
                 //     click:function(params){
                 //         console.log(params);
                 //     }
                 // },
-                position: function(pt) {
-                    return [pt[0], '10%'];
-                },
+                // position: function(pt) {
+                //     return [pt[0], '10%'];
+                // },
                 axisPointer : { // 坐标轴指示器，坐标轴触发有效
                             type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                         },
@@ -1302,14 +1364,31 @@ CQ.mainApp.zhishikuController
                     $scope.yd_data = params[0];
                     angular.forEach(evaluation,function(index,item){
                         if($scope.yd_data.name!=undefined){
-                            // console.log($scope.yd_data.name);
                             if($scope.yd_data.name===index.time){
-                                // console.log(item);
                                  $scope.evaluation = evaluation[item];
-                                 //console.log($scope.evaluation);
                             }
                         }
                     })
+                    // angular.forEach($scope.evaluation.scene,function(index,item){
+                    //     $scope.scenedata.push(+index)
+                    // })
+                    // $scope.scenedata = $scope.scenedata.slice(19);  
+                    // //console.log($scope.scenedata)   
+                    // console.log($scope.evaluation)
+                    // $scope.time = $scope.evaluation.time;
+                    // mychart1.setOption({
+                    //     legend: {
+                    //         data: [`舆情场景 ${$scope.time}`],
+                    //     },
+                    //     series: [{
+                    //         data : [
+                    //             {
+                    //                 value : $scope.scenedata,
+                    //                 name : `舆情场景 ${$scope.time}`
+                    //             },
+                    //         ]
+                    //     }]
+                    // });
                     var str = '\
                             <table class="table table-bordered">\
                                 <tbody>\
@@ -1318,11 +1397,11 @@ CQ.mainApp.zhishikuController
                                         <td>'+$scope.evaluation.time+'</td>\
                                     </tr>\
                                     <tr>\
-                                        <th>舆情态势值</th>\
+                                        <th>当前舆情态势值</th>\
                                         <td>'+$scope.evaluation.value+'</td>\
                                     </tr>\
                                     <tr>\
-                                        <th>时间发展状态</th>\
+                                        <th>事件发展状态</th>\
                                         <td>'+$scope.evaluation.state+'</td>\
                                     </tr>\
                                     <tr>\
@@ -1331,13 +1410,11 @@ CQ.mainApp.zhishikuController
                                     </tr>\
                                 </tbody>\
                             </table>'
-
                     return str
                 }
             },
             title: {
                 left: '',
-                // text: '舆情态势值走势',
             },
             toolbox: {
                 feature: {
@@ -1390,17 +1467,6 @@ CQ.mainApp.zhishikuController
                         color: 'rgb(255, 70, 131)'
                     }
                 },
-                // areaStyle: {
-                //     normal: {
-                //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                //             offset: 0,
-                //             color: 'rgb(255, 158, 68)'
-                //         }, {
-                //             offset: 1,
-                //             color: 'rgb(255, 70, 131)'
-                //         }])
-                //     }
-                // },
                 data: [66,37,53,64,58,41,43,46,54,55,58]
             },
             {
@@ -1457,7 +1523,4 @@ CQ.mainApp.zhishikuController
             }]
         };
         mychart.setOption(option);
-        // mychart.on('click',function () {
-        //     console.log($scope.yd_data);
-        // })
     }]);
