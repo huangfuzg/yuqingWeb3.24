@@ -12,12 +12,156 @@
 	svg image{
 		stroke-width:50%;
 	}
+	@media (min-width: 1500px)
+	{
+		.col-xl-9 {
+		    width: 75%;
+		    float:left;
+		}
+		.col-xl-3 {
+		    width: 25%;
+		    float:left;
+		}
+	}
+	.user-type {
+		/*margin-bottom: 10px;*/
+		float: right;
+	}
+	.user-type-btn {
+		color: black !important;
+		background-color: white !important;
+	}
+	.user-type-btn.active, .user-type-btn:hover, .user-type-btn.active {
+		color: white !important;
+		background: #2a72b5 !important;
+    	border-color: #2a72b5 !important;
+	}
+	.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+	    background: #2a72b5 !important;
+    	border-color: #2a72b5 !important;
+	}
 </style>
 <div style="position: relative; bottom: 0;">
-	<div class="panel panel-primary" style="height: 100%;">
-		<div class="panel-heading"><h3 class="panel-title">社团发现</h3></div>
-		<div class="panel-body" id="communityGraph" style="height: 800px;">
-			<div class="title" id="title"></div>
+	<!-- <div class="user-type">
+		<div style="max-width:400px; display: inline-block; vertical-align: middle; margin-right: 10px;">
+			<span class="input-group">
+				<input type="text" class="form-control input-sm input-white" placeholder="请输入用户名">
+				<span class="input-group-btn">
+		            <button class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+		        </span>
+		    </span>
+		</div>
+		<a class="btn btn-primary user-type-btn">重点用户</a>
+		<a class="btn btn-primary user-type-btn">敏感用户</a>
+		<a class="btn btn-primary user-type-btn">僵尸用户</a>
+	</div> -->
+	<div class="row">
+		<div class="">
+			<div class="panel panel-primary" style="height: 100%;">
+				<div class="panel-heading"><h3 class="panel-title">社团发现</h3></div>
+				<div class="panel-body" id="communityGraph" style="height: 800px;">
+					<div class="title" id="title"></div>
+				</div>
+			</div>
+		</div>
+		<div class="">
+			<div class="panel panel-primary" style="height: 100%;">
+				<div class="panel-heading" style="padding:1px;">
+					<div class="user-type" style="margin:4px 14px;">
+						<a class="btn btn-sm btn-primary user-type-btn" ng-click="filterUser(1)">重点用户</a>
+						<a class="btn btn-sm btn-primary user-type-btn" ng-click="filterUser(2)">敏感用户</a>
+						<a class="btn btn-sm btn-primary user-type-btn" ng-click="filterUser(3)">僵尸用户</a>
+						<div style="max-width:300px; display: inline-block; vertical-align: middle; margin-left: 5px;">
+							<span class="input-group">
+								<input type="text" class="form-control input-sm input-white" placeholder="请输入用户名" ng-model="username">
+								<span class="input-group-btn">
+						            <button class="btn btn-sm btn-primary" type="button" ng-click="searchUser(username)"><i class="fa fa-search"></i></button>
+						        </span>
+						    </span>
+						</div>
+					</div>
+					<h3 class="panel-title" style="margin:9px 14px;">用户列表</h3>
+				</div>
+				<div class="panel-body">
+					<ul class="media-list media-list-with-divider">
+			            <li class="media media-sm" ng-repeat="(index, items) in pageData">
+			                <a class="pull-left" href="{{items.home_url}}" target="_blank">
+			                    <img alt="" class="media-object rounded-corner" src="/static/assets/img/people.svg"/>
+			                </a>
+			                <div class="media-body">
+			                    <a href="{{items.home_url}}" target="_blank">
+			                        <h4 class="media-heading f-s-15" ng-bind="items.user_name">
+			                        </h4>
+			                    </a>
+			                    <ul class="breadcrumb">
+			                        <li>
+			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+			                                关注：{{items.Follows}}
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a title="查看详细博主信息" ui-sref="{{items.home_url}}">
+			                                粉丝：{{items.Following}}
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="{{items.home_url}}" target="_blank" title="查看博主微博">
+			                                微博数：{{items.post_num}}
+			                            </a>
+			                        </li>
+			                        <!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
+			                    </ul>
+			                    <ul class="breadcrumb">
+			                        <li>
+			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+			                                所在地：{{items.location}}
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+			                                用户id：{{items.user_id}}
+			                            </a>
+			                        </li>
+			                    </ul>
+			                    <ul class="breadcrumb">
+			                        <li>
+			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+			                                简介：{{items.intro}}
+			                            </a>
+			                        </li>
+			                    </ul>
+			                    <ul class="f-s-14 breadcrumb">
+			                        <li>
+			                            <a href="{{items.home_url}}" target="_blank" title="查看用户详细信息">
+			                                来自：{{items.board}}
+			                            </a>
+			                        </li>
+			                        <li>
+			                            <a title="查看详细帖子" ui-sref="yuqingTrendsController({poster:[items.name]})">
+			                                发帖：{{items.post_num}}
+			                            </a>
+			                        </li>
+			                        <!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
+			                    </ul>
+			                </div>
+			            </li>
+			        </ul>
+			        <div class="dataTables_paginate paging_simple_numbers" id="data-table_paginate">
+						<ul class="pagination pull-right">
+							<li class="paginate_button previous" id="data-table_previous" ng-click="getTableData(page-1)" ng-class="{disabled:page<=1}"><a href="javascript:void">Previous</a></li>
+							<li class="paginate_button" ng-repeat="index in pageset" ng-class="{active:page==index}" ng-click="getTableData(index)"><a href="javascript:void">{{index}}</a></li>
+							<li class="paginate_button next" id="data-table_next" ng-click="getTableData(page+1)" ng-class="{disabled:page>=max_page}"><a href="javascript:void">Next</a></li>
+						</ul>
+					</div>
+			    </div>
+			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(".user-type-btn").click(function(event) {
+		console.log($("this"));
+		$(".user-type-btn").removeClass("active");
+		$(this).addClass('active');
+	});
+</script>

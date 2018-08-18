@@ -148,6 +148,7 @@ CQ.mainApp.zhishikuController
         },0);
         $rootScope.modelName="社团发现";
         var data=null;
+        $scope.alluser = null;//所有用户
         $http({
             method:"get",
             url:"/static/assets/data/zhishiku/community.json"
@@ -197,10 +198,55 @@ CQ.mainApp.zhishikuController
                 edge.target=(nodes[edge.target]||edge.target);
             });
             console.log(nodes);
+            $scope.alluser = nodes;
+            $scope.page=1;
+            $scope.allPageData = $scope.alluser;
+            $scope.getTableData=function(page,data){
+                var tables,page_num = 20;
+                if(data)
+                    tables=data;
+                else
+                    tables = $scope.allPageData;
+                $scope.max_page=Math.ceil(tables.length/page_num);
+                console.log($scope.max_page);
+                var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                if(page<1||page>$scope.max_page&&page!=1)
+                    return null;
+                $scope.counts=tables.length;
+                // console.log(Math.ceil(tables.length/page_num));
+                $scope.pageData=tables.slice(page*page_num-page_num,page*page_num);
+                $scope.page=page;
+                if($scope.max_page<5)
+                {
+                    $scope.pageset=[];
+                    for(var i=1;i<$scope.max_page+1;i++)
+                        $scope.pageset.push(i);
+                }
+                else if(page<4)
+                    $scope.pageset=angular.copy(pageset_min);
+                else if(page>$scope.max_page-3)
+                    $scope.pageset=angular.copy(pageset_max);
+                else
+                    $scope.pageset=pageset_min.map(d=>d+page-3);
+            }
+            $scope.getTableData(1,$scope.alluser);
             drawForceGraph("#communityGraph",nodes,edges);
         },function(res){
             console.log(res);
         });
+
+        $scope.filterUser = function(usertype)
+        {
+            $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+            $scope.getTableData(1,$scope.allPageData);
+        }
+
+        $scope.searchUser = function(username)
+        {
+            $scope.allPageData = $scope.alluser.filter(d=>d.user_name==username);
+            $scope.getTableData(1,$scope.allPageData);
+        }
+
         function drawForceGraph(dom,nodes,edges)
         {
             var width = $(dom).width(),
