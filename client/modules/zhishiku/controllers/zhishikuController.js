@@ -148,11 +148,12 @@ CQ.mainApp.zhishikuController
         },0);
         $rootScope.modelName="社团发现";
         var data=null;
+        $scope.alluser = null;//所有用户
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/community.json"
+            url:"http://118.190.133.203:8899/yqdata/community_detection"
         }).then(function(res){
-            data=res.data;
+            data=res.data.data;
             console.log(data);
             var nodes=[],edges=[],nodesl=0,edge_count=2,color_index=0;
             for (var key in data)
@@ -197,10 +198,55 @@ CQ.mainApp.zhishikuController
                 edge.target=(nodes[edge.target]||edge.target);
             });
             console.log(nodes);
+            $scope.alluser = nodes;
+            $scope.page=1;
+            $scope.allPageData = $scope.alluser;
+            $scope.getTableData=function(page,data){
+                var tables,page_num = 20;
+                if(data)
+                    tables=data;
+                else
+                    tables = $scope.allPageData;
+                $scope.max_page=Math.ceil(tables.length/page_num);
+                console.log($scope.max_page);
+                var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                if(page<1||page>$scope.max_page&&page!=1)
+                    return null;
+                $scope.counts=tables.length;
+                // console.log(Math.ceil(tables.length/page_num));
+                $scope.pageData=tables.slice(page*page_num-page_num,page*page_num);
+                $scope.page=page;
+                if($scope.max_page<5)
+                {
+                    $scope.pageset=[];
+                    for(var i=1;i<$scope.max_page+1;i++)
+                        $scope.pageset.push(i);
+                }
+                else if(page<4)
+                    $scope.pageset=angular.copy(pageset_min);
+                else if(page>$scope.max_page-3)
+                    $scope.pageset=angular.copy(pageset_max);
+                else
+                    $scope.pageset=pageset_min.map(d=>d+page-3);
+            }
+            $scope.getTableData(1,$scope.alluser);
             drawForceGraph("#communityGraph",nodes,edges);
         },function(res){
             console.log(res);
         });
+
+        $scope.filterUser = function(usertype)
+        {
+            $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+            $scope.getTableData(1,$scope.allPageData);
+        }
+
+        $scope.searchUser = function(username)
+        {
+            $scope.allPageData = $scope.alluser.filter(d=>d.user_name==username);
+            $scope.getTableData(1,$scope.allPageData);
+        }
+
         function drawForceGraph(dom,nodes,edges)
         {
             var width = $(dom).width(),
@@ -505,15 +551,15 @@ CQ.mainApp.zhishikuController
         console.log("eventdetailController", "start!!!");
         $rootScope.modelName="事件详情";
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
-        siteDefaultImg={"MicroBlog":"/static/assets/img/weibo.svg","baidutieba":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg"};
+        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg"};
         //页面UI初始化；
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/event_data.json"
+            url:"http://118.190.133.203:8899/yqdata/event_detail"
         }).then(function(res){
-            posts=res.data;
+            posts=res.data.data;
             console.log(new Date(posts[0].pt_time));
-            $scope.durationTime=(new Date(posts[posts.length-1].topic_post_time)-new Date(posts[0].pt_time))/86400000;
+            $scope.durationTime=(new Date(posts[posts.length-1].pt_time)-new Date(posts[0].pt_time))/86400000;
             $scope.durationTime=16;
             $scope.postsNum=posts.length;
             $scope.posterNum=new Set(posts.map(d=>d.poster).filter(d=>d!=" ")).size;
@@ -521,16 +567,21 @@ CQ.mainApp.zhishikuController
                 if(d.content&&d.content.charAt(0)==':')
                     d.content=d.content.slice(1);
                 // console.log(siteNames[d.site_name]);
-                d.defaultPosterImg=siteDefaultImg[d.site_name];
-                if(d.pt_time)
-                    if(d.pt_time.indexOf("2017")==-1&&d.pt_time.indexOf("年")==-1)
-                    {
-                        // d.pt_time="2017年"+d.pt_time;
-                        d.pt_time="2017-"+d.pt_time.split(/月|日/).slice(0,2).join("-")+" 00:00:00"
-                    }
-                d.site_name=siteNames[d.site_name]?siteNames[d.site_name]:d.site_name;
+                if(d.site_name=="")
+                {
+                    d.site_name = "其他";
+                }
+                d.defaultPosterImg=siteDefaultImg[d.site_name]||siteDefaultImg["其他"];
+                // if(d.pt_time)
+                //     if(d.pt_time.indexOf("2017")==-1&&d.pt_time.indexOf("年")==-1)
+                //     {
+                //         // d.pt_time="2017年"+d.pt_time;
+                //         d.pt_time="2017-"+d.pt_time.split(/月|日/).slice(0,2).join("-")+" 00:00:00"
+                //     }
+                // d.site_name=siteNames[d.site_name]?siteNames[d.site_name]:d.site_name;
             });
-            posts=posts.filter(d=>new Date(d.pt_time)>new Date("2017-8-14 23:59:59"));
+            // posts=posts.filter(d=>new Date(d.pt_time)>new Date("2017-8-14 23:59:59"));
+            $scope.allposts = posts;
             drawChart(posts);
             pages=~~(posts.length/page_num)+1;
             $scope.posts=posts.slice(0,page_num);
@@ -596,17 +647,17 @@ CQ.mainApp.zhishikuController
         function drawChart(data) {
             var ndx = crossfilter(data),
             all = ndx.groupAll(),
-            dayDist = dc.barChart("#dayChart"),
+            dayDist = dc.lineChart("#dayChart"),
             dayDim = ndx.dimension(function(d) {
                 if(d.pt_time)
-                    return dateFormat(new Date(d.pt_time));
+                    // return dateFormat(new Date(d.pt_time));
+                    return new Date(d.pt_time);
                 else if(d.topic_post_time)
                     return dateFormat(new Date(d.topic_post_time));
             }),
-            dayGroup = dayDim.group().reduceSum(function (d) {
-                return 1;
-            });
-            drawBarDayDist(dayDist, dayDim, dayGroup);
+            dayGroup = dayDim.group();
+            // drawBarDayDist(dayDist, dayDim, dayGroup);
+            drawdayDist1(dayDist, dayDim, dayGroup);
             var datatypeDist = dc.pieChart("#siteChart"),
             datatypeDim = ndx.dimension(function (d) {
                 return d.site_name;
@@ -614,7 +665,24 @@ CQ.mainApp.zhishikuController
             datatypeGroup = datatypeDim.group().reduceSum(function(d) {
                 return 1;
             });
-            drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
+            // console.log(datatypeDim);
+            var top5data = datatypeGroup.top(6).map(d=>d.key),
+            datatypeDim1 = ndx.dimension(function (d) {
+                for(var i = 0; i < top5data.length; i++)
+                {
+                    if(top5data[i] == d.site_name)
+                    {
+                        d.site_name_1 = d.site_name;
+                        return d.site_name_1;
+                    }
+                }
+                d.site_name_1 = "其他";
+                return d.site_name_1;
+            }),
+            datatypeGroup1 = datatypeDim1.group().reduceSum(function(d) {
+                return 1;
+            });
+            drawPieDatatypeDist(datatypeDist, datatypeDim1, datatypeGroup1);
         }
         function drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
             var width = $("#siteChart").width(),
@@ -630,7 +698,7 @@ CQ.mainApp.zhishikuController
                 .cy(height*0.5)
                 .dimension(datatypeDim)
                 .group(datatypeGroup)
-                .legend(dc.legend().horizontal(false).x(0).y(width*0.1).legendText(function(d){return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
+                .legend(dc.legend().horizontal(false).x(0).y(width*0.1).legendText(function(d){console.log("d",d);return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
             // datatypeDist.addFilterHandler(function(filters, filter) {
             //         filters.push(filter);
             //         post_filters.site = filters;
@@ -660,7 +728,7 @@ CQ.mainApp.zhishikuController
                     .centerBar(false)
                     .round(dc.round.floor)
                     .alwaysUseRounding(true)
-                    .renderLabel(true)
+                    .renderLabel(false)
                     .outerPadding(0.2)
                     .controlsUseVisibility(true)
                     .x(d3.scale.ordinal())
@@ -702,6 +770,82 @@ CQ.mainApp.zhishikuController
                 console.log(dayDim.top(Infinity));
             });
             dayDist.render();
+        }
+
+        function drawdayDist1(dayDist1, dayDim1, dayGroup1) {
+             var dateFormat =d3.time.format("%Y-%m-%d %H:%M:%S");
+             // var dayDist2 = dc.barChart("#dayChart");
+             // var dayDim2 = dayDim1;
+             // var dayGroup2 = dayDim2.group().reduceSum(function(d) {
+             //    return 0.2;
+             // });
+             var width = $("#dayChart").width();
+             var height = $("#dayChart").height();
+             dayDist1
+                .renderArea(true)
+                .width(width)
+                .height(height)
+                .transitionDuration(1000)
+                .margins({top: 30, right: 50, bottom: 25, left: 40})
+                .dimension(dayDim1)
+                .group(dayGroup1)
+                .mouseZoomable(true)
+                // .rangeChart(dayDist2)
+                .title(function(p){
+                    return [
+                        "时间: "+dateFormat(p.key),
+                        "数目: "+p.value
+                    ].join("\n");
+                })
+                .x(d3.time.scale().domain([new Date($scope.allposts[$scope.allposts.length - 1].pt_time),new Date($scope.allposts[0].pt_time)]))
+                .round(d3.time.minutes.round)
+                .xUnits(d3.time.minutes)
+                .elasticY(true)
+                .renderHorizontalGridLines(true)
+                .brushOn(true)
+                .xAxisLabel("时间")
+                .yAxisLabel("帖子数量");
+            dayDist1.on("filtered", function(){
+                // console.log(post_filters);
+                // console.log(getPosts());
+                $timeout(function(){getPosts(dayDim1.top(Infinity))},0);
+            });
+            dayDist1.render();
+
+            // line2  
+            
+            // dayDist2
+            //     .width($("#dayDist2").width())
+            //     .height(100)
+            //     .margins({top: 30, right: 50, bottom: 25, left: 40})
+            //     .dimension(dayDim2)
+            //     .group(dayGroup2)
+            //     .elasticY(false)
+            //     .yAxisPadding('10%') //设置y轴距离顶部的距离(为了renderLabel才设置)
+            //     .centerBar(true)
+            //     .gap(1)
+            //     //.round(d3.time.round)
+            //     .alwaysUseRounding(true)
+            //     //.xUnits(d3.time.minutes);
+            //     .renderLabel(false)
+            //     .outerPadding(0.2)
+            //     .controlsUseVisibility(true)
+            //     .x(d3.time.scale().domain([$scope.postData[$scope.postData.length - 1].postTime, 
+            //         $scope.postData[0].postTime]))
+            //     .renderHorizontalGridLines(false)
+            //     .brushOn(true);
+            // dayDist2.addFilterHandler(function(filters, filter) {
+            //     filters.push(filter);
+            //     $scope.filters.start_time = filter[0];
+            //     $scope.filters.end_time = filter[1];
+            //     console.log($scope.filters.start_time);
+            //     console.log($scope.filters.end_time);
+            //     // $scope.filters.filtertype = 3;
+            //     return filters;
+            // });  
+            // dayDist2.render();
+            // $("#dayDist2 .y").html("");
+            // $("#dayDist2 .y").remove();
         }
     }]).controller("behaviouralController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
@@ -920,7 +1064,7 @@ CQ.mainApp.zhishikuController
         var comm_show_num = 4;
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/usercomment.json"
+            url:"http://118.190.133.203:8899/yqdata/opinion_mining"
         }).then(function(result){
              $scope.items=result.data.data;
             console.log($scope.items);
@@ -959,9 +1103,9 @@ CQ.mainApp.zhishikuController
         //页面UI初始化；
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/da_v.json"
+            url:"http://118.190.133.203:8899/yqdata/hot_value_evolution"
         }).then(function(res){
-            var counts = (res.data);
+            var counts = (res.data.data.reverse());
             var ti=[],dat=[[],[],[]];
             var type=['大V数','帖子数/10','热度']
             var mychart = echarts.init(document.getElementById('hot'));
@@ -1060,14 +1204,21 @@ CQ.mainApp.zhishikuController
 
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/evolu.json"
+            url:"http://118.190.133.203:8899/yqdata/hot_topic_evolution"
         }).then(function(res) {
-            var ex = res.data;
+            var ex = res.data.data;
             var leg = [],ti=[],dat=[];
             var topics=[]
+            var min_val =100;
             for(var i=0;i<6;i++){
                 dat[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             }
+            ex.forEach(function(d){
+                var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
+                if(tmp<min_val){
+                    min_val = tmp;
+                }
+            });
             ex.forEach(function (d) {
                 console.log(d);
                 if(leg.indexOf(d.topic)==-1)
@@ -1077,7 +1228,7 @@ CQ.mainApp.zhishikuController
                 ti.sort();
                 var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
                 console.log(tmp)
-                dat[d.type-1][tmp-15]=d.num;
+                dat[d.type-1][tmp-min_val]=d.num;
                 if(topics[topics.length-1]!=d.topic)
                     topics.push(d.topic);
 
