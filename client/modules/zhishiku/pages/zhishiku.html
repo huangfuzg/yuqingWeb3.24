@@ -35,7 +35,7 @@
     margin-top: 10px;font-size:1.3em; margin-bottom: 5px;">
         <li><a href="#/zhishiku/subjects">舆情知识库</a></li>
         <li><a href="#/zhishiku/subjects">主题</a></li>
-        <li><a href="#/zhishiku/subjects/events">事件</a></li>
+        <li><a ui-sref="events({subject:event.from_subject})">事件</a></li>
         <li class="active">{{modelName}}</li>
 
     </ol>
@@ -70,14 +70,14 @@
     <div class="col-xs-2">
         <ul id="event-nav" class="nav nav-pills nav-stacked">
             <li class="nav-title text-center"><h4><b><i>目&nbsp;&nbsp;录</i></b></h4></li>
-            <li class="text-center" ng-class='{"active":modelName=="事件详情"}'><a ui-sref="zhishiku.eventdetail">事件详情</a></li>
-            <li class="text-center" ng-class='{"active":modelName=="社团发现"}'><a ui-sref="zhishiku.community">社团发现</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="事件详情"}'><a ui-sref="zhishiku.eventdetail({event:event})">事件详情</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="社团发现"}'><a ui-sref="zhishiku.community({event:event})">社团发现</a></li>
             <!-- <li><a ui-sref="zhishiku.behavioural">行为分析</a></li> -->
-            <li class="text-center" ng-class='{"active":modelName=="情感分析"}'><a ui-sref="zhishiku.sentiment">情感分析</a></li>
-            <li class="text-center" ng-class='{"active":modelName=="观点挖掘"}'><a ui-sref="zhishiku.viewpoint">观点挖掘</a></li>
-            <li class="text-center" ng-class='{"active":modelName=="事件演化"}'><a ui-sref="zhishiku.evolutionary">事件演化</a></li>
-            <li class="text-center" ng-class='{"active":modelName=="舆情引导"}'><a ui-sref="zhishiku.guidance">舆情引导</a></li>
-            <li class="text-center" ng-class='{"active":modelName=="舆情导控"}'><a ui-sref="zhishiku.evaluation">舆情导控</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="情感分析"}'><a ui-sref="zhishiku.sentiment({event:event})">情感分析</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="观点挖掘"}'><a ui-sref="zhishiku.viewpoint({event:event})">观点挖掘</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="事件演化"}'><a ui-sref="zhishiku.evolutionary({event:event})">事件演化</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="舆情引导"}' ng-permission="6"><a ui-sref="zhishiku.guidance({event:event})">舆情引导</a></li>
+            <li class="text-center" ng-class='{"active":modelName=="舆情导控"}' ng-permission="6"><a ui-sref="zhishiku.evaluation({event:event})">舆情导控</a></li>
         </ul>
     </div>
 </div>

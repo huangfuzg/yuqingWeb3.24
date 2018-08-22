@@ -23,27 +23,42 @@ CQ.mainApp.zhishikuController
     function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
         console.log("zhishikuController", "start!!!");
         //页面UI初始化；
-        $scope.subjects=[{
+        $scope.subjects=[
+        {
             id:0,
             name:"中印对峙",
             img:"/static/assets/img/zhishiku/zydz.jpg",
             description:"2017年6月18日至2017年8月28日，印度边防部队非法越过边界线进入了中方境内，阻挠中国边防部队在洞朗地区的正常活动，双方在该地区紧张对峙两个多月。"
-        },{
-            id:1,
-            name:"萨德部署",
-            img:"/static/assets/img/zhishiku/sadebushu.jpg",
-            description:"2016年7月以来，韩国和美国决定在驻韩美军基地部署“萨德”末段高空区域防御系统，遭到周边国家的强烈反对，中国民间和舆论爆发了对韩国的大规模抵制行动。"
-            },{
-            id:2,
-            name:"南海争端",
-            img:"/static/assets/img/zhishiku/nanhai.png",
-            description:"2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。"
-        },{
-            id:3,
-            name:"香港占中",
-            img:"/static/assets/img/zhishiku/hkzz.jpg",
-            description:"2014年9月28日至2014年12月15日，部分香港学生和市民在“港独”分子的挑唆下，非法占领香港中环地区，冲击政府，严重阻塞交通，扰乱社会秩序。"
-        }];
+        },
+        // {
+        //     id:1,
+        //     name:"萨德部署",
+        //     img:"/static/assets/img/zhishiku/sadebushu.jpg",
+        //     description:"2016年7月以来，韩国和美国决定在驻韩美军基地部署“萨德”末段高空区域防御系统，遭到周边国家的强烈反对，中国民间和舆论爆发了对韩国的大规模抵制行动。"
+        //     },{
+        //     id:2,
+        //     name:"南海争端",
+        //     img:"/static/assets/img/zhishiku/nanhai.png",
+        //     description:"2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。"
+        // },
+        // {
+        //     id:3,
+        //     name:"香港占中",
+        //     img:"/static/assets/img/zhishiku/hkzz.jpg",
+        //     description:"2014年9月28日至2014年12月15日，部分香港学生和市民在“港独”分子的挑唆下，非法占领香港中环地区，冲击政府，严重阻塞交通，扰乱社会秩序。"
+        // },
+        {
+            id:4,
+            name:"中美贸易战",
+            img:"/static/assets/img/zhishiku/zmmy.jpg",
+            description:"2018年中美贸易争端是中华人民共和国与美利坚合众国之间的一场贸易争端。2018年7月6日，特朗普政府正式对来自中国内地价值340亿美元的商品加征25%关税，标志着特朗对华关税政策正式实施。中国商务部其后在声明中指出，“美国违反世贸规则，发动了迄今为止经济史上规模最大的贸易战”。"
+        },
+        {
+            id:5,
+            name:"疫苗问题",
+            img:"/static/assets/img/zhishiku/yimiao.jpg",
+            description:"2018年7月15日，国家药品监督管理局发布通告指出，长春长生生物科技有限公司冻干人用狂犬病疫苗生产存在记录造假等行为。 这是长生生物自2017年11月份被发现百白破疫苗效价指标不符合规定后不到一年，再曝疫苗质量问题。"
+        },];
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku subject app start!!!");
@@ -67,7 +82,7 @@ CQ.mainApp.zhishikuController
         console.log("eventsController", "start!!!");
         //页面UI初始化；
         $scope.subject = $stateParams.subject;
-        $scope.events=[{
+        $scope.events0=[{  //中印对峙
             id:0,
             time:"2017年6月26日",
             img:"/static/assets/img/zhishiku/yuejie.jpg",
@@ -88,7 +103,70 @@ CQ.mainApp.zhishikuController
             name:"中印对峙结束",
             summary:"2017年8月28日，中印双方达成共识，印方将越界人员和设备全部撤回边界印方一侧，中方对此进行了确认，至此，为期两个多月的中印对峙状态告一段落。中方表明将继续按照历史界约规定行使主权权利，维护边境地区的和平与安宁。",
             keywords:[{word:"撤军",weight:1} ,{word:"印度",weight:0.98} ,{word:"越界",weight:0.83} ,{word:"现场",weight:0.7},{word:"洞朗",weight:0.68} ,{word:"人员",weight:0.63} ,{word:"设备",weight:0.63} ,{word:"修路",weight:0.54} ,{word:"权利",weight:0.41} ,{word:"维护",weight:0.3},{word:"外交部",weight:0.9},{word:"国防部",weight:0.7},{word:"主权",weight:0.6},{word:"结束",weight:0.5}]
+        }
+        ];
+
+        $scope.events1 = [{ //假疫苗事件
+            id:0,
+            'event':'国家药监局发通告',
+            'time':'2018年7月15日',
+            img:"/static/assets/img/zhishiku/ymev1.png",
+            'name':'国家药监局发通告',
+            'keywords':[{word:'药监局',weight:0.15},{word:'长春长生生物',weight:0.20},{word:'长生生物',weight:0.13},{word:'疫苗',weight:0.16},{word:'假疫苗',weight:0.21},{word:'狂犬疫苗',weight:0.32},{word:'疫苗造假',weight:0.11},{word:'造假',weight:0.58},{word:'举报',weight:0.61},{word:'高俊芳',weight:0.48},{word:'道德',weight:0.19},{word:'质量',weight:0.16}],
+            'summary':'2018年7月15日，国家药品监督管理局发布通告称，长春长生生物科技有限责任公司在冻干人用狂犬病疫苗生产过程中存在记录造假等严重违反《药品生产质量管理规范》的行为，已责令长春长生停止生产狂犬疫苗。'
+        },
+        {
+            id:1,
+            'event':'假疫苗事件处理结果',
+            'time':'2018年8月16日',
+            img:"/static/assets/img/zhishiku/ymev2.png",
+            'name':'假疫苗事件处理结果',
+            'keywords':[{word:'长春长生生物',weight:0.23},{word:'长生生物',weight:0.46},{word:'疫苗',weight:0.10},{word:'假疫苗',weight:0.17},{word:'习近平',weight:0.28},{word:'药监局',weight:0.36},{word:'国务院',weight:0.08},{word:'中央政治局',weight:0.19},{word:'会议结果',weight:0.61},{word:'调查结果',weight:0.89},{word:'免职',weight:0.98},{word:'引咎辞职',word:0.90},{word:'责令辞职',weight:0.87}],
+            'summary':'2018年8月16日，中共中央政治局常务委员会召开会议，听取关于吉林长春长生公司问题疫苗案件调查及有关问责情况的汇报。中共中央总书记习近平主持会议并发表重要讲话。会议同意，对金育辉（吉林省副省长，2017年4月起分管吉林省食品药品监管工作）予以免职，对李晋修（吉林省政协副主席，2015年12月-2017年4月任分管吉林省食品药品监管工作的副省长）责令辞职，要求刘长龙（长春市市长，2016年9月任长春市代市长，2016年10月至今任长春市市长）、毕井泉（市场监管总局党组书记、副局长，2015年2月-2018年3月任原食品药品监管总局局长）引咎辞职，要求姜治莹（吉林省委常委、延边朝鲜族自治州委书记，2012年3月-2016年5月任长春市委副书记、市长）、焦红（国家药监局局长）作出深刻检查；对35名非中管干部进行问责；决定中央纪委国家监委对吴浈（原食品药品监管总局副局长、原卫生计生委副主任，分管药化注册管理、药化监管和审核检验等工作）进行立案审查调查。会议责成吉林省委和省政府、国家药监局向中共中央、国务院作出深刻检查。'
+        }];
+
+        $scope.events2 = [  //中美贸易战
+        {
+            id:0,
+            'event':'美方挑起贸易战',
+            'time':'2018年3月1日',
+            img:"/static/assets/img/zhishiku/zmev1.jpg",
+            'name':'美方挑起贸易战',
+            'keywords':[{word:'关税',weight:0.15},{word:'中美',weight:0.20},{word:'贸易战',weight:0.13},{word:'特朗普',weight:0.16},{word:'进口',weight:0.21},{word:'出口',weight:0.32},{word:'钢铁',weight:0.11},{word:'铝',weight:0.58},{word:'中美经济',weight:0.61},{word:'征税',weight:0.48},{word:'措施',weight:0.19},{word:'反制裁',weight:0.16}],
+            'summary':'2018年3月1日美方宣布，将在很长一段时期对钢铁和铝进口征收25%和10%的重税。但随后豁免盟友，最终被征收高关税的可能“只有中国”。'
+        },
+        {
+            id:1,
+            'event':'美方制裁中兴',
+            'time':'2018年4月16日',
+            img:"/static/assets/img/zhishiku/zmev2.jpg",
+            'name':'美方制裁中兴',
+            'keywords':[{word:'中美',weight:0.28},{word:'贸易战',weight:0.34},{word:'中兴通讯',weight:0.85},{word:'制裁',weight:0.64},{word:'停牌',weight:0.55},{word:'芯片',weight:0.46},{word:'美国',weight:0.41},{word:'商务部',weight:0.61},{word:'股市',weight:0.77},{word:'股票',weight:0.12},{word:'出售',weight:0.13},{word:'自主',weight:0.15},{word:'伊朗',weight:0.26},{word:'禁令',weight:0.38}],
+            'summary':'2018年4月16日美国商务部宣布，未来7年将禁止美国公司向中兴通讯销售零部件,商品,软件和技术。中兴通讯在A股和H股市场随后宣布停牌，其部分美国供货商的股票，在美国市场价格一度急跌。（事件缘由：2016年中兴违反美国禁令出口伊朗，于2017年3月8日和美国司法部,财政部,商务部达成和解。中兴2018年触发禁令原因，涉案35名员工奖金未扣。）'
+        },
+        {
+            id:2,
+            'event':'美方变卦再次挑起贸易战',
+            'time':'2018年7月6日',
+            img:"/static/assets/img/zhishiku/zmev3.jpeg",
+            'name':'美方变卦再次挑起贸易战',
+            'keywords':[{word:'加征',weight:0.46},{word:'关税',weight:0.74},{word:'变卦',weight:0.47},{word:'中美',weight:0.16},{word:'贸易战',weight:0.28},{word:'特朗普',weight:0.36},{word:'海关',weight:0.24},{word:'进口',weight:0.78},{word:'出口',weight:0.14},{word:'反击',weight:0.41},{word:'斗争',weight:0.42},{word:'反制裁',weight:0.43}],
+            'summary':'2018年7月6日，据美国海关和边境保护局消息，美国于当地时间7月6日00:01（北京时间6日12:01）起对第一批清单上818个类别,价值340亿美元的中国商品加征25%的进口关税。作为反击，中国也于同日对同等规模的美国产品加征25%的进口关税。'
         }]; 
+
+        if($scope.subject.id == 0)
+        {
+            $scope.events = $scope.events0;
+        }
+        else if($scope.subject.id == 4)
+        {
+            $scope.events = $scope.events2;
+        }
+        else if($scope.subject.id == 5)
+        {
+            $scope.events = $scope.events1;
+        }
+        $scope.events.forEach(d=>d.from_subject = $scope.subject);
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("events app start!!!");
@@ -139,19 +217,22 @@ CQ.mainApp.zhishikuController
                 }
             });
         }
-    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout", 
-    function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
-        console.log("zhishikuController", "start!!!");
+    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams", "$timeout", 
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams, $timeout) {
+        console.log("社团发现", "start!!!");
         //页面UI初始化；
         $timeout(function(){
             $("#title").hide();
         },0);
         $rootScope.modelName="社团发现";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         var data=null;
         $scope.alluser = null;//所有用户
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/community_detection"
+            url:"http://118.190.133.203:8899/yqdata/community_detection",
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
             data=res.data.data;
             console.log(data);
@@ -546,21 +627,24 @@ CQ.mainApp.zhishikuController
                 App.runui();
             }
         });
-    }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout",
-    function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
+    }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams", "$timeout",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams, $timeout) {
         console.log("eventdetailController", "start!!!");
         $rootScope.modelName="事件详情";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
         siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg"};
         //页面UI初始化；
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/event_detail"
+            url:"http://118.190.133.203:8899/yqdata/event_detail",
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
             posts=res.data.data;
             console.log(new Date(posts[0].pt_time));
-            $scope.durationTime=(new Date(posts[posts.length-1].pt_time)-new Date(posts[0].pt_time))/86400000;
-            $scope.durationTime=16;
+            $scope.durationTime=-Math.floor((new Date(posts[posts.length-1].pt_time)-new Date(posts[0].pt_time))/86400000);
+            // $scope.durationTime=16;
             $scope.postsNum=posts.length;
             $scope.posterNum=new Set(posts.map(d=>d.poster).filter(d=>d!=" ")).size;
             posts.forEach(d=>{
@@ -570,6 +654,10 @@ CQ.mainApp.zhishikuController
                 if(d.site_name=="")
                 {
                     d.site_name = "其他";
+                }
+                if(d.content.length>200)
+                {
+                    d.content = d.content.slice(0,199)+'......';
                 }
                 d.defaultPosterImg=siteDefaultImg[d.site_name]||siteDefaultImg["其他"];
                 // if(d.pt_time)
@@ -660,6 +748,10 @@ CQ.mainApp.zhishikuController
             drawdayDist1(dayDist, dayDim, dayGroup);
             var datatypeDist = dc.pieChart("#siteChart"),
             datatypeDim = ndx.dimension(function (d) {
+                if(d.site_name.indexOf("T")!==-1)
+                {
+                    console.log(d.site_name)
+                }
                 return d.site_name;
             }),
             datatypeGroup = datatypeDim.group().reduceSum(function(d) {
@@ -866,10 +958,12 @@ CQ.mainApp.zhishikuController
                 });
             }
         });
-    }]).controller("sentimentController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("sentimentController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams) {
         console.log("sentimentController", "start!!!");
         $rootScope.modelName="情感分析";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         //页面UI初始化；
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
@@ -878,6 +972,7 @@ CQ.mainApp.zhishikuController
                 $http({
                     method:"get",
                     url:"/static/assets/data/zhishiku/allemotion.json",
+                    params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
                 }).then(function (res) {
                     $scope.cnt=0;
                     var tmp = res.data;
@@ -1054,17 +1149,20 @@ CQ.mainApp.zhishikuController
                 });
             }
         });
-    }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams) {
         console.log("viewpointController", "start!!!");
         $rootScope.modelName="观点挖掘";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         $scope.showMoreBtn=true;
         $scope.less=false;
         $scope.expression=true;
         var comm_show_num = 4;
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/opinion_mining"
+            url:"http://118.190.133.203:8899/yqdata/opinion_mining",
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(result){
              $scope.items=result.data.data;
             console.log($scope.items);
@@ -1096,14 +1194,17 @@ CQ.mainApp.zhishikuController
                 App.runui();
             }
         });
-    }]).controller("evolutionaryController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("evolutionaryController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams) {
         console.log("evolutionaryController", "start!!!");
         $rootScope.modelName="事件演化";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         //页面UI初始化；
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/hot_value_evolution"
+            url:"http://118.190.133.203:8899/yqdata/hot_value_evolution",
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
             var counts = (res.data.data.reverse());
             var ti=[],dat=[[],[],[]];
@@ -1204,7 +1305,8 @@ CQ.mainApp.zhishikuController
 
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/hot_topic_evolution"
+            url:"http://118.190.133.203:8899/yqdata/hot_topic_evolution",
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res) {
             var ex = res.data.data;
             var leg = [],ti=[],dat=[];
