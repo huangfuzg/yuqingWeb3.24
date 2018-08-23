@@ -229,12 +229,13 @@ CQ.mainApp.zhishikuController
         $rootScope.event = $scope.event;
         var data=null;
         $scope.alluser = null;//所有用户
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/community.json":"http://118.190.133.203:8899/yqdata/community_detection";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/community_detection",
+            url:url,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            data=res.data.data;
+            data=$scope.event.from_subject.id == 0 ? res.data : res.data.data;
             console.log(data);
             var nodes=[],edges=[],nodesl=0,edge_count=2,color_index=0;
             for (var key in data)
@@ -586,12 +587,12 @@ CQ.mainApp.zhishikuController
                 // console.log(d3.event); 
                 d3.select(this).select("text").text(function(d){
                     $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
-                    if(d.detail)
-                    {
-                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
-                        if(d.detail.is_V==1)
-                            $("#title").append("<br/>大V")
-                    }
+                    // if(d.detail)
+                    // {
+                    //     $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
+                    //     if(d.detail.is_V==1)
+                    //         $("#title").append("<br/>大V")
+                    // }
                     $("#title").css({"left":d3.event.clientX,"top":d3.event.clientY}).fadeIn('fast');
                     return "";
                 });
@@ -636,12 +637,13 @@ CQ.mainApp.zhishikuController
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
         siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg"};
         //页面UI初始化；
+        var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":"http://118.190.133.203:8899/yqdata/event_detail";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/event_detail",
+            url:url,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            posts=res.data.data;
+            posts=$scope.event.from_subject.id == 0 ? res.data.data : res.data.data;
             console.log(new Date(posts[0].pt_time));
             $scope.durationTime=-Math.floor((new Date(posts[posts.length-1].pt_time)-new Date(posts[0].pt_time))/86400000);
             // $scope.durationTime=16;
@@ -758,7 +760,7 @@ CQ.mainApp.zhishikuController
                 return 1;
             });
             // console.log(datatypeDim);
-            var top5data = datatypeGroup.top(6).map(d=>d.key),
+            var top5data = datatypeGroup.top(2).map(d=>d.key),
             datatypeDim1 = ndx.dimension(function (d) {
                 for(var i = 0; i < top5data.length; i++)
                 {
@@ -965,18 +967,26 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         //页面UI初始化；
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/allemotion.json":"http://118.190.133.203:8899/yqdata/emotion_analysis";
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
                 $http({
                     method:"get",
-                    url:"/static/assets/data/zhishiku/allemotion.json",
+                    url:url,
                     params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
                 }).then(function (res) {
                     $scope.cnt=0;
-                    var tmp = res.data;
-                    var table = res.data,page_num=20,tables=table;
+                    var tmp = $scope.event.from_subject.id == 0 ? res.data : res.data.data;
+                    // console.log("tmp",tmp);
+                    var labels = [];
+                    tmp.forEach(function(d){
+                        if(labels.indexOf(d.label)==-1){
+                            labels.push(d.label);
+                        }
+                    })
+                    var table = res.data.data,page_num=20,tables=table;
                     // $scope.max_page=Math.ceil(res.data.length/page_num);
                     $scope.page=1;
                     var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
@@ -1007,11 +1017,11 @@ CQ.mainApp.zhishikuController
                     var senTmp=true;
                     var emotion1 = 0,emotion2=0,emotion3=0;
                     tmp.forEach(function (d) {
-                        if(d.label=='袖手旁观')
+                        if(d.label==labels[0])
                             emotion1+=1;
-                        if(d.label=='情绪激动')
+                        if(d.label==labels[1])
                             emotion2+=1;
-                        if(d.label=='冷静客观')
+                        if(d.label==labels[2])
                             emotion3+=1;
 
                     })
@@ -1029,7 +1039,7 @@ CQ.mainApp.zhishikuController
                         legend: {
                             orient: 'vertical',
                             left: 'left',
-                            data: ['袖手旁观','情绪激动','冷静客观']
+                            data: labels,
                         },
                         series : [
                             {
@@ -1047,14 +1057,14 @@ CQ.mainApp.zhishikuController
                                     }
                                 },
                                 data:[
-                                    {value:emotion1, name:'袖手旁观',label:{
+                                    {value:emotion1, name:labels[0],label:{
                                         normal:{
                                             fontSize:12,
                                             show:true,
                                         }
                                     }},
-                                    {value:emotion2, name:'情绪激动'},
-                                    {value:emotion3, name:'冷静客观'},
+                                    {value:emotion2, name:labels[1]},
+                                    {value:emotion3, name:labels[2]},
                                    ],
                                 itemStyle: {
                                     emphasis: {
@@ -1078,6 +1088,7 @@ CQ.mainApp.zhishikuController
                             if(params.selected[key])
                             te.push(key)
                         }
+                        console.log(te);
                         senTmp=table.filter(function (d) {
                             return te.includes(d.label)
                         })
@@ -1159,12 +1170,13 @@ CQ.mainApp.zhishikuController
         $scope.less=false;
         $scope.expression=true;
         var comm_show_num = 4;
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/usercomment.json":"http://118.190.133.203:8899/yqdata/opinion_mining";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/opinion_mining",
+            url:url,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(result){
-             $scope.items=result.data.data;
+             $scope.items=$scope.event.from_subject.id == 0 ? result.data.data : result.data.data;
             console.log($scope.items);
             angular.forEach($scope.items,function(array){
                 console.log(array.usercomment);  
@@ -1201,12 +1213,14 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         //页面UI初始化；
+        var url1 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/da_v.json":"http://118.190.133.203:8899/yqdata/hot_value_evolution";
+        var url2 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/evolu.json":"http://118.190.133.203:8899/yqdata/hot_topic_evolution";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/hot_value_evolution",
+            url:url1,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            var counts = (res.data.data.reverse());
+            var counts = $scope.event.from_subject.id == 0 ? res.data.reverse() : (res.data.data.reverse());
             var ti=[],dat=[[],[],[]];
             var type=['大V数','帖子数/10','热度']
             var mychart = echarts.init(document.getElementById('hot'));
@@ -1305,10 +1319,10 @@ CQ.mainApp.zhishikuController
 
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/hot_topic_evolution",
+            url:url2,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res) {
-            var ex = res.data.data;
+            var ex = $scope.event.from_subject.id == 0 ? res.data : res.data.data;
             var leg = [],ti=[],dat=[];
             var topics=[]
             var min_val =100;
