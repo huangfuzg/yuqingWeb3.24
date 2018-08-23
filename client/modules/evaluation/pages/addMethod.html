@@ -1,0 +1,90 @@
+<style>
+.dia_warning{
+    color: #f59c1a;
+}
+
+.ngdialog.ngdialog-theme-details {
+    padding: 5% !important;
+}
+
+.ngdialog.ngdialog-theme-details .ngdialog-content {
+    width: 1000px !important;
+}
+</style>
+<div class="panel panel-primary" data-sortable-id="ui-buttons-3">
+    <div class="panel-heading">
+        <h4 class="panel-title f-s-15">导控策略选择</h4>
+    </div>
+    <div class="panel-body">
+       <div class="form-group col-md-12">
+            <div class="col-md-3">
+                <div class="wrapper">
+                    <p><b>导控策略</b></p>
+                    <ul class="nav nav-pills nav-stacked nav-sm">
+                        <li>
+                          <span><input type="checkbox" ng-model="del.selected"/></span>
+                          <a style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                          删帖</a>
+                        </li>
+                          <li>
+                          <span><input type="checkbox" ng-model="send.selected"/></span>
+                          <a style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                          推送文本</a>
+                        </li>
+                        <li>
+                          <span><input type="checkbox" ng-model="positive.selected"/></span>
+                          <a style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                          主动发布言论</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="wrapper">
+                    <form method="POST" name="topicForm" novalidate="false">
+                          <div class="m-b-15" id='1' ng-show="del.selected">
+                              <a style="display:block;"><i class="fa fa-trash-o"></i> 
+                                      需要进行删帖:</a>
+                              <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+                                  <ul class="nav nav-pills nav-stacked nav-sm panel-body">
+                                      <li ng-repeat="community1 in alldata1">
+                                      <span><input type="checkbox" ng-model="community1.selected" ng-click="onAllSelected(community1,del)"/></span>
+                                      <a data-toggle="collapse" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                                      {{ community1.community }}</a>
+                                      <ul class="collapse list-inline in">
+                                          <li ng-repeat="node1 in community1.viewpoint">
+                                              <span><input type="checkbox" ng-model="node1.selected" ng-click="checkBoxChange(node1,community1,del)"/></span>
+                                              <a>{{node1.Content}}</a>
+                                          </li>
+                                      </ul>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="m-b-15" id='2' ng-show="send.selected">
+                              <a style="display:block;"><i class="fa fa-hand-grab-o"></i> 
+                                      需要推送文本:</a>
+                              <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+                                  <ul class="nav nav-pills nav-stacked nav-sm panel-body">
+                                      <li ng-repeat="community2 in alldata2">
+                                      <span><input type="checkbox" ng-model="community2.selected" ng-click="onAllSelected(community2,send)"/></span>
+                                      <a  style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
+                                      {{ community2.community }}</a>
+                                      <ul  class="collapse list-inline in">
+                                          <li ng-repeat="node2 in community2.viewpoint">
+                                              <span><input type="checkbox" ng-model="node2.selected" ng-click="checkBoxChange(node2,community2,send)"/></span>
+                                              <a>{{node2.Content}}</a>
+                                          </li>
+                                      </ul>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>                               
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        <button type="submit" data-dismiss="modal" class="btn btn-primary p-l-40 p-r-40 pull-right" ng-click="save()">提交</button> 
+    </div>
+</div>

@@ -1,0 +1,54 @@
+
+    <div class="tab-content">
+        <div  id="general-tab">
+            <!-- <a href="javascript:;"  ng-class='{"disabled":!next1}' class="btn btn-primary btn-sm pull-right" ng-click="gostep(1)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+            <h3 class="m-t-5 m-b-5">{{modelName}}</h3>
+            <p class="m-b-15">
+                        All the predefined css classes will override the defined css styling in your classes, UNLESS the <code>!important</code> is declared in your defined css styling.
+                    </p>
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawRH()"><i class="fa fa-align-justify"></i> 生成舆情态势值走势</a> -->
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ><i class="fa fa-toggle-right"></i> 生成评估指标体系</a> -->
+                    <div class="panel-body" style='height:400px'>
+                        <div id="yqts" style="width: 100%;height: 100%" ng-click="getData()"></div>
+                    </div>
+                    <div class="panel-body" style='height:400px'>
+                        <div id="scene" style="width: 100%;height: 100%"></div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="email-content">
+                        <table class="table table-email f-s-14">
+                            <thead>
+                            <tr>
+                                <th class="yd_date" style="width: 15%">时间</th>
+                                <th class="yd_value" style="width: 20%">舆情态势值</th>
+                                <th class="yd_state" style="width: 20%">事件发展状态</th>
+                                <th class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time" style="width: 30%">对应引导策略</th>
+                                <th style="width: 30%" ng-if="evaluation.time==evaluations[evaluations.length-1].time">引导</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-model='evaluation'>
+                                <td class="yd_date">{{evaluation.time}}</td>
+                                <td class="yd_value">{{evaluation.value}}</td>
+                                <td class="yd_state">{{evaluation.state}}</td>
+                                <td class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time">{{evaluation.method}}</td>
+                                <td ng-if="evaluation.time==evaluations[evaluations.length-1].time"><a ui-sref="dk.method({content:event,id:event.id})"class="btn btn-primary btn-sm"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a></td>
+                            </tr>
+                            <!-- <tr ng-repeat='evaluation in evaluations.slice().reverse()'>
+                                <td class="yd_date">{{evaluation.time}}</td>
+                                <td class="yd_value">{{evaluation.value}}</td>
+                                <td class="yd_state">{{evaluation.state}}</td>
+                                <td class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time">{{evaluation.method}}</td>
+                                <td ng-if="evaluation.time==evaluations[evaluations.length-1].time"><a href="#padding-tab" class="btn btn-primary btn-sm"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a></td>
+                            </tr> -->
+                            </tbody>
+                        </table>
+                        <div class="email-footer clearfix">
+                                <a href="javascript:;" class="btn btn-primary btn-sm pull-left" ui-sref="dk.zhibiao({content:event,id:event.id})"><i class="fa fa-arrow-left"></i> 上一步</a>
+                                <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ui-sref="dk.method({content:event,id:event.id})"><i class="fa fa-arrow-right"></i> 导控策略生成</a>
+                            </div>
+                        </div>
+                        
+                    </div>
+        </div>
+    </div>
