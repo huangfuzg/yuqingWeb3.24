@@ -119,7 +119,7 @@ CQ.mainApp.zhishikuController
             id:1,
             'event':'假疫苗事件处理结果',
             'time':'2018年8月16日',
-            img:"/static/assets/img/zhishiku/ymev2.png",
+            img:"/static/assets/img/zhishiku/ymev2.jpg",
             'name':'假疫苗事件处理结果',
             'keywords':[{word:'长春长生生物',weight:0.23},{word:'长生生物',weight:0.46},{word:'疫苗',weight:0.10},{word:'假疫苗',weight:0.17},{word:'习近平',weight:0.28},{word:'药监局',weight:0.36},{word:'国务院',weight:0.08},{word:'中央政治局',weight:0.19},{word:'会议结果',weight:0.61},{word:'调查结果',weight:0.89},{word:'免职',weight:0.98},{word:'引咎辞职',word:0.90},{word:'责令辞职',weight:0.87}],
             'summary':'2018年8月16日，中共中央政治局常务委员会召开会议，听取关于吉林长春长生公司问题疫苗案件调查及有关问责情况的汇报。中共中央总书记习近平主持会议并发表重要讲话。会议同意，对金育辉（吉林省副省长，2017年4月起分管吉林省食品药品监管工作）予以免职，对李晋修（吉林省政协副主席，2015年12月-2017年4月任分管吉林省食品药品监管工作的副省长）责令辞职，要求刘长龙（长春市市长，2016年9月任长春市代市长，2016年10月至今任长春市市长）、毕井泉（市场监管总局党组书记、副局长，2015年2月-2018年3月任原食品药品监管总局局长）引咎辞职，要求姜治莹（吉林省委常委、延边朝鲜族自治州委书记，2012年3月-2016年5月任长春市委副书记、市长）、焦红（国家药监局局长）作出深刻检查；对35名非中管干部进行问责；决定中央纪委国家监委对吴浈（原食品药品监管总局副局长、原卫生计生委副主任，分管药化注册管理、药化监管和审核检验等工作）进行立案审查调查。会议责成吉林省委和省政府、国家药监局向中共中央、国务院作出深刻检查。'
@@ -229,12 +229,13 @@ CQ.mainApp.zhishikuController
         $rootScope.event = $scope.event;
         var data=null;
         $scope.alluser = null;//所有用户
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/community.json":"http://118.190.133.203:8899/yqdata/community_detection";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/community_detection",
+            url:url,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            data=res.data.data;
+            data=$scope.event.from_subject.id == 0 ? res.data : res.data.data;
             console.log(data);
             var nodes=[],edges=[],nodesl=0,edge_count=2,color_index=0;
             for (var key in data)
@@ -586,12 +587,12 @@ CQ.mainApp.zhishikuController
                 // console.log(d3.event); 
                 d3.select(this).select("text").text(function(d){
                     $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
-                    if(d.detail)
-                    {
-                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
-                        if(d.detail.is_V==1)
-                            $("#title").append("<br/>大V")
-                    }
+                    // if(d.detail)
+                    // {
+                    //     $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
+                    //     if(d.detail.is_V==1)
+                    //         $("#title").append("<br/>大V")
+                    // }
                     $("#title").css({"left":d3.event.clientX,"top":d3.event.clientY}).fadeIn('fast');
                     return "";
                 });
@@ -634,14 +635,15 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
-        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg"};
+        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","Twitter":"/static/assets/img/twitter.svg"};
         //页面UI初始化；
+        var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":"http://118.190.133.203:8899/yqdata/event_detail";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/event_detail",
+            url:url,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            posts=res.data.data;
+            posts=$scope.event.from_subject.id == 0 ? res.data.data : res.data.data;
             console.log(new Date(posts[0].pt_time));
             $scope.durationTime=-Math.floor((new Date(posts[posts.length-1].pt_time)-new Date(posts[0].pt_time))/86400000);
             // $scope.durationTime=16;
@@ -758,7 +760,7 @@ CQ.mainApp.zhishikuController
                 return 1;
             });
             // console.log(datatypeDim);
-            var top5data = datatypeGroup.top(6).map(d=>d.key),
+            var top5data = datatypeGroup.top(2).map(d=>d.key),
             datatypeDim1 = ndx.dimension(function (d) {
                 for(var i = 0; i < top5data.length; i++)
                 {
@@ -965,18 +967,26 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         //页面UI初始化；
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/allemotion.json":"http://118.190.133.203:8899/yqdata/emotion_analysis";
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
                 $http({
                     method:"get",
-                    url:"/static/assets/data/zhishiku/allemotion.json",
+                    url:url,
                     params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
                 }).then(function (res) {
                     $scope.cnt=0;
-                    var tmp = res.data;
-                    var table = res.data,page_num=20,tables=table;
+                    var tmp = $scope.event.from_subject.id == 0 ? res.data : res.data.data;
+                    // console.log("tmp",tmp);
+                    var labels = [];
+                    tmp.forEach(function(d){
+                        if(labels.indexOf(d.label)==-1){
+                            labels.push(d.label);
+                        }
+                    })
+                    var table = res.data.data,page_num=20,tables=table;
                     // $scope.max_page=Math.ceil(res.data.length/page_num);
                     $scope.page=1;
                     var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
@@ -1007,11 +1017,11 @@ CQ.mainApp.zhishikuController
                     var senTmp=true;
                     var emotion1 = 0,emotion2=0,emotion3=0;
                     tmp.forEach(function (d) {
-                        if(d.label=='袖手旁观')
+                        if(d.label==labels[0])
                             emotion1+=1;
-                        if(d.label=='情绪激动')
+                        if(d.label==labels[1])
                             emotion2+=1;
-                        if(d.label=='冷静客观')
+                        if(d.label==labels[2])
                             emotion3+=1;
 
                     })
@@ -1029,7 +1039,7 @@ CQ.mainApp.zhishikuController
                         legend: {
                             orient: 'vertical',
                             left: 'left',
-                            data: ['袖手旁观','情绪激动','冷静客观']
+                            data: labels,
                         },
                         series : [
                             {
@@ -1047,14 +1057,14 @@ CQ.mainApp.zhishikuController
                                     }
                                 },
                                 data:[
-                                    {value:emotion1, name:'袖手旁观',label:{
+                                    {value:emotion1, name:labels[0],label:{
                                         normal:{
                                             fontSize:12,
                                             show:true,
                                         }
                                     }},
-                                    {value:emotion2, name:'情绪激动'},
-                                    {value:emotion3, name:'冷静客观'},
+                                    {value:emotion2, name:labels[1]},
+                                    {value:emotion3, name:labels[2]},
                                    ],
                                 itemStyle: {
                                     emphasis: {
@@ -1078,6 +1088,7 @@ CQ.mainApp.zhishikuController
                             if(params.selected[key])
                             te.push(key)
                         }
+                        console.log(te);
                         senTmp=table.filter(function (d) {
                             return te.includes(d.label)
                         })
@@ -1159,12 +1170,13 @@ CQ.mainApp.zhishikuController
         $scope.less=false;
         $scope.expression=true;
         var comm_show_num = 4;
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/usercomment.json":"http://118.190.133.203:8899/yqdata/opinion_mining";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/opinion_mining",
+            url:url,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(result){
-             $scope.items=result.data.data;
+             $scope.items=$scope.event.from_subject.id == 0 ? result.data.data : result.data.data;
             console.log($scope.items);
             angular.forEach($scope.items,function(array){
                 console.log(array.usercomment);  
@@ -1201,12 +1213,15 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         //页面UI初始化；
+        console.log($scope.event);
+        var url1 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/da_v.json":"http://118.190.133.203:8899/yqdata/hot_value_evolution";
+        var url2 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/evolu.json":"http://118.190.133.203:8899/yqdata/hot_topic_evolution";
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/hot_value_evolution",
+            url:url1,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            var counts = (res.data.data.reverse());
+            var counts = $scope.event.from_subject.id == 0 ? res.data.reverse() : (res.data.data.reverse());
             var ti=[],dat=[[],[],[]];
             var type=['大V数','帖子数/10','热度']
             var mychart = echarts.init(document.getElementById('hot'));
@@ -1305,10 +1320,10 @@ CQ.mainApp.zhishikuController
 
         $http({
             method:"get",
-            url:"http://118.190.133.203:8899/yqdata/hot_topic_evolution",
+            url:url2,
             params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res) {
-            var ex = res.data.data;
+            var ex = $scope.event.from_subject.id == 0 ? res.data : res.data.data;
             var leg = [],ti=[],dat=[];
             var topics=[]
             var min_val =100;
@@ -1322,14 +1337,14 @@ CQ.mainApp.zhishikuController
                 }
             });
             ex.forEach(function (d) {
-                console.log(d);
+                // console.log(d);
                 if(leg.indexOf(d.topic)==-1)
                     leg.push(d.topic);
                 if(ti.indexOf(d.time)==-1)
                     ti.push(d.time);
                 ti.sort();
                 var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
-                console.log(tmp)
+                // console.log(tmp)
                 dat[d.type-1][tmp-min_val]=d.num;
                 if(topics[topics.length-1]!=d.topic)
                     topics.push(d.topic);

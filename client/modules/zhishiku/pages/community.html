@@ -40,6 +40,11 @@
 	    background: #2a72b5 !important;
     	border-color: #2a72b5 !important;
 	}
+	#content > div.col-xs-10.ng-scope > div > div > div:nth-child(2) > div > div.panel-body > ul > li:nth-child(2){
+		margin-top:0;
+		border-top: none;
+		padding-top:0;
+	}
 </style>
 <div style="position: relative; bottom: 0;">
 	<!-- <div class="user-type">
@@ -84,27 +89,28 @@
 				</div>
 				<div class="panel-body">
 					<ul class="media-list media-list-with-divider">
-			            <li class="media media-sm" ng-repeat="(index, items) in pageData">
+			            <li class="media media-sm col-md-6" ng-repeat="(index, items) in pageData">
 			                <a class="pull-left" href="{{items.home_url}}" target="_blank">
 			                    <img alt="" class="media-object rounded-corner" src="/static/assets/img/people.svg"/>
+			                    <!-- <img ng-if="!(items.user_img==''||items.user_img==' '||items.user_img==undefined)" alt="" class="media-object rounded-corner" src={{items.user_img}}/> -->
 			                </a>
 			                <div class="media-body">
-			                    <a href="{{items.home_url}}" target="_blank">
+			                    <a href="{{items.home_url}}" target="_blank" ng-if="items.user_name">
 			                        <h4 class="media-heading f-s-15" ng-bind="items.user_name">
 			                        </h4>
 			                    </a>
 			                    <ul class="breadcrumb">
-			                        <li>
+			                        <li ng-if="items.Follows">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
 			                                关注：{{items.Follows}}
 			                            </a>
 			                        </li>
-			                        <li>
+			                        <li ng-if="items.Following">
 			                            <a title="查看详细博主信息" ui-sref="{{items.home_url}}">
 			                                粉丝：{{items.Following}}
 			                            </a>
 			                        </li>
-			                        <li>
+			                        <li ng-if="items.post_num">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看博主微博">
 			                                微博数：{{items.post_num}}
 			                            </a>
@@ -112,31 +118,31 @@
 			                        <!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
 			                    </ul>
 			                    <ul class="breadcrumb">
-			                        <li>
+			                        <li ng-if="items.location">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
 			                                所在地：{{items.location}}
 			                            </a>
 			                        </li>
-			                        <li>
+			                        <li ng-if="items.user_id">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
 			                                用户id：{{items.user_id}}
 			                            </a>
 			                        </li>
 			                    </ul>
 			                    <ul class="breadcrumb">
-			                        <li>
+			                        <li ng-if="items.intro">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
 			                                简介：{{items.intro}}
 			                            </a>
 			                        </li>
 			                    </ul>
 			                    <ul class="f-s-14 breadcrumb">
-			                        <li>
+			                        <li ng-if="items.board">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看用户详细信息">
 			                                来自：{{items.board}}
 			                            </a>
 			                        </li>
-			                        <li>
+			                        <li ng-if="items.post_num">
 			                            <a title="查看详细帖子" ui-sref="yuqingTrendsController({poster:[items.name]})">
 			                                发帖：{{items.post_num}}
 			                            </a>
