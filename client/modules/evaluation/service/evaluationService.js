@@ -4,6 +4,7 @@ angular.module('dkService',['commons'])
         var factories = {};
         factories.getDK_community = $resource(CQ.variable.RESTFUL_URL + "community_detection", parseResource.params, parseResource.actions);
         factories.getDK_opinion = $resource(CQ.variable.RESTFUL_URL + "opinion_mining", parseResource.params, parseResource.actions);        
+        factories.getDK_method = $resource(CQ.variable.RESTFUL_URL + "", parseResource.params, parseResource.actions);        
         return factories;
     }])
     .factory("DKFacService",['DKFac', 'RestService', '$http',function(DKFac, RestService,$http) {
@@ -14,12 +15,26 @@ angular.module('dkService',['commons'])
         factories.getDK_opinion = function(params) {
             return RestService.get(DKFac.getDK_opinion, params);
         };
-        factories.getDkData = function(params) {
-            return RestService.get(DKFac.getDkData, params);
+        factories.getDK_method = function(params) {
+            return RestService.get(DKFac.getDK_method, params);
         };
-        factories.upDkData = function(data){
-            return $http.post(CQ.variable.RESTFUL_URL + "", data);
+        factories.UpdateMethod = function(data) {
+            return $http.post("http://118.190.133.203:8899/yqdata/", data);
         };
         return factories;
     }])
-    
+    .factory('PGFac', ['$resource','parseResource',function($resource,parseResource){
+        var factories = {};
+        factories.getPG_data = $resource("http://118.190.133.203:8100/yqdata/" + "score_save", parseResource.params, parseResource.actions);
+        return factories;
+    }])
+    .factory("PGFacService",['PGFac', 'RestService', '$http',function(PGFac, RestService,$http) {
+        var factories = {};
+        factories.getPG_data = function(params) {
+            return RestService.get(PGFac.getPG_data, params);
+        };
+        factories.UpdatePG = function(data) {
+            return $http.post("http://118.190.133.203:8100/yqdata/score_save", data);
+        };
+        return factories;
+    }])

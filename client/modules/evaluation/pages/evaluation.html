@@ -31,6 +31,10 @@
     line-height: 14px;
     opacity: 1;
 }
+p{
+    font-size: 14px;
+}
+
 </style>
 <div id="content" class="content">
             <!-- begin breadcrumb -->
@@ -82,21 +86,7 @@
                             <a href="javascript:;" class="btn btn-white btn-white-without-border"><i class="fa fa-th"></i></a>
                             <a href="javascript:;" class="btn btn-white btn-white-without-border"><i class="fa fa-th-large"></i></a>
                         </div>
-                        <ul class="pagination pagination-without-border pull-right m-t-0">
-                            <!-- <li class="disabled"><a href="javascript:;">«</a></li>
-                            <li class="active"><a href="javascript:;">1</a></li>
-                            <li><a href="javascript:;">2</a></li>
-                            <li><a href="javascript:;">3</a></li>
-                            <li><a href="javascript:;">4</a></li>
-                            <li><a href="javascript:;">5</a></li>
-                            <li><a href="javascript:;"></a></li>
-                            <li><a href="javascript:;">7</a></li>
-                            <li><a href="javascript:;">»</a></li> -->
-                            <li ng-class="{disabled:page <= 0}" ng-click="getDataByPage(page-1)"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li ng-class="{disabled:page <= 0}"><a href="javascript:;" ng-click="getDataByPage(page-1)"><i class="fa fa-angle-left"></i></a></li>
-                            <li ng-class="{disabled:page >= maxPage}"><a href="javascript:;" ng-click="getDataByPage(page+1)"><i class="fa fa-angle-right"></i></a></li>
-                            <li ng-class="{disabled:page >= maxPage}"><a href="javascript:;" ng-click="getDataByPage(page+1)"><i class="fa fa-angle-double-right"></i></a></li>
-                            </ul>
+                        
                         <ul class="result-list">
                             <li ng-repeat="content in contents">
                                 <div class="result-image">
@@ -104,14 +94,14 @@
                                 </div>
                                 <div class="result-info">
                                     <h4 class="title"><a href="javascript:;">{{content.name}}</a></h4>
-                                    <p class="location">2017/06/18 - 2017/08/28</p>
+                                    <p class="location">{{content.time}}</p>
                                     <p class="desc">
                                          {{content.description}}
                                     </p>
                                     <div class="btn-row">
                                         <!-- <a href="javascript:;" data-toggle="tooltip" data-container="body" title="Analytics"><i class="fa fa-fw fa-bar-chart-o"></i></a> -->
                                        <!--  <a href="javascript:;" data-toggle="tooltip" data-container="body" title="事件详情"><i class="fa fa-fw fa-tasks"></i></a> -->
-                                        <a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.eventdetail({event:event})"><i class="fa fa-list-ul fa-fw"></i> 事件详情</a>
+                                        <a href="javascript:;" class="btn btn-primary btn" ui-sref="zhishiku.eventdetail({event:content})"><i class="fa fa-list-ul fa-fw"></i> 事件详情</a>
                                         <!-- <a href="javascript:;" data-toggle="tooltip" data-container="body" title="Configuration"><i class="fa fa-fw fa-cog"></i></a>
                                         <a href="javascript:;" data-toggle="tooltip" data-container="body" title="Performance"><i class="fa fa-fw fa-tachometer"></i></a>
                                         <a href="javascript:;" data-toggle="tooltip" data-container="body" title="Users"><i class="fa fa-fw fa-user"></i></a> -->

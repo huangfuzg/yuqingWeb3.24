@@ -2,9 +2,9 @@
 		<div id="content" class="content">
 			<!-- begin breadcrumb -->
 			<ol class="breadcrumb pull-right">
-    			<li><a href="javascript:;">舆情导控</a></li>
-				<li class="active">{{event.name}}</li>
-                <li><a href="javascript:;">成效评估</a></li>
+    			<li><a href="#/evaluation">舆情导控</a></li>
+				<li><a href="#/evaluation">{{event.name}}</a></li>
+                <li>成效评估</li>
 			</ol>
 			
 			<h1 class="page-header">{{event.name}} <small>成效评估</small></h1>
@@ -35,7 +35,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr ng-repeat="result in eval_results">
+                            <tr ng-repeat="result in eval_results.details">
                                 <td>{{result.time}}</td>
                                 <td>{{result.result}}</td>
                                 <td>

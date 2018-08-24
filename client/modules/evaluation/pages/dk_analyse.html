@@ -31,8 +31,8 @@ font-size: 14px;
                     <i class="fa fa-bar-chart-o"></i>
                     实时态势值</h4>
             </div>
-                <div class="email-content">
-                <table class="table table-email f-s-14">
+                <div class="panel-body">
+                <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th class="yd_date" style="width: 25%">当前时间</th>
@@ -48,7 +48,9 @@ font-size: 14px;
                     <tr ng-model='today'>
                         <td class="yd_date">{{today.time}}</td>
                         <td class="yd_value">{{today.value}}</td>
-                        <td class="yd_value">中印1 中印2 中印3</td>
+                        <td ng-if="id==0">班公湖投石,张拉山演习,侧踹印士兵动作</td>
+                        <td ng-if="id==4">美方挑起贸易战,美方制裁中兴,美方变卦再次挑起贸易战</td>
+                        <td ng-if="id==5">国家药监局发通告,假疫苗事件处理结果</td>
                         <td class="yd_state">{{today.state}}</td>
                         <td class="yd_method" ng-if="modelName!='导控策略选择'"><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="dk.method({content:event,id:event.id})"><i class="fa fa-edit"></i> 设置导控策略</a></td>
                         <!-- <td class="yd_content">{{evaluation.content}}</td> -->
@@ -56,9 +58,10 @@ font-size: 14px;
                     </tr>
                     </tbody>
                 </table>
-                <div class="email-footer clearfix">
-                    <p>*当前舆情态势值是经过PETC分析之后，结合指标体系融合得到的针对事件状态的描述，范围在0-100之间</p>
-                </div>
+                <p>*当前舆情态势值是经过PETC分析之后，结合指标体系融合得到的针对事件状态的描述，范围在0-100之间</p>
+                <!-- <div class="email-footer clearfix">
+                    
+                </div> -->
                 </div>
         </div>
     </div>
