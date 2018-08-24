@@ -1213,6 +1213,7 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         //页面UI初始化；
+        console.log($scope.event);
         var url1 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/da_v.json":"http://118.190.133.203:8899/yqdata/hot_value_evolution";
         var url2 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/evolu.json":"http://118.190.133.203:8899/yqdata/hot_topic_evolution";
         $http({
@@ -1336,14 +1337,14 @@ CQ.mainApp.zhishikuController
                 }
             });
             ex.forEach(function (d) {
-                console.log(d);
+                // console.log(d);
                 if(leg.indexOf(d.topic)==-1)
                     leg.push(d.topic);
                 if(ti.indexOf(d.time)==-1)
                     ti.push(d.time);
                 ti.sort();
                 var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
-                console.log(tmp)
+                // console.log(tmp)
                 dat[d.type-1][tmp-min_val]=d.num;
                 if(topics[topics.length-1]!=d.topic)
                     topics.push(d.topic);
