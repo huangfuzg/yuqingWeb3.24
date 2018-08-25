@@ -586,7 +586,7 @@ CQ.mainApp.zhishikuController
             function mouseover() { 
                 // console.log(d3.event); 
                 d3.select(this).select("text").text(function(d){
-                    $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
+                    $("#title").html("userid: "+d.user_id+"<br/>社团: "+d.group+"<br/>关注: "+d.Following+"<br/>粉丝: "+d.Follows+"<br/>发帖: "+d.post_num);
                     // if(d.detail)
                     // {
                     //     $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
@@ -760,7 +760,7 @@ CQ.mainApp.zhishikuController
                 return 1;
             });
             // console.log(datatypeDim);
-            var top5data = datatypeGroup.top(2).map(d=>d.key),
+            var top5data = datatypeGroup.top(Infinity).map(d=>d.key),
             datatypeDim1 = ndx.dimension(function (d) {
                 for(var i = 0; i < top5data.length; i++)
                 {
