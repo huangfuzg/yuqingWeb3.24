@@ -25,7 +25,7 @@ angular.module('dkService',['commons'])
     }])
     .factory('PGFac', ['$resource','parseResource',function($resource,parseResource){
         var factories = {};
-        factories.getPG_data = $resource(CQ.variable.RESTFUL_URL + "score_search", parseResource.params, parseResource.actions);
+        factories.getPG_data = $resource("http://118.190.133.203:8899/yqdata/" + "score_search", parseResource.params, parseResource.actions);
         return factories;
     }])
     .factory("PGFacService",['PGFac', 'RestService', '$http',function(PGFac, RestService,$http) {
