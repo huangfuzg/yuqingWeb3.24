@@ -55,7 +55,7 @@
 				<tbody>
 				<tr ng-repeat="(i,x) in senData">
 					<td class="num">{{i}}</td>
-					<td class="title">{{x.content}}</td>
+					<td class="title"><a href={{x.post_url}} target="_blank">{{x.content}}</a></td>
 					<td class="source">{{x.poster}}</td>
 					<td class="time">{{x.pt_time}}</td>
 					<td class="value">{{x.label}}</td>

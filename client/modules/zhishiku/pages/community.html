@@ -130,7 +130,12 @@
 			                        </li>
 			                    </ul>
 			                    <ul class="breadcrumb">
-			                        <li ng-if="items.intro">
+			                        <li ng-if="items.intro && items.intro.length>15">
+			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+			                                简介：{{items.intro.slice(0,15)+'......'}}
+			                            </a>
+			                        </li>
+			                        <li ng-if="items.intro && items.intro.length<=15">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
 			                                简介：{{items.intro}}
 			                            </a>
@@ -167,7 +172,15 @@
 <script type="text/javascript">
 	$(".user-type-btn").click(function(event) {
 		console.log($("this"));
-		$(".user-type-btn").removeClass("active");
-		$(this).addClass('active');
+		if(!$(this).hasClass('active'))
+		{
+			$(".user-type-btn").removeClass("active");
+			$(this).addClass('active');
+		}
+		else
+		{
+			$(".user-type-btn").removeClass("active");
+		}
+
 	});
 </script>

@@ -316,11 +316,19 @@ CQ.mainApp.zhishikuController
         },function(res){
             console.log(res);
         });
-
+        var last_click_usertype = -1;
         $scope.filterUser = function(usertype)
         {
-            $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+            if(last_click_usertype == usertype)
+            {
+                $scope.allPageData = $scope.alluser;
+            }
+            else
+            {
+                $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+            }
             $scope.getTableData(1,$scope.allPageData);
+            last_click_usertype = usertype;
         }
 
         $scope.searchUser = function(username)
@@ -635,7 +643,7 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
-        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","Twitter":"/static/assets/img/twitter.svg"};
+        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度贴吧":"/static/assets/img/tieba.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","推特":"/static/assets/img/twitter.svg","论坛":"/static/assets/img/luntan.svg"};
         //页面UI初始化；
         var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":"http://118.190.133.203:8899/yqdata/event_detail";
         $http({

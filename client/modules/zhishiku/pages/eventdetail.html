@@ -84,11 +84,11 @@
 									<img src="{{post.poster_img}}" alt="" class="media-object rounded-corner" ng-if="post.poster_img&&post.poster_img!=' '"/>
 									<img src="{{post.defaultPosterImg}}" alt="" class="media-object rounded-corner" ng-if="!post.poster_img||post.poster_img==' '"/>
 								</a>
-								<a href="{{post.post_url}}" class="media-body" style="color: inherit;">
+								<a href="{{post.post_url}}" class="media-body" style="color: inherit;" target="_blank">
 									<h5 class="media-heading" ng-if="post.poster">{{post.poster}}</h5>
 									<h5 class="media-heading" ng-if="post.topic_poster_name">{{post.topic_poster_name}}</h5>
-									<p>{{post.content}}</p>
-									<p>{{post.topic_content}}</p>
+									<p style="word-break: break-all;">{{post.content}}</p>
+									<p style="word-break: break-all;">{{post.topic_content}}</p>
 									<p ng-if="post.content==' '">{{post.title}}</p>
 									<p class="text-center" style="width: 100%"><img src={{post.img_url}} alt="" ng-if="post.img_url!=' '" style="margin: auto; min-width: 40%" />
 									</p>
@@ -98,6 +98,7 @@
 										</video>
 									</p>
 									<p class="text-muted m-t-5">发帖时间： <i>{{post.pt_time}}</i><i>{{post.topic_post_time}}</i>
+										 &nbsp;&nbsp;&nbsp;来自：<i>{{post.site_name}}</i>
 										<!-- <span class = "p-t-1 p-l-10 f-s-14 text-right iconslists">
 	                                        <a title = "情感分析"
 	                                        ng-click = "">
