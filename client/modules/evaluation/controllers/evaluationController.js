@@ -1457,6 +1457,7 @@ CQ.mainApp.dkController
             PGFacService.getPG_data({id:$rootScope.id}).then(function(res){
                 console.log(res);
                 $scope.eval_results = res;
+                console.log($scope.eval_results)
             })
         }
         getResult();
@@ -1465,7 +1466,7 @@ CQ.mainApp.dkController
                 var ti=[],dat=[[],[],[]];
                 var mychart3 = echarts.init(document.getElementById('compare'));
                 $scope.eval_results.forEach(function (d) {
-                    //console.log(d)
+                        console.log(d)
                     //if(d.type>0){
                         ti.push(d.time);
                         dat[0].push(+(d.result));
@@ -1473,6 +1474,8 @@ CQ.mainApp.dkController
                         dat[2].push(d.consistent*100);
                     //}
                 })
+                console.log(ti)
+                console.log(dat)
                 var obj1 = {value:+v.result,
                     itemStyle:{
                             normal:{
@@ -1500,7 +1503,7 @@ CQ.mainApp.dkController
                                 }
                             } 
                 }
-                var index = $scope.eval_results1.details.findIndex((d)=>{
+                var index = $scope.eval_results.findIndex((d)=>{
                     return d.time == v.time
                 })
                 dat[0].splice(index,1,obj1)
