@@ -316,19 +316,20 @@ CQ.mainApp.zhishikuController
         },function(res){
             console.log(res);
         });
-        var last_click_usertype = -1;
+        var usertype_state = 0;//0：未选取，1：重点，2：敏感，3：僵尸
         $scope.filterUser = function(usertype)
         {
-            if(last_click_usertype == usertype)
+            if(usertype_state == usertype)
             {
                 $scope.allPageData = $scope.alluser;
+                usertype_state = 0;
             }
             else
             {
                 $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+                usertype_state = usertype;
             }
             $scope.getTableData(1,$scope.allPageData);
-            last_click_usertype = usertype;
         }
 
         $scope.searchUser = function(username)
