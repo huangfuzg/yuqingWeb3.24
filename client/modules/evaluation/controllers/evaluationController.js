@@ -31,28 +31,50 @@ CQ.mainApp.dkController
             e_id:5,
             name:"长春长生假疫苗",
             state:"需高强度引导",
+            safe:70,
+            dangerous:60,
+            from_subject:{id:5},
+            img:"/static/assets/img/zhishiku/yimiao.jpg",
+            description:"2018年7月15日，国家药品监督管理局发布通告指出，长春长生生物科技有限公司冻干人用狂犬病疫苗生产存在记录造假等行为。 这是长生生物自2017年11月份被发现百白破疫苗效价指标不符合规定后不到一年，再曝疫苗质量问题。"
+        }];
+        $scope.allcontents1=[
+            {
+            id:0,
+            name:"中印对峙",
+            state:"无需引导",
+            safe:60,
+            dangerous:50,
+            from_subject:{id:0},
+            img:"/static/assets/img/zhishiku/zydz.jpg",
+            description:"2017年6月18日至2017年8月28日，印度边防部队非法越过边界线进入了中方境内，阻挠中国边防部队在洞朗地区的正常活动，双方在该地区紧张对峙两个多月。"
+            },
+            {
+            id:4,
+            name:"中美贸易战",
+            state:"需低强度引导",
+            safe:80,
+            dangerous:70,
+            from_subject:{id:4},
+            img:"/static/assets/img/zhishiku/zmmy.jpg",
+            description:"2018年中美贸易争端是中华人民共和国与美利坚合众国之间的一场贸易争端。2018年7月6日，特朗普政府正式对来自中国内地价值340亿美元的商品加征25%关税，标志着特朗对华关税政策正式实施。中国商务部其后在声明中指出，“美国违反世贸规则，发动了迄今为止经济史上规模最大的贸易战”。"
+            },
+            {
+            id:5,
+            name:"长春长生假疫苗",
+            state:"需高强度引导",
             safe:90,
             dangerous:80,
             from_subject:{id:5},
             img:"/static/assets/img/zhishiku/yimiao.jpg",
             description:"2018年7月15日，国家药品监督管理局发布通告指出，长春长生生物科技有限公司冻干人用狂犬病疫苗生产存在记录造假等行为。 这是长生生物自2017年11月份被发现百白破疫苗效价指标不符合规定后不到一年，再曝疫苗质量问题。"
         }];
-        $http({
-                method:"get",
-                url:"/static/assets/data/zhishiku/evaluation.json",
-            }).then(function (res) {
-                $scope.today = res.data[res.data.length-1];
-                console.log($scope.today);
-        })
-        // if($rootScope.id == 0){
-        //     $scope.events = "123"
-        // }
-        // if($rootScope.id == 4){
-        //     $scope.events = "美方挑起贸易战,美方制裁中兴,美方变卦再次挑起贸易战"
-        // }
-        // if($rootScope.id == 5){
-        //     $scope.events = "国家药监局发通告,假疫苗事件处理结果"
-        // }
+        // $http({
+        //         method:"get",
+        //         url:"/static/assets/data/zhishiku/all_scene.json",
+        //     }).then(function (res) {
+        //         $rootScope.Alltime = res.data;
+        //         console.log($rootScope.Alltime);
+        // })
     }])
     .controller("evaluationController", ["$rootScope", "$scope","$stateParams","$http", "ngDialog", "notice",function($rootScope, $scope, $stateParams,
         $http, ngDialog, notice) {
@@ -63,7 +85,7 @@ CQ.mainApp.dkController
             id:0,
             e_id:0,
             name:"中印对峙",
-            state:"无需引导",
+            state:"需低强度引导",
             safe:60,
             time:"2017/06/18",
             dangerous:50,
@@ -76,8 +98,8 @@ CQ.mainApp.dkController
             e_id:4,
             name:"中美贸易战",
             state:"需低强度引导",
-            safe:85,
-            dangerous:75,
+            safe:75,
+            dangerous:65,
             time:"2018/07/06",
             from_subject:{id:4},
             img:"/static/assets/img/zhishiku/zmmy.jpg",
@@ -88,8 +110,8 @@ CQ.mainApp.dkController
             e_id:5,
             name:"长春长生假疫苗",
             state:"需高强度引导",
-            safe:90,
-            dangerous:80,
+            safe:70,
+            dangerous:60,
             time:"2018/07/15",
             from_subject:{id:5},
             img:"/static/assets/img/zhishiku/yimiao.jpg",
@@ -154,61 +176,79 @@ CQ.mainApp.dkController
             } 
         }
     }])
-
     .controller("petcController", ["$rootScope", "$scope","$sce","$stateParams","$http", "ngDialog", "notice","DKFacService",function($rootScope, $scope, $sce,$stateParams,
         $http, ngDialog, notice,DKFacService) {
         console.log("petcController started");
         $rootScope.modelName = "PETC分析"
         $rootScope.need = true;
         $rootScope.id = $stateParams.id;
-        // if($stateParams.content==null){
-            angular.forEach($scope.allcontents,function(d){
-                if(d.e_id == $rootScope.id){
-                    $rootScope.event = d;
+        $http({
+                method:"get",
+                url:"/static/assets/data/zhishiku/all_scene.json",
+            }).then(function (res) {
+                $rootScope.Alltime = res.data;
+                console.log($rootScope.Alltime);
+                angular.forEach($rootScope.Alltime,function(d){
+                console.log(d)
+                if(d.id == $rootScope.id){
+                    $rootScope.today = d.details[d.details.length-1];
                 }
             })
-            console.log($rootScope.event)
-            //$rootScope.event = $scope.allcontents[+$rootScope.id];
-        // }
-        // else{
-        //     $rootScope.event = $stateParams.content;
-        // }
+        }) 
+        angular.forEach($scope.allcontents,function(d){
+            if(d.e_id == $rootScope.id){
+                $rootScope.event = d; 
+            }
+        })
+        angular.forEach($scope.allcontents1,function(d){
+            if(d.id == $rootScope.id){
+                $rootScope.event1 = d; 
+            }
+        })
+        $scope.showCommunity = [];
         if($rootScope.id==0){
-            $scope.shi1 = "印方言论很可笑,印方实力不足,希望和平解决闹剧" 
-            $scope.shi2 = "班公湖投石,张拉山演习,侧踹印士兵动作"
+            $scope.showCommunity = ["敏感社团1:5608430453,5878945047,5017346946","敏感社团2:2418201593,3290507174,5922171480","敏感社团3:1747150823,1011427793,但国庆"]
+            $scope.p = $sce.trustAsHtml($scope.showCommunity.join("\r\n").replace(/(\r\n)|(\n)/g,'<br>'));
+            $scope.shi2 = "班公湖,投石,冲突,对峙" 
+            $scope.shi1 = "印方阻挠中方施工,中印士兵班公湖冲突,中印对峙结束"
         }
         if($rootScope.id==4){
-            $scope.shi1 = "美国是挑起贸易战的源头,支持中国把贸易战打下去,贸易战对中国不利"
-            $scope.shi2 = "美方挑起贸易战,美方制裁中兴,美方变卦再次挑起贸易战"
+            $scope.showCommunity = ["敏感社团1:PYSN,通山一,HiPlus5","敏感社团2:古鳖,不穿秋裤的施能能,百溶汇金","敏感社团3:赵盛烨,1011427793,5878945047"]
+            $scope.p = $sce.trustAsHtml($scope.showCommunity.join("\r\n").replace(/(\r\n)|(\n)/g,'<br>'));
+            $scope.shi2 = "经济,农民,汇率,关税,贸易,市场"
+            $scope.shi1 = "美方挑起贸易战,美方制裁中兴,美方变卦再次挑起贸易战"
         }
         if($rootScope.id==5){
-            $scope.shi1 = "假疫苗问题应该严肃处理,国家反腐工作力度加强,受到过假疫苗的毒害"
-            $scope.shi2 = "国家药监局发通告,假疫苗事件处理结果"
+            // $scope.showCommunity = ["敏感社团1:5608430453,5878945047,5017346946","敏感社团2:2418201593,3290507174,5922171480","敏感社团3:1747150823,1011427793,但国庆"]
+            // $scope.p = $sce.trustAsHtml($scope.showCommunity.join("\r\n").replace(/(\r\n)|(\n)/g,'<br>'));
+            $scope.shi2 = "药监局,长生生物,假疫苗,道德,违反,高俊芳"
+            $scope.shi1 = "国家药监局发通告,假疫苗事件处理结果"
         }
         DKFacService.getDK_community({s_id:$rootScope.id,ev_id:0}).then(function(res){
             console.log(res)
-            $scope.community = res;
-            $scope.community1 = "敏感社团1:";
-            $scope.community2 = "敏感社团2:";
-            $scope.community3 = "敏感社团3:";
-            $scope.showCommunity = [];
-            angular.forEach($scope.community.data1.slice(50,53),function(value,index){
-                let str = value.user_name + " ";
-                $scope.community1  += str;
-            })
-            $scope.showCommunity.push($scope.community1);
-            angular.forEach($scope.community.data2.slice(50,53),function(value,index){
-                let str = value.user_name + " ";
-                $scope.community2  += str;
-            })
-            $scope.showCommunity.push($scope.community2);
-            angular.forEach($scope.community.data3.slice(50,53),function(value,index){
-                let str = value.user_name + " ";
-                $scope.community3  += str;
-            })
-            $scope.showCommunity.push($scope.community3);
-            $scope.p = $sce.trustAsHtml($scope.showCommunity.join("\r\n").replace(/(\r\n)|(\n)/g,'<br>')); 
-            console.log($scope.p)
+            if($rootScope.id==5){
+                 $scope.community = res;
+                $scope.community1 = "敏感社团1:";
+                $scope.community2 = "敏感社团2:";
+                $scope.community3 = "敏感社团3:";
+                
+                angular.forEach($scope.community.data1.slice(50,53),function(value,index){
+                    let str = value.user_name + " ";
+                    $scope.community1  += str;
+                })
+                $scope.showCommunity.push($scope.community1);
+                angular.forEach($scope.community.data2.slice(50,53),function(value,index){
+                    let str = value.user_name + " ";
+                    $scope.community2  += str;
+                })
+                $scope.showCommunity.push($scope.community2);
+                angular.forEach($scope.community.data3.slice(50,53),function(value,index){
+                    let str = value.user_name + " ";
+                    $scope.community3  += str;
+                })
+                $scope.showCommunity.push($scope.community3);
+                $scope.p = $sce.trustAsHtml($scope.showCommunity.join("\r\n").replace(/(\r\n)|(\n)/g,'<br>'));
+            }           
         })
     }])
     .controller("zhibiaoController", ["$rootScope", "$scope","$stateParams","$http", "ngDialog", "notice",function($rootScope, $scope, $stateParams,
@@ -217,13 +257,26 @@ CQ.mainApp.dkController
         $rootScope.modelName = "指标体系构建"
         $rootScope.need = true;
         $rootScope.id = $stateParams.id;
+        $http({
+                method:"get",
+                url:"/static/assets/data/zhishiku/all_scene.json",
+            }).then(function (res) {
+                $rootScope.Alltime = res.data;
+                console.log($rootScope.Alltime);
+                angular.forEach($rootScope.Alltime,function(d){
+                console.log(d)
+                if(d.id == $rootScope.id){
+                    $rootScope.today = d.details[d.details.length-1];
+                }
+            })
+        }) 
+        console.log($rootScope.today)  
         if($stateParams.content==null){
             angular.forEach($scope.allcontents,function(d){
                 if(d.e_id == $rootScope.id){
                     $rootScope.event = d;
                 }
             })
-            //$rootScope.event = $scope.allcontents[+$rootScope.id];
         }
         else{
             $rootScope.event = $stateParams.content;
@@ -381,6 +434,19 @@ CQ.mainApp.dkController
         $rootScope.modelName = "多元指标融合";
         $rootScope.need = true;
         $rootScope.id = $stateParams.id;
+        $http({
+                method:"get",
+                url:"/static/assets/data/zhishiku/all_scene.json",
+            }).then(function (res) {
+                $rootScope.Alltime = res.data;
+                console.log($rootScope.Alltime);
+                angular.forEach($rootScope.Alltime,function(d){
+                console.log(d)
+                if(d.id == $rootScope.id){
+                    $rootScope.today = d.details[d.details.length-1];
+                }
+            })
+        }) 
         if($stateParams.content==null){
             angular.forEach($scope.allcontents,function(d){
                 if(d.e_id == $rootScope.id){
@@ -392,13 +458,14 @@ CQ.mainApp.dkController
         else{
             $rootScope.event = $stateParams.content;
         }
-        console.log($rootScope.event)
+        console.log($rootScope.Alltime)
         $scope.evaluation = {};
         $scope.scenedata = [];
         var evaluation = {};
         $scope.yd_data = {};
         var mychart1 = echarts.init(document.getElementById('scene'));
         var mychart = echarts.init(document.getElementById('yqts'));
+        
         $http({
                 method:"get",
                 url:"/static/assets/data/zhishiku/all_scene.json",
@@ -413,6 +480,7 @@ CQ.mainApp.dkController
                 drawLine()
                 drawRadar()
         })
+       
 
         $scope.getData = function(){
             console.log($scope.yd_data);
@@ -420,13 +488,15 @@ CQ.mainApp.dkController
                         if($scope.yd_data.name!=undefined){
                             if($scope.yd_data.name===index.time){
                                  $scope.evaluation = evaluation[item];
+                                 console.log($scope.evaluation)
                             }
                         }
                     })
                     angular.forEach($scope.evaluation.scene,function(index,item){
                         $scope.scenedata.push(+index)
                     })
-                    $scope.scenedata = $scope.scenedata.slice(19);  
+                    $scope.scenedata = $scope.scenedata.slice(19);
+                    console.log($scope.scenedata);
                     $scope.time = $scope.evaluation.time;       
                     mychart1.setOption({
                         legend: {
@@ -441,10 +511,8 @@ CQ.mainApp.dkController
                             ]
                         }]
                     });
-
         }
         function drawLine(){
-            //var mychart = echarts.init(document.getElementById('yqts'));
             let date = [];
             let taishi = [];
             let safe = [];
@@ -617,7 +685,7 @@ CQ.mainApp.dkController
                     $scope.scenedata.push(+index)
             })
             //$scope.scenedata = $scope.scenedata.slice(19); 
-            //console.log($scope.scenedata)
+            console.log($scope.scenedata)
             mychart1.hideLoading();
             var option1 = {
                             title: {
@@ -680,6 +748,20 @@ CQ.mainApp.dkController
         $rootScope.need = true;
         $rootScope.modelName = "导控策略选择";
         $rootScope.id = $stateParams.id;
+        $http({
+                method:"get",
+                url:"/static/assets/data/zhishiku/all_scene.json",
+            }).then(function (res) {
+                $rootScope.Alltime = res.data;
+                console.log($rootScope.Alltime);
+                angular.forEach($rootScope.Alltime,function(d){
+                console.log(d)
+                if(d.id == $rootScope.id){
+                    $rootScope.today = d.details[d.details.length-1];
+                }
+            })
+        }) 
+        console.log($rootScope.today)  
         $rootScope.method1 = "";
         $rootScope.method2 = "";
         if($stateParams.content==null){
@@ -696,21 +778,26 @@ CQ.mainApp.dkController
         console.log($rootScope.event)
         
         function getResult(){
-              $http({
-                method:"get",
-                url:"/static/assets/data/zhishiku/eval_result.json",
-                }).then(function (res) {
-                    angular.forEach(res.data,function(d){
-                        if(d.id==$rootScope.id){
-                            $scope.eval_results = d.details;
-                        }
-                    })     
-                })
-                DKFacService.getDK_method({id:$rootScope.id,time:$scope.today.time}).then(function(res){
-                    console.log(res)
-                    $rootScope.method1 = $sce.trustAsHtml(res[0].strategy1.replace(/(\r\n)|(\n)/g,'<br>'));
-                    $rootScope.method2 = $sce.trustAsHtml(res[0].strategy2.replace(/(\r\n)|(\n)/g,'<br>'));
-                })
+
+        angular.forEach($rootScope.Alltime,function(d){
+            if(d.id==$rootScope.id){
+                $scope.eval_results = [];
+                angular.forEach(d.details,function(index){
+                    if(index.type>0&&index.time!=$rootScope.today.time){
+                        $scope.eval_results.push(index)
+                    }
+                });
+                console.log($scope.eval_results)
+            }
+        })     
+        
+        DKFacService.getDK_method({id:$rootScope.id,time:$scope.today.time}).then(function(res){
+            console.log(res)
+            if(res.length!=0){
+                $rootScope.method1 = $sce.trustAsHtml(res[0].strategy1.replace(/(\r\n)|(\n)/g,'<br>'));
+                $rootScope.method2 = $sce.trustAsHtml(res[0].strategy2.replace(/(\r\n)|(\n)/g,'<br>'));
+            }
+        })
         }
         setTimeout(function(){
             console.log($scope.today)
@@ -720,8 +807,13 @@ CQ.mainApp.dkController
                 method:"get",
                 url:"/static/assets/data/zhishiku/methodprovide.json",
                 }).then(function (res) {
-                $scope.alldata1 = res.data;
-                $scope.alldata2 = res.data;
+                    angular.forEach(res.data,function(d){
+                        if(d.id==$rootScope.id){
+                            console.log(d)
+                            $scope.alldata1 = d.opinion;
+                            $scope.alldata2 = d.opinion;
+                        }
+                    })  
             })
         $scope.op1 = [];
         $scope.op2 = [];
@@ -1268,7 +1360,7 @@ CQ.mainApp.dkController
     function($rootScope, $scope, $http, ngDialog, $state, $stateParams, $timeout,notice,PGFacService) {
         console.log("进入成效评估");
         $rootScope.id = $stateParams.id;
-        console.log($rootScope.id)
+        console.log($rootScope.id);
         $scope.allcontents=[
             {
             id:0,
@@ -1304,6 +1396,20 @@ CQ.mainApp.dkController
             description:"2018年7月15日，国家药品监督管理局发布通告指出，长春长生生物科技有限公司冻干人用狂犬病疫苗生产存在记录造假等行为。 这是长生生物自2017年11月份被发现百白破疫苗效价指标不符合规定后不到一年，再曝疫苗质量问题。"
         }];
         $rootScope.id = $stateParams.id;
+        $http({
+                method:"get",
+                url:"/static/assets/data/zhishiku/all_scene.json",
+            }).then(function (res) {
+                $rootScope.Alltime = res.data;
+                console.log($rootScope.Alltime);
+                angular.forEach($rootScope.Alltime,function(d){
+                console.log(d)
+                if(d.id == $rootScope.id){
+                    $rootScope.today = d.details[d.details.length-1];
+                }
+            })
+        }) 
+        //console.log($rootScope.today)
         $scope.experts = [];
         if($stateParams.content==null){
             angular.forEach($scope.allcontents,function(d){
@@ -1324,22 +1430,33 @@ CQ.mainApp.dkController
                 }).then(function (res) {
                     angular.forEach(res.data,function(d){
                         if(d.id==$rootScope.id){
+                            $rootScope.today = d.details[d.details.length-1];
                             $scope.eval_results1 = d;
-                            console.log(d);
+                            console.log($rootScope.today)
                             angular.forEach($scope.eval_results1.details,function(value,index){
-                                //console.log(index)
                                 value.result = $scope.result[index];
-                                if(value.type==0){
+                                if(value.type==0||value.time==$rootScope.today.time){
                                     $scope.eval_results1.details.splice(index, 1)
                                 }
                             })
                             console.log($scope.eval_results1.details)
                         }
                     })
+                    angular.forEach(res.data,function(d){
+                        if(d.id==$rootScope.id){
+                            $scope.eval_results2 = [];
+                            angular.forEach(d.details,function(index){
+                                if(index.type>0&&index.time!=$rootScope.today.time){
+                                    $scope.eval_results2.push(index)
+                                }
+                            });
+                            console.log($scope.eval_results2)
+                        }
+                    })     
             })
             PGFacService.getPG_data({id:$rootScope.id}).then(function(res){
-                console.log(res)
-                $scope.eval_results = res
+                console.log(res);
+                $scope.eval_results = res;
             })
         }
         getResult();
@@ -1507,6 +1624,7 @@ CQ.mainApp.dkController
         }
         $scope.score = function(d){
             console.log(d);
+            $scope.d1 = d;
             ngDialog.open({
                     template: '/static/modules/evaluation/pages/score.html',
                     controller: 'pgController',
@@ -1514,7 +1632,7 @@ CQ.mainApp.dkController
                     width: "100%",
                     scope: $scope
                 });
-            angular.forEach($scope.eval_results1.details,function(v){
+            angular.forEach($scope.eval_results2,function(v){
                 if(d.time==v.time)
                 {
                     $scope.thing = v;
@@ -1567,11 +1685,8 @@ CQ.mainApp.dkController
                         myChart4.setOption(option4);
                     },400)
                 }
-            })
-            
-            
+            })            
         }
-    
         $scope.Doscore = function(){
             console.log($scope.expertScore)
             if($scope.expertScore==""||$scope.expertScore==undefined){
@@ -1587,31 +1702,33 @@ CQ.mainApp.dkController
                  PGFacService.UpdatePG(cons).then(function(res){
                     console.log(res)
                     if(res.data.success===false){
-                         notice.notify_info("您好","添加失败","",false,"","");
+                         notice.notify_info("您好","评价失败","",false,"","");
                     }
                     else
                     {
                         ngDialog.closeAll();
-                        notice.notify_info("您好","添加成功！","",false,"","");
-                        console.log($scope.data);
+                        notice.notify_info("您好","评价成功！","",false,"","");
                     }
                  },function(err) {
                     console.log(err);
-                    notice.notify_info("您好","添加失败！请重试","",false,"","");
+                    notice.notify_info("您好","评价失败！请重试","",false,"","");
                  });
                  $scope.thing.expert = $scope.expertScore;
+                 $scope.d1.expert = $scope.expertScore;
                  $scope.thing.fin = true;
                  $scope.thing.consistent = +$scope.thing.expert>+$scope.thing.result?+$scope.thing.result/+$scope.thing.expert:+$scope.thing.expert/+$scope.thing.result;
                  console.log($scope.thing)
-                 angular.forEach($scope.eval_results, function(value, key){
-                     if(value.time == $scope.thing.time){
-                        value.expert = $scope.expertScore;
-                        value.fin = true;
-                     }
-                 });
-                 //$scope.$apply()
-            }
-            console.log($scope.eval_results)
+                 $timeout(function(){
+                    angular.forEach($scope.eval_results, function(value, key){
+                         if(value.time == $scope.thing.time){
+                            value.expert = $scope.expertScore;
+                            value.fin = true;
+                            $scope.$apply()
+                            console.log($scope.eval_results)
+                         }
+                     });
+                 },0)
+            }      
         }
     }])
   
