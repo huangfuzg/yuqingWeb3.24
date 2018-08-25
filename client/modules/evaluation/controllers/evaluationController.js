@@ -225,24 +225,22 @@ CQ.mainApp.dkController
             $scope.shi1 = "国家药监局发通告,假疫苗事件处理结果"
         }
         DKFacService.getDK_community({s_id:$rootScope.id,ev_id:0}).then(function(res){
-            console.log(res)
             if($rootScope.id==5){
-                 $scope.community = res;
+                $scope.community = res;
                 $scope.community1 = "敏感社团1:";
                 $scope.community2 = "敏感社团2:";
                 $scope.community3 = "敏感社团3:";
-                
-                angular.forEach($scope.community.data1.slice(50,53),function(value,index){
+                angular.forEach(res.group1.slice(50,53),function(value,index){
                     let str = value.user_name + " ";
                     $scope.community1  += str;
                 })
                 $scope.showCommunity.push($scope.community1);
-                angular.forEach($scope.community.data2.slice(50,53),function(value,index){
+                angular.forEach(res.group2.slice(50,53),function(value,index){
                     let str = value.user_name + " ";
                     $scope.community2  += str;
                 })
                 $scope.showCommunity.push($scope.community2);
-                angular.forEach($scope.community.data3.slice(50,53),function(value,index){
+                angular.forEach(res.group3.slice(50,53),function(value,index){
                     let str = value.user_name + " ";
                     $scope.community3  += str;
                 })
