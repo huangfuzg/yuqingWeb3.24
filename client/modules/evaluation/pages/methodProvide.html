@@ -1,0 +1,95 @@
+
+    <div class="tab-content">
+        <div id="padding-tab">
+            <h3 class="m-t-5 m-b-5">{{modelName}}</h3>
+            <p class="m-b-15">
+                从特定的舆情事件场景中抽取特征，构造用于成效评估的指标体系。结合舆情事件发展态势，给出特定引导策略下的引导成效值。
+            </p>
+            <a class="btn btn-sm btn-primary" ng-click="addMethod()"><i class="fa fa-plus m-r-5"></i> 策略选择 </a>
+            <a class="btn btn-sm btn-primary" ng-click="showHistory()"><i class="fa fa-hand-stop-o m-r-5"></i> 查看历史策略 </a>
+        </div>
+        <div class="panel-body">
+          <div class="email-content">
+            <table class="table table-email f-s-14">
+                <thead>
+                <tr class="active">
+                    <!-- <th style="width: 10%">时间</th> -->
+                    <th style="width: 15%">引导策略</th>
+                    <th style="width: 15%">描述</th>
+                    <th style="width: 40%">详情</th>
+                    <!-- <th style="width: 30%">观点</th> -->
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>删帖</td>
+                    <td>针对特定的观点及言论，直接删除，避免造成舆论的不良影响。</td>
+                    <td ng-bind-html="method1">{{method1}}</td>
+                </tr>
+                <tr>
+                    
+                    <td>推送文本</td>
+                    <td>基于观点的情感分析，有针对性的生成正向的言论推送给具体人群，以起到消极极端言论的作用。</td>
+                    <td ng-bind-html="method2">{{method2}}</td>
+                </tr>
+                <tr>
+                    <td>主动发布言论</td>
+                    <td>针对全网范围，引领意见。</td>
+                    <td>意见领袖</td>
+                </tr>
+                </tbody>
+            </table>
+          </div>
+          <div class="email-footer clearfix">
+          </div>
+        </div>
+        <div class="panel panel-primary" data-sortable-id="index-1" ng-show="history">
+            <div class="panel-heading">
+                <h4 class="panel-title f-s-14 font-w-600">
+                    <i class="fa fa-bar-chart-o"></i>
+                    历史导控策略</h4>
+            </div>
+            <div class="panel-body" >
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th style="width: 30%">时间</th>
+                        <th style="width: 20%">态势值</th>
+                        <th style="width: 40%">引导策略</th>
+                        <th style="width: 10%">引导文本</th>      
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="data in eval_results">
+                        <td>{{data.time}}</td>
+                        <td>{{data.value}}</td>
+                        <td>{{data.method}}</td>
+                        <td><a class="btn btn-sm btn-primary" ng-click="lookMethod(data)"><i class="fa fa-envelope m-r-5"></i> 查看 </a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table table-email f-s-14" ng-show="look">
+                    <thead>
+                    <tr>
+                        <th style="width: 10%">时间</th>
+                        <th style="width: 10%">用户名</th>
+                        <!-- <th style="width: 10%">发帖时间</th> -->
+                        <th style="width: 30%">偏激观点</th>
+                        <th style="width: 40%">对应文本推送</th>      
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="look in lookData">
+                        <td>{{time}}</td>
+                        <td>{{look.postername}}</td>
+                        <!-- <td>{{data.value}}</td> -->
+                        <td>{{look.content}}</td>
+                        <td>{{look.article}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+     

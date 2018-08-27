@@ -23,27 +23,42 @@ CQ.mainApp.zhishikuController
     function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
         console.log("zhishikuController", "start!!!");
         //页面UI初始化；
-        $scope.subjects=[{
+        $scope.subjects=[
+        {
             id:0,
             name:"中印对峙",
             img:"/static/assets/img/zhishiku/zydz.jpg",
             description:"2017年6月18日至2017年8月28日，印度边防部队非法越过边界线进入了中方境内，阻挠中国边防部队在洞朗地区的正常活动，双方在该地区紧张对峙两个多月。"
-        },{
-            id:1,
-            name:"萨德部署",
-            img:"/static/assets/img/zhishiku/sadebushu.jpg",
-            description:"2016年7月以来，韩国和美国决定在驻韩美军基地部署“萨德”末段高空区域防御系统，遭到周边国家的强烈反对，中国民间和舆论爆发了对韩国的大规模抵制行动。"
-            },{
-            id:2,
-            name:"南海争端",
-            img:"/static/assets/img/zhishiku/nanhai.png",
-            description:"2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。"
-        },{
-            id:3,
-            name:"香港占中",
-            img:"/static/assets/img/zhishiku/hkzz.jpg",
-            description:"2014年9月28日至2014年12月15日，部分香港学生和市民在“港独”分子的挑唆下，非法占领香港中环地区，冲击政府，严重阻塞交通，扰乱社会秩序。"
-        }];
+        },
+        // {
+        //     id:1,
+        //     name:"萨德部署",
+        //     img:"/static/assets/img/zhishiku/sadebushu.jpg",
+        //     description:"2016年7月以来，韩国和美国决定在驻韩美军基地部署“萨德”末段高空区域防御系统，遭到周边国家的强烈反对，中国民间和舆论爆发了对韩国的大规模抵制行动。"
+        //     },{
+        //     id:2,
+        //     name:"南海争端",
+        //     img:"/static/assets/img/zhishiku/nanhai.png",
+        //     description:"2015年9月11日，印度军队和印藏边防警察部队派人越界拆毁了中国在建的哨所，双方军队遂在这一地区发生对峙。"
+        // },
+        // {
+        //     id:3,
+        //     name:"香港占中",
+        //     img:"/static/assets/img/zhishiku/hkzz.jpg",
+        //     description:"2014年9月28日至2014年12月15日，部分香港学生和市民在“港独”分子的挑唆下，非法占领香港中环地区，冲击政府，严重阻塞交通，扰乱社会秩序。"
+        // },
+        {
+            id:4,
+            name:"中美贸易战",
+            img:"/static/assets/img/zhishiku/zmmy.jpg",
+            description:"2018年中美贸易争端是中华人民共和国与美利坚合众国之间的一场贸易争端。2018年7月6日，特朗普政府正式对来自中国内地价值340亿美元的商品加征25%关税，标志着特朗对华关税政策正式实施。中国商务部其后在声明中指出，“美国违反世贸规则，发动了迄今为止经济史上规模最大的贸易战”。"
+        },
+        {
+            id:5,
+            name:"疫苗问题",
+            img:"/static/assets/img/zhishiku/yimiao.jpg",
+            description:"2018年7月15日，国家药品监督管理局发布通告指出，长春长生生物科技有限公司冻干人用狂犬病疫苗生产存在记录造假等行为。 这是长生生物自2017年11月份被发现百白破疫苗效价指标不符合规定后不到一年，再曝疫苗质量问题。"
+        },];
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku subject app start!!!");
@@ -67,7 +82,7 @@ CQ.mainApp.zhishikuController
         console.log("eventsController", "start!!!");
         //页面UI初始化；
         $scope.subject = $stateParams.subject;
-        $scope.events=[{
+        $scope.events0=[{  //中印对峙
             id:0,
             time:"2017年6月26日",
             img:"/static/assets/img/zhishiku/yuejie.jpg",
@@ -88,7 +103,70 @@ CQ.mainApp.zhishikuController
             name:"中印对峙结束",
             summary:"2017年8月28日，中印双方达成共识，印方将越界人员和设备全部撤回边界印方一侧，中方对此进行了确认，至此，为期两个多月的中印对峙状态告一段落。中方表明将继续按照历史界约规定行使主权权利，维护边境地区的和平与安宁。",
             keywords:[{word:"撤军",weight:1} ,{word:"印度",weight:0.98} ,{word:"越界",weight:0.83} ,{word:"现场",weight:0.7},{word:"洞朗",weight:0.68} ,{word:"人员",weight:0.63} ,{word:"设备",weight:0.63} ,{word:"修路",weight:0.54} ,{word:"权利",weight:0.41} ,{word:"维护",weight:0.3},{word:"外交部",weight:0.9},{word:"国防部",weight:0.7},{word:"主权",weight:0.6},{word:"结束",weight:0.5}]
+        }
+        ];
+
+        $scope.events1 = [{ //假疫苗事件
+            id:0,
+            'event':'国家药监局发通告',
+            'time':'2018年7月15日',
+            img:"/static/assets/img/zhishiku/ymev1.png",
+            'name':'国家药监局发通告',
+            'keywords':[{word:'药监局',weight:0.15},{word:'长春长生生物',weight:0.20},{word:'长生生物',weight:0.13},{word:'疫苗',weight:0.16},{word:'假疫苗',weight:0.21},{word:'狂犬疫苗',weight:0.32},{word:'疫苗造假',weight:0.11},{word:'造假',weight:0.58},{word:'举报',weight:0.61},{word:'高俊芳',weight:0.48},{word:'道德',weight:0.19},{word:'质量',weight:0.16}],
+            'summary':'2018年7月15日，国家药品监督管理局发布通告称，长春长生生物科技有限责任公司在冻干人用狂犬病疫苗生产过程中存在记录造假等严重违反《药品生产质量管理规范》的行为，已责令长春长生停止生产狂犬疫苗。'
+        },
+        {
+            id:1,
+            'event':'假疫苗事件处理结果',
+            'time':'2018年8月16日',
+            img:"/static/assets/img/zhishiku/ymev2.jpg",
+            'name':'假疫苗事件处理结果',
+            'keywords':[{word:'长春长生生物',weight:0.23},{word:'长生生物',weight:0.46},{word:'疫苗',weight:0.10},{word:'假疫苗',weight:0.17},{word:'习近平',weight:0.28},{word:'药监局',weight:0.36},{word:'国务院',weight:0.08},{word:'中央政治局',weight:0.19},{word:'会议结果',weight:0.61},{word:'调查结果',weight:0.89},{word:'免职',weight:0.98},{word:'引咎辞职',word:0.90},{word:'责令辞职',weight:0.87}],
+            'summary':'2018年8月16日，中共中央政治局常务委员会召开会议，听取关于吉林长春长生公司问题疫苗案件调查及有关问责情况的汇报。中共中央总书记习近平主持会议并发表重要讲话。会议同意，对金育辉（吉林省副省长，2017年4月起分管吉林省食品药品监管工作）予以免职，对李晋修（吉林省政协副主席，2015年12月-2017年4月任分管吉林省食品药品监管工作的副省长）责令辞职，要求刘长龙（长春市市长，2016年9月任长春市代市长，2016年10月至今任长春市市长）、毕井泉（市场监管总局党组书记、副局长，2015年2月-2018年3月任原食品药品监管总局局长）引咎辞职，要求姜治莹（吉林省委常委、延边朝鲜族自治州委书记，2012年3月-2016年5月任长春市委副书记、市长）、焦红（国家药监局局长）作出深刻检查；对35名非中管干部进行问责；决定中央纪委国家监委对吴浈（原食品药品监管总局副局长、原卫生计生委副主任，分管药化注册管理、药化监管和审核检验等工作）进行立案审查调查。会议责成吉林省委和省政府、国家药监局向中共中央、国务院作出深刻检查。'
+        }];
+
+        $scope.events2 = [  //中美贸易战
+        {
+            id:0,
+            'event':'美方挑起贸易战',
+            'time':'2018年3月1日',
+            img:"/static/assets/img/zhishiku/zmev1.jpg",
+            'name':'美方挑起贸易战',
+            'keywords':[{word:'关税',weight:0.15},{word:'中美',weight:0.20},{word:'贸易战',weight:0.13},{word:'特朗普',weight:0.16},{word:'进口',weight:0.21},{word:'出口',weight:0.32},{word:'钢铁',weight:0.11},{word:'铝',weight:0.58},{word:'中美经济',weight:0.61},{word:'征税',weight:0.48},{word:'措施',weight:0.19},{word:'反制裁',weight:0.16}],
+            'summary':'2018年3月1日美方宣布，将在很长一段时期对钢铁和铝进口征收25%和10%的重税。但随后豁免盟友，最终被征收高关税的可能“只有中国”。'
+        },
+        {
+            id:1,
+            'event':'美方制裁中兴',
+            'time':'2018年4月16日',
+            img:"/static/assets/img/zhishiku/zmev2.jpg",
+            'name':'美方制裁中兴',
+            'keywords':[{word:'中美',weight:0.28},{word:'贸易战',weight:0.34},{word:'中兴通讯',weight:0.85},{word:'制裁',weight:0.64},{word:'停牌',weight:0.55},{word:'芯片',weight:0.46},{word:'美国',weight:0.41},{word:'商务部',weight:0.61},{word:'股市',weight:0.77},{word:'股票',weight:0.12},{word:'出售',weight:0.13},{word:'自主',weight:0.15},{word:'伊朗',weight:0.26},{word:'禁令',weight:0.38}],
+            'summary':'2018年4月16日美国商务部宣布，未来7年将禁止美国公司向中兴通讯销售零部件,商品,软件和技术。中兴通讯在A股和H股市场随后宣布停牌，其部分美国供货商的股票，在美国市场价格一度急跌。（事件缘由：2016年中兴违反美国禁令出口伊朗，于2017年3月8日和美国司法部,财政部,商务部达成和解。中兴2018年触发禁令原因，涉案35名员工奖金未扣。）'
+        },
+        {
+            id:2,
+            'event':'美方变卦再次挑起贸易战',
+            'time':'2018年7月6日',
+            img:"/static/assets/img/zhishiku/zmev3.jpeg",
+            'name':'美方变卦再次挑起贸易战',
+            'keywords':[{word:'加征',weight:0.46},{word:'关税',weight:0.74},{word:'变卦',weight:0.47},{word:'中美',weight:0.16},{word:'贸易战',weight:0.28},{word:'特朗普',weight:0.36},{word:'海关',weight:0.24},{word:'进口',weight:0.78},{word:'出口',weight:0.14},{word:'反击',weight:0.41},{word:'斗争',weight:0.42},{word:'反制裁',weight:0.43}],
+            'summary':'2018年7月6日，据美国海关和边境保护局消息，美国于当地时间7月6日00:01（北京时间6日12:01）起对第一批清单上818个类别,价值340亿美元的中国商品加征25%的进口关税。作为反击，中国也于同日对同等规模的美国产品加征25%的进口关税。'
         }]; 
+
+        if($scope.subject.id == 0)
+        {
+            $scope.events = $scope.events0;
+        }
+        else if($scope.subject.id == 4)
+        {
+            $scope.events = $scope.events2;
+        }
+        else if($scope.subject.id == 5)
+        {
+            $scope.events = $scope.events1;
+        }
+        $scope.events.forEach(d=>d.from_subject = $scope.subject);
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("events app start!!!");
@@ -139,20 +217,25 @@ CQ.mainApp.zhishikuController
                 }
             });
         }
-    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout", 
-    function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
-        console.log("zhishikuController", "start!!!");
+    }]).controller("communityController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams", "$timeout", 
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams, $timeout) {
+        console.log("社团发现", "start!!!");
         //页面UI初始化；
         $timeout(function(){
             $("#title").hide();
         },0);
         $rootScope.modelName="社团发现";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         var data=null;
+        $scope.alluser = null;//所有用户
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/community.json":"http://118.190.133.203:8899/yqdata/community_detection";
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/community.json"
+            url:url,
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            data=res.data;
+            data=$scope.event.from_subject.id == 0 ? res.data : res.data.data;
             console.log(data);
             var nodes=[],edges=[],nodesl=0,edge_count=2,color_index=0;
             for (var key in data)
@@ -197,10 +280,64 @@ CQ.mainApp.zhishikuController
                 edge.target=(nodes[edge.target]||edge.target);
             });
             console.log(nodes);
+            $scope.alluser = nodes;
+            $scope.page=1;
+            $scope.allPageData = $scope.alluser;
+            $scope.getTableData=function(page,data){
+                var tables,page_num = 20;
+                if(data)
+                    tables=data;
+                else
+                    tables = $scope.allPageData;
+                $scope.max_page=Math.ceil(tables.length/page_num);
+                console.log($scope.max_page);
+                var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
+                if(page<1||page>$scope.max_page&&page!=1)
+                    return null;
+                $scope.counts=tables.length;
+                // console.log(Math.ceil(tables.length/page_num));
+                $scope.pageData=tables.slice(page*page_num-page_num,page*page_num);
+                $scope.page=page;
+                if($scope.max_page<5)
+                {
+                    $scope.pageset=[];
+                    for(var i=1;i<$scope.max_page+1;i++)
+                        $scope.pageset.push(i);
+                }
+                else if(page<4)
+                    $scope.pageset=angular.copy(pageset_min);
+                else if(page>$scope.max_page-3)
+                    $scope.pageset=angular.copy(pageset_max);
+                else
+                    $scope.pageset=pageset_min.map(d=>d+page-3);
+            }
+            $scope.getTableData(1,$scope.alluser);
             drawForceGraph("#communityGraph",nodes,edges);
         },function(res){
             console.log(res);
         });
+        var usertype_state = 0;//0：未选取，1：重点，2：敏感，3：僵尸
+        $scope.filterUser = function(usertype)
+        {
+            if(usertype_state == usertype)
+            {
+                $scope.allPageData = $scope.alluser;
+                usertype_state = 0;
+            }
+            else
+            {
+                $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+                usertype_state = usertype;
+            }
+            $scope.getTableData(1,$scope.allPageData);
+        }
+
+        $scope.searchUser = function(username)
+        {
+            $scope.allPageData = $scope.alluser.filter(d=>d.user_name==username);
+            $scope.getTableData(1,$scope.allPageData);
+        }
+
         function drawForceGraph(dom,nodes,edges)
         {
             var width = $(dom).width(),
@@ -458,13 +595,13 @@ CQ.mainApp.zhishikuController
             function mouseover() { 
                 // console.log(d3.event); 
                 d3.select(this).select("text").text(function(d){
-                    $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
-                    if(d.detail)
-                    {
-                        $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
-                        if(d.detail.is_V==1)
-                            $("#title").append("<br/>大V")
-                    }
+                    $("#title").html("userid: "+d.user_id+"<br/>社团: "+d.group+"<br/>关注: "+d.Following+"<br/>粉丝: "+d.Follows+"<br/>发帖: "+d.post_num);
+                    // if(d.detail)
+                    // {
+                    //     $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
+                    //     if(d.detail.is_V==1)
+                    //         $("#title").append("<br/>大V")
+                    // }
                     $("#title").css({"left":d3.event.clientX,"top":d3.event.clientY}).fadeIn('fast');
                     return "";
                 });
@@ -500,37 +637,50 @@ CQ.mainApp.zhishikuController
                 App.runui();
             }
         });
-    }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$timeout",
-    function($rootScope, $scope, $http, ngDialog, $state, $timeout) {
+    }]).controller("eventdetailController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams", "$timeout",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams, $timeout) {
         console.log("eventdetailController", "start!!!");
         $rootScope.modelName="事件详情";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
-        siteDefaultImg={"MicroBlog":"/static/assets/img/weibo.svg","baidutieba":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg"};
+        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度贴吧":"/static/assets/img/tieba.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","推特":"/static/assets/img/twitter.svg","论坛":"/static/assets/img/luntan.svg"};
         //页面UI初始化；
+        var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":"http://118.190.133.203:8899/yqdata/event_detail";
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/event_data.json"
+            url:url,
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            posts=res.data;
+            posts=$scope.event.from_subject.id == 0 ? res.data.data : res.data.data;
             console.log(new Date(posts[0].pt_time));
-            $scope.durationTime=(new Date(posts[posts.length-1].topic_post_time)-new Date(posts[0].pt_time))/86400000;
-            $scope.durationTime=16;
+            $scope.durationTime=-Math.floor((new Date(posts[posts.length-1].pt_time)-new Date(posts[0].pt_time))/86400000);
+            // $scope.durationTime=16;
             $scope.postsNum=posts.length;
             $scope.posterNum=new Set(posts.map(d=>d.poster).filter(d=>d!=" ")).size;
             posts.forEach(d=>{
                 if(d.content&&d.content.charAt(0)==':')
                     d.content=d.content.slice(1);
                 // console.log(siteNames[d.site_name]);
-                d.defaultPosterImg=siteDefaultImg[d.site_name];
-                if(d.pt_time)
-                    if(d.pt_time.indexOf("2017")==-1&&d.pt_time.indexOf("年")==-1)
-                    {
-                        // d.pt_time="2017年"+d.pt_time;
-                        d.pt_time="2017-"+d.pt_time.split(/月|日/).slice(0,2).join("-")+" 00:00:00"
-                    }
-                d.site_name=siteNames[d.site_name]?siteNames[d.site_name]:d.site_name;
+                if(d.site_name=="")
+                {
+                    d.site_name = "其他";
+                }
+                if(d.content.length>200)
+                {
+                    d.content = d.content.slice(0,199)+'......';
+                }
+                d.defaultPosterImg=siteDefaultImg[d.site_name]||siteDefaultImg["其他"];
+                // if(d.pt_time)
+                //     if(d.pt_time.indexOf("2017")==-1&&d.pt_time.indexOf("年")==-1)
+                //     {
+                //         // d.pt_time="2017年"+d.pt_time;
+                //         d.pt_time="2017-"+d.pt_time.split(/月|日/).slice(0,2).join("-")+" 00:00:00"
+                //     }
+                // d.site_name=siteNames[d.site_name]?siteNames[d.site_name]:d.site_name;
             });
-            posts=posts.filter(d=>new Date(d.pt_time)>new Date("2017-8-14 23:59:59"));
+            // posts=posts.filter(d=>new Date(d.pt_time)>new Date("2017-8-14 23:59:59"));
+            $scope.allposts = posts;
             drawChart(posts);
             pages=~~(posts.length/page_num)+1;
             $scope.posts=posts.slice(0,page_num);
@@ -596,25 +746,46 @@ CQ.mainApp.zhishikuController
         function drawChart(data) {
             var ndx = crossfilter(data),
             all = ndx.groupAll(),
-            dayDist = dc.barChart("#dayChart"),
+            dayDist = dc.lineChart("#dayChart"),
             dayDim = ndx.dimension(function(d) {
                 if(d.pt_time)
-                    return dateFormat(new Date(d.pt_time));
+                    // return dateFormat(new Date(d.pt_time));
+                    return new Date(d.pt_time);
                 else if(d.topic_post_time)
                     return dateFormat(new Date(d.topic_post_time));
             }),
-            dayGroup = dayDim.group().reduceSum(function (d) {
-                return 1;
-            });
-            drawBarDayDist(dayDist, dayDim, dayGroup);
+            dayGroup = dayDim.group();
+            // drawBarDayDist(dayDist, dayDim, dayGroup);
+            drawdayDist1(dayDist, dayDim, dayGroup);
             var datatypeDist = dc.pieChart("#siteChart"),
             datatypeDim = ndx.dimension(function (d) {
+                if(d.site_name.indexOf("T")!==-1)
+                {
+                    console.log(d.site_name)
+                }
                 return d.site_name;
             }),
             datatypeGroup = datatypeDim.group().reduceSum(function(d) {
                 return 1;
             });
-            drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup);
+            // console.log(datatypeDim);
+            var top5data = datatypeGroup.top(Infinity).map(d=>d.key),
+            datatypeDim1 = ndx.dimension(function (d) {
+                for(var i = 0; i < top5data.length; i++)
+                {
+                    if(top5data[i] == d.site_name)
+                    {
+                        d.site_name_1 = d.site_name;
+                        return d.site_name_1;
+                    }
+                }
+                d.site_name_1 = "其他";
+                return d.site_name_1;
+            }),
+            datatypeGroup1 = datatypeDim1.group().reduceSum(function(d) {
+                return 1;
+            });
+            drawPieDatatypeDist(datatypeDist, datatypeDim1, datatypeGroup1);
         }
         function drawPieDatatypeDist(datatypeDist, datatypeDim, datatypeGroup) {
             var width = $("#siteChart").width(),
@@ -630,7 +801,7 @@ CQ.mainApp.zhishikuController
                 .cy(height*0.5)
                 .dimension(datatypeDim)
                 .group(datatypeGroup)
-                .legend(dc.legend().horizontal(false).x(0).y(width*0.1).legendText(function(d){return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
+                .legend(dc.legend().horizontal(false).x(0).y(width*0.1).legendText(function(d){console.log("d",d);return d.name + ' ' + (d.data/sum*100).toFixed(2) + '%';}));
             // datatypeDist.addFilterHandler(function(filters, filter) {
             //         filters.push(filter);
             //         post_filters.site = filters;
@@ -660,7 +831,7 @@ CQ.mainApp.zhishikuController
                     .centerBar(false)
                     .round(dc.round.floor)
                     .alwaysUseRounding(true)
-                    .renderLabel(true)
+                    .renderLabel(false)
                     .outerPadding(0.2)
                     .controlsUseVisibility(true)
                     .x(d3.scale.ordinal())
@@ -703,6 +874,82 @@ CQ.mainApp.zhishikuController
             });
             dayDist.render();
         }
+
+        function drawdayDist1(dayDist1, dayDim1, dayGroup1) {
+             var dateFormat =d3.time.format("%Y-%m-%d %H:%M:%S");
+             // var dayDist2 = dc.barChart("#dayChart");
+             // var dayDim2 = dayDim1;
+             // var dayGroup2 = dayDim2.group().reduceSum(function(d) {
+             //    return 0.2;
+             // });
+             var width = $("#dayChart").width();
+             var height = $("#dayChart").height();
+             dayDist1
+                .renderArea(true)
+                .width(width)
+                .height(height)
+                .transitionDuration(1000)
+                .margins({top: 30, right: 50, bottom: 25, left: 40})
+                .dimension(dayDim1)
+                .group(dayGroup1)
+                .mouseZoomable(true)
+                // .rangeChart(dayDist2)
+                .title(function(p){
+                    return [
+                        "时间: "+dateFormat(p.key),
+                        "数目: "+p.value
+                    ].join("\n");
+                })
+                .x(d3.time.scale().domain([new Date($scope.allposts[$scope.allposts.length - 1].pt_time),new Date($scope.allposts[0].pt_time)]))
+                .round(d3.time.minutes.round)
+                .xUnits(d3.time.minutes)
+                .elasticY(true)
+                .renderHorizontalGridLines(true)
+                .brushOn(true)
+                .xAxisLabel("时间")
+                .yAxisLabel("帖子数量");
+            dayDist1.on("filtered", function(){
+                // console.log(post_filters);
+                // console.log(getPosts());
+                $timeout(function(){getPosts(dayDim1.top(Infinity))},0);
+            });
+            dayDist1.render();
+
+            // line2  
+            
+            // dayDist2
+            //     .width($("#dayDist2").width())
+            //     .height(100)
+            //     .margins({top: 30, right: 50, bottom: 25, left: 40})
+            //     .dimension(dayDim2)
+            //     .group(dayGroup2)
+            //     .elasticY(false)
+            //     .yAxisPadding('10%') //设置y轴距离顶部的距离(为了renderLabel才设置)
+            //     .centerBar(true)
+            //     .gap(1)
+            //     //.round(d3.time.round)
+            //     .alwaysUseRounding(true)
+            //     //.xUnits(d3.time.minutes);
+            //     .renderLabel(false)
+            //     .outerPadding(0.2)
+            //     .controlsUseVisibility(true)
+            //     .x(d3.time.scale().domain([$scope.postData[$scope.postData.length - 1].postTime, 
+            //         $scope.postData[0].postTime]))
+            //     .renderHorizontalGridLines(false)
+            //     .brushOn(true);
+            // dayDist2.addFilterHandler(function(filters, filter) {
+            //     filters.push(filter);
+            //     $scope.filters.start_time = filter[0];
+            //     $scope.filters.end_time = filter[1];
+            //     console.log($scope.filters.start_time);
+            //     console.log($scope.filters.end_time);
+            //     // $scope.filters.filtertype = 3;
+            //     return filters;
+            // });  
+            // dayDist2.render();
+            // $("#dayDist2 .y").html("");
+            // $("#dayDist2 .y").remove();
+        }
     }]).controller("behaviouralController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("behaviouralController", "start!!!");
@@ -722,22 +969,33 @@ CQ.mainApp.zhishikuController
                 });
             }
         });
-    }]).controller("sentimentController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("sentimentController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams) {
         console.log("sentimentController", "start!!!");
         $rootScope.modelName="情感分析";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         //页面UI初始化；
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/allemotion.json":"http://118.190.133.203:8899/yqdata/emotion_analysis";
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
                 App.runui();
                 $http({
                     method:"get",
-                    url:"/static/assets/data/zhishiku/allemotion.json",
+                    url:url,
+                    params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
                 }).then(function (res) {
                     $scope.cnt=0;
-                    var tmp = res.data;
-                    var table = res.data,page_num=20,tables=table;
+                    var tmp = $scope.event.from_subject.id == 0 ? res.data : res.data.data;
+                    // console.log("tmp",tmp);
+                    var labels = [];
+                    tmp.forEach(function(d){
+                        if(labels.indexOf(d.label)==-1){
+                            labels.push(d.label);
+                        }
+                    })
+                    var table = res.data.data,page_num=20,tables=table;
                     // $scope.max_page=Math.ceil(res.data.length/page_num);
                     $scope.page=1;
                     var pageset_min=[1,2,3,4,5],pageset_max=pageset_min.map(d=>d+$scope.max_page-5);
@@ -768,11 +1026,11 @@ CQ.mainApp.zhishikuController
                     var senTmp=true;
                     var emotion1 = 0,emotion2=0,emotion3=0;
                     tmp.forEach(function (d) {
-                        if(d.label=='袖手旁观')
+                        if(d.label==labels[0])
                             emotion1+=1;
-                        if(d.label=='情绪激动')
+                        if(d.label==labels[1])
                             emotion2+=1;
-                        if(d.label=='冷静客观')
+                        if(d.label==labels[2])
                             emotion3+=1;
 
                     })
@@ -790,7 +1048,7 @@ CQ.mainApp.zhishikuController
                         legend: {
                             orient: 'vertical',
                             left: 'left',
-                            data: ['袖手旁观','情绪激动','冷静客观']
+                            data: labels,
                         },
                         series : [
                             {
@@ -808,14 +1066,14 @@ CQ.mainApp.zhishikuController
                                     }
                                 },
                                 data:[
-                                    {value:emotion1, name:'袖手旁观',label:{
+                                    {value:emotion1, name:labels[0],label:{
                                         normal:{
                                             fontSize:12,
                                             show:true,
                                         }
                                     }},
-                                    {value:emotion2, name:'情绪激动'},
-                                    {value:emotion3, name:'冷静客观'},
+                                    {value:emotion2, name:labels[1]},
+                                    {value:emotion3, name:labels[2]},
                                    ],
                                 itemStyle: {
                                     emphasis: {
@@ -839,6 +1097,7 @@ CQ.mainApp.zhishikuController
                             if(params.selected[key])
                             te.push(key)
                         }
+                        console.log(te);
                         senTmp=table.filter(function (d) {
                             return te.includes(d.label)
                         })
@@ -910,19 +1169,23 @@ CQ.mainApp.zhishikuController
                 });
             }
         });
-    }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("viewpointController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams) {
         console.log("viewpointController", "start!!!");
         $rootScope.modelName="观点挖掘";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         $scope.showMoreBtn=true;
         $scope.less=false;
         $scope.expression=true;
         var comm_show_num = 4;
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/usercomment.json":"http://118.190.133.203:8899/yqdata/opinion_mining";
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/usercomment.json"
+            url:url,
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(result){
-             $scope.items=result.data.data;
+             $scope.items=$scope.event.from_subject.id == 0 ? result.data.data : result.data.data;
             console.log($scope.items);
             angular.forEach($scope.items,function(array){
                 console.log(array.usercomment);  
@@ -952,16 +1215,22 @@ CQ.mainApp.zhishikuController
                 App.runui();
             }
         });
-    }]).controller("evolutionaryController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
-    function($rootScope, $scope, $http, ngDialog, $state) {
+    }]).controller("evolutionaryController", ["$rootScope", "$scope", "$http", "ngDialog", "$state", "$stateParams",
+    function($rootScope, $scope, $http, ngDialog, $state, $stateParams) {
         console.log("evolutionaryController", "start!!!");
         $rootScope.modelName="事件演化";
+        $scope.event = $stateParams.event;
+        $rootScope.event = $scope.event;
         //页面UI初始化；
+        console.log($scope.event);
+        var url1 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/da_v.json":"http://118.190.133.203:8899/yqdata/hot_value_evolution";
+        var url2 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/evolu.json":"http://118.190.133.203:8899/yqdata/hot_topic_evolution";
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/da_v.json"
+            url:url1,
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res){
-            var counts = (res.data);
+            var counts = $scope.event.from_subject.id == 0 ? res.data.reverse() : (res.data.data.reverse());
             var ti=[],dat=[[],[],[]];
             var type=['大V数','帖子数/10','热度']
             var mychart = echarts.init(document.getElementById('hot'));
@@ -1060,24 +1329,32 @@ CQ.mainApp.zhishikuController
 
         $http({
             method:"get",
-            url:"/static/assets/data/zhishiku/evolu.json"
+            url:url2,
+            params:{s_id:$scope.event.from_subject.id,ev_id:$scope.event.id}
         }).then(function(res) {
-            var ex = res.data;
+            var ex = $scope.event.from_subject.id == 0 ? res.data : res.data.data;
             var leg = [],ti=[],dat=[];
             var topics=[]
+            var min_val =100;
             for(var i=0;i<6;i++){
                 dat[i]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             }
+            ex.forEach(function(d){
+                var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
+                if(tmp<min_val){
+                    min_val = tmp;
+                }
+            });
             ex.forEach(function (d) {
-                console.log(d);
+                // console.log(d);
                 if(leg.indexOf(d.topic)==-1)
                     leg.push(d.topic);
                 if(ti.indexOf(d.time)==-1)
                     ti.push(d.time);
                 ti.sort();
                 var tmp = +d.time.charAt(d.time.length-2)+d.time.charAt(d.time.length-1);
-                console.log(tmp)
-                dat[d.type-1][tmp-15]=d.num;
+                // console.log(tmp)
+                dat[d.type-1][tmp-min_val]=d.num;
                 if(topics[topics.length-1]!=d.topic)
                     topics.push(d.topic);
 
@@ -1201,9 +1478,11 @@ CQ.mainApp.zhishikuController
     }]).controller("evaluationController", ["$rootScope", "$scope", "$http", "ngDialog", "$state",
     function($rootScope, $scope, $http, ngDialog, $state) {
         console.log("guidanceController", "start!!!");
-        $rootScope.modelName="引导评估";
+        $rootScope.modelName="舆情导控";
         //页面UI初始化；
         $scope.evaluation = {};
+        $scope.time = "2017/8/15";
+        $scope.scenedata = [4, 2, 4, 5, 3, 4, 5, 5, 5, 4, 5, 4, 5, 5, 5, 5, 4, 5, 4];
         var evaluation = {};
         $scope.yd_data = {};
         $http({
@@ -1213,41 +1492,101 @@ CQ.mainApp.zhishikuController
                 evaluation = res.data;
                 $scope.evaluation = evaluation[0];
                 })
-        // $http({
-        //             method:"get",
-        //             url:"/static/assets/data/zhishiku/yindao.json"
-        //         }).then(function(res){
-        //             $scope.guideData = res.data;
-        //             console.log($scope.guideData);
-        //         },function (res) {
-
-        //         });
+        var mychart1 = echarts.init(document.getElementById('scene'));
+        var option1 = {
+                        title: {
+                        },
+                        tooltip: {},
+                        legend: {
+                            data: [`舆情场景 ${$scope.time}`],
+                            x:'left',
+                            y:'top'
+                        },
+                        radar: {
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    backgroundColor: '#999',
+                                    borderRadius: 3,
+                                    padding: [3, 5]
+                               }
+                            },
+                            indicator: [
+                               { name: '话题集中度', max: 5},
+                               { name: '年龄分布', max: 5},
+                               { name: '地域分布 ', max: 5},
+                               { name: '平台分布 ', max: 5},
+                               { name: '参与人敏感度', max: 5},
+                               { name: '粉丝数量', max: 5},
+                               { name: '已产生时间', max: 5},
+                               { name: '识别准确率', max: 5},
+                               { name: '平台数', max: 5},
+                               { name: '主题集中度', max: 5},
+                               { name: '数据类型分布', max: 5},
+                               { name: '事件敏感度', max: 5},
+                               { name: '传播速度', max: 5},
+                               { name: '人群活跃度', max: 5},
+                               { name: '传播飙升度', max: 5},
+                               { name: '人群飙升度', max: 5},
+                               { name: '话题倾向性', max: 5},
+                               { name: '平台活跃度', max: 5},
+                               { name: '话题敏感度', max: 5}
+                            ]
+                        },
+                        series: [{
+                            type: 'radar',
+                            data : [
+                                {
+                                    value : $scope.scenedata,
+                                    name : `舆情场景 ${$scope.time}`
+                                },
+                            ]
+                        }]
+                    };
+        mychart1.setOption(option1);
         $scope.getData = function(){
             console.log($scope.yd_data);
+            console.log(evaluation);
             angular.forEach(evaluation,function(index,item){
                         if($scope.yd_data.name!=undefined){
-                            // console.log($scope.yd_data.name);
                             if($scope.yd_data.name===index.time){
-                                // console.log(item);
                                  $scope.evaluation = evaluation[item];
-                                 console.log($scope.evaluation);
                             }
                         }
                     })
+                    angular.forEach($scope.evaluation.scene,function(index,item){
+                        $scope.scenedata.push(+index)
+                    })
+                    $scope.scenedata = $scope.scenedata.slice(19);  
+   
+                    $scope.time = $scope.evaluation.time;       
+                    mychart1.setOption({
+                        legend: {
+                            data: [`舆情场景 ${$scope.time}`],
+                        },
+                        series: [{
+                            data : [
+                                {
+                                    value : $scope.scenedata,
+                                    name : `舆情场景 ${$scope.time}`
+                                },
+                            ]
+                        }]
+                    });
         }
         var mychart = echarts.init(document.getElementById('yqts'));
         var option = {
             tooltip: {
                 trigger: 'axis',
-                triggerOn:'click|mousemove',
+                triggerOn:'mousemove|click',
                 // {
                 //     click:function(params){
                 //         console.log(params);
                 //     }
                 // },
-                position: function(pt) {
-                    return [pt[0], '10%'];
-                },
+                // position: function(pt) {
+                //     return [pt[0], '10%'];
+                // },
                 axisPointer : { // 坐标轴指示器，坐标轴触发有效
                             type : 'shadow' // 默认为直线，可选为：'line' | 'shadow'
                         },
@@ -1256,14 +1595,31 @@ CQ.mainApp.zhishikuController
                     $scope.yd_data = params[0];
                     angular.forEach(evaluation,function(index,item){
                         if($scope.yd_data.name!=undefined){
-                            // console.log($scope.yd_data.name);
                             if($scope.yd_data.name===index.time){
-                                // console.log(item);
                                  $scope.evaluation = evaluation[item];
-                                 //console.log($scope.evaluation);
                             }
                         }
                     })
+                    // angular.forEach($scope.evaluation.scene,function(index,item){
+                    //     $scope.scenedata.push(+index)
+                    // })
+                    // $scope.scenedata = $scope.scenedata.slice(19);  
+                    // //console.log($scope.scenedata)   
+                    // console.log($scope.evaluation)
+                    // $scope.time = $scope.evaluation.time;
+                    // mychart1.setOption({
+                    //     legend: {
+                    //         data: [`舆情场景 ${$scope.time}`],
+                    //     },
+                    //     series: [{
+                    //         data : [
+                    //             {
+                    //                 value : $scope.scenedata,
+                    //                 name : `舆情场景 ${$scope.time}`
+                    //             },
+                    //         ]
+                    //     }]
+                    // });
                     var str = '\
                             <table class="table table-bordered">\
                                 <tbody>\
@@ -1272,11 +1628,11 @@ CQ.mainApp.zhishikuController
                                         <td>'+$scope.evaluation.time+'</td>\
                                     </tr>\
                                     <tr>\
-                                        <th>舆情态势值</th>\
+                                        <th>当前舆情态势值</th>\
                                         <td>'+$scope.evaluation.value+'</td>\
                                     </tr>\
                                     <tr>\
-                                        <th>时间发展状态</th>\
+                                        <th>事件发展状态</th>\
                                         <td>'+$scope.evaluation.state+'</td>\
                                     </tr>\
                                     <tr>\
@@ -1285,13 +1641,11 @@ CQ.mainApp.zhishikuController
                                     </tr>\
                                 </tbody>\
                             </table>'
-
                     return str
                 }
             },
             title: {
                 left: '',
-                // text: '舆情态势值走势',
             },
             toolbox: {
                 feature: {
@@ -1344,17 +1698,6 @@ CQ.mainApp.zhishikuController
                         color: 'rgb(255, 70, 131)'
                     }
                 },
-                // areaStyle: {
-                //     normal: {
-                //         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                //             offset: 0,
-                //             color: 'rgb(255, 158, 68)'
-                //         }, {
-                //             offset: 1,
-                //             color: 'rgb(255, 70, 131)'
-                //         }])
-                //     }
-                // },
                 data: [66,37,53,64,58,41,43,46,54,55,58]
             },
             {
@@ -1411,7 +1754,4 @@ CQ.mainApp.zhishikuController
             }]
         };
         mychart.setOption(option);
-        // mychart.on('click',function () {
-        //     console.log($scope.yd_data);
-        // })
     }]);

@@ -81,7 +81,7 @@ select {
                                     </select>
                                      <select name="senmes_topic" class="" ng-model="dataObj.topicId" ng-options="item.value as item.name for item in topic">
                                     </select>
-                                     <select name="senmes_source" class="" ng-model="dataObj.dataType">
+                                    <select name="senmes_source" class="" ng-model="dataObj.dataType">
                                         <option value="-1">-所有数据源-</option>
                                         <option value="0">新闻</option>
                                         <option value="1">论坛</option>
@@ -96,6 +96,7 @@ select {
                                     <input type="text" id="datepicker-end" placeholder="选择结束日期" class = "sen-h-34" ng-model = "dataObj.endDate"/>
                                     <button type="button" class="btn btn-md btn-primary m-l-5" ng-click="search()"><i class="fa fa-search"></i>搜索</button>
                                     </span>
+                                    
                                     
                                 </span>
                                 </div>
@@ -112,7 +113,7 @@ select {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="odd gradeX" ng-repeat="item in sendata">
+                                        <tr class="odd gradeX" ng-repeat="item in pagesendata">
                                             <td class="width-md">
                                                 <input class="m-r-2" type="checkbox" ng-model="item.selected" ng-click="selectBoxChange(item)">
                                                 <a ng-href={{item.url}} target="_blank">{{item.senwords.join(',')}}</a>
@@ -143,16 +144,17 @@ select {
                             <nav>
                                 
                                 <div class="btn-group m-b-10 f-s-14 max" >
-                                    <button type="button" class="btn btn-white page" ng-click="Previous()">上一页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Firstpage()">首页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Previous()" ng-class="{disabled:pageNum<=1}">上一页</button>
                                     <button type="button" class="btn btn-white {{isActivePage(page)}} list" ng-repeat="page in pageList"
                                      ng-click = "selectPage(page)">
                                         {{page}}
                                     </button>
-                                    
-                                    <button type="button" class="btn btn-white page" ng-click="Next()">下一页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Next()" ng-class="{disabled:pageNum>=pages}">下一页</button>
+                                    <button type="button" class="btn btn-white page" ng-click="Lastpage()">尾页</button>
                                 </div>
 
-                                <div class="btn-group m-b-10 f-s-14 min" style="display: none;">
+                                <!-- <div class="btn-group m-b-10 f-s-14 min" style="display: none;">
                                     <button type="button" class="btn btn-white page" ng-click="Previous()">上一页</button>
                             
                                     <button type="button" class="btn btn-white page" ng-click="Next()">下一页</button>
@@ -162,7 +164,7 @@ select {
                                     <button type="button" class="btn btn-white" ng-click="selectPage(dataObj.pageNum)">跳转</button>
                                     </div>
                                     
-                                </div>
+                                </div> -->
 
                                <ul class="list-inline f-s-14 pull-right">
                                     <li>

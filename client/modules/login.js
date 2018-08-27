@@ -45,7 +45,7 @@ function login() {
                 account_login(userinfo);
                 if(data.data.user_authority == 3)
                 {
-                    window.location.href = "admin.html";
+                    window.location.href = "index.html";
                 }
                 else
                 {

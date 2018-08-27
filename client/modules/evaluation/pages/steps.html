@@ -1,0 +1,183 @@
+  <style type="text/css">
+      .table {
+        border-bottom: 1px solid #e2e7eb;
+    }
+  </style>
+  <!-- begin #content -->
+		<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb pull-right">
+				<!-- <li><a href="javascript:;">Home</a></li>
+ -->			<li><a href="javascript:;">舆情导控</a></li>
+				<li class="active">{{event.name}}</li>
+                <li><a href="javascript:;">导控分析</a></li>
+			</ol>
+			<!-- end breadcrumb -->
+			<!-- begin page-header -->
+			<h1 class="page-header">{{event.name}} <small>导控分析</small></h1>
+			<!-- end page-header -->
+			
+			<ul class="nav nav-tabs">
+				<li ng-show="steps[0]" ng-class='(stepNum==="1")?"active":""'><a href="#general-tab" data-toggle="tab"><i class="fa fa-toggle-right"></i> <span class="hidden-xs">Step 1</span></a></li>
+                <li ng-show="steps[1]" ng-class='(stepNum==="2")?"active":""'><a href="#text-font-tab" data-toggle="tab"><i class="fa fa-toggle-right"></i> <span class="hidden-xs">Step 2</span></a></li>
+                <li ng-show="steps[2]" ng-class='(stepNum==="3")?"active":""'><a href="#margin-tab" data-toggle="tab"><i class="fa fa-stop-circle-o"></i> <span class="hidden-xs">Step 3</span></a></li>
+                <li ng-show="steps[3]" ng-class='(stepNum==="4")?"active":""'><a href="#padding-tab" data-toggle="tab"><i class="fa fa-fw fa-expand"></i> <span class="hidden-xs">Step 4</span></a></li>
+            </ul>
+            <div class="tab-content">
+                <div ng-class='(stepNum==="1")?"tab-pane fade active in":"tab-pane fade"' id="general-tab">
+                    <a href="javascript:;"  ng-class='{"disabled":!next1}' class="btn btn-primary btn-sm pull-right" ng-click="gostep(1)"><i class="fa fa-align-justify"></i> 下一步</a>
+                    <h4 class="m-t-5 m-b-5">指标体系构建</h4>
+
+                    <p class="m-b-15">
+                        舆情要素抽取，实现舆情分析中关于“因人、因时、因事、因势”的详细剖析针对舆情的分析，将舆情要素分为四个部分：P(person)人、E(event)事件、T(tendency)态势、C(chance)时机。
+                    </p>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="showPETC()"><i class="fa fa-align-justify"></i> 生成PETC分析结果</a>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ng-class='{"disabled":!step1}' ng-click="drawZB()"><i class="fa fa-toggle-right"></i> 生成评估指标体系</a>
+                    <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-1" ng-show="step1">
+                        <div class="panel-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%">要素</th>
+                                        <th style="width:70%">结果</th>
+                                        <th style="width:20%">详情</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>因人</td>
+                                        <td> 舆情要素抽取，实现舆情分析中关于“因人、因时、因事、因势”的详细剖析针对舆情的分析，</td>
+                                        <td><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.community({event:event})"><i class="fa fa-group fa-fw"></i> 社团发现</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>因事</td>
+                                        <td> 舆情要素抽取，实现舆情分析中关于“因人、因时、因事、因势”的详细剖析针对舆情的分析，将舆情要素分为四个部分：P(person)人、E(event)事件、T(tendency)态势、C(chance)时机。</td>
+                                        <td><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.viewpoint({event:event})"><i class="fa fa-lightbulb-o fa-fw"></i> 观点挖掘</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>因势</td>
+                                        <td> 舆情要素抽取，实现舆情分析中关于“因人、因时、因事、因势”的详细剖析针对舆情的分析，将舆情要素分为四个部分：P(person)人、E(event)事件、T(tendency)态势、C(chance)时机。</td>
+                                        <td><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.evolutionary({event:event})"><i class="fa fa-exchange fa-fw"></i> 事件演化</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>因时</td>
+                                        <td> 由人，事，势分析决定导控时机。</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawZB()"><i class="fa fa-align-justify"></i> 生成评估指标体系</a> -->
+                            <div class="panel-body" style='height:600px'>
+                                <div id="zb" style="width: 100%;height: 100%"></div>
+                            </div>
+                            <!-- <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ng-click="gostep(1)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+                        </div>
+                    </div>
+                </div>
+                <div ng-class='(stepNum==="2")?"tab-pane fade active in":"tab-pane fade"' id="text-font-tab">
+                    <!-- <a href="javascript:;" ng-class='{"disabled":!next2}' class="btn btn-primary btn-sm pull-right" ng-click="gostep(2)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+                    <a ui-sref="method({now:evaluation,event:event})" ng-class='{"disabled":!next2}' class="btn btn-primary btn-sm pull-right"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a>
+                    <h4 class="m-t-5 m-b-5">多元指标融合</h4>
+                    <p class="m-b-15">
+                        All the predefined css classes will override the defined css styling in your classes, UNLESS the <code>!important</code> is declared in your defined css styling.
+                    </p>
+                    <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawRH()"><i class="fa fa-align-justify"></i> 生成舆情态势值走势</a>
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ><i class="fa fa-toggle-right"></i> 生成评估指标体系</a> -->
+                    <div class="panel-body" style='height:400px'>
+                        <div id="yqts" style="width: 100%;height: 100%" ng-click="getData()"></div>
+                    </div>
+                    <div class="panel-body" style='height:400px'>
+                        <div id="scene" style="width: 100%;height: 100%"></div>
+                    </div>
+                    <div class="panel-body" ng-show="next2">
+                        <table class="table table-email f-s-14">
+                            <thead>
+                            <tr>
+                                <th class="yd_date" style="width: 15%">当前时间</th>
+                                <th class="yd_value" style="width: 20%">当前舆情态势值</th>
+                                <th class="yd_state" style="width: 20%">事件发展状态</th>
+                                <th class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time" style="width: 30%">对应引导策略</th>
+                                <th style="width: 30%" ng-if="evaluation.time==evaluations[evaluations.length-1].time">引导</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-model='evaluation'>
+                                <td class="yd_date">{{evaluation.time}}</td>
+                                <td class="yd_value">{{evaluation.value}}</td>
+                                <td class="yd_state">{{evaluation.state}}</td>
+                                <td class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time">{{evaluation.method}}</td>
+                                <td ng-if="evaluation.time==evaluations[evaluations.length-1].time"><a ui-sref="method({now:evaluation,event:event})"class="btn btn-primary btn-sm"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a></td>
+                            </tr>
+                            <!-- <tr ng-repeat='evaluation in evaluations.slice().reverse()'>
+                                <td class="yd_date">{{evaluation.time}}</td>
+                                <td class="yd_value">{{evaluation.value}}</td>
+                                <td class="yd_state">{{evaluation.state}}</td>
+                                <td class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time">{{evaluation.method}}</td>
+                                <td ng-if="evaluation.time==evaluations[evaluations.length-1].time"><a href="#padding-tab" class="btn btn-primary btn-sm"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a></td>
+                            </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--  <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ng-click="gostep(2)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+
+                </div>
+                <div ng-class='(stepNum==="3")?"tab-pane fade active in":"tab-pane fade"' id="margin-tab">
+                    <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ng-click="gostep(3)"><i class="fa fa-align-justify"></i> 下一步</a>
+                    <h4 class="m-t-5 m-b-5">舆情导控成效分析</h4>
+                    <p class="m-b-15">
+                        从特定的舆情事件场景中抽取特征，构造用于成效评估的指标体系。结合舆情事件发展态势，给出特定引导策略下的引导成效值。
+                    </p>
+                     <!-- <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ng-click="gostep(3)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+                    <!-- <div class="panel-body" style='height:600px'>
+                        <div id="zb2" style="width: 50%;height: 100%"></div>
+                    </div> -->
+                  <!--   <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawZB2()"><i class="fa fa-align-justify"></i> 生成成效评估结果</a> -->
+                   
+                    <div class="panel-body">
+                        <table class="table table-email f-s-14">
+                            <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>引导成效</th>
+                                <th>专家评价</th>
+                                <th>一致率</th>
+                                <th>*</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="result in eval_results">
+                                <td>{{result.time}}</td>
+                                <td>{{result.result}}</td>
+                                <td>
+                                    <!-- <select name="senmes_source" class="" ng-model="expert">
+                                        <option value="0">引导无效</option>
+                                        <option value="1">引导弱有效</option>
+                                        <option value="2">引导相对有效</option>
+                                        <option value="3">引导很有效</option>
+                                    </select> -->
+                                <form>
+                                    <label class="radio-inline"><input type="radio" name="optradio">引导无效</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio">引导弱有效</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio">引导相对有效</label>
+                                    <label class="radio-inline"><input type="radio" name="optradio">引导很有效</label>
+                                  </form></td>
+                                <td>{{result.consistent}}</td>
+                                <td><a href="javascript:;" class="btn btn-primary btn-sm" ng-click="analyse(result)"> 详情</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-body" style="height:600px">
+                        <div id="compare" style="width: 100%;height: 100%"></div>
+
+                    </div>
+                </div>
+                <div ng-class='(stepNum==="4")?"tab-pane fade active in":"tab-pane fade"' id="padding-tab">
+                    <h4 class="m-t-5 m-b-5">导控策略生成</h4>
+                    <p class="m-b-15">
+                        All the predefined css classes will override the defined css styling in your classes, UNLESS the <code>!important</code> is declared in your defined css styling.
+                    </p>
+                </div>
+            </div>
+		</div>
+		<!-- end #content

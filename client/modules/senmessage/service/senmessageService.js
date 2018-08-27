@@ -18,11 +18,12 @@ angular.module("senmessageService", ["commons"])
         factories.getSenmsg = $resource(CQ.variable.RESTFUL_URL + "senmassage/senmsgout", parseResource.params, parseResource.actions);
         return factories;
     }])
-    .factory("SenFacService", ["SenFac", "RestService", function(SenFac, RestService) {
+    .factory("SenFacService", ["SenFac", "RestService","$http", function(SenFac, RestService,$http) {
         var factories = {};
 
         factories.getSenLists = function(params) {
             return RestService.get(SenFac.getSenLists, params);
+            //return $http.get(CQ.variable.RESTFUL_URL + "senmassage/showmsg", params);
         };
 
         factories.getDetailData = function(params) {

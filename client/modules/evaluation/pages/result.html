@@ -1,0 +1,74 @@
+<style type="text/css">
+.table {
+/*border-bottom: 1px solid #e2e7eb;*/
+font-size: 14px;
+}
+p{
+font-size: 14px;
+}
+</style>
+
+		<div id="content" class="content">
+			<!-- begin breadcrumb -->
+			<ol class="breadcrumb pull-right">
+    			<li><a href="#/evaluation">舆情导控</a></li>
+				<li><a href="#/evaluation">{{event.name}}</a></li>
+                <li>成效评估</li>
+			</ol>
+			
+			<h1 class="page-header">{{event.name}} <small>成效评估</small></h1>
+			<!-- end page-header -->
+			
+            <div class="tab-content">
+                <div id="padding-tab">
+                    <h3 class="m-t-5 m-b-5">舆情导控成效分析</h3>
+                    <p class="m-b-15">
+                        从特定的舆情事件场景中抽取特征，构造用于成效评估的指标体系。结合舆情事件发展态势，给出特定引导策略下的引导成效值。
+                    </p>
+                     <!-- <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ng-click="gostep(3)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+                    <!-- <div class="panel-body" style='height:600px'>
+                        <div id="zb2" style="width: 50%;height: 100%"></div>
+                    </div> -->
+                  <!--   <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawZB2()"><i class="fa fa-align-justify"></i> 生成成效评估结果</a> -->
+                   
+                    <div class="panel-body">
+                        <div class="email-content">
+                        <table class="table table-email f-s-14">
+                            <thead>
+                            <tr>
+                                <th>时间</th>
+                                <th>引导成效</th>
+                                <th>专家评价</th>
+                                <th>一致率</th>
+                                <th>*</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="(i,result) in eval_results">
+                                <td>{{result.time}}</td>
+                                <td>{{result.result}}</td>
+                                <td>
+                                      {{result.expert}}
+                                </td>
+                                <td>{{result.consistent}}</td>
+                                <td>
+                                <a href="javascript:;"  class="btn btn-primary btn-sm" ng-click="score(result)"> 评价</a>
+                                <a href="javascript:;" ng-if="result.fin" class="btn btn-primary btn-sm" ng-click="analyse(result)"> 详情</a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="email-footer clearfix">
+                            <p>*引导成效值为通过DEA算法得到的针对本次引导的评分结果，范围在0-100之间</p>
+                            
+                        </div>
+                    </div>
+                    <div class="panel-body" style="height:600px" ng-if="show_consistent">
+                        <div id="compare" style="width: 100%;height: 100%"></div>
+
+                    </div>
+                    <a href="javascript:;" class="btn btn-primary btn-sm pull-left" ui-sref="evaluation"><i class="fa fa-arrow-left"></i> 返回</a>
+                </div>
+            </div>
+		</div>
+		<!-- end #content

@@ -16,7 +16,8 @@ CQ.mainApp = {
     groupmanagementController:angular.module("groupmanagement.Controller",[]),
     msgController:           angular.module("msg.Controller",["msgService"]),
     reportController:        angular.module("report.Controller",["reportService"]),
-    topicmodelController:    angular.module("topicmodel.Controller",["topicmodelService","Notice"])
+    topicmodelController:    angular.module("topicmodel.Controller",["topicmodelService","Notice"]),
+    dkController:      angular.module("dk.Controller",["dkService"]),
 };
 angular.module('mainApp', [
     "ui.router",
@@ -40,7 +41,8 @@ angular.module('mainApp', [
     "groupmanagement.Controller",
     "msg.Controller",
     "report.Controller",
-    "topicmodel.Controller"
+    "topicmodel.Controller",
+    "dk.Controller",
     ])
     .config(["$stateProvider", "$urlRouterProvider", "$locationProvider", "$httpProvider",
         function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

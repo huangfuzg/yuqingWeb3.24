@@ -7,39 +7,59 @@ CQ.mainApp.usermanagementController
         $scope.selectList = [];
         $scope.selectobj=[];
         $scope.pages = 10;
-        $scope.pageSize = 5;
+        $scope.pageSize = 3;
         $scope.pageNum = 1;
         $scope.newpage = $scope.pages > 5 ? 5:$scope.pages;       
-        $scope.data=[];
-        
+        getData()
+        function getData(object){
+            $scope.data=[];
             ViewuserService.getUserData({user_name:$rootScope.curentUser}).then(function(res)
-            {         
-                console.log(res);         
-                $scope.data=res;
-                for (var i = $scope.data.length - 1; i >= 0; i--) {
-                    if($scope.data[i].user_role_id===2){
-                        $scope.data.splice(i,1);
+                {         
+                    console.log(res);         
+                    $scope.data=res;
+                    for (var i = $scope.data.length - 1; i >= 0; i--) {
+                        if($scope.data[i].user_role_id===2){
+                            $scope.data.splice(i,1);
+                        } 
                     }
-                    
-                }
-                for (var i = res.length - 1; i >= 0; i--) {
-                     console.log(res[i].topic_kws.toString());
-                     $scope.data[i].topic_kws=res[i].topic_kws.toString();
-                 } 
-                //console.log($scope.data.topic_kws.toString();
-                // $scope.pages = Math.ceil(res.length/10);
-                // $scope.newpage = Math.ceil(res.length/5);
-                //console.log($scope.newpage);
-                for(var i=0;i<$scope.newpage;i++){
-                    $scope.pagelist[i]=i+1;
-                }
-                for(var i = $scope.data.length - 1; i >= 0; i--) {
+                    for (var i = res.length - 1; i >= 0; i--) {
+                         // console.log(res[i].topic_kws.toString());
+                         $scope.data[i].topic_kws=res[i].topic_kws.toString();
+                     } 
+                    //console.log($scope.data.topic_kws.toString();
+                    $scope.pages = Math.ceil(res.length/10);
+                    $scope.newpage = $scope.pages > 5 ? 5:$scope.pages;
+                    for(var i=0;i<$scope.newpage;i++){
+                        $scope.pagelist.push(i+1);
+                    }
 
-                $scope.data[i].user_logintime=CurentTime($scope.data[i].user_logintime*1000) 
-            }
-        });      
-        
-        
+                    for(var i = $scope.data.length - 1; i >= 0; i--) {
+                    $scope.data[i].user_logintime=CurentTime($scope.data[i].user_logintime*1000) 
+                }
+            });      
+        }        
+        $scope.selectPage = function (page) {
+            if (page < 1 || page > $scope.pages) return;
+            $scope.pageNum = page;
+            console.log("选择的页：" + page);
+            getData();
+        };
+        $scope.isActivePage = function (page) {
+            if($scope.pageNum==page){
+                return "btn btn-primary";
+            }else return "btn";
+        }
+        //上一页
+        $scope.Previous = function () {
+            $scope.pageNum = $scope.pageNum == 1 ? 1 : $scope.pageNum - 1;
+            $scope.selectPage($scope.pageNum);
+        };
+
+        //下一页
+        $scope.Next = function () {
+            $scope.pageNum = $scope.pageNum == $scope.pages ? $scope.pages : $scope.pageNum + 1;
+            $scope.selectPage($scope.pageNum);
+        };
         function CurentTime(d)
         { 
             var now = new Date(d);

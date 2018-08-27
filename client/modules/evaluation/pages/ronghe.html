@@ -1,0 +1,55 @@
+
+    <div class="tab-content">
+        <div  id="general-tab">
+            <!-- <a href="javascript:;"  ng-class='{"disabled":!next1}' class="btn btn-primary btn-sm pull-right" ng-click="gostep(1)"><i class="fa fa-align-justify"></i> 下一步</a> -->
+            <h3 class="m-t-5 m-b-5">{{modelName}}</h3>
+            <p class="m-b-15">
+                        基于舆情事件评价指标体系，利用舆情事件测试数据集计算各指标值，并结合层次分析法和熵权系数法进行指标融合，计算得舆情事件综合态势值，综合态势值是对舆情事件当前发展状态的描述。
+                    </p>
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawRH()"><i class="fa fa-align-justify"></i> 生成舆情态势值走势</a> -->
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ><i class="fa fa-toggle-right"></i> 生成评估指标体系</a> -->
+                    <div class="panel-body" style='height:400px'>
+                        <div id="yqts" style="width: 100%;height: 100%" ng-click="getData()"></div>
+                    </div>
+                    <div class="panel-body" style='height:400px'>
+                        <div id="scene" style="width: 100%;height: 100%"></div>
+                    </div>
+                    <div class="panel-body">
+                        <!-- <div class="email-content"> -->
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="yd_date" style="width: 15%">时间</th>
+                                <th class="yd_value" style="width: 20%">舆情态势值</th>
+                                <th class="yd_state" style="width: 20%">事件发展状态</th>
+                                <th class="yd_method" style="width: 20%">对应引导策略</th>
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-model='evaluation'>
+                                <td class="yd_date">{{evaluation.time}}</td>
+                                <td class="yd_value">{{evaluation.value}}</td>
+                                <td class="yd_state">{{evaluation.state}}</td>
+                                <td class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time">{{evaluation.method}}</td>
+                                <td ng-if="evaluation.time==evaluations[evaluations.length-1].time"></td>
+                            </tr>
+                            <!-- <tr ng-repeat='evaluation in evaluations.slice().reverse()'>
+                                <td class="yd_date">{{evaluation.time}}</td>
+                                <td class="yd_value">{{evaluation.value}}</td>
+                                <td class="yd_state">{{evaluation.state}}</td>
+                                <td class="yd_method" ng-if="evaluation.time!=evaluations[evaluations.length-1].time">{{evaluation.method}}</td>
+                                <td ng-if="evaluation.time==evaluations[evaluations.length-1].time"><a href="#padding-tab" class="btn btn-primary btn-sm"><i class="fa fa-paper-plane-o fa-fw"></i> 舆情引导</a></td>
+                            </tr> -->
+                            </tbody>
+                        </table>
+                        <a href="javascript:;" class="btn btn-primary btn-sm pull-left" ui-sref="dk.zhibiao({content:event,id:event.e_id})"><i class="fa fa-arrow-left"></i> 上一步</a>
+                        <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ui-sref="dk.method({content:event,id:event.e_id})"><i class="fa fa-arrow-right"></i> 导控策略生成</a>
+                        <!-- <div class="email-footer clearfix">
+                                
+                            </div>
+                        </div> -->
+                        
+                    </div>
+        </div>
+    </div>

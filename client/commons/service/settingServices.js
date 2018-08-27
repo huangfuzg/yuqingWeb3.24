@@ -417,6 +417,16 @@ angular.module('settingservice',[])
                 permission: "1",
             }
         ];
+        var evaluation = [
+            {
+                label:"舆情导控",
+                link: "#/evaluation",
+                hasShow: true,
+                icon: "",
+                items: "",
+                permission: "1",
+            }
+        ];
         var friendLink = [
             {
                 label:"友情链接",
@@ -512,6 +522,14 @@ angular.module('settingservice',[])
                 hasShow:true,
                 icon:"fa fa-database",
                 items:"",
+                permission: "5",
+            },
+            {
+                label:"舆情导控",
+                link: "#/evaluation",
+                hasShow: true,
+                icon: "fa fa-globe",
+                items: "",
                 permission: "5",
             },
             {

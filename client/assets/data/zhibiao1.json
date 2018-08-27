@@ -1,0 +1,60 @@
+{
+ "name": "舆情事件总体评价",
+ "label":{"fontSize": 20},
+ "symbolSize": 60,
+ "symbol":"image:///static/assets/img/edit.png",
+ "children": [
+  {
+   "name": "因人",
+   "symbolSize": 70,
+   "symbol":"image:///static/assets/img/people5.svg",
+   "label":{"fontSize": 16},
+   "children": [
+    {"name": "参与人话题的集中度"},
+    {"name": "参与人群的年龄分布"},
+    {"name": "参与人群的地域分布"},
+    {"name": "参与人在各平台的分布"},
+    {"name": "参与人的敏感度"},
+    {"name": "参与人的粉丝数量"}
+   ]
+  },
+  {
+   "name": "因事",
+   "symbolSize": 70,
+   "symbol":"image:///static/assets/img/thing.svg",
+   "label":{"fontSize": 16},
+   "children": [
+    {"name": "事件发现时已产生的时间"},
+    {"name": "事件识别的准确率"},
+    {"name": "事件发现时存在的平台数"},
+    {"name": "事件的主题类型集中度"},
+    {"name": "事件蕴含的数据类型分布"},
+    {"name": "事件的严重或敏感程度"}
+   ]
+  },
+  {
+   "name": "因势",
+   "symbolSize": 70,
+   "symbol":"image:///static/assets/img/trend2.svg",
+   "label":{"fontSize": 16},
+   "children": [
+    {"name": "舆情事件的传播速度"},
+    {"name": "主体人群的活跃度"},
+    {"name": "舆情事件传播的飙升度"},
+    {"name": "舆情事件参与人群飙升度"},
+    {"name": "舆情事件话题倾向性比率"},
+    {"name": "舆情事件平台活跃度比率"},
+    {"name": "舆情事件话题敏感度比率"}
+   ]
+  },
+  {
+   "name": "因时",
+   "symbolSize": 70,
+   "symbol":"image:///static/assets/img/time1.svg",
+   "label":{"fontSize": 16},
+   "children": [
+    {"name": "舆情引导介入的时机"}
+   ]
+  }
+ ]
+}

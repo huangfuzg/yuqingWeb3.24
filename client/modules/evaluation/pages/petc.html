@@ -1,0 +1,66 @@
+
+
+            <div class="tab-content">
+                <div  id="general-tab">
+             
+                    <h3 class="m-t-5 m-b-5">{{modelName}}</h3>
+
+                    <p class="m-b-15">
+                        舆情要素抽取，实现舆情分析中关于“因人、因时、因事、因势”的详细剖析针对舆情的分析，将舆情要素分为四个部分：P(person)人、E(event)事件、T(tendency)态势、C(chance)时机。
+                    </p>
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="showPETC()"><i class="fa fa-align-justify"></i> 生成PETC分析结果</a> -->
+                    <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ng-class='{"disabled":!step1}' ng-click="drawZB()"><i class="fa fa-toggle-right"></i> 生成评估指标体系</a> -->
+                    <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-1">
+                        <div class="panel-body">
+                            <!-- <div class="email-content"> -->
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10%">要素</th>
+                                        <th style="width:40%">要素描述</th>
+                                        <th style="width:40%">分析结果</th>
+                                        <th style="width:10%">详情</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>因人</td>
+                                        <td>人事舆情事件的发起者，也是舆情事件传播的参与者，提出相应的指标体系，刻画人物在舆情事件中的特征，有利于了解和掌握不同的人参与不同舆情事件的特征</td>
+                                        <td ng-bind-html="p">{{p}}</td>
+                                        <td><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.community({event:event})"><i class="fa fa-group fa-fw"></i> 社团发现</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>因事</td>
+                                        <td>舆情事件的发现是实现舆情引导的基本，只有及时准确的从多模态数据中准确识别出舆情事件，才能实现相应的引导和控制，通过总结分析可以发现哪些类型的舆情事件容易出现在哪些平台中，舆情事件的产生时间规律等</td>
+                                        <td>{{shi1}}</td>
+                                        <td><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="events({subject:event1})"><i class="fa fa-lightbulb-o fa-fw"></i> 事件发现</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>因势</td>
+                                        <td>势是指舆情事件的发展和演化态势，是了解和掌握舆情发展趋势的基础和根本，根据不同的舆情态势，发现不同的引导需求</td>
+                                        <td>{{shi2}}</td>
+                                        <td><a href="javascript:;" class="btn btn-primary btn-sm" ui-sref="zhishiku.evolutionary({event:event})"><i class="fa fa-exchange fa-fw"></i> 事件演化</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>因时</td>
+                                        <td>时机是指引导策略介入的时间。</td>
+                                        <td>由人，事，势分析决定导控时机。</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                             <a href="javascript:;" class="btn btn-primary btn-sm pull-left" ui-sref="evaluation"><i class="fa fa-arrow-left"></i> 返回</a>
+                             <a href="javascript:;" class="btn btn-primary btn-sm pull-right" ui-sref="dk.zhibiao({content:event,id:event.e_id})"><i class="fa fa-arrow-right"></i> 生成评估指标体系</a>
+                           <!--  <div class="email-footer clearfix">
+                               
+                            </div> -->
+                        <!-- </div> -->
+                            <!-- <a href="javascript:;" class="btn btn-primary btn-sm" ng-click="drawZB()"><i class="fa fa-align-justify"></i> 生成评估指标体系</a> -->
+                            <!-- <div class="panel-body" style='height:600px'>
+                                <div id="zb" style="width: 100%;height: 100%"></div>
+                            </div> -->
+                            
+                        </div>
+                    </div>
+                </div>
+           </div>
