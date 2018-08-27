@@ -611,7 +611,20 @@ CQ.mainApp.systemsettingController
                 App.runui();
             }
         });
+        $scope.usemodel = function()
+        {
+            console.log($scope.usedmodel);
+            $scope.topicList.forEach(function(d){
+                if(d.topicName==$scope.usedmodel){
+                    $scope.topic = JSON.parse(JSON.stringify(d)) || {};
+                    for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+                    {
+                        $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
+                    }
+                }
+            });
 
+        };
         $scope.onDragComplete = function($data,$event)
         {
 
@@ -783,6 +796,18 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic);
             $scope.topicNameEnable = false;
             $scope.submitUrl  = $scope.baseUrl + "/addtopic";
+            $scope.modellist=[];
+            $scope.usedmodel="nomodel";
+            $scope.baseUrl = CQ.variable.RESTFUL_URL ;
+                var url = $scope.baseUrl+"/settopic";
+                //?userId=" + $scope.userId;
+                // var url = "/static/setup.json";
+                $http.get(url).success(function(data){
+                    console.log(data);
+                    data.data.topicData.forEach(function(d){
+                         $scope.modellist.push(d.topicName);
+                    });
+                });
         }
         //选择站点
         $scope.checkBoxChange = function(d,typesite)

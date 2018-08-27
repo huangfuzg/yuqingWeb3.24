@@ -167,7 +167,10 @@
                                         <label class="control-label">查询关键字:</label>
                                         <!-- end email subject -->
                                         <!-- begin email content -->
-
+                                        <select id="modelList" ng-change="usemodel()" ng-model="usedmodel">
+                                            <option value="nomodel" disabled selected hidden>使用已有模板</option>
+                                            <option ng-repeat="x in modellist" value={{x}}>{{x}}</option>
+                                        </select>
                                         <div class="m-b-15" style="border: 1px solid #ccd0d4;  border-radius: 5px; padding: 10px 5px">
                                             <div style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px;padding: 5px;background-color: rgba(250, 240, 210, 0.5); width: 100%" ng-repeat="(i,andkeywords) in topic.topicKeywords">
                                                 <div style="display: inline-block; width: 25%">
