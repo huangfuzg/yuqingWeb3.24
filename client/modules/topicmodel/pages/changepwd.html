@@ -1,0 +1,50 @@
+<style>
+.dia_warning{
+    color: #f59c1a;
+}
+
+.ngdialog.ngdialog-theme-details {
+    padding: 5% !important;
+}
+
+.ngdialog.ngdialog-theme-details .ngdialog-content {
+    width: 1000px !important;
+}
+
+</style>
+<div class="panel panel-primary" data-sortable-id="ui-buttons-3">
+    <div class="panel-heading">
+
+        <h4 class="panel-title f-s-15">修改密码</h4>
+    </div>
+    <div class="panel-body">
+        
+        <form class="form-horizontal" role="form" name="myForm" ng-submit="submitpwd()">
+            
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">密码</label>
+                <div class="col-sm-10">
+                    <input type="password" name="password" class="form-control" id="password" ng-model="add.password" ng-minlength="4" ng-maxlength="64" required placeholder="请输入密码">
+                    <span style="color:#c33" ng-show="myForm.password.$touched && myForm.password.$invalid">
+                    <span ng-show="myForm.password.$error.required&&myForm.password.$touched"><i class="fa fa-info-circle"></i> 请输入新密码</span>
+                    <span ng-show="myForm.password.$error.minlength||myForm.password.$error.maxlength)&&myForm.password.$touched"><i class="fa fa-info-circle"></i> 密码应在4到32位之间</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="lastname" class="col-sm-2 control-label">重复输入密码</label>
+                <div class="col-sm-10">
+                    <input type="password" name="repassword" class="form-control" id="repassword" ng-model="add.repassword" ng-minlength="4" ng-maxlength="64" required placeholder="请输入密码">
+                    <span style="color:#c33" ng-show="myForm.repassword.$touched && myForm.repassword.$invalid">
+                    <span ng-show="myForm.repassword.$error.required&&myForm.repassword.$touched"><i class="fa fa-info-circle"></i> 请再次输入密码</span>
+                    <span ng-show="notsame"><i class="fa fa-info-circle"></i> 两次输入密码不一致</span>   
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary" ng-disabled="myForm.password.$dirty && myForm.password.$invalid ||myForm.repassword.$dirty && myForm.repassword.$invalid">确认修改</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -548,6 +548,14 @@ angular.module('settingservice',[])
                 items: "",
                 permission: "2",
             },
+            {
+                label:"话题模板管理",
+                link: "#/topicmodel",
+                hasShow: true,
+                icon: "fa fa-user",
+                items: "",
+                permission: "2",
+            },
             // {
             //     label:"用户组管理",
             //     link: "#/gmanagement",

@@ -41,9 +41,9 @@
             <div class="email-btn-row f-s-15">
                 
                 
-                <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题 </a>
+                <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题模板 </a>
 
-                <a href="#/manageTopic" class="btn btn-sm btn-primary" ng-permission="2"> 管理组内话题</a>
+                
                 <!-- <span class="dropdown">
                     <a href="email_inbox.html#" class="email-header-link btn btn-sm btn-inverse" data-toggle="dropdown">View All <i class="fa fa-angle-down m-l-5"></i></a>
                     <ul class="dropdown-menu">
@@ -83,9 +83,9 @@
                         <tr>
                             <th ng-show = "false"></th>
                             
-                            <th>话题名称</th>
+                            <th>模板名称</th>
                             <th>查询关键字</th>
-                            <th class="mobile-width-0">爬取站点</th>
+                            <!-- <th class="mobile-width-0">爬取站点</th> -->
                             <th>操作</th>
                         </tr>
                     </thead>
@@ -94,14 +94,14 @@
                             <td style="min-width:5em;max-width:15em;" ng-show = "false">{{topicItem.topicId}}</td>
                             
                             <td class="mobile-width-20 pc-width-15" style="min-width:6em;max-width:20em;vertical-align: middle">{{topicItem.topicName}}</td>
-                            <td class="mobile-width-60 pc-width-25" style="min-width:6em;vertical-align: middle"><span class="mobile-hide">{{toStr(topicItem.topicKeywords)}}</span><span class="mobile-show">{{toStr(topicItem.topicKeywords)}}</span></td>
-                            <td class="mobile-width-0 pc-width-45" style="vertical-align: middle"><span class="mobile-hide">{{topicItem.sitesStr}}</span></span><span class="mobile-show">{{topicItem.sitesStr}}</span></td>
-                            <td class="mobile-width-20 pc-width-15" style="min-width:6em;max-width: 15em;vertical-align: middle"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
+                            <td class="mobile-width-60 pc-width-45" style="min-width:6em;vertical-align: middle"><span class="mobile-hide">{{toStr(topicItem.topicKeywords)}}</span><span class="mobile-show">{{toStr(topicItem.topicKeywords)}}</span></td>
+                           <!--  <td class="mobile-width-0 pc-width-45" style="vertical-align: middle"><span class="mobile-hide">{{topicItem.sitesStr}}</span></span><span class="mobile-show">{{topicItem.sitesStr}}</span></td> -->
+                            <td class="mobile-width-20 pc-width-15" style="min-width:6em;max-width: 15em;vertical-align: middle"><a href="#myModal" title="修改模板" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除模板" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="email-footer clearfix">
-                    {{topicCount}}个话题
+                    {{topicCount}}个话题模板
                     <ul class="pagination pagination-sm m-t-0 m-b-0 pull-right">
                         <li ng-class="{disabled:page <= 0}" ng-click="getDataByPage(page-1)"><a href="javascript:;"><i class="fa fa-angle-double-left"></i></a></li>
                         <li ng-class="{disabled:page <= 0}"><a href="javascript:;" ng-click="getDataByPage(page-1)"><i class="fa fa-angle-left"></i></a></li>
@@ -113,7 +113,7 @@
         </div>
         <!-- end col-10 -->
     <!-- 模态框（Modal） -->
-<div class="modal fade col-lg-10 col-lg-offset-1" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade col-lg-8 col-lg-offset-2" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
@@ -129,7 +129,7 @@
                     <!-- begin vertical-box -->
                     <div class="vertical-box">
                         <!-- begin vertical-box-column -->
-                        <div class="vertical-box-column width-250">
+                       <!--  <div class="vertical-box-column width-250">
                             <div class="wrapper">
                                 <p><b>全部站点</b></p>
                                 <ul class="nav nav-pills nav-stacked nav-sm">
@@ -141,14 +141,14 @@
                                     </ul>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> -->
                             <!-- end wrapper -->
-                        </div>
+                         <!-- </div>  -->
                         <!-- end vertical-box-column -->
                         <!-- begin vertical-box-column -->
                         <div class="vertical-box-column">
                             <div class="wrapper">
-                                <div class="p-30 bg-white">
+                                <div class="content-full-width bg-white">
                                     <!-- begin email form -->
                                     <form method="POST" name="topicForm" ng-submit="save()" novalidate="false">
                                         <!-- begin email to -->
@@ -167,10 +167,7 @@
                                         <label class="control-label">查询关键字:</label>
                                         <!-- end email subject -->
                                         <!-- begin email content -->
-                                        <select id="modelList" ng-change="usemodel()" ng-model="usedmodel">
-                                            <option value="nomodel" disabled selected hidden>使用已有模板</option>
-                                            <option ng-repeat="x in modellist" value={{x}}>{{x}}</option>
-                                        </select>
+
                                         <div class="m-b-15" style="border: 1px solid #ccd0d4;  border-radius: 5px; padding: 10px 5px">
                                             <div style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px;padding: 5px;background-color: rgba(250, 240, 210, 0.5); width: 100%" ng-repeat="(i,andkeywords) in topic.topicKeywords">
                                                 <div style="display: inline-block; width: 25%">
@@ -225,7 +222,7 @@
                                             </div> -->
                                         </div>
 
-                                        <label class="control-label">站点信息:</label>
+                                       <!--  <label class="control-label">站点信息:</label>
                                         <div class="m-b-15">
                                             <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
                                                 <ul class="nav nav-pills nav-stacked nav-sm panel-body">
@@ -242,7 +239,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- end email content -->
                                         <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">提交</button>
                                     </form>
