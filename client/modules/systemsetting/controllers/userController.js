@@ -258,6 +258,7 @@ CQ.mainApp.systemsettingController
             }
             return result;
         }
+
         //添加话题
         $scope.newTopic = function()
         {
@@ -611,8 +612,20 @@ CQ.mainApp.systemsettingController
                 App.runui();
             }
         });
+        $scope.changetype1 = function()
+        {
+            document.getElementById("type2").style.display="inline-block";
+            print("ZYZ1");
+        }
+        $scope.changetype2 = function()
+        {
+            document.getElementById("type3").style.display="inline-block";
+            print($scope.topic);
+        }
         $scope.usemodel = function()
         {
+            var type11=$scope.topic.type1;
+            var type22=$scope.topic.type2;
             console.log($scope.usedmodel);
             $scope.topicList.forEach(function(d){
                 if(d.topicName==$scope.usedmodel){
@@ -623,7 +636,8 @@ CQ.mainApp.systemsettingController
                     }
                 }
             });
-
+            $scope.topic.type1=type11;
+            $scope.topic.type2=type22;
         };
         $scope.onDragComplete = function($data,$event)
         {
@@ -784,6 +798,34 @@ CQ.mainApp.systemsettingController
         $scope.newTopic = function()
         {
             $scope.modelName = "添加话题";
+            $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
+            $scope.topic.topicKeywords.push([]);
+            $scope.allsites.forEach(function(d1)
+            {
+                d1.selected = false;
+                d1.detail_sites.forEach(function(d){
+                    d.selected = false;
+                });
+            });
+            console.log($scope.topic);
+            $scope.topicNameEnable = false;
+            $scope.submitUrl  = $scope.baseUrl + "/addtopic";
+            $scope.modellist=[];
+            $scope.usedmodel="nomodel";
+            $scope.baseUrl = CQ.variable.RESTFUL_URL ;
+                var url = $scope.baseUrl+"/settopic";
+                //?userId=" + $scope.userId;
+                // var url = "/static/setup.json";
+                $http.get(url).success(function(data){
+                    console.log(data);
+                    data.data.topicData.forEach(function(d){
+                         $scope.modellist.push(d.topicName);
+                    });
+                });
+        }
+        $scope.usemodels = function()
+        {
+            $("#myModal").modal('hide');
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
             $scope.allsites.forEach(function(d1)
