@@ -78,6 +78,28 @@ CQ.mainApp.systemsettingController
                 }
             }
         };
+        $scope.onDropComplete1 = function($data,$event)
+        {
+            for(var i = 0; i < $scope.allsites1.length; i++)
+            {
+                for(var j = 0; j < $scope.allsites1[i].detail_sites.length; j++)
+                {
+                    if($scope.allsites1[i].detail_sites[j].siteId == $data.siteId)
+                    {
+                        if($scope.allsites1[i].detail_sites[j].selected)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            $scope.allsites1[i].detail_sites[j].selected = true;
+                            $scope.topic.siteLists.push($data);
+                            return;
+                        }
+                    }
+                }
+            }
+        };
         //拖动全选
         $scope.onAllDrag = function($data,$event)
         {
@@ -606,6 +628,8 @@ CQ.mainApp.systemsettingController
                     $scope.topicList = data.data.topicData;
                     $scope.topicCount = $scope.topicList.length;
                     $scope.allsites = data.data.allSites;
+                    console.log("ALLSITES");
+                    console.log($scope.allsites);
                     $scope.getDataByPage($scope.page);
                 });
                 console.log("userSetting app start!!!");
@@ -615,30 +639,55 @@ CQ.mainApp.systemsettingController
         $scope.changetype1 = function()
         {
             document.getElementById("type2").style.display="inline-block";
-            print("ZYZ1");
+            console.log($scope.allsites);
         }
         $scope.changetype2 = function()
         {
             document.getElementById("type3").style.display="inline-block";
-            print($scope.topic);
+            console.log($scope.allsites);
         }
-        $scope.usemodel = function()
+        $scope.selectmodel = function()
         {
-            var type11=$scope.topic.type1;
-            var type22=$scope.topic.type2;
+            console.log($scope.allsites);
+            var type11=$scope.topic1.type1;
+            var type22=$scope.topic1.type2;
             console.log($scope.usedmodel);
             $scope.topicList.forEach(function(d){
                 if(d.topicName==$scope.usedmodel){
-                    $scope.topic = JSON.parse(JSON.stringify(d)) || {};
-                    for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+                    $scope.topic1 = JSON.parse(JSON.stringify(d)) || {};
+                    for(var i = 0; i < $scope.topic1.topicKeywords.length; i++)
                     {
-                        $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
+                        $scope.topic1.topicKeywords[i].str = $scope.topic1.topicKeywords[i].toString();
                     }
                 }
             });
-            $scope.topic.type1=type11;
-            $scope.topic.type2=type22;
+            $scope.topic1.type1=type11;
+            $scope.topic1.type2=type22;
+            
+            $scope.allsites1.forEach(function(d3){
+                        console.log(d3);
+                        d3.selected = false;
+                        d3.detail_sites.forEach(function(d1)
+                        {
+                            d1.selected = false;
+                            $scope.topic1.siteLists.forEach(function(d2){
+                                if(d2.siteId == d1.siteId)
+                                {
+                                    d1.selected = true;
+                                }
+                            });
+                        });
+                        update(d3);
+                    });
+        
         };
+        $scope.usemodel = function()
+        {
+            $("#myModal1").modal('hide');
+            console.log("hhh");
+            $scope.topic=$scope.topic1;
+            $scope.allsites=$scope.allsites1;
+        }
         $scope.onDragComplete = function($data,$event)
         {
 
@@ -733,6 +782,8 @@ CQ.mainApp.systemsettingController
                 method: 'post',
                 data: $scope.jsonData,
             }).success(function(data, status, headers, config){
+                console.log("LZPP");
+                console.log($scope.jsonData);
                 if(data.success == false) {
                     //alert("操作失败!即将为您跳转...");
                     notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
@@ -797,6 +848,7 @@ CQ.mainApp.systemsettingController
         //添加话题
         $scope.newTopic = function()
         {
+            console.log($scope.allsites);
             $scope.modelName = "添加话题";
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
@@ -825,7 +877,8 @@ CQ.mainApp.systemsettingController
         }
         $scope.usemodels = function()
         {
-            $("#myModal").modal('hide');
+            //$("#myModal").modal('hide');
+            //$('#myModal1').modal('show');
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
             $scope.allsites.forEach(function(d1)
@@ -835,7 +888,7 @@ CQ.mainApp.systemsettingController
                     d.selected = false;
                 });
             });
-            console.log($scope.topic);
+            console.log($scope.allsites);
             $scope.topicNameEnable = false;
             $scope.submitUrl  = $scope.baseUrl + "/addtopic";
             $scope.modellist=[];
@@ -850,6 +903,8 @@ CQ.mainApp.systemsettingController
                          $scope.modellist.push(d.topicName);
                     });
                 });
+            $scope.allsites1=$scope.allsites;
+            $scope.topic1=$scope.topic;
         }
         //选择站点
         $scope.checkBoxChange = function(d,typesite)

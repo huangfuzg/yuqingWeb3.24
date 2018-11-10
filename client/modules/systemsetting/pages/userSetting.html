@@ -182,7 +182,7 @@
                                                 </div>
                                                 <div class="f-s-20" style="display: inline-block; width: 14%; vertical-align: middle;">
                                                     <i class="btn btn-xs fa fa-plus-circle text-success" ng-click="addAndKeywords()" title="添加关键词组"></i>
-                                                    <i class="btn btn-xs fa fa-minus-circle text-danger" ng-click="delAndKeywords(i)" ng-show="topic.topicKeywords.length>1" title="删除关键词组"></i>
+                                                    <i class="btn btn-xs fa fa-minus-circle text-danger" ng-click="delAndKeywords(i)" ng-show="topic1.topicKeywords.length>1" title="删除关键词组"></i>
                                                     <span class="btn btn-xs text-info fa fa-adn" ng-click="openBatchPage()" title="添加关键词组合">
                                                     </span>
                                                 </div>
@@ -284,12 +284,12 @@
                                 
                                     <div class="p-30 bg-white">
                                     <!-- begin email form -->
-                                    <form method="POST" name="topicForm" ng-submit="save()" novalidate="false">
+                                    <form method="POST" name="topicForm" ng-submit="usemodel()" novalidate="false">
                                         <!-- begin email to -->
                                         <label class="control-label">话题模板筛选</label>
                                         <div class="m-b-15">
                                             <div style="display: inline-block; width: 25%">
-                                                <select class="form-control" ng-model="topic.type1" ng-change="changetype1()">
+                                                <select class="form-control" ng-model="topic1.type1" ng-change="changetype1()">
                                                     <option value="">请选择事件</option>  
                                                     <option value="高考">高考</option>
                                                     <option value="成考">成考</option>
@@ -297,7 +297,7 @@
                                                 </select>
                                             </div>
                                             <div id="type2" style="display: none; width: 25%">
-                                                <select class="form-control" ng-model="topic.type2" ng-change="changetype2()">
+                                                <select class="form-control" ng-model="topic1.type2" ng-change="changetype2()">
                                                     <option value="">请选择时间</option>  
                                                     <option value="之前">之前</option>
                                                     <option value="期间">期间</option>
@@ -305,7 +305,7 @@
                                                 </select>
                                             </div>
                                             <div id="type3" style="display: none; width: 25%">
-                                                <select class="form-control" ng-model="usedmodel" ng-change="usemodel()">
+                                                <select class="form-control" ng-model="usedmodel" ng-change="selectmodel()">
                                                     <option value="nomodel" disabled selected hidden>请选择话题</option>
                                                     <option ng-repeat="x in modellist" value={{x}}>{{x}}</option>
                                                 </select>
@@ -313,7 +313,7 @@
                                         </div>
                                         <label class="control-label">话题名称:</label>
                                         <div class="m-b-15">
-                                            <input type="text" disabled="disabled" name="topicname" class="form-control" ng-model="topic.topicName"/>
+                                            <input type="text" disabled="disabled" name="topicname" class="form-control" ng-model="topic1.topicName"/>
                                             
                                         </div>
                                         <!-- end email to -->
@@ -321,12 +321,12 @@
                                         <label class="control-label">查询关键字:</label>
                                         <!-- end email subject -->
                                         <!-- begin email content -->
-                                        <select id="modelList" ng-change="usemodel()" ng-model="usedmodel">
+                                        <!-- <select id="modelList" ng-change="usemodel()" ng-model="usedmodel">
                                             <option value="nomodel" disabled selected hidden>使用已有模板</option>
                                             <option ng-repeat="x in modellist" value={{x}}>{{x}}</option>
-                                        </select>
+                                        </select> -->
                                         <div class="m-b-15" style="border: 1px solid #ccd0d4;  border-radius: 5px; padding: 10px 5px">
-                                            <div style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px;padding: 5px;background-color: rgba(250, 240, 210, 0.5); width: 100%" ng-repeat="(i,andkeywords) in topic.topicKeywords">
+                                            <div style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px;padding: 5px;background-color: rgba(250, 240, 210, 0.5); width: 100%" ng-repeat="(i,andkeywords) in topic1.topicKeywords">
                                                 <div style="display: inline-block; width: 25%">
                                                     <select disabled="disabled" class="form-control">
                                                         <option value="and" selected>AND</option>
@@ -381,15 +381,15 @@
 
                                         <label class="control-label">站点信息:</label>
                                         <div class="m-b-15">
-                                            <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete($data,$event)">
+                                            <div class="panel" style="border: 1px solid #ccd0d4" ng-drop="true" ng-drop-success="onDropComplete1($data,$event)">
                                                 <ul class="nav nav-pills nav-stacked nav-sm panel-body">
-                                                    <li ng-repeat="oneTypeSite in allsites">
-                                                    <span><input type="checkbox" ng-model="oneTypeSite.selected" ng-click="onAllSelected(oneTypeSite)"/></span>
+                                                    <li ng-repeat="oneTypeSite in allsites1">
+                                                    <span><input type="checkbox" disabled="disabled" ng-model="oneTypeSite.selected" ng-click="onAllSelected(oneTypeSite)"/></span>
                                                     <a data-toggle="collapse" href="#{{oneTypeSite.siteTypeId}}" style="display: inline-block;"><i class="fa fa-inbox fa-fw m-r-5"></i> 
                                                     {{ oneTypeSite.siteTypeName }}</a>
                                                     <ul id="{{oneTypeSite.siteTypeId}}" class="collapse list-inline in">
                                                         <li ng-repeat="node in oneTypeSite.detail_sites">
-                                                            <span><input type="checkbox" ng-model="node.selected" ng-click="checkBoxChange(node,oneTypeSite)"/></span>
+                                                            <span><input type="checkbox" disabled="disabled" ng-model="node.selected" ng-click="checkBoxChange(node,oneTypeSite)"/></span>
                                                             <a href="javascript::void">{{node.siteName}}</a>
                                                         </li>
                                                     </ul>
@@ -398,7 +398,7 @@
                                             </div>
                                         </div>
                                         <!-- end email content -->
-                                        <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">提交</button>
+                                        <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">使用模板</button>
                                     </form>
                                     <!-- end email form -->
                                 </div>

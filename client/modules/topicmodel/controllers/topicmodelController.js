@@ -224,7 +224,8 @@ CQ.mainApp.topicmodelController
     $http, ngDialog, notice) {
     console.log("delete topic");
     $scope.deleteMyTopic = function() {
-        $scope.removeUrl = $scope.baseUrl + "/deletetopic";
+        //$scope.removeUrl = $scope.baseUrl + "/deletetopic";
+        $scope.removeUrl="http://118.190.133.203:8001/yqdata/template_delete";
         $http({
             params: {topicId : $scope.topic_id},
             //url:"http://118.190.133.203:8100/yqdata/deletetopic",
@@ -270,8 +271,10 @@ CQ.mainApp.topicmodelController
     {
     console.log("topicmodelController", "start!!!");
     console.log($stateParams);
+    $scope.exam_type=$stateParams.exam_type;
+    $scope.exam_period=$stateParams.exam_period;
     //$scope.event = $stateParams.event;
-    //console.log($scope.event.id0);
+    
     //console.log($scope.event.id);
     
     $scope.topic_id = null;
@@ -281,15 +284,21 @@ CQ.mainApp.topicmodelController
                 $scope.userId = 1;
                 $scope.baseUrl = CQ.variable.RESTFUL_URL ;
                 //htt:p//118.190.133.203:8100/yqdata/deletetopic
-                var url = $scope.baseUrl+"/settopic";
+                //var url = $scope.baseUrl+"/settopic";
                 //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
 
-                //var url="http://118.190.133.203:8001/yqdata/template_showall";
+                var url="http://118.190.133.203:8001/yqdata/template_show";
                 //?userId=" + $scope.userId;
                 // var url = "/static/setup.json";
                 var sites = "";
                 $scope.page = 0;
-                $http.get(url).success(function(data){
+                $http({
+                    params: {exam_type : $scope.exam_type,exam_period:$scope.exam_period},
+                    //url:"http://118.190.133.203:8100/yqdata/deletetopic",
+                    url: url,
+                    method: 'get',
+                })
+                .success(function(data, status, headers, config){
                     console.log("LZP");
                     console.log(data);
                     data.data.topicData.forEach(function(d){
@@ -307,10 +316,37 @@ CQ.mainApp.topicmodelController
                         d.sitesStr = sites;
                     });
                     $scope.topicList = data.data.topicData;
+                    console.log($scope.topicList);
                     $scope.topicCount = $scope.topicList.length;
                     $scope.allsites = data.data.allSites;
                     $scope.getDataByPage($scope.page);
+                    
+                })
+                .error(function(error){
+                    notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
                 });
+                // $http.get(url).success(function(data){
+                //     console.log("LZP");
+                //     console.log(data);
+                //     data.data.topicData.forEach(function(d){
+                //         sites = "";
+                //         d.siteLists.forEach(function(site){
+                //             if(sites != "")
+                //             {
+                //                 sites += ",";
+                //             }
+                //             if(site.siteName)
+                //             {
+                //                 sites += site.siteName;
+                //             }
+                //         });
+                //         d.sitesStr = sites;
+                //     });
+                //     $scope.topicList = data.data.topicData;
+                //     $scope.topicCount = $scope.topicList.length;
+                //     $scope.allsites = data.data.allSites;
+                //     $scope.getDataByPage($scope.page);
+                // });
                 console.log("userSetting app start!!!");
                 App.runui();
             }
@@ -394,8 +430,7 @@ CQ.mainApp.topicmodelController
             // if($scope.topic.topicId)
             //     $scope.jsonData.topicId = $scope.topic.topicId;
             $scope.jsonData.topicName = $scope.topic.topicName;
-            $scope.jsonData.type1 = $scope.topic.type1;
-            $scope.jsonData.type2 = $scope.topic.type2;
+            
             // $scope.topic.topicKeywords._and = $scope.topic.topicKeywords.and.toString().split(',');
             // $scope.topic.topicKeywords._or = $scope.topic.topicKeywords.or.toString().split(',');
             $scope.jsonData.topicKeywords = $scope.topic.topicKeywords;
@@ -405,6 +440,8 @@ CQ.mainApp.topicmodelController
             }
             console.log($scope.topic.topicKeywords);
             $scope.jsonData.sites = $scope.topic.siteLists;
+            $scope.jsonData.exam_type=$scope.topic.exam_type;
+            $scope.jsonData.exam_period=$scope.topic.exam_period;
             $scope.jsonData = JSON.stringify($scope.jsonData);
             console.log($scope.jsonData);
             $http({
@@ -490,7 +527,7 @@ CQ.mainApp.topicmodelController
         $scope.newTopic = function()
         {
             $scope.modelName = "添加话题模板";
-            $scope.topic = {type1:"高考",type2:"之前",topicName:"",topicKeywords:[],siteLists:[]};
+            $scope.topic = {exam_type:$scope.exam_type,exam_period:$scope.exam_period,topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
             $scope.allsites.forEach(function(d1)
             {
@@ -501,7 +538,9 @@ CQ.mainApp.topicmodelController
             });
             console.log($scope.topic);
             $scope.topicNameEnable = false;
-            $scope.submitUrl  = $scope.baseUrl + "/addtopic";
+            //$scope.submitUrl  = $scope.baseUrl + "/addtopic";
+             
+             $scope.submitUrl  ="http://118.190.133.203:8001/yqdata/template_add";
         }
         //选择站点
         $scope.checkBoxChange = function(d,typesite)
@@ -540,8 +579,19 @@ CQ.mainApp.topicmodelController
         //刷新
         $scope.reload = function(d,opretion)
         {
-            if(opretion == "save" && $scope.modelName == "添加话题模板")
+            console.log(d);
+            $("#myModal").modal('hide');
+            if((opretion == "save" && $scope.modelName == "添加话题模板")&&
+                ((d.exam_type==$scope.exam_type&&d.exam_period==$scope.exam_period)||
+                    ($scope.exam_type==-1&&$scope.exam_period==-1)||
+                    (d.exam_type==$scope.exam_type&&$scope.exam_period==-1)))
             {
+                if(d.exam_type == 0) d.exam_type="高考";
+                else if(d.exam_type == 1) d.exam_type="成考";
+                else d.exam_type="研考";
+                if(d.exam_period == 0) d.exam_period="之前";
+                else if(d.exam_period == 1) d.exam_period="期间";
+                else d.exam_period="之后";
                 d.siteLists = d.siteLists || [];
                 d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
                 $scope.topicList.push(d);
@@ -554,25 +604,47 @@ CQ.mainApp.topicmodelController
                 {
                     $scope.getDataByPage($scope.page);
                 }
-                $("#myModal").modal('hide');
+                
                 $scope.topicCount++;
                 return true;
             }
             else if(opretion == "save" && $scope.modelName == "修改话题")
             {
-                d.siteLists = d.siteLists || [];
-                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
-                for(var i = 0; i < $scope.topicList.length; i++)
+                if((d.exam_type==$scope.exam_type&&d.exam_period==$scope.exam_period)||
+                    ($scope.exam_type==-1&&$scope.exam_period==-1)||
+                    (d.exam_type==$scope.exam_type&&$scope.exam_period==-1))
                 {
-                    if($scope.topicList[i].topicName == d.topicName)
+                    if(d.exam_type == 0) d.exam_type="高考";
+                    else if(d.exam_type == 1) d.exam_type="成考";
+                    else d.exam_type="研考";
+                    if(d.exam_period == 0) d.exam_period="之前";
+                    else if(d.exam_period == 1) d.exam_period="期间";
+                    else d.exam_period="之后";
+                    d.siteLists = d.siteLists || [];
+                    d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+                    for(var i = 0; i < $scope.topicList.length; i++)
                     {
-                       $scope.topicList[i] = d;
-                       $scope.pageData[i%$scope.pageSize] = d;
-                       $("#myModal").modal('hide');
-                       return true;
+                        if($scope.topicList[i].topicName == d.topicName)
+                        {
+                           $scope.topicList[i] = d;
+                           $scope.pageData[i%$scope.pageSize] = d;
+                           return true;
+                       }
                    }
                }
-           }
+               else{
+                    for(var i = 0; i < $scope.topicList.length; i++)
+                    {
+                        if($scope.topicList[i].topicName == d.topicName)
+                        {
+                           $scope.topicList.splice(i,1);
+
+                           $scope.getDataByPage($scope.page);
+                           return true;
+                       }
+                   }     
+               }
+            }
            else if(opretion == "delete")
            {
                 for(var i = 0; i < $scope.topicList.length; i++)
@@ -600,24 +672,31 @@ CQ.mainApp.topicmodelController
             $scope.pageSize = 5.0;
             $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
             $scope.pageData = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
+            $scope.topicCount=$scope.pageData.length;
         };
         //修改话题
         $scope.changeTopic = function(d)
         {
             console.log(d);
+            var dd = JSON.parse(JSON.stringify(d));
+            if(d.exam_type == "高考") dd.exam_type=0;
+            else if(d.exam_type == "成考") dd.exam_type=1;
+            else dd.exam_type=2;
+            if(d.exam_period == "之前") dd.exam_period=0;
+            else if(d.exam_period == "期间") dd.exam_period=1;
+            else dd.exam_period=2;
             $scope.modelName = "修改话题";
             $scope.topicNameEnable = true;
-            $scope.topic = JSON.parse(JSON.stringify(d)) || {};
-            $scope.topic.type1="高考";
-            $scope.topic.type2="之前";
+            $scope.topic = JSON.parse(JSON.stringify(dd)) || {};
+            console.log($scope.topic);
             for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
             {
                 $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
             }
             console.log($scope.topic);
                     // console.log(new d.constructor());
-                    $scope.submitUrl = $scope.baseUrl + "/modifytopic";
-                    // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
+                    //$scope.submitUrl = $scope.baseUrl + "/modifytopic";
+                    $scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
                     $scope.allsites.forEach(function(d3){
                         console.log(d3);
                         d3.selected = false;

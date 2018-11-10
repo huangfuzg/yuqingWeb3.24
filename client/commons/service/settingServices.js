@@ -114,7 +114,7 @@ angular.module('settingservice',[])
                 }]
             },
             {
-                label: "考研",
+                label: "研考",
                 link: "#/topicmodel/2/-1", 
                 hasShow:true,
                 icon:"",

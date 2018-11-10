@@ -70,7 +70,7 @@ nextState=1;
             <div class="email-btn-row f-s-15">
                 
                 
-                <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题 </a>
+                <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建模板 </a>
                 
                 <!-- <a href="#/manageTopic" class="btn btn-sm btn-primary" ng-permission="2"> 管理组内话题</a> -->
                 <!-- <span class="dropdown">
@@ -127,8 +127,8 @@ nextState=1;
                             <td class="mobile-width-20 pc-width-10" style="min-width:6em;max-width:20em;vertical-align: middle">{{topicItem.topicName}}</td>
                             <td class="mobile-width-60 pc-width-25" style="min-width:6em;vertical-align: middle"><span class="mobile-hide">{{toStr(topicItem.topicKeywords)}}</span><span class="mobile-show">{{toStr(topicItem.topicKeywords)}}</span></td>
                             <td class="mobile-width-0 pc-width-35" style="vertical-align: middle"><span class="mobile-hide">{{topicItem.sitesStr}}</span></span><span class="mobile-show">{{topicItem.sitesStr}}</span></td>
-                            <td class="mobile-width-0 pc-width-10" style="vertical-align: middle"><span class="mobile-hide">{{}}</span></span></td>
-                            <td class="mobile-width-0 pc-width-10" style="vertical-align: middle"><span class="mobile-hide">{{}}</span></span></td>
+                            <td class="mobile-width-0 pc-width-10" style="vertical-align: middle"><span class="mobile-hide">{{topicItem.exam_type}}</span></span></td>
+                            <td class="mobile-width-0 pc-width-10" style="vertical-align: middle"><span class="mobile-hide">{{topicItem.exam_period}}</span></span></td>
                             <td class="mobile-width-20 pc-width-10" style="min-width:6em;max-width: 15em;vertical-align: middle"><a href="#myModal" title="修改话题" class="email-btn" ng-click=changeTopic(topicItem) data-toggle="modal" data-backdrop="false"><i class="fa fa-edit"></i></a> <a href="javascript::void," title="删除话题" class="email-btn" ng-click="remove(topicItem)"><i class="fa fa-trash-o"></i></a></td>
                         </tr>
                     </tbody>
@@ -199,17 +199,17 @@ nextState=1;
                                         <label class="control-label">话题模板类型:</label>
                                         <div class="m-b-15">
                                             <div style="display: inline-block; width: 25%">
-                                                <select class="form-control" ng-model="topic.type1" onchang="changetype()">
-                                                    <option value="高考" selected>高考</option>
-                                                    <option value="成考">成考</option>
-                                                    <option value="研考">研考</option>
+                                                <select class="form-control" ng-model="topic.exam_type" onchang="changetype()">
+                                                    <option value="0" selected>高考</option>
+                                                    <option value="1">成考</option>
+                                                    <option value="2">研考</option>
                                                 </select>
                                             </div>
                                             <div style="display: inline-block; width: 25%">
-                                                <select class="form-control" ng-model="topic.type2">
-                                                    <option value="之前" selected>之前</option>
-                                                    <option value="期间">期间</option>
-                                                    <option value="之后">之后</option>
+                                                <select class="form-control" ng-model="topic.exam_period">
+                                                    <option value="0" selected>之前</option>
+                                                    <option value="1">期间</option>
+                                                    <option value="2">之后</option>
                                                 </select>
                                             </div>
                                         </div>

@@ -3,7 +3,7 @@ CQ.mainApp.topicmodelController
     .config(["$stateProvider", "$urlRouterProvider", function($stateProvider, $urlRouterProvider){
         $stateProvider
             .state("topicmodelController", {
-                url:"/topicmodel/:modeltype/:modeltime",
+                url:"/topicmodel/:exam_type/:exam_period",
                 templateUrl: "/static/modules/topicmodel/pages/topicmodel3.html",
                 controller: "topicmodelController"
             })
