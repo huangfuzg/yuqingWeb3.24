@@ -920,6 +920,8 @@ CQ.mainApp.systemsettingController
         {
             //$("#myModal").modal('hide');
             //$('#myModal1').modal('show');
+            document.getElementById("type2").style.display="none";
+            document.getElementById("type3").style.display="none";
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
             $scope.allsites.forEach(function(d1)
