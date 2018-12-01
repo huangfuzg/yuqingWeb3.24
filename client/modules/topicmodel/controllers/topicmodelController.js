@@ -224,8 +224,8 @@ CQ.mainApp.topicmodelController
     $http, ngDialog, notice) {
     console.log("delete topic");
     $scope.deleteMyTopic = function() {
-        //$scope.removeUrl = $scope.baseUrl + "/deletetopic";
-        $scope.removeUrl="http://118.190.133.203:8001/yqdata/template_delete";
+        $scope.removeUrl = $scope.baseUrl + "/template_delete";
+        //$scope.removeUrl="http://118.190.133.203:8001/yqdata/template_delete";
         $http({
             params: {topicId : $scope.topic_id},
             //url:"http://118.190.133.203:8100/yqdata/deletetopic",
@@ -284,7 +284,7 @@ CQ.mainApp.topicmodelController
                 $scope.userId = 1;
                 $scope.baseUrl = CQ.variable.RESTFUL_URL ;
                 //htt:p//118.190.133.203:8100/yqdata/deletetopic
-                //var url = $scope.baseUrl+"/settopic";
+                //var url = $scope.baseUrl+"/template_show";
                 //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
 
                 var url="http://118.190.133.203:8001/yqdata/template_show";
@@ -538,9 +538,9 @@ CQ.mainApp.topicmodelController
             });
             console.log($scope.topic);
             $scope.topicNameEnable = false;
-            //$scope.submitUrl  = $scope.baseUrl + "/addtopic";
+            //$scope.submitUrl  = $scope.baseUrl + "/template_add";
              
-             $scope.submitUrl  ="http://118.190.133.203:8001/yqdata/template_add";
+            $scope.submitUrl  ="http://118.190.133.203:8001/yqdata/template_add";
         }
         //选择站点
         $scope.checkBoxChange = function(d,typesite)
@@ -695,7 +695,7 @@ CQ.mainApp.topicmodelController
             }
             console.log($scope.topic);
                     // console.log(new d.constructor());
-                    //$scope.submitUrl = $scope.baseUrl + "/modifytopic";
+                    //$scope.submitUrl = $scope.baseUrl + "/template_modify";
                     $scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
                     $scope.allsites.forEach(function(d3){
                         console.log(d3);
