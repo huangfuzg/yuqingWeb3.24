@@ -42,7 +42,7 @@
                 
                 
                 <a href="#myModal" class="btn btn-sm btn-primary" ng-click="newTopic()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 新建话题 </a>
-
+                <a href="#myModal1" class="btn btn-sm btn-primary" ng-click="usemodels()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 使用已有模板新建话题</a>
                 <a href="#/manageTopic" class="btn btn-sm btn-primary" ng-permission="2"> 管理组内话题</a>
                 <!-- <span class="dropdown">
                     <a href="email_inbox.html#" class="email-header-link btn btn-sm btn-inverse" data-toggle="dropdown">View All <i class="fa fa-angle-down m-l-5"></i></a>
@@ -113,7 +113,7 @@
         </div>
         <!-- end col-10 -->
     <!-- 模态框（Modal） -->
-<div class="modal fade col-lg-10 col-lg-offset-1" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade col-lg-10 col-lg-offset-1" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width: 100%;">
         <div class="modal-content">
             <div class="modal-header">
@@ -260,7 +260,7 @@
             </div>
             <!-- end row -->
             <!-- 模态框（Modal） -->
-<div class="modal fade col-lg-10 col-lg-offset-1" id="myModal1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade col-lg-10 col-lg-offset-1" id="myModal1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
     <div class="modal-dialog" style="width: 70%;">
         <div class="modal-content">
             <div class="modal-header">
@@ -311,21 +311,21 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <label class="control-label">话题名称:</label>
+                                       <!--  <label class="control-label">话题名称:</label>
                                         <div class="m-b-15">
                                             <input type="text" disabled="disabled" name="topicname" class="form-control" ng-model="topic1.topicName"/>
                                             
-                                        </div>
+                                        </div> -->
                                         <!-- end email to -->
                                         <!-- begin email subject -->
-                                        <label class="control-label">查询关键字:</label>
+                                        <!-- <label class="control-label">查询关键字:</label> -->
                                         <!-- end email subject -->
                                         <!-- begin email content -->
                                         <!-- <select id="modelList" ng-change="usemodel()" ng-model="usedmodel">
                                             <option value="nomodel" disabled selected hidden>使用已有模板</option>
                                             <option ng-repeat="x in modellist" value={{x}}>{{x}}</option>
                                         </select> -->
-                                        <div class="m-b-15" style="border: 1px solid #ccd0d4;  border-radius: 5px; padding: 10px 5px">
+                                   <!--      <div class="m-b-15" style="border: 1px solid #ccd0d4;  border-radius: 5px; padding: 10px 5px">
                                             <div style="border: 1px solid #999;border-radius: 2px;margin-bottom: 5px;padding: 5px;background-color: rgba(250, 240, 210, 0.5); width: 100%" ng-repeat="(i,andkeywords) in topic1.topicKeywords">
                                                 <div style="display: inline-block; width: 25%">
                                                     <select disabled="disabled" class="form-control">
@@ -348,7 +348,7 @@
                                                 <span class="text-danger" ng-show="topicForm.keywords_{{i}}.$error.pattern" style="position: relative; left: 70%">
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
-                                            </div>
+                                            </div> -->
                                             <!-- <div style="width: 100%;" class="m-b-15"> 
                                                 <i class="" style="width: 4%; display: inline-block;">
                                                     AND: 
@@ -377,7 +377,7 @@
                                                     含有非法字符，关键字需以,隔开
                                                 </span>
                                             </div> -->
-                                        </div>
+                                       <!--  </div>
 
                                         <label class="control-label">站点信息:</label>
                                         <div class="m-b-15">
@@ -396,7 +396,7 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- end email content -->
                                         <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">使用模板</button>
                                     </form>
