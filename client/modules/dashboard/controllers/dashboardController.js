@@ -214,34 +214,73 @@ CQ.mainApp.dashboardController
     function heatmap(){
       map.centerAndZoom(new BMap.Point(104.335373, 34.366872), 6);
       $.getJSON("/static/assets/data/map/heat1.json", function (data){
-      var data1=data;
-      function compare(property){
-          return function(a,b){
-              var value1 = a[property];
-              var value2 = b[property];
-              return value1 - value2;
-          }
-      }
-      data1.sort(compare('count'));
-      for(var i=0;i<data1.length;i++){
-        if(i<7) data1[i].color="#FFB3FF";
-        else if(i<14) data1[i].color="#FF77FF";
-        else if(i<21) data1[i].color="#FF3EFF";
-        else if(i<28) data1[i].color="#CC00CC";
-        else data1[i].color="#770077";
-      }
-       
-      for(var i=0;i<data1.length;i++){
-        getBoundary(data1[i]);
+        var data1=data;
+        function compare(property){
+            return function(a,b){
+                var value1 = a[property];
+                var value2 = b[property];
+                return value1 - value2;
+            }
+        }
+        data1.sort(compare('count'));
+        for(var i=0;i<data1.length;i++){
+          if(i<7) data1[i].color="#FFB3FF";
+          else if(i<14) data1[i].color="#FF77FF";
+          else if(i<21) data1[i].color="#FF3EFF";
+          else if(i<28) data1[i].color="#CC00CC";
+          else data1[i].color="#770077";
+        }
+         
+        for(var i=0;i<data1.length;i++){
+          getBoundary(data1[i]);
         }  
-    
+      })
+      $.getJSON("/static/assets/data/map/province.json", function (data){
+        for(var i=0;i<data.length;i++){
+          var Cenpoint = new BMap.Point(data[i].center.split(",")[0],data[i].center.split(",")[1])
+          var marker = new BMap.Marker(Cenpoint);
+          marker.enableMassClear();
+          var label = new BMap.Label(data[i].name,{offset:new BMap.Size(0,-35),border:"0px"});
+          marker.setLabel(label);
+          marker.addEventListener("mouseover",function (e){
+            p=e.target;
+            console.log(p.getLabel().content);
+            // $.getJSON("/static/assets/data/map/city.json", function (data){
+            //     $.each(data, function (infoIndex, info){
+            //       if(pro==info["province"]){
+            //         map.setZoom(czoom);
+            //         option.series[0].data=info["keywords"];
+            //         var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(info["lng"],info["lat"]),300,200);
+            //         map.addOverlay(myCompOverlay);
+            //       }
+            //     }) 
+            // })   
+          });
+          map.addOverlay(marker);
+          // var opts = {
+          //   position : Cenpoint,    // 指定文本标注所在的地理位置
+          //   offset   : new BMap.Size(0, -40)    //设置文本偏移量
+          // }
+          // var label = new BMap.Label(data[i].name, opts);  // 创建文本标注对象
+          // label.setStyle({
+          //      color : "red",
+          //      fontSize : "12px",
+          //      //height : "20px",
+          //      //lineHeight : "20px",
+          //      fontFamily:"微软雅黑",
+          //      border:"0px"
+          //  });
+          // map.addOverlay(label);  
+        }
       })
     }
     function getBoundary(province) {
         var boundary = new BMap.Boundary();
         boundary.get(province["province"], function(rs){
+          var pointArray = [];
           for (var j = 0; j < rs.boundaries.length; j++) {
               var ply = new BMap.Polygon(rs.boundaries[j]); //建立多边形覆盖物
+              pointArray = pointArray.concat(ply.getPath());
               ply.setFillColor(province.color);
               ply.addEventListener("click", function (e) {
 
@@ -273,7 +312,11 @@ CQ.mainApp.dashboardController
                 //$("#myselect option[text="+value+"]").attr("selected", true);
               });
               map.addOverlay(ply);  //添加覆盖物
-            }    
+            }
+            // var Cenpoint = new BMap.Point();
+            // Cenpoint=map.getViewport(pointArray)["center"];
+            // var marker = new BMap.Marker(Cenpoint);
+            //map.addOverlay(marker); 
           });
       }
 

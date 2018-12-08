@@ -284,10 +284,10 @@ CQ.mainApp.topicmodelController
                 $scope.userId = 1;
                 $scope.baseUrl = CQ.variable.RESTFUL_URL ;
                 //htt:p//118.190.133.203:8100/yqdata/deletetopic
-                //var url = $scope.baseUrl+"/template_show";
+                var url = $scope.baseUrl+"/template_show";
                 //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
 
-                var url="http://118.190.133.203:8001/yqdata/template_show";
+                //var url="http://118.190.133.203:8001/yqdata/template_show";
                 //?userId=" + $scope.userId;
                 // var url = "/static/setup.json";
                 var sites = "";
@@ -538,9 +538,9 @@ CQ.mainApp.topicmodelController
             });
             console.log($scope.topic);
             $scope.topicNameEnable = false;
-            //$scope.submitUrl  = $scope.baseUrl + "/template_add";
+            $scope.submitUrl  = $scope.baseUrl + "/template_add";
              
-            $scope.submitUrl  ="http://118.190.133.203:8001/yqdata/template_add";
+            //$scope.submitUrl  ="http://118.190.133.203:8001/yqdata/template_add";
         }
         //选择站点
         $scope.checkBoxChange = function(d,typesite)
@@ -695,8 +695,8 @@ CQ.mainApp.topicmodelController
             }
             console.log($scope.topic);
                     // console.log(new d.constructor());
-                    //$scope.submitUrl = $scope.baseUrl + "/template_modify";
-                    $scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
+                    $scope.submitUrl = $scope.baseUrl + "/template_modify";
+                    //$scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
                     $scope.allsites.forEach(function(d3){
                         console.log(d3);
                         d3.selected = false;
