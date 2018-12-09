@@ -307,7 +307,7 @@
                                             <div id="type3" style="display: none; width: 25%">
                                                 <select class="form-control" ng-model="usedmodel" ng-change="selectmodel()">
                                                     <option value="nomodel" disabled selected hidden>请选择话题</option>
-                                                    <option ng-repeat="x in modellist" value={{x}}>{{x}}</option>
+                                                    <option ng-repeat="x in pageData1" value={{x.topicName}}>{{x.topicName}}</option>
                                                 </select>
                                             </div>
                                         </div>
