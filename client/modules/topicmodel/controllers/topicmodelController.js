@@ -235,7 +235,7 @@ CQ.mainApp.topicmodelController
         .success(function(data, status, headers, config){
             ngDialog.closeAll();
             notice.notify_info("您好！","话题删除成功！","",false,"","");
-            $scope.reload($scope.topic_id,"delete");
+            $scope.reload_for_model($scope.topic_id,"delete");
                 // setTimeout(function(){
                 //     window.location.reload("index.html#/userSetting");
                 // },2000);
@@ -286,10 +286,8 @@ CQ.mainApp.topicmodelController
                 //htt:p//118.190.133.203:8100/yqdata/deletetopic
                 var url = $scope.baseUrl+"/template_show";
                 //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
+                console.log($scope.exam_type)
 
-                //var url="http://118.190.133.203:8001/yqdata/template_show";
-                //?userId=" + $scope.userId;
-                // var url = "/static/setup.json";
                 var sites = "";
                 $scope.page = 0;
                 $http({
@@ -299,8 +297,8 @@ CQ.mainApp.topicmodelController
                     method: 'get',
                 })
                 .success(function(data, status, headers, config){
-                    console.log("LZP");
-                    console.log(data);
+                    // console.log("LZP");
+                    // console.log(data);
                     data.data.topicData.forEach(function(d){
                         sites = "";
                         d.siteLists.forEach(function(site){
@@ -317,8 +315,9 @@ CQ.mainApp.topicmodelController
                     });
                     $scope.topicList = data.data.topicData;
                     console.log($scope.topicList);
-                    $scope.topicCount = $scope.topicList.length;
+                    $scope.moedelCount = $scope.topicList.length;
                     $scope.allsites = data.data.allSites;
+                    $scope.modelCount=$scope.topicList.length;
                     $scope.getDataByPage($scope.page);
                     
                 })
@@ -460,7 +459,7 @@ CQ.mainApp.topicmodelController
                         $scope.topic.topicId = data.data.topic_id;
                         console.log($scope.topic);
                     }
-                    $scope.reload($scope.topic,"save");
+                    $scope.reload_for_model($scope.topic,"save");
                 }
                 // setTimeout(function(){
                 //     window.location.reload("index.html#/userSetting");
@@ -577,9 +576,9 @@ CQ.mainApp.topicmodelController
             }
         }
         //刷新
-        $scope.reload = function(d,opretion)
+        $scope.reload_for_model = function(d,opretion)
         {
-            console.log(d);
+            // console.log(d);
             $("#myModal").modal('hide');
             if((opretion == "save" && $scope.modelName == "添加话题模板")&&
                 ((d.exam_type==$scope.exam_type&&d.exam_period==$scope.exam_period)||
@@ -605,7 +604,7 @@ CQ.mainApp.topicmodelController
                     $scope.getDataByPage($scope.page);
                 }
                 
-                $scope.topicCount++;
+                $scope.modelCount++;
                 return true;
             }
             else if(opretion == "save" && $scope.modelName == "修改话题")
@@ -622,7 +621,7 @@ CQ.mainApp.topicmodelController
                     else d.exam_period="之后";
                     d.siteLists = d.siteLists || [];
                     d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
-                    for(var i = 0; i < $scope.topicList.length; i++)
+                    for(var i = 1; i < $scope.topicList.length; i++)
                     {
                         if($scope.topicList[i].topicName == d.topicName)
                         {
@@ -633,7 +632,7 @@ CQ.mainApp.topicmodelController
                    }
                }
                else{
-                    for(var i = 0; i < $scope.topicList.length; i++)
+                    for(var i = 1; i < $scope.topicList.length; i++)
                     {
                         if($scope.topicList[i].topicName == d.topicName)
                         {
@@ -653,7 +652,7 @@ CQ.mainApp.topicmodelController
                     {
                         $scope.topicList.splice(i,1);
                         $scope.getDataByPage($scope.page);
-                        $scope.topicCount--;
+                        $scope.modelCount--;
                         return true;
                     }
                 }
@@ -672,7 +671,6 @@ CQ.mainApp.topicmodelController
             $scope.pageSize = 5.0;
             $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
             $scope.pageData = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
-            $scope.topicCount=$scope.pageData.length;
         };
         //修改话题
         $scope.changeTopic = function(d)

@@ -663,6 +663,7 @@ CQ.mainApp.systemsettingController
 
         $scope.changetype2 = function()
         {
+            // $scope.modelName = "添加话题"
             if($scope.topic1.type2 == '')
                 {
                     document.getElementById("type3").style.display="none";
@@ -674,13 +675,89 @@ CQ.mainApp.systemsettingController
 
             }
 
+           $scope.baseUrl = CQ.variable.RESTFUL_URL ;
+                //htt:p//118.190.133.203:8100/yqdata/deletetopic
+                var url = $scope.baseUrl+"/template_show";
+                //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
+                // console.log(url)
+                // console.log($scope.topic1.type1,$scope.topic1.type2)
+
+                if ($scope.topic1.type1 == "高考")
+                {
+                    $scope.type11 = 0
+                }
+                else if ($scope.topic1.type1 == "成考")
+                {
+                    $scope.type11 = 1
+                }
+                else if ($scope.topic1.type1 == "成考")
+                {
+                    $scope.type11 = 2
+                } 
+
+                if ($scope.topic1.type2 == "之前")
+                {
+                    $scope.type22 = 0
+                }
+                else if ($scope.topic1.type2 == "期间")
+                {
+                    $scope.type22 = 1
+                }
+                else if ($scope.topic1.type2 == "之后")
+                {
+                    $scope.type22 = 2
+                } 
+             
+                //var url="http://118.190.133.203:8001/yqdata/template_show";
+                //?userId=" + $scope.userId;
+                // var url = "/static/setup.json";
+                var sites = "";
+                $scope.page = 0;
+                $http({
+                    params: {exam_type:$scope.type11,exam_period:$scope.type22},
+                    //url:"http://118.190.133.203:8100/yqdata/deletetopic",
+                    url: url,
+                    method: 'get',
+                })
+                .success(function(data, status, headers, config){
+                    console.log("LZP");
+                    // console.log(data);
+                    data.data.topicData.forEach(function(d){
+                        sites = "";
+                        d.siteLists.forEach(function(site){
+                            if(sites != "")
+                            {
+                                sites += ",";
+                            }
+                            if(site.siteName)
+                            {
+                                sites += site.siteName;
+                            }
+                        });
+                        d.sitesStr = sites;
+                    });
+                    $scope.topicList = data.data.topicData;
+                    // console.log($scope.topicList);
+                    // $scope.topicCount1 = $scope.topicList.length;
+                    // $scope.allsites = data.data.allSites;
+                    $scope.pageData1 = $scope.topicList
+                })
+                .error(function(){
+                //alert("未知的错误!即将为您跳转...");
+                notice.notify_info( "连接服务器失败！" ,"",false,"","");
+            });
+                // $scope.pageData = scope.pageData1
         }
 
+
+        
         $scope.selectmodel = function()
         {
             // console.log($scope.allsites);
             var type11=$scope.topic1.type1;
             var type22=$scope.topic1.type2;
+
+
             // console.log($scope.usedmodel);
             $scope.topicList.forEach(function(d){
                 if(d.topicName==$scope.usedmodel){  //如果模板库中有和返回的usemodel相同的名称
@@ -719,6 +796,7 @@ CQ.mainApp.systemsettingController
         {
             $("#myModal1").modal('hide');
             $("#myModal").modal('show');
+            $scope.modelName = "添加话题2"
             $('#myModal').css({'overflow-y':'scroll'});
             // console.log("hhh");
             $scope.topic=$scope.topic1;
@@ -906,15 +984,7 @@ CQ.mainApp.systemsettingController
             $scope.modellist=[];
             $scope.usedmodel="nomodel";
             $scope.baseUrl = CQ.variable.RESTFUL_URL ;
-                var url = $scope.baseUrl+"/settopic";
-                //?userId=" + $scope.userId;
-                // var url = "/static/setup.json";
-                $http.get(url).success(function(data){
-                    console.log(data);
-                    data.data.topicData.forEach(function(d){
-                         $scope.modellist.push(d.topicName);
-                    });
-                });
+               
         }
         $scope.usemodels = function()
         {
@@ -931,21 +1001,31 @@ CQ.mainApp.systemsettingController
                     d.selected = false;
                 });
             });
-            console.log($scope.allsites);
+            // console.log($scope.allsites);
+
             $scope.topicNameEnable = false;
             $scope.submitUrl  = $scope.baseUrl + "/addtopic";
             $scope.modellist=[];
             $scope.usedmodel="nomodel";
             $scope.baseUrl = CQ.variable.RESTFUL_URL ;
-                var url = $scope.baseUrl+"/settopic";
+                // var url = $scope.baseUrl+"/template_show";
+                // var url = $scope.baseUrl+"/settopic";
                 //?userId=" + $scope.userId;
                 // var url = "/static/setup.json";
-                $http.get(url).success(function(data){
-                    console.log(data);
-                    data.data.topicData.forEach(function(d){
-                         $scope.modellist.push(d.topicName);
-                    });
-                });
+
+                // $http({
+                //     params: {exam_type : $scope.topic1.type1,exam_period:$scope.topic1.type2},
+                //     //url:"http://118.190.133.203:8100/yqdata/deletetopic",
+                //     url: url,
+                //     method: 'get',
+                // })
+
+                // $http.get(url).success(function(data){
+                //     console.log(data);
+                //     data.data.topicData.forEach(function(d){
+                //          $scope.modellist.push(d.topicName);
+                //     });
+                // });
             $scope.allsites1=$scope.allsites;
             $scope.topic1=$scope.topic;
 
@@ -1005,6 +1085,25 @@ CQ.mainApp.systemsettingController
                 $scope.topicCount++;
                 return true;
             }
+            else if(opretion == "save" && $scope.modelName == "添加话题2")
+            {
+                $("#myModal").modal('hide');
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+                $scope.topicList.push(d);
+                $scope.pageData1.push(d);
+                if($scope.pageData1.length > $scope.pageSize)
+                {
+                    $scope.getDataByPage_1(++$scope.page);
+                }
+                else
+                {
+                    $scope.getDataByPage_1($scope.page);
+                }
+                $scope.topicCount++;
+                window.location.reload("index.html#/userSetting");
+                return true;
+            }
             else if(opretion == "save" && $scope.modelName == "修改话题")
             {
                 d.siteLists = d.siteLists || [];
@@ -1035,6 +1134,28 @@ CQ.mainApp.systemsettingController
             }
             return false;
         }
+        $scope.getDataByPage_1 = function(page)
+        {
+            $scope.maxPage = $scope.maxPage || 0;
+            $scope.page = $scope.page || 0;
+            if(page >= 0 && page<= $scope.maxPage)
+            {
+                $scope.page = page;
+            }
+            $scope.pageSize = 5.0;
+            $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
+            // $scope.pageData1 = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
+                for(var i=0;i<$scope.pageData1.length;i++)
+            {
+                if(i==$scope.pageData1.length-1||
+                    $scope.pageData1[i].username!=$scope.pageData1[i+1].username)
+                {
+                    $scope.pageData1[0].rowspan=i+1;
+                    break;
+                }
+
+            }
+        };
         //分页
         $scope.getDataByPage = function(page)
         {
@@ -1047,13 +1168,23 @@ CQ.mainApp.systemsettingController
             $scope.pageSize = 5.0;
             $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
             $scope.pageData = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
+                for(var i=0;i<$scope.pageData.length;i++)
+            {
+                if(i==$scope.pageData.length-1||
+                    $scope.pageData[i].username!=$scope.pageData[i+1].username)
+                {
+                    $scope.pageData[0].rowspan=i+1;
+                    break;
+                }
+
+            }
         };
         //修改话题
         $scope.changeTopic = function(d)
         {
             console.log(d);
             $scope.modelName = "修改话题";
-            $scope.topicNameEnable = true;
+            $scope.topicNameEnable = false;
             $scope.topic = JSON.parse(JSON.stringify(d)) || {};
             for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
             {
