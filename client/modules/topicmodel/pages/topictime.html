@@ -1,0 +1,84 @@
+<style>
+    .timeline .timeline-body
+    {
+        margin-top: 10px;
+    }
+    .timeline-header .username{
+        font-size: 18px;
+    }
+    .timeline .timeline-time .time{
+        font-size: 20px;
+        margin-top: 10px;
+    }
+    .timeline .timeline-icon a{
+        background-color: #000000;
+        border-color: #8cc1bc;
+    }
+    li.colmd-6{
+        border: solid #8cc1bc 3px;
+        box-sizing: border-box;
+        border-radius: 5px;
+        /*height: 200px;*/
+        width: 45%;
+    }
+    .timeline:before{
+        background: #8cc1bc;
+    }
+</style>
+<div id="content" class="content" style="padding: 0">
+    <ol class="breadcrumb" style="margin-left: 20px;
+    margin-top: 10px;font-size:1.3em;">
+        <li><a href="#/topicmodel">话题模板</a></li>
+        <li><a href="#/topicmodel">主题</a></li>
+        <li class="active">时间</li>
+    </ol>
+    <!-- end breadcrumb -->
+    <!-- begin timeline -->
+    <ul class="timeline">
+        <li ng-repeat="(i,event) in events">
+            <!-- begin timeline-time -->
+            <div class="timeline-time">
+                <!-- <span class="date">today</span> -->
+                <span class="time">{{event.time}}</span>
+            </div>
+            <!-- end timeline-time -->
+            <!-- begin timeline-icon -->
+            <div class="timeline-icon">
+                <a href="javascript:;"><img src="/static/assets/icon/events.png"/></a>
+            </div>
+            <!-- end timeline-icon -->
+            <!-- begin timeline-body -->
+            <div class="timeline-body">
+                <div class="timeline-header">
+                    <!-- <span class="userimage"><img src="assets/img/user-1.jpg" alt="" /></span> -->
+                    <span class="username"><a href="javascript:;">{{event.name}}</a> <small></small></span>
+                    <!-- <span class="pull-right text-muted">18 Views</span> -->
+                </div>
+                <div class="timeline-content">
+                    <p>
+                        {{event.summary}}
+                    </p>
+                    <ul class="row list-unstyled" style="display: flex; flex-direction: row; justify-content: space-around;">
+                        <li class="colmd-6">
+                            <img src={{event.img}} style="width: 100%;height: 100%" ui-sref="topicmodelController({event:event})"/>
+                        </li>   
+                        <li class="colmd-6" id="wordsCloud_{{event.id}}" style="height: 280px">
+                            
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- end timeline-body -->
+        </li>
+        <li>
+            <!-- begin timeline-icon -->
+            <div class="timeline-icon">
+                <a href="javascript:;"><img src="/static/assets/icon/END.png"/></a>
+            </div>
+            <!-- end timeline-icon -->
+            <!-- begin timeline-body -->
+            <!-- begin timeline-body -->
+        </li>
+    </ul>
+    <!-- end timeline -->
+</div>

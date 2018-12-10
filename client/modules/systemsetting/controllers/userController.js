@@ -11,6 +11,7 @@ CQ.mainApp.systemsettingController
                 $scope.userId = 1;
                 var url1 = $scope.baseUrl+"/adminmanagetopic";
                 //var url1 = "http://118.190.133.203:8100/yqdata/adminmanagetopic";
+                print(123)
                 var sites = "";
                 $scope.page = 0;
                 $http.get(url1).success(function(data){
@@ -71,6 +72,28 @@ CQ.mainApp.systemsettingController
                         else
                         {
                             $scope.allsites[i].detail_sites[j].selected = true;
+                            $scope.topic.siteLists.push($data);
+                            return;
+                        }
+                    }
+                }
+            }
+        };
+        $scope.onDropComplete1 = function($data,$event)
+        {
+            for(var i = 0; i < $scope.allsites1.length; i++)
+            {
+                for(var j = 0; j < $scope.allsites1[i].detail_sites.length; j++)
+                {
+                    if($scope.allsites1[i].detail_sites[j].siteId == $data.siteId)
+                    {
+                        if($scope.allsites1[i].detail_sites[j].selected)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            $scope.allsites1[i].detail_sites[j].selected = true;
                             $scope.topic.siteLists.push($data);
                             return;
                         }
@@ -258,6 +281,7 @@ CQ.mainApp.systemsettingController
             }
             return result;
         }
+
         //添加话题
         $scope.newTopic = function()
         {
@@ -526,7 +550,7 @@ CQ.mainApp.systemsettingController
         });
     };
 }])
-.controller("deleteMyTopic", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope,
+.controller("deleteMyTopic_user", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function($rootScope, $scope,
     $http, ngDialog, notice) {
     console.log("delete topic");
     $scope.deleteMyTopic = function() {
@@ -542,7 +566,7 @@ CQ.mainApp.systemsettingController
             notice.notify_info("您好！","话题删除成功！","",false,"","");
             $scope.reload($scope.topic_id,"delete");
                 // setTimeout(function(){
-                //     window.location.reload("index.html#/userSetting");
+                //     window.location.reload("index.html/userSetting");
                 // },2000);
             })
         .error(function(error){
@@ -571,6 +595,8 @@ CQ.mainApp.systemsettingController
         $scope.closeThisDialog();
     }
 }])
+
+// 以下是usersetting.html对应的控制器,这是被systemcontrollersetting决定的
 .controller("userSettingController", ["$rootScope", "$scope", "$http", "ngDialog", "notice",function ($rootScope,
     $scope, $http, ngDialog, notice)
     {
@@ -587,7 +613,6 @@ CQ.mainApp.systemsettingController
                 var sites = "";
                 $scope.page = 0;
                 $http.get(url).success(function(data){
-                    console.log(data);
                     data.data.topicData.forEach(function(d){
                         sites = "";
                         d.siteLists.forEach(function(site){
@@ -611,20 +636,172 @@ CQ.mainApp.systemsettingController
                 App.runui();
             }
         });
-        $scope.usemodel = function()
+        $scope.changetype1 = function()
         {
-            console.log($scope.usedmodel);
+            if($scope.flag1 == 0)
+            {
+                document.getElementById("type2").style.display="inline-block";
+                $scope.flag1 = 1;
+            }
+            else
+            {
+                if($scope.topic1.type1 == '')
+                {
+                    $scope.flag1 = 0;
+                    document.getElementById("type2").style.display="none";
+                    document.getElementById("type3").style.display="none";
+                }
+                else
+                {
+                    $scope.topic1.type2 = ""
+                    document.getElementById("type2").style.display="inline-block";
+                    document.getElementById("type3").style.display="none";
+
+                }
+            }
+        }
+
+        $scope.changetype2 = function()
+        {
+            // $scope.modelName = "添加话题"
+            if($scope.topic1.type2 == '')
+                {
+                    document.getElementById("type3").style.display="none";
+                }
+            else
+            {
+                $scope.usedmodel = "nomodel";
+                document.getElementById("type3").style.display="inline-block";
+
+            }
+
+           $scope.baseUrl = CQ.variable.RESTFUL_URL ;
+                //htt:p//118.190.133.203:8100/yqdata/deletetopic
+                var url = $scope.baseUrl+"/template_show";
+                //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
+                // console.log(url)
+                // console.log($scope.topic1.type1,$scope.topic1.type2)
+
+                if ($scope.topic1.type1 == "高考")
+                {
+                    $scope.type11 = 0
+                }
+                else if ($scope.topic1.type1 == "成考")
+                {
+                    $scope.type11 = 1
+                }
+                else if ($scope.topic1.type1 == "成考")
+                {
+                    $scope.type11 = 2
+                } 
+
+                if ($scope.topic1.type2 == "之前")
+                {
+                    $scope.type22 = 0
+                }
+                else if ($scope.topic1.type2 == "期间")
+                {
+                    $scope.type22 = 1
+                }
+                else if ($scope.topic1.type2 == "之后")
+                {
+                    $scope.type22 = 2
+                } 
+             
+                //var url="http://118.190.133.203:8001/yqdata/template_show";
+                //?userId=" + $scope.userId;
+                // var url = "/static/setup.json";
+                var sites = "";
+                $scope.page = 0;
+                $http({
+                    params: {exam_type:$scope.type11,exam_period:$scope.type22},
+                    //url:"http://118.190.133.203:8100/yqdata/deletetopic",
+                    url: url,
+                    method: 'get',
+                })
+                .success(function(data, status, headers, config){
+                    console.log("LZP");
+                    // console.log(data);
+                    data.data.topicData.forEach(function(d){
+                        sites = "";
+                        d.siteLists.forEach(function(site){
+                            if(sites != "")
+                            {
+                                sites += ",";
+                            }
+                            if(site.siteName)
+                            {
+                                sites += site.siteName;
+                            }
+                        });
+                        d.sitesStr = sites;
+                    });
+                    $scope.topicList = data.data.topicData;
+                    // console.log($scope.topicList);
+                    // $scope.topicCount1 = $scope.topicList.length;
+                    // $scope.allsites = data.data.allSites;
+                    $scope.pageData1 = $scope.topicList
+                })
+                .error(function(){
+                //alert("未知的错误!即将为您跳转...");
+                notice.notify_info( "连接服务器失败！" ,"",false,"","");
+            });
+                // $scope.pageData = scope.pageData1
+        }
+
+
+        
+        $scope.selectmodel = function()
+        {
+            // console.log($scope.allsites);
+            var type11=$scope.topic1.type1;
+            var type22=$scope.topic1.type2;
+
+
+            // console.log($scope.usedmodel);
             $scope.topicList.forEach(function(d){
-                if(d.topicName==$scope.usedmodel){
-                    $scope.topic = JSON.parse(JSON.stringify(d)) || {};
-                    for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
+                if(d.topicName==$scope.usedmodel){  //如果模板库中有和返回的usemodel相同的名称
+                    $scope.topic1 = JSON.parse(JSON.stringify(d)) || {};
+                    // 提取某一模板的关键字
+                     //console.log($scope.topic1.topicKeywords[2].str,'hi!!') //是某个模板的关键字数量
+                    for(var i = 0; i < $scope.topic1.topicKeywords.length; i++)
                     {
-                        $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
+                        $scope.topic1.topicKeywords[i].str = $scope.topic1.topicKeywords[i].toString();
                     }
                 }
             });
-
+            $scope.topic1.type1=type11;
+            $scope.topic1.type2=type22;
+            // 这部分其实就是为了将选定模板对应的所有爬取网站选中
+            $scope.allsites1.forEach(function(d3){
+                        console.log(d3);
+                        // d3是网站类别  d1是d3的一个子类,是该网站类别下的具体网站名称
+                        d3.selected = false;
+                        d3.detail_sites.forEach(function(d1)
+                        {
+                            d1.selected = false;
+                            $scope.topic1.siteLists.forEach(function(d2){
+                                if(d2.siteId == d1.siteId)
+                                {
+                                    d1.selected = true;
+                                }
+                            });
+                        });
+                        update(d3);//将d3更新,这样返回mymodel的时候,某个模板对应的所有站点就被选中了
+                    });
+        
         };
+        // 将mymodel1返回的topic对象与对应的allsite应用到mymodel界面
+        $scope.usemodel = function()
+        {
+            $("#myModal1").modal('hide');
+            $("#myModal").modal('show');
+            $scope.modelName = "添加话题2"
+            $('#myModal').css({'overflow-y':'scroll'});
+            // console.log("hhh");
+            $scope.topic=$scope.topic1;
+            $scope.allsites=$scope.allsites1;
+        }
         $scope.onDragComplete = function($data,$event)
         {
 
@@ -686,7 +863,7 @@ CQ.mainApp.systemsettingController
             ngDialog.open(
             {
                 template: '/static/modules/systemsetting/pages/deleteMyTopic.html',
-                controller: 'deleteMyTopic',
+                controller: 'deleteMyTopic_user',
                 width:"10%",
                 scope:$scope
             });
@@ -697,7 +874,9 @@ CQ.mainApp.systemsettingController
         //修改、添加话题
         $scope.save = function()
         {
-            console.log($scope.topic);
+
+            //$scope.topic中存储的是我们选择的模板对象,具有站点\名称\id等等属性!
+            // console.log($scope.topic);
             $scope.jsonData = {};
             $scope.jsonData.userId = $scope.userId;
             // if($scope.topic.topicId)
@@ -710,15 +889,19 @@ CQ.mainApp.systemsettingController
             {
                 $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
             }
-            console.log($scope.topic.topicKeywords);
+            // console.log($scope.topic.topicKeywords);
             $scope.jsonData.sites = $scope.topic.siteLists;
             $scope.jsonData = JSON.stringify($scope.jsonData);
-            console.log($scope.jsonData);
+            // console.log($scope.jsonData);
+            //该json数据中有:
+            //{"userId":1,"topicName":"dsadasdsadffasda","topicKeywords":[["dsadsa"]],"sites":[{"siteId":4,"siteName":"腾讯教育"},{"siteId":501,"siteName":"百度搜一搜"}]}
             $http({
                 url: $scope.submitUrl,
                 method: 'post',
                 data: $scope.jsonData,
             }).success(function(data, status, headers, config){
+                // console.log("LZPP");
+                // console.log($scope.jsonData);
                 if(data.success == false) {
                     //alert("操作失败!即将为您跳转...");
                     notice.notify_info("您好！", "操作失败，请重试！" ,"",false,"","");
@@ -731,7 +914,8 @@ CQ.mainApp.systemsettingController
                         $scope.topic.topicId = data.data.topic_id;
                         console.log($scope.topic);
                     }
-                    $scope.reload($scope.topic,"save");
+                    $scope.reload($scope.topic,"save");  //可以使添加的模板直接显示出来
+                    $("#myModal").modal('hide');
                 }
                 // setTimeout(function(){
                 //     window.location.reload("index.html#/userSetting");
@@ -739,7 +923,7 @@ CQ.mainApp.systemsettingController
             })
             .error(function(){
                 //alert("未知的错误!即将为您跳转...");
-                notice.notify_info("您好！", "服务器出错！！" ,"",false,"","");
+                notice.notify_info("您好！", "已存在该模板！！" ,"",false,"","");
             });
         }
         $scope.openBatchPage = function()
@@ -783,6 +967,7 @@ CQ.mainApp.systemsettingController
         //添加话题
         $scope.newTopic = function()
         {
+            console.log($scope.allsites);
             $scope.modelName = "添加话题";
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
@@ -799,15 +984,51 @@ CQ.mainApp.systemsettingController
             $scope.modellist=[];
             $scope.usedmodel="nomodel";
             $scope.baseUrl = CQ.variable.RESTFUL_URL ;
-                var url = $scope.baseUrl+"/settopic";
+               
+        }
+        $scope.usemodels = function()
+        {
+            //$("#myModal").modal('hide');
+            //$('#myModal1').modal('show');
+            document.getElementById("type2").style.display="none";
+            document.getElementById("type3").style.display="none";
+            $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
+            $scope.topic.topicKeywords.push([]);
+            $scope.allsites.forEach(function(d1)
+            {
+                d1.selected = false;
+                d1.detail_sites.forEach(function(d){
+                    d.selected = false;
+                });
+            });
+            // console.log($scope.allsites);
+
+            $scope.topicNameEnable = false;
+            $scope.submitUrl  = $scope.baseUrl + "/addtopic";
+            $scope.modellist=[];
+            $scope.usedmodel="nomodel";
+            $scope.baseUrl = CQ.variable.RESTFUL_URL ;
+                // var url = $scope.baseUrl+"/template_show";
+                // var url = $scope.baseUrl+"/settopic";
                 //?userId=" + $scope.userId;
                 // var url = "/static/setup.json";
-                $http.get(url).success(function(data){
-                    console.log(data);
-                    data.data.topicData.forEach(function(d){
-                         $scope.modellist.push(d.topicName);
-                    });
-                });
+
+                // $http({
+                //     params: {exam_type : $scope.topic1.type1,exam_period:$scope.topic1.type2},
+                //     //url:"http://118.190.133.203:8100/yqdata/deletetopic",
+                //     url: url,
+                //     method: 'get',
+                // })
+
+                // $http.get(url).success(function(data){
+                //     console.log(data);
+                //     data.data.topicData.forEach(function(d){
+                //          $scope.modellist.push(d.topicName);
+                //     });
+                // });
+            $scope.allsites1=$scope.allsites;
+            $scope.topic1=$scope.topic;
+
         }
         //选择站点
         $scope.checkBoxChange = function(d,typesite)
@@ -864,6 +1085,25 @@ CQ.mainApp.systemsettingController
                 $scope.topicCount++;
                 return true;
             }
+            else if(opretion == "save" && $scope.modelName == "添加话题2")
+            {
+                $("#myModal").modal('hide');
+                d.siteLists = d.siteLists || [];
+                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
+                $scope.topicList.push(d);
+                $scope.pageData1.push(d);
+                if($scope.pageData1.length > $scope.pageSize)
+                {
+                    $scope.getDataByPage_1(++$scope.page);
+                }
+                else
+                {
+                    $scope.getDataByPage_1($scope.page);
+                }
+                $scope.topicCount++;
+                window.location.reload("index.html#/userSetting");
+                return true;
+            }
             else if(opretion == "save" && $scope.modelName == "修改话题")
             {
                 d.siteLists = d.siteLists || [];
@@ -894,6 +1134,28 @@ CQ.mainApp.systemsettingController
             }
             return false;
         }
+        $scope.getDataByPage_1 = function(page)
+        {
+            $scope.maxPage = $scope.maxPage || 0;
+            $scope.page = $scope.page || 0;
+            if(page >= 0 && page<= $scope.maxPage)
+            {
+                $scope.page = page;
+            }
+            $scope.pageSize = 5.0;
+            $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
+            // $scope.pageData1 = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
+                for(var i=0;i<$scope.pageData1.length;i++)
+            {
+                if(i==$scope.pageData1.length-1||
+                    $scope.pageData1[i].username!=$scope.pageData1[i+1].username)
+                {
+                    $scope.pageData1[0].rowspan=i+1;
+                    break;
+                }
+
+            }
+        };
         //分页
         $scope.getDataByPage = function(page)
         {
@@ -906,13 +1168,23 @@ CQ.mainApp.systemsettingController
             $scope.pageSize = 5.0;
             $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
             $scope.pageData = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
+                for(var i=0;i<$scope.pageData.length;i++)
+            {
+                if(i==$scope.pageData.length-1||
+                    $scope.pageData[i].username!=$scope.pageData[i+1].username)
+                {
+                    $scope.pageData[0].rowspan=i+1;
+                    break;
+                }
+
+            }
         };
         //修改话题
         $scope.changeTopic = function(d)
         {
             console.log(d);
             $scope.modelName = "修改话题";
-            $scope.topicNameEnable = true;
+            $scope.topicNameEnable = false;
             $scope.topic = JSON.parse(JSON.stringify(d)) || {};
             for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
             {
