@@ -223,12 +223,23 @@ CQ.mainApp.dashboardController
             }
         }
         data1.sort(compare('count'));
+        var color = d3.scale.category10();
         for(var i=0;i<data1.length;i++){
-          if(i<7) data1[i].color="#FFB3FF";
-          else if(i<14) data1[i].color="#FF77FF";
-          else if(i<21) data1[i].color="#FF3EFF";
-          else if(i<28) data1[i].color="#CC00CC";
-          else data1[i].color="#770077";
+          // if(i<7) data1[i].color="#FFB3FF";
+          // else if(i<14) data1[i].color="#FF77FF";
+          // else if(i<21) data1[i].color="#FF3EFF";
+          // else if(i<28) data1[i].color="#CC00CC";
+          // else data1[i].color="#770077";
+          if(i<3) data1[i].color=color(0);
+          else if(i<7) data1[i].color=color(1);
+          else if(i<10) data1[i].color=color(2);
+          else if(i<14) data1[i].color=color(3);
+          else if(i<17) data1[i].color=color(4);
+          else if(i<20) data1[i].color=color(5);
+          else if(i<24) data1[i].color=color(6);
+          else if(i<27) data1[i].color=color(7);
+          else if(i<30) data1[i].color=color(8);
+          else data1[i].color=color(9);
         }
          
         for(var i=0;i<data1.length;i++){
@@ -239,12 +250,18 @@ CQ.mainApp.dashboardController
         for(var i=0;i<data.length;i++){
           var Cenpoint = new BMap.Point(data[i].center.split(",")[0],data[i].center.split(",")[1])
           var marker = new BMap.Marker(Cenpoint);
-          marker.enableMassClear();
-          var label = new BMap.Label(data[i].name,{offset:new BMap.Size(0,-35),border:"0px"});
+          // marker.enableMassClear();
+          var label = new BMap.Label(data[i].name,{offset:new BMap.Size(-10,-20)});
+          label.setStyle({padding:"0px",border:"0px",fontWeight:"bold",fontSize:"20px"});
           marker.setLabel(label);
+          marker.setTop();
+          // var label = new BMap.Label(data[i].name,{offset:new BMap.Size(0,-35),border:"0px solid #BC3B3A",
+          //   backgroundColor:"#EE5D5B",color:"red",height:"18px",padding:"2px",lineHeight:"18px",whiteSpace:"nowrap",fontSize:"12px",top:"22px",left:"10px",position:"absolute"});
+          // marker.setLabel(label);
           marker.addEventListener("mouseover",function (e){
+
             p=e.target;
-            console.log(p.getLabel().content);
+            console.log(p);
             // $.getJSON("/static/assets/data/map/city.json", function (data){
             //     $.each(data, function (infoIndex, info){
             //       if(pro==info["province"]){
@@ -254,7 +271,19 @@ CQ.mainApp.dashboardController
             //         map.addOverlay(myCompOverlay);
             //       }
             //     }) 
-            // })   
+            // })
+            var opts = {    
+              width : 0,     // 信息窗口宽度    
+              height: 0,     // 信息窗口高度    
+              title : "省名"  // 信息窗口标题   
+            }    
+            var infoWindow = new BMap.InfoWindow(p.getLabel().content, opts);  // 创建信息窗口对象    
+            map.openInfoWindow(infoWindow, p.getPosition());      // 打开信息窗口   
+          });
+          marker.addEventListener("mouseout",function (e){
+            console.log("11");
+            p=e.target;
+            p.closeInfoWindow();    // 关闭信息窗口   
           });
           map.addOverlay(marker);
           // var opts = {
