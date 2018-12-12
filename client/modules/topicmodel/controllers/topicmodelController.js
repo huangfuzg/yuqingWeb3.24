@@ -423,7 +423,7 @@ CQ.mainApp.topicmodelController
         //修改、添加话题
         $scope.save = function()
         {
-            console.log($scope.topic);
+            console.log($scope.topic.topicId);
             $scope.jsonData = {};
             $scope.jsonData.userId = $scope.userId;
             // if($scope.topic.topicId)
@@ -437,12 +437,12 @@ CQ.mainApp.topicmodelController
             {
                 $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
             }
-            console.log($scope.topic.topicKeywords);
+            // console.log($scope.topic.topicKeywords);
             $scope.jsonData.sites = $scope.topic.siteLists;
             $scope.jsonData.exam_type=$scope.topic.exam_type;
             $scope.jsonData.exam_period=$scope.topic.exam_period;
             $scope.jsonData = JSON.stringify($scope.jsonData);
-            console.log($scope.jsonData);
+            // console.log($scope.jsonData);
             $http({
                 url: $scope.submitUrl,
                 method: 'post',
@@ -456,8 +456,8 @@ CQ.mainApp.topicmodelController
                     notice.notify_info("您好！", "话题操作成功！" ,"",false,"","");
                     if(!!data.data)
                     {
-                        $scope.topic.topicId = data.data.topic_id;
-                        console.log($scope.topic);
+                        $scope.topic.topicId = data.data;
+                        // console.log($scope.topic);
                     }
                     $scope.reload_for_model($scope.topic,"save");
                 }
@@ -607,12 +607,15 @@ CQ.mainApp.topicmodelController
                 $scope.modelCount++;
                 return true;
             }
-            else if(opretion == "save" && $scope.modelName == "修改话题")
+            else if(opretion == "save" && $scope.modelName == "修改模板")
             {
+                console.log("老子进来了1")
                 if((d.exam_type==$scope.exam_type&&d.exam_period==$scope.exam_period)||
                     ($scope.exam_type==-1&&$scope.exam_period==-1)||
                     (d.exam_type==$scope.exam_type&&$scope.exam_period==-1))
                 {
+                                    console.log("老子进来了2")
+
                     if(d.exam_type == 0) d.exam_type="高考";
                     else if(d.exam_type == 1) d.exam_type="成考";
                     else d.exam_type="研考";
@@ -621,10 +624,13 @@ CQ.mainApp.topicmodelController
                     else d.exam_period="之后";
                     d.siteLists = d.siteLists || [];
                     d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
-                    for(var i = 1; i < $scope.topicList.length; i++)
+                    for(var i = 0; i < $scope.topicList.length; i++)
                     {
-                        if($scope.topicList[i].topicName == d.topicName)
+                        console.log($scope.topicList[i].topicId,d.topicId)
+                        if($scope.topicList[i].topicId == d.topicId)
                         {
+                                                                console.log("老子进来了3")
+
                            $scope.topicList[i] = d;
                            $scope.pageData[i%$scope.pageSize] = d;
                            return true;
@@ -683,8 +689,8 @@ CQ.mainApp.topicmodelController
             if(d.exam_period == "之前") dd.exam_period=0;
             else if(d.exam_period == "期间") dd.exam_period=1;
             else dd.exam_period=2;
-            $scope.modelName = "修改话题";
-            $scope.topicNameEnable = true;
+            $scope.modelName = "修改模板";
+            $scope.topicNameEnable = false;
             $scope.topic = JSON.parse(JSON.stringify(dd)) || {};
             console.log($scope.topic);
             for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
