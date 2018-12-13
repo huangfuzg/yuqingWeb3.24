@@ -11,7 +11,7 @@ CQ.mainApp.systemsettingController
                 $scope.userId = 1;
                 var url1 = $scope.baseUrl+"/adminmanagetopic";
                 //var url1 = "http://118.190.133.203:8100/yqdata/adminmanagetopic";
-                print(123)
+
                 var sites = "";
                 $scope.page = 0;
                 $http.get(url1).success(function(data){
@@ -428,7 +428,7 @@ CQ.mainApp.systemsettingController
                 d.sitesStr += d.siteLists[i].siteName;
                 for(var i = 0; i < $scope.topicList.length; i++)
                 {
-                    if($scope.topicList[i].topicName == d.topicName)
+                    if($scope.topicList[i].topicId == d.topicId)
                     {
                        $scope.topicList[i] = d;
                        $scope.pageData[i%$scope.pageSize] = d;
@@ -690,7 +690,7 @@ CQ.mainApp.systemsettingController
                 {
                     $scope.type11 = 1
                 }
-                else if ($scope.topic1.type1 == "成考")
+                else if ($scope.topic1.type1 == "研考")
                 {
                     $scope.type11 = 2
                 } 
@@ -876,12 +876,16 @@ CQ.mainApp.systemsettingController
         {
 
             //$scope.topic中存储的是我们选择的模板对象,具有站点\名称\id等等属性!
-            // console.log($scope.topic);
+            console.log($scope.topic);
             $scope.jsonData = {};
             $scope.jsonData.userId = $scope.userId;
+            $scope.jsonData.topicId = $scope.topic.topicId
+
             // if($scope.topic.topicId)
             //     $scope.jsonData.topicId = $scope.topic.topicId;
             $scope.jsonData.topicName = $scope.topic.topicName;
+            // console.log($scope.topic.topicName)
+            // console.log($scope.topic.siteLists)
             // $scope.topic.topicKeywords._and = $scope.topic.topicKeywords.and.toString().split(',');
             // $scope.topic.topicKeywords._or = $scope.topic.topicKeywords.or.toString().split(',');
             $scope.jsonData.topicKeywords = $scope.topic.topicKeywords;
@@ -889,10 +893,10 @@ CQ.mainApp.systemsettingController
             {
                 $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
             }
-            // console.log($scope.topic.topicKeywords);
+            // console.log($scope.topic.topicId);
             $scope.jsonData.sites = $scope.topic.siteLists;
             $scope.jsonData = JSON.stringify($scope.jsonData);
-            // console.log($scope.jsonData);
+            console.log($scope.jsonData);
             //该json数据中有:
             //{"userId":1,"topicName":"dsadasdsadffasda","topicKeywords":[["dsadsa"]],"sites":[{"siteId":4,"siteName":"腾讯教育"},{"siteId":501,"siteName":"百度搜一搜"}]}
             $http({
@@ -918,7 +922,7 @@ CQ.mainApp.systemsettingController
                     $("#myModal").modal('hide');
                 }
                 // setTimeout(function(){
-                //     window.location.reload("index.html#/userSetting");
+                // window.location.reload("index.html#/userSetting");
                 // },2000);
             })
             .error(function(){
@@ -1085,32 +1089,14 @@ CQ.mainApp.systemsettingController
                 $scope.topicCount++;
                 return true;
             }
-            else if(opretion == "save" && $scope.modelName == "添加话题2")
-            {
-                $("#myModal").modal('hide');
-                d.siteLists = d.siteLists || [];
-                d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
-                $scope.topicList.push(d);
-                $scope.pageData1.push(d);
-                if($scope.pageData1.length > $scope.pageSize)
-                {
-                    $scope.getDataByPage_1(++$scope.page);
-                }
-                else
-                {
-                    $scope.getDataByPage_1($scope.page);
-                }
-                $scope.topicCount++;
-                window.location.reload("index.html#/userSetting");
-                return true;
-            }
+
             else if(opretion == "save" && $scope.modelName == "修改话题")
             {
                 d.siteLists = d.siteLists || [];
                 d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
                 for(var i = 0; i < $scope.topicList.length; i++)
                 {
-                    if($scope.topicList[i].topicName == d.topicName)
+                    if($scope.topicList[i].topicId == d.topicId)
                     {
                        $scope.topicList[i] = d;
                        $scope.pageData[i%$scope.pageSize] = d;
@@ -1182,10 +1168,11 @@ CQ.mainApp.systemsettingController
         //修改话题
         $scope.changeTopic = function(d)
         {
-            console.log(d);
             $scope.modelName = "修改话题";
             $scope.topicNameEnable = false;
             $scope.topic = JSON.parse(JSON.stringify(d)) || {};
+            console.log($scope.topic.topicName);
+
             for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
             {
                 $scope.topic.topicKeywords[i].str = $scope.topic.topicKeywords[i].toString();
@@ -1193,9 +1180,11 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic);
                     // console.log(new d.constructor());
                     $scope.submitUrl = $scope.baseUrl + "/modifytopic";
-                    // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
+                    // $scope.submitUrl = "http://118.190.133.203:8001/yqdata/modifytopic";
+                                        // $scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
+
                     $scope.allsites.forEach(function(d3){
-                        console.log(d3);
+                        // console.log(d3);
                         d3.selected = false;
                         d3.detail_sites.forEach(function(d1)
                         {
