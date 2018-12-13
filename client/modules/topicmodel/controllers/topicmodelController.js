@@ -426,6 +426,8 @@ CQ.mainApp.topicmodelController
             console.log($scope.topic.topicId);
             $scope.jsonData = {};
             $scope.jsonData.userId = $scope.userId;
+            $scope.jsonData.topicId = $scope.topic.topicId
+
             // if($scope.topic.topicId)
             //     $scope.jsonData.topicId = $scope.topic.topicId;
             $scope.jsonData.topicName = $scope.topic.topicName;
@@ -438,11 +440,14 @@ CQ.mainApp.topicmodelController
                 $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
             }
             // console.log($scope.topic.topicKeywords);
+            console.log($scope.topic.topicId);
+
             $scope.jsonData.sites = $scope.topic.siteLists;
             $scope.jsonData.exam_type=$scope.topic.exam_type;
             $scope.jsonData.exam_period=$scope.topic.exam_period;
+            $scope.jsonData.topicId = $scope.topic.topicId
             $scope.jsonData = JSON.stringify($scope.jsonData);
-            // console.log($scope.jsonData);
+            console.log($scope.jsonData);
             $http({
                 url: $scope.submitUrl,
                 method: 'post',
@@ -700,7 +705,8 @@ CQ.mainApp.topicmodelController
             console.log($scope.topic);
                     // console.log(new d.constructor());
                     $scope.submitUrl = $scope.baseUrl + "/template_modify";
-                    //$scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
+                    // $scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
+                    // $scope.submitUrl = "http://118.190.30.115:8001/yqdata/template_modify";
                     $scope.allsites.forEach(function(d3){
                         console.log(d3);
                         d3.selected = false;

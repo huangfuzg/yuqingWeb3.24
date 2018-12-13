@@ -879,6 +879,8 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic);
             $scope.jsonData = {};
             $scope.jsonData.userId = $scope.userId;
+            $scope.jsonData.topicId = $scope.topic.topicId
+
             // if($scope.topic.topicId)
             //     $scope.jsonData.topicId = $scope.topic.topicId;
             $scope.jsonData.topicName = $scope.topic.topicName;
@@ -891,7 +893,7 @@ CQ.mainApp.systemsettingController
             {
                 $scope.topic.topicKeywords[i] = $scope.topic.topicKeywords[i].str.split(',');
             }
-            // console.log($scope.topic.topicKeywords);
+            // console.log($scope.topic.topicId);
             $scope.jsonData.sites = $scope.topic.siteLists;
             $scope.jsonData = JSON.stringify($scope.jsonData);
             console.log($scope.jsonData);
@@ -1166,12 +1168,10 @@ CQ.mainApp.systemsettingController
         //修改话题
         $scope.changeTopic = function(d)
         {
-            console.log("王伟帆");
             $scope.modelName = "修改话题";
             $scope.topicNameEnable = false;
             $scope.topic = JSON.parse(JSON.stringify(d)) || {};
             console.log($scope.topic.topicName);
-            console.log("王伟帆");
 
             for(var i = 0; i < $scope.topic.topicKeywords.length; i++)
             {
@@ -1180,7 +1180,9 @@ CQ.mainApp.systemsettingController
             console.log($scope.topic);
                     // console.log(new d.constructor());
                     $scope.submitUrl = $scope.baseUrl + "/modifytopic";
-                    // $scope.submitUrl = "http://118.190.133.203:8100/yqdata/modifytopic";
+                    // $scope.submitUrl = "http://118.190.133.203:8001/yqdata/modifytopic";
+                                        // $scope.submitUrl = "http://118.190.133.203:8001/yqdata/template_modify";
+
                     $scope.allsites.forEach(function(d3){
                         // console.log(d3);
                         d3.selected = false;
