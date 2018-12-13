@@ -149,7 +149,7 @@
                         <!-- begin vertical-box-column -->
                         <div class="vertical-box-column">
                             <div class="wrapper">
-                                <<!-- a href="#myModal1" style="float:right;margin:5px 5px 5px" class="btn btn-sm btn-primary" ng-click="usemodels()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 使用已有模板创建话题 </a> -->
+                                <!-- a href="#myModal1" style="float:right;margin:5px 5px 5px" class="btn btn-sm btn-primary" ng-click="usemodels()" data-toggle="modal" data-backdrop="false"><i class="fa fa-plus m-r-5"></i> 使用已有模板创建话题 </a> -->
                                     <div class="p-30 bg-white">
                                     <!-- begin email form -->
                                     <form method="POST" name="topicForm" ng-submit="save()" novalidate="false">
@@ -182,7 +182,7 @@
                                                 </div>
                                                 <div class="f-s-20" style="display: inline-block; width: 14%; vertical-align: middle;">
                                                     <i class="btn btn-xs fa fa-plus-circle text-success" ng-click="addAndKeywords()" title="添加关键词组"></i>
-                                                    <i class="btn btn-xs fa fa-minus-circle text-danger" ng-click="delAndKeywords(i)" ng-show="topic1.topicKeywords.length>1" title="删除关键词组"></i>
+                                                    <i class="btn btn-xs fa fa-minus-circle text-danger" ng-click="delAndKeywords(i)" ng-show="topic.topicKeywords.length>1" title="删除关键词组"></i>
                                                     <span class="btn btn-xs text-info fa fa-adn" ng-click="openBatchPage()" title="添加关键词组合">
                                                     </span>
                                                 </div>
@@ -244,6 +244,9 @@
                                         </div>
                                         <!-- end email content -->
                                         <button type="submit" class="btn btn-primary p-l-40 p-r-40" ng-disabled="topicForm.topicname.$invalid||topicForm.keywords.$invalid">提交</button>
+                                        <a class="btn btn-primary p-l-40 p-r-40" ng-click="newTopic()" data-toggle="modal" data-backdrop="false">重置</a>
+                                        <!-- <a href="#" class="btn btn-sm btn-primary" ng-click="reset()" data-toggle="modal" data-backdrop="false">重置</a> -->
+
                                     </form>
                                     <!-- end email form -->
                                 </div>
