@@ -804,6 +804,7 @@ CQ.mainApp.systemsettingController
             // console.log("hhh");
             $scope.topic=$scope.topic1;
             $scope.allsites=$scope.allsites1;
+            $scope.topic1.type1 = ''
         }
         $scope.onDragComplete = function($data,$event)
         {
