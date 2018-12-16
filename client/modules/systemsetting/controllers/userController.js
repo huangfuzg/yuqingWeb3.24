@@ -736,11 +736,13 @@ CQ.mainApp.systemsettingController
                         });
                         d.sitesStr = sites;
                     });
-                    $scope.topicList = data.data.topicData;
-                    // console.log($scope.topicList);
+                    //$scope.topicList = data.data.topicData;
+                    //console.log($scope.topicList);
                     // $scope.topicCount1 = $scope.topicList.length;
-                    // $scope.allsites = data.data.allSites;
-                    $scope.pageData1 = $scope.topicList
+                    // $scope.allsites = data.data.allSites;\
+                    $scope.pageData1 = JSON.parse(JSON.stringify(data.data.topicData)) || {};
+                    //$scope.pageData1 = data.data.topicData;
+                    console.log($scope.pageData1);
                 })
                 .error(function(){
                 //alert("未知的错误!即将为您跳转...");
@@ -757,9 +759,9 @@ CQ.mainApp.systemsettingController
             var type11=$scope.topic1.type1;
             var type22=$scope.topic1.type2;
 
-
+            console.log($scope.topicList);
             // console.log($scope.usedmodel);
-            $scope.topicList.forEach(function(d){
+            $scope.pageData1.forEach(function(d){
                 if(d.topicName==$scope.usedmodel){  //如果模板库中有和返回的usemodel相同的名称
                     $scope.topic1 = JSON.parse(JSON.stringify(d)) || {};
                     // 提取某一模板的关键字
@@ -770,6 +772,7 @@ CQ.mainApp.systemsettingController
                     }
                 }
             });
+            console.log($scope.topic1);
             $scope.topic1.type1=type11;
             $scope.topic1.type2=type22;
             // 这部分其实就是为了将选定模板对应的所有爬取网站选中
@@ -1030,8 +1033,12 @@ CQ.mainApp.systemsettingController
                 //          $scope.modellist.push(d.topicName);
                 //     });
                 // });
-            $scope.allsites1=$scope.allsites;
-            $scope.topic1=$scope.topic;
+            //$scope.allsites1=$scope.allsites;
+            //$scope.topic1=$scope.topic;
+            // $scope.topic1 = JSON.parse(JSON.stringify($scope.topic)) || {};
+            // console.log($scope.topic);
+            // console.log($scope.topic1);
+            $scope.allsites1 = JSON.parse(JSON.stringify($scope.allsites)) || {};
 
         }
         //选择站点
@@ -1071,7 +1078,7 @@ CQ.mainApp.systemsettingController
         //刷新
         $scope.reload = function(d,opretion)
         {
-            if(opretion == "save" && $scope.modelName == "添加话题")
+            if(opretion == "save" && ($scope.modelName == "添加话题"||$scope.modelName == "添加话题2"))
             {
                 d.siteLists = d.siteLists || [];
                 d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
@@ -1087,6 +1094,8 @@ CQ.mainApp.systemsettingController
                 }
                 $("#myModal").modal('hide');
                 $scope.topicCount++;
+                console.log($scope.topicList);
+                console.log($scope.pageData);
                 return true;
             }
 
@@ -1154,7 +1163,7 @@ CQ.mainApp.systemsettingController
             $scope.pageSize = 5.0;
             $scope.maxPage = Math.ceil($scope.topicList.length/$scope.pageSize) - 1;
             $scope.pageData = $scope.topicList.slice($scope.pageSize * $scope.page, $scope.pageSize * ($scope.page + 1));
-                for(var i=0;i<$scope.pageData.length;i++)
+            for(var i=0;i<$scope.pageData.length;i++)
             {
                 if(i==$scope.pageData.length-1||
                     $scope.pageData[i].username!=$scope.pageData[i+1].username)
@@ -1164,6 +1173,7 @@ CQ.mainApp.systemsettingController
                 }
 
             }
+            console.log($scope.pageData);
         };
         //修改话题
         $scope.changeTopic = function(d)
