@@ -799,7 +799,7 @@ CQ.mainApp.systemsettingController
         {
             $("#myModal1").modal('hide');
             $("#myModal").modal('show');
-            $scope.modelName = "添加话题2"
+            $scope.modelName = "添加话题"
             $('#myModal').css({'overflow-y':'scroll'});
             // console.log("hhh");
             $scope.topic=$scope.topic1;
@@ -1080,7 +1080,7 @@ CQ.mainApp.systemsettingController
         //刷新
         $scope.reload = function(d,opretion)
         {
-            if(opretion == "save" && ($scope.modelName == "添加话题"||$scope.modelName == "添加话题2"))
+            if(opretion == "save" && ($scope.modelName == "添加话题"))
             {
                 d.siteLists = d.siteLists || [];
                 d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
