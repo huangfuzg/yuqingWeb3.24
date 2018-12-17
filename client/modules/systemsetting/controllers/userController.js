@@ -998,6 +998,7 @@ CQ.mainApp.systemsettingController
         {
             //$("#myModal").modal('hide');
             //$('#myModal1').modal('show');
+            $scope.topic1.type1 = ''
             document.getElementById("type2").style.display="none";
             document.getElementById("type3").style.display="none";
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
