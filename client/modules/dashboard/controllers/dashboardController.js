@@ -25,7 +25,7 @@ CQ.mainApp.dashboardController
                         textStyle: {
                             normal: {
                                 color: function () {
-                                    return 'rgba(' + [255,255,255,0.8
+                                    return 'rgba(' + [51,255,255,0.8
                                             // Math.round(Math.random() * 255),
                                             // Math.round(Math.random() * 255),
                                             // Math.round(Math.random() * 255)
@@ -38,91 +38,108 @@ CQ.mainApp.dashboardController
                             }
                         },
                           data: [
-                            {
+                           {
                                 name: 'Sam S Club',
                                 value: 10000,
                             }, {
                                 name: 'Macys',
                                 value: 6181
                             }
-                            // ,{
-                        //         name: 'Amy Schumer',
-                        //         value: 4386
-                        //     }, {
-                        //         name: 'Jurassic World',
-                        //         value: 4055
-                        //     }, {
-                        //         name: 'Charter Communications',
-                        //         value: 2467
-                        //     }, {
-                        //         name: 'Chick Fil A',
-                        //         value: 2244
-                        //     }, {
-                        //         name: 'Planet Fitness',
-                        //         value: 1898
-                        //     }, {
-                        //         name: 'Pitch Perfect',
-                        //         value: 1484
-                        //     }, {
-                        //         name: 'Express',
-                        //         value: 1112
-                        //     }, {
-                        //         name: 'Home',
-                        //         value: 965
-                        //     }, {
-                        //         name: 'Johnny Depp',
-                        //         value: 847
-                        //     }, {
-                        //         name: 'Lena Dunham',
-                        //         value: 582
-                        //     }, {
-                        //         name: 'Lewis Hamilton',
-                        //         value: 555
-                        //     }, {
-                        //         name: 'KXAN',
-                        //         value: 550
-                        //     }, {
-                        //         name: 'Mary Ellen Mark',
-                        //         value: 462
-                        //     }, {
-                        //         name: 'Farrah Abraham',
-                        //         value: 366
-                        //     }, {
-                        //         name: 'Rita Ora',
-                        //         value: 360
-                        //     }, {
-                        //         name: 'Serena Williams',
-                        //         value: 282
-                        //     }, {
-                        //         name: 'NCAA baseball tournament',
-                        //         value: 273
-                        //     }, {
-                        //         name: 'Point',
-                        //         value: 273
-                        //     }, {
-                        //         name: 'Point Break',
-                        //         value: 265
-                        //     }
-                        ]
+                          ]
                 }]  
             };
         //初始化整个地图
           var map = new BMap.Map("allmap");    // 创建Map实例
-          map.setMinZoom(6);
-          map.setMaxZoom(16);
+          
           //台湾
           //map.centerAndZoom(new BMap.Point(120.977318,23.720389), 11);  // 初始化地图,设置中心点坐标和地图级别
           //上海
           //map.centerAndZoom(new BMap.Point(121.487899,39.929986), 11);
           //北京
-          map.centerAndZoom(new BMap.Point(116.395645,39.929986), 11);
+          map.centerAndZoom(new BMap.Point(104.335373, 34.366872), 10);
           //添加地图类型控件
           map.addControl(new BMap.MapTypeControl({
             mapTypes:[
                     BMAP_NORMAL_MAP
                 ]}));   
 
-          map.enableScrollWheelZoom(true);   //开启鼠标滚轮缩放
+          //map.enableScrollWheelZoom(true);   //开启鼠标滚轮缩放
+
+          // 定义一个下拉列表
+          function ZoomControl(){
+            // 默认停靠位置和偏移量
+            this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+            this.defaultOffset = new BMap.Size(10, 10);
+          }
+
+          // 通过JavaScript的prototype属性继承于BMap.Control
+          ZoomControl.prototype = new BMap.Control();
+
+          // 自定义控件必须实现自己的initialize方法,并且将控件的DOM元素返回
+          // 在本方法中创建个div元素作为控件的容器,并将其添加到地图容器中
+          ZoomControl.prototype.initialize = function(map){
+            // 创建一个DOM元素
+            var select = document.createElement("select");
+            select.id="myselect";
+            // 添加文字说明
+            //div.appendChild(document.createTextNode("放大2级"));
+            // 设置样式
+            select.style.cursor = "pointer";
+            select.style.border = "1px solid gray";
+            select.style.backgroundColor = "white";
+            select.change=function(){
+              console.log("hhhhh");
+            }
+            var id=new Array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33);
+            var value=new Array("北京市","上海市","天津市","重庆市","黑龙江省","吉林省","辽宁省","内蒙古自治区","河北省","新疆维吾尔自治区","甘肃省",
+              "青海省","陕西省","宁夏回族自治区","河南省","山东省", "山西省","安徽省","湖南省","湖北省","江苏省","四川省","贵州省","云南省",
+              "广西壮族自治区","西藏自治区","浙江省","江西省","广东省","福建省","台湾省","海南省","香港特别行政区","澳门特别行政区");
+            //通过DOM树取得下拉列表框元素
+            select.length=1;//设置每次只能选择一个
+            var option=document.createElement("option");
+            option.setAttribute("value","");//设置option的属性值
+              //在option元素下增加文本节点
+            option.appendChild(document.createTextNode("中国"));
+            option.selected=true;
+            select.appendChild(option);
+            for(var x=0;x<id.length;x++){
+              //设置option中的内容,建立option节点
+              var option=document.createElement("option");
+              option.setAttribute("value",value[x]);//设置option的属性值
+              //在option元素下增加文本节点
+              option.appendChild(document.createTextNode(value[x]));
+              
+              //在select中增加option节点
+              select.appendChild(option);
+            }
+            
+            // select.options[0].selected=true;//设置第一个为默认选中
+              // 绑定事件,点击一次放大两级
+              // div.onclick = function(e){
+              //   map.setZoom(map.getZoom() + 2);
+              // }
+              // 添加DOM元素到地图中
+              map.getContainer().appendChild(select);
+              console.log(select);
+              // 将DOM元素返回
+              return select;
+          }
+
+          // 创建控件
+          var myZoomCtrl = new ZoomControl();
+          // 添加到地图当中
+          map.addControl(myZoomCtrl);
+          $("#myselect").change(function(){
+             var pro=$("#myselect").find("option:selected").text();
+             if(pro=="中国"){
+                map.clearOverlays();
+                heatmap();
+             }
+             else{
+              word_cloud(pro); 
+            }
+          });
+
 
 
           map.setMapStyle({
@@ -157,51 +174,241 @@ CQ.mainApp.dashboardController
                   }
           ]
           });
-          map.setMapStyle({style:'midnight'});
+        map.setMapStyle({style:'midnight'});
+        heatmap();
 
-        // 添加带有定位的导航控件
-            var navigationControl = new BMap.NavigationControl({
-              // 靠左上角位置
-              anchor: BMAP_ANCHOR_TOP_LEFT,
-              // LARGE类型
-              type: BMAP_NAVIGATION_CONTROL_LARGE,
-              // 启用显示定位
-              enableGeolocation: true
-            });
-            map.addControl(navigationControl);
-          // 添加定位控件
-          var geolocationControl = new BMap.GeolocationControl();
-          geolocationControl.addEventListener("locationSuccess", function(e){
-            // 定位成功事件
-              var address = '';
-              address += e.addressComponent.province;
-              address += e.addressComponent.city;
-              address += e.addressComponent.district;
-              address += e.addressComponent.street;
-              address += e.addressComponent.streetNumber;
-              alert("当前定位地址为：" + address);
-          });
-          geolocationControl.addEventListener("locationError",function(e){
-              // 定位失败事件
-              alert(e.message);
-          });
-          map.addControl(geolocationControl); 
-        //地图右键菜单
-          var menu = new BMap.ContextMenu();
-          var txtMenuItem = [
-            {
-              text:'放大',
-              callback:function(){map.zoomIn()}
-            },
-            {
-              text:'缩小',
-              callback:function(){map.zoomOut()}
+
+        function word_cloud(pro){
+          map.clearOverlays();
+          var boundary = new BMap.Boundary();
+          boundary.get(pro, function(rs){
+            var pointArray = [];
+            for (var j = 0; j < rs.boundaries.length; j++) {
+                var ply = new BMap.Polygon(rs.boundaries[j]); //建立多边形覆盖物
+                map.addOverlay(ply);  //添加覆盖物
+                pointArray = pointArray.concat(ply.getPath());
+                if(j==rs.boundaries.length-1) map.setViewport(pointArray);
             }
-          ];
-          for(var i=0; i < txtMenuItem.length; i++){
-            menu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
-          }
-          map.addContextMenu(menu);
+            
+            var czoom=7;
+            if(pro=="新疆维吾尔自治区"||pro=="西藏自治区"||pro=="黑龙江省"||pro=="青海省"||pro=="内蒙古自治区"||pro=="甘肃省"||pro=="西藏自治区"||pro=="海南省") czoom=7;
+            else if(pro=="辽宁省"||pro=="吉林省"||pro=="河北省"||pro=="陕西省"||pro=="宁夏回族自治区"||pro=="河南省"||pro=="山东省"||pro=="山西省"||pro=="安徽省"||pro=="湖南省"
+              ||pro=="湖北省"||pro=="江苏省"||pro=="四川省"||pro=="贵州省"||pro=="云南省"||pro=="广西壮族自治区"||pro=="浙江省"||pro=="江西省"||pro=="广东省") czoom=8;
+            else if(pro=="重庆市"||pro=="福建省"||pro=="台湾省") czoom=9;
+            else if(pro=="北京市"||pro=="上海市"||pro=="天津市") czoom=10;
+              $.getJSON("/static/assets/data/map/city.json", function (data){
+                $.each(data, function (infoIndex, info){
+                  if(pro==info["province"]){
+                    map.setZoom(czoom);
+                    option.series[0].data=info["keywords"];
+                    var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(info["lng"],info["lat"]),300,200);
+                    map.addOverlay(myCompOverlay);
+                  }
+                }) 
+              })    
+          });
+          
+        }
+
+    //热力图
+    function heatmap(){
+      map.centerAndZoom(new BMap.Point(104.335373, 34.366872), 6);
+      $.getJSON("/static/assets/data/map/heat1.json", function (data){
+        var data1=data;
+        function compare(property){
+            return function(a,b){
+                var value1 = a[property];
+                var value2 = b[property];
+                return value1 - value2;
+            }
+        }
+        data1.sort(compare('count'));
+        var color = d3.scale.category10();
+        for(var i=0;i<data1.length;i++){
+          // if(i<7) data1[i].color="#FFB3FF";
+          // else if(i<14) data1[i].color="#FF77FF";
+          // else if(i<21) data1[i].color="#FF3EFF";
+          // else if(i<28) data1[i].color="#CC00CC";
+          // else data1[i].color="#770077";
+          if(i<3) data1[i].color=color(0);
+          else if(i<7) data1[i].color=color(1);
+          else if(i<10) data1[i].color=color(2);
+          else if(i<14) data1[i].color=color(3);
+          else if(i<17) data1[i].color=color(4);
+          else if(i<20) data1[i].color=color(5);
+          else if(i<24) data1[i].color=color(6);
+          else if(i<27) data1[i].color=color(7);
+          else if(i<30) data1[i].color=color(8);
+          else data1[i].color=color(9);
+        }
+         
+        for(var i=0;i<data1.length;i++){
+          getBoundary(data1[i]);
+        }  
+      })
+      $.getJSON("/static/assets/data/map/province.json", function (data){
+        for(var i=0;i<data.length;i++){
+          var Cenpoint = new BMap.Point(data[i].center.split(",")[0],data[i].center.split(",")[1])
+          var marker = new BMap.Marker(Cenpoint);
+          // marker.enableMassClear();
+          var label = new BMap.Label(data[i].name,{offset:new BMap.Size(-10,-20)});
+          label.setStyle({padding:"0px",border:"0px",fontWeight:"bold",fontSize:"20px"});
+          marker.setLabel(label);
+          marker.setTop();
+          // var label = new BMap.Label(data[i].name,{offset:new BMap.Size(0,-35),border:"0px solid #BC3B3A",
+          //   backgroundColor:"#EE5D5B",color:"red",height:"18px",padding:"2px",lineHeight:"18px",whiteSpace:"nowrap",fontSize:"12px",top:"22px",left:"10px",position:"absolute"});
+          // marker.setLabel(label);
+          marker.addEventListener("mouseover",function (e){
+
+            p=e.target;
+            console.log(p);
+            // $.getJSON("/static/assets/data/map/city.json", function (data){
+            //     $.each(data, function (infoIndex, info){
+            //       if(pro==info["province"]){
+            //         map.setZoom(czoom);
+            //         option.series[0].data=info["keywords"];
+            //         var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(info["lng"],info["lat"]),300,200);
+            //         map.addOverlay(myCompOverlay);
+            //       }
+            //     }) 
+            // })
+            var opts = {    
+              width : 0,     // 信息窗口宽度    
+              height: 0,     // 信息窗口高度    
+              title : "省名"  // 信息窗口标题   
+            }    
+            var infoWindow = new BMap.InfoWindow(p.getLabel().content, opts);  // 创建信息窗口对象    
+            map.openInfoWindow(infoWindow, p.getPosition());      // 打开信息窗口   
+          });
+          marker.addEventListener("mouseout",function (e){
+            console.log("11");
+            p=e.target;
+            p.closeInfoWindow();    // 关闭信息窗口   
+          });
+          map.addOverlay(marker);
+          // var opts = {
+          //   position : Cenpoint,    // 指定文本标注所在的地理位置
+          //   offset   : new BMap.Size(0, -40)    //设置文本偏移量
+          // }
+          // var label = new BMap.Label(data[i].name, opts);  // 创建文本标注对象
+          // label.setStyle({
+          //      color : "red",
+          //      fontSize : "12px",
+          //      //height : "20px",
+          //      //lineHeight : "20px",
+          //      fontFamily:"微软雅黑",
+          //      border:"0px"
+          //  });
+          // map.addOverlay(label);  
+        }
+      })
+    }
+    function getBoundary(province) {
+        var boundary = new BMap.Boundary();
+        boundary.get(province["province"], function(rs){
+          var pointArray = [];
+          for (var j = 0; j < rs.boundaries.length; j++) {
+              var ply = new BMap.Polygon(rs.boundaries[j]); //建立多边形覆盖物
+              pointArray = pointArray.concat(ply.getPath());
+              ply.setFillColor(province.color);
+              ply.addEventListener("click", function (e) {
+
+                var latlng = e.point;
+                var info = new BMap.InfoWindow(province["province"],{width:0,height:0});
+                // map.openInfoWindow(info, latlng);
+                var value=province["province"];  
+                console.log(value);
+                //高亮闪烁显示鼠标点击的省
+                var delay = 0;
+                
+                for (var flashTimes = 0; flashTimes < 3; flashTimes++) {
+                    delay += 200;
+                    setTimeout(function () {
+                        ply.setFillColor("#FFFFFF");
+                    }, delay);
+
+                    delay += 200;
+                    setTimeout(function () {
+                        ply.setFillColor(province.color);
+                    }, delay);
+                                           
+                    
+                }
+                //setTimeout(word_cloud(value), 1500);
+                setTimeout(function(){
+                  word_cloud(value);
+                }, 1700);
+                //$("#myselect option[text="+value+"]").attr("selected", true);
+              });
+              map.addOverlay(ply);  //添加覆盖物
+            }
+            // var Cenpoint = new BMap.Point();
+            // Cenpoint=map.getViewport(pointArray)["center"];
+            // var marker = new BMap.Marker(Cenpoint);
+            //map.addOverlay(marker); 
+          });
+      }
+
+   //详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+    //参数说明如下:
+    /* visible 热力图是否显示,默认为true
+     * opacity 热力的透明度,1-100
+     * radius 势力图的每个点的半径大小   
+     * gradient  {JSON} 热力图的渐变区间 . gradient如下所示
+     *  {
+            .2:'rgb(0, 255, 255)',
+            .5:'rgb(0, 110, 255)',
+            .8:'rgb(100, 0, 255)'
+        }
+        其中 key 表示插值的位置, 0~1. 
+            value 为颜色值. 
+     */
+  //   map.addEventListener("click",function(e){
+  //   alert(e.point.lng + "," + e.point.lat);
+  // });
+        // // 添加带有定位的导航控件
+        //     var navigationControl = new BMap.NavigationControl({
+        //       // 靠左上角位置
+        //       anchor: BMAP_ANCHOR_TOP_LEFT,
+        //       // LARGE类型
+        //       type: BMAP_NAVIGATION_CONTROL_LARGE,
+        //       // 启用显示定位
+        //       enableGeolocation: true
+        //     });
+        //     map.addControl(navigationControl);
+        //   // 添加定位控件
+        //   var geolocationControl = new BMap.GeolocationControl();
+        //   geolocationControl.addEventListener("locationSuccess", function(e){
+        //     // 定位成功事件
+        //       var address = '';
+        //       address += e.addressComponent.province;
+        //       address += e.addressComponent.city;
+        //       address += e.addressComponent.district;
+        //       address += e.addressComponent.street;
+        //       address += e.addressComponent.streetNumber;
+        //       alert("当前定位地址为：" + address);
+        //   });
+        //   geolocationControl.addEventListener("locationError",function(e){
+        //       // 定位失败事件
+        //       alert(e.message);
+        //   });
+        //   map.addControl(geolocationControl); 
+        // //地图右键菜单
+        //   var menu = new BMap.ContextMenu();
+        //   var txtMenuItem = [
+        //     {
+        //       text:'放大',
+        //       callback:function(){map.zoomIn()}
+        //     },
+        //     {
+        //       text:'缩小',
+        //       callback:function(){map.zoomOut()}
+        //     }
+        //   ];
+        //   for(var i=0; i < txtMenuItem.length; i++){
+        //     menu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
+        //   }
+        //   map.addContextMenu(menu);
 
           // 复杂的自定义覆盖物
             function ComplexCustomOverlay(point,width,height){
@@ -239,154 +446,154 @@ CQ.mainApp.dashboardController
 
             // map.addOverlay(myCompOverlay);
 
-           var time=new Date();
+           //var time=new Date();
            
-          map.addEventListener("tilesloaded",function(e){
-            map.clearOverlays();
-            time = new Date();
-            var thistime=new Date();
-            console.log(time,thistime);
-            console.log(time.getTime() == thistime.getTime());
-            var data=null;
-            if(map.getZoom()<8){
-              data="country";
-            }
-            else if(8<=map.getZoom()&&map.getZoom()<12){
-              data="province";
-            }
-            else if(12<=map.getZoom()&&map.getZoom()<14){
-              data="city";
-            }
-            else{
-              data="district";
-            }
-            var counter=0;
-            var bs = map.getBounds();   //获取可视区域
-            var lng1=bs.getSouthWest().lng;
-            var lat2=bs.getSouthWest().lat;
-            var lng2=bs.getNorthEast().lng;
-            var lat1=bs.getNorthEast().lat;
-            var lat=lat1;
-            console.log(lng1,lng2,lat1,lat2);
-            var geoc = new BMap.Geocoder();
-            var result={};
-            for(var i=0;i<10;i++){
-              var lng=lng1;
-              for(var j=0;j<20;j++){
-                  var p=new BMap.Point(lng,lat);
-                  geoc.getLocation(p, function(rs){
-                    counter++;
-                    // console.log(counter);
-                    var addComp = rs.addressComponents;
-                    var address="";
-                    if(data=="country"){
+          // map.addEventListener("tilesloaded",function(e){
+          //   map.clearOverlays();
+          //   time = new Date();
+          //   var thistime=new Date();
+          //   console.log(time,thistime);
+          //   console.log(time.getTime() == thistime.getTime());
+          //   var data=null;
+          //   if(map.getZoom()<8){
+          //     data="country";
+          //   }
+          //   else if(8<=map.getZoom()&&map.getZoom()<12){
+          //     data="province";
+          //   }
+          //   else if(12<=map.getZoom()&&map.getZoom()<14){
+          //     data="city";
+          //   }
+          //   else{
+          //     data="district";
+          //   }
+          //   var counter=0;
+          //   var bs = map.getBounds();   //获取可视区域
+          //   var lng1=bs.getSouthWest().lng;
+          //   var lat2=bs.getSouthWest().lat;
+          //   var lng2=bs.getNorthEast().lng;
+          //   var lat1=bs.getNorthEast().lat;
+          //   var lat=lat1;
+          //   console.log(lng1,lng2,lat1,lat2);
+          //   var geoc = new BMap.Geocoder();
+          //   var result={};
+          //   for(var i=0;i<10;i++){
+          //     var lng=lng1;
+          //     for(var j=0;j<20;j++){
+          //         var p=new BMap.Point(lng,lat);
+          //         geoc.getLocation(p, function(rs){
+          //           counter++;
+          //           // console.log(counter);
+          //           var addComp = rs.addressComponents;
+          //           var address="";
+          //           if(data=="country"){
 
-                    }
-                    else if(data=="province"){
-                      address=address+addComp.province;
-                    }
-                    else if(data=="city"){
-                      address=address+addComp.province+addComp.city;
-                    }
-                    else{
-                      address=address+addComp.province+addComp.city+addComp.district;
-                    }
-                    if(address!=""){
-                      if(!result[address]){
-                                result[address]={
-                                  level:data,
-                                    number:1,
-                                    lng:1,
-                                    lat:1,
-                                    minwidth:rs.point.lng,
-                                    maxwidth:rs.point.lng,
-                                    minheight:rs.point.lat,
-                                    maxheight:rs.point.lat,
-                                    width:0,
-                                    height:0
-                                };
-                                if(data=="province"){
-                                    result[address].province=addComp.province;
-                                }
-                                if(data=="city"){
-                                    result[address].province=addComp.province;
-                                    result[address].city=addComp.city;
-                                }
-                                if(data=="district"){
-                                    result[address].province=addComp.province;
-                                    result[address].city=addComp.city;
-                                    result[address].district=addComp.district;
-                                }
-                                // var myGeo = new BMap.Geocoder();
-                                // myGeo.getPoint(address, function(point){
-                                //   result[address].lng=point.lng;
-                                //   result[address].lat=point.lat;
-                                // });
-                            }
-                      else{
-                        if(Math.abs(rs.point.lng-lng1)<Math.abs(result[address].minwidth-lng1)){
+          //           }
+          //           else if(data=="province"){
+          //             address=address+addComp.province;
+          //           }
+          //           else if(data=="city"){
+          //             address=address+addComp.province+addComp.city;
+          //           }
+          //           else{
+          //             address=address+addComp.province+addComp.city+addComp.district;
+          //           }
+          //           if(address!=""){
+          //             if(!result[address]){
+          //                       result[address]={
+          //                         level:data,
+          //                           number:1,
+          //                           lng:1,
+          //                           lat:1,
+          //                           minwidth:rs.point.lng,
+          //                           maxwidth:rs.point.lng,
+          //                           minheight:rs.point.lat,
+          //                           maxheight:rs.point.lat,
+          //                           width:0,
+          //                           height:0
+          //                       };
+          //                       if(data=="province"){
+          //                           result[address].province=addComp.province;
+          //                       }
+          //                       if(data=="city"){
+          //                           result[address].province=addComp.province;
+          //                           result[address].city=addComp.city;
+          //                       }
+          //                       if(data=="district"){
+          //                           result[address].province=addComp.province;
+          //                           result[address].city=addComp.city;
+          //                           result[address].district=addComp.district;
+          //                       }
+          //                       // var myGeo = new BMap.Geocoder();
+          //                       // myGeo.getPoint(address, function(point){
+          //                       //   result[address].lng=point.lng;
+          //                       //   result[address].lat=point.lat;
+          //                       // });
+          //                   }
+          //             else{
+          //               if(Math.abs(rs.point.lng-lng1)<Math.abs(result[address].minwidth-lng1)){
 
-                          result[address].minwidth=rs.point.lng;
-                        }
-                        if(Math.abs(rs.point.lng-lng1)>Math.abs(result[address].maxwidth-lng1)){
+          //                 result[address].minwidth=rs.point.lng;
+          //               }
+          //               if(Math.abs(rs.point.lng-lng1)>Math.abs(result[address].maxwidth-lng1)){
 
-                          result[address].maxwidth=rs.point.lng;
-                        }
-                        if(Math.abs(rs.point.lat-lat1)<Math.abs(result[address].minheight-lat1)){
+          //                 result[address].maxwidth=rs.point.lng;
+          //               }
+          //               if(Math.abs(rs.point.lat-lat1)<Math.abs(result[address].minheight-lat1)){
 
-                          result[address].minheight=rs.point.lat;
-                        }
-                        if(Math.abs(rs.point.lat-lat1)>Math.abs(result[address].maxheight-lat1)){
+          //                 result[address].minheight=rs.point.lat;
+          //               }
+          //               if(Math.abs(rs.point.lat-lat1)>Math.abs(result[address].maxheight-lat1)){
 
-                          result[address].maxheight=rs.point.lat;
-                        }
-                        result[address].number++;
-                        result[address].width=Math.abs((result[address].maxwidth-result[address].minwidth)/(lng2-lng1))*1920;
-                        result[address].height=Math.abs((result[address].maxheight-result[address].minheight)/(lat2-lat1))*949;
+          //                 result[address].maxheight=rs.point.lat;
+          //               }
+          //               result[address].number++;
+          //               result[address].width=Math.abs((result[address].maxwidth-result[address].minwidth)/(lng2-lng1))*1920;
+          //               result[address].height=Math.abs((result[address].maxheight-result[address].minheight)/(lat2-lat1))*949;
 
-                      }
-                    }
-                    if(counter==190){
+          //             }
+          //           }
+          //           if(counter==190){
                     
 
-                          for(var key in result){
-                            if(result[key].number<1){
-                              delete result[key];
-                            }
-                          }
-                          for(var key in result){
-                            result[key].lng=(result[key].maxwidth+result[key].minwidth)/2;
-                            result[key].lat=(result[key].maxheight+result[key].minheight)/2;
-                          }
-                          console.log(result);
-                          $.getJSON("/static/assets/data/map/"+data+".json", function (data){
-                            $.each(data, function (infoIndex, info){
-                              console.log(info);
-                              for(var key in result){
-                                if(key==info["place"]){
+          //                 for(var key in result){
+          //                   if(result[key].number<1){
+          //                     delete result[key];
+          //                   }
+          //                 }
+          //                 for(var key in result){
+          //                   result[key].lng=(result[key].maxwidth+result[key].minwidth)/2;
+          //                   result[key].lat=(result[key].maxheight+result[key].minheight)/2;
+          //                 }
+          //                 console.log(result);
+          //                 $.getJSON("/static/assets/data/map/"+data+".json", function (data){
+          //                   $.each(data, function (infoIndex, info){
+          //                     console.log(info);
+          //                     for(var key in result){
+          //                       if(key==info["place"]){
                                   
-                                  option.series[0].data=info["keywords"];
+          //                         option.series[0].data=info["keywords"];
                            
-                                  var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(result[key].lng,result[key].lat),result[key].width*0.4,result[key].height*0.4);
-                                  if(time.getTime() == thistime.getTime()){
-                                    map.addOverlay(myCompOverlay);
-                                  }
-                                }
-                              }
+          //                         var myCompOverlay = new ComplexCustomOverlay(new BMap.Point(result[key].lng,result[key].lat),result[key].width*0.4,result[key].height*0.4);
+          //                         if(time.getTime() == thistime.getTime()){
+          //                           map.addOverlay(myCompOverlay);
+          //                         }
+          //                       }
+          //                     }
                              
-                            }) 
-                          }) 
-                        }    
-                  });
-                lng=lng+(lng2-lng1)/20;
-              }
-              lat=lat+(lat2-lat1)/10;    
-            }
+          //                   }) 
+          //                 }) 
+          //               }    
+          //         });
+          //       lng=lng+(lng2-lng1)/20;
+          //     }
+          //     lat=lat+(lat2-lat1)/10;    
+          //   }
             
 
             
             
-          });
+          // });
             $scope.mapflag=false;
             var endTime = new Date()
             $scope.date = endTime.getFullYear()+'-'+(endTime.getMonth()+1)+'-'+endTime.getDate();

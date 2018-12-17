@@ -316,10 +316,19 @@ CQ.mainApp.zhishikuController
         },function(res){
             console.log(res);
         });
-
+        var usertype_state = 0;//0：未选取，1：重点，2：敏感，3：僵尸
         $scope.filterUser = function(usertype)
         {
-            $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+            if(usertype_state == usertype)
+            {
+                $scope.allPageData = $scope.alluser;
+                usertype_state = 0;
+            }
+            else
+            {
+                $scope.allPageData = $scope.alluser.filter(d=>d.user_type==usertype);
+                usertype_state = usertype;
+            }
             $scope.getTableData(1,$scope.allPageData);
         }
 
@@ -586,7 +595,7 @@ CQ.mainApp.zhishikuController
             function mouseover() { 
                 // console.log(d3.event); 
                 d3.select(this).select("text").text(function(d){
-                    $("#title").html("userid: "+d.user_id+"<br/>group: "+d.group);
+                    $("#title").html("userid: "+d.user_id+"<br/>社团: "+d.group+"<br/>关注: "+d.Following+"<br/>粉丝: "+d.Follows+"<br/>发帖: "+d.post_num);
                     // if(d.detail)
                     // {
                     //     $("#title").append("<br/>username: "+d.detail.user_name+"<br/>"+"content: "+d.detail.content.slice(0,50)+"...");
@@ -635,7 +644,7 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
-        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度帖吧":"/static/assets/img/baidu.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","Twitter":"/static/assets/img/twitter.svg"};
+        siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度贴吧":"/static/assets/img/tieba.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","推特":"/static/assets/img/twitter.svg","论坛":"/static/assets/img/luntan.svg"};
         //页面UI初始化；
         var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":"http://118.190.133.203:8899/yqdata/event_detail";
         $http({
@@ -760,7 +769,7 @@ CQ.mainApp.zhishikuController
                 return 1;
             });
             // console.log(datatypeDim);
-            var top5data = datatypeGroup.top(2).map(d=>d.key),
+            var top5data = datatypeGroup.top(Infinity).map(d=>d.key),
             datatypeDim1 = ndx.dimension(function (d) {
                 for(var i = 0; i < top5data.length; i++)
                 {

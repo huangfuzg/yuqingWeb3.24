@@ -1,0 +1,98 @@
+<style>
+    .align-center{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+    }
+    ul.subject{
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* justify-content: space-around; */    
+        justify-content: space-around;
+        width: 100%;
+        padding: 10px;
+    }
+    ul.subject>li{
+        border: 2px solid rgb(207, 219, 230);
+        width: 48%;
+        box-sizing: border-box;
+        margin: 0.5%;
+    }
+    .img-box{
+        position: relative;
+        cursor: pointer;
+        height:100%;
+    }
+    .img-shield{
+        position: absolute;
+        display: none;
+        left: 50%;
+        top: 50%;
+        /*z-index: 50;*/
+        background: rgba(31, 30, 30, 0.38);
+        width: 0;
+        height: 0;
+    }
+    .description{
+        display: flex;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        align-items: center;
+    }
+    .description>div{
+        width: 100%;
+        height:80px;
+        text-align: center;
+        background: rgba(12, 12, 12, 0.6);
+        color: white;
+        overflow: hidden;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center
+    }
+    .description>div>h3{
+        font-size:2.2em;
+        color: white;   
+    }
+    .breadcrumb>li+li:before {
+        padding: 0 5px;
+        color: #000;
+        content: ">>\00a0";
+    }
+</style>
+<div id="content" class="content" style="padding: 0">
+    <ol class="breadcrumb" style="margin-left: 20px;
+    margin-top: 10px;font-size:1.3em;">
+        <li><a href="javascript:void;">话题模板</a></li>
+        <!-- <li><a href="javascript:;">主题</a></li> -->
+        <li class="active">主题</li>
+    </ol>
+    <!-- end breadcrumb -->
+    <div class="align-center" style="">
+        <h2 class="text-center m-b-20" width="100%">模板主题</h2>
+        <ul id="subject" class="subject">
+            <li ng-repeat="subject in subjects">
+                <a ui-sref="topictime({subject:subject})">
+                    <div class="img-box">
+                        <img src={{subject.img}} style="width:100%;height:100%"/>
+                        <div class="img-shield"></div>
+                        <div class="description">
+                            <div>
+                                <h3>{{subject.name}}</h3>
+                                <p>{{subject.description}}</p>
+                                <p>点击查看详细分析</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

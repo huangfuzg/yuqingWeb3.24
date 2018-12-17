@@ -74,11 +74,12 @@ CQ.mainApp.topicController
                         d.imgs = imgs11;
                     }else if(d.topicId == 143) {
                         d.imgs = imgs12;
-                    }else if(d.topicId == 132) {
-                        d.imgs = imgsqiche;
-                    }else if(d.topicId == 133) {
-                        d.imgs = imgsyinlibo;
                     }
+                    // else if(d.topicId == 132) {
+                    //     d.imgs = imgsqiche;
+                    // }else if(d.topicId == 133) {
+                    //     d.imgs = imgsyinlibo;
+                    // }
                     //d.imgs = imgs;
                 });
                 $scope.data = res;

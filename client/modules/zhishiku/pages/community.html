@@ -102,17 +102,17 @@
 			                    <ul class="breadcrumb">
 			                        <li ng-if="items.Follows">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
-			                                关注：{{items.Follows}}
+			                                关注：{{items.Following}}
 			                            </a>
 			                        </li>
 			                        <li ng-if="items.Following">
 			                            <a title="查看详细博主信息" ui-sref="{{items.home_url}}">
-			                                粉丝：{{items.Following}}
+			                                粉丝：{{items.Follows}}
 			                            </a>
 			                        </li>
 			                        <li ng-if="items.post_num">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看博主微博">
-			                                微博数：{{items.post_num}}
+			                                发帖：{{items.post_num}}
 			                            </a>
 			                        </li>
 			                        <!-- <li>最 发帖时间：{{items.pt_time||"2017/3/30"}}</li> -->
@@ -130,7 +130,12 @@
 			                        </li>
 			                    </ul>
 			                    <ul class="breadcrumb">
-			                        <li ng-if="items.intro">
+			                        <li ng-if="items.intro && items.intro.length>15">
+			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
+			                                简介：{{items.intro.slice(0,15)+'......'}}
+			                            </a>
+			                        </li>
+			                        <li ng-if="items.intro && items.intro.length<=15">
 			                            <a href="{{items.home_url}}" target="_blank" title="查看详细博主信息">
 			                                简介：{{items.intro}}
 			                            </a>
@@ -167,7 +172,15 @@
 <script type="text/javascript">
 	$(".user-type-btn").click(function(event) {
 		console.log($("this"));
-		$(".user-type-btn").removeClass("active");
-		$(this).addClass('active');
+		if(!$(this).hasClass('active'))
+		{
+			$(".user-type-btn").removeClass("active");
+			$(this).addClass('active');
+		}
+		else
+		{
+			$(".user-type-btn").removeClass("active");
+		}
+
 	});
 </script>
