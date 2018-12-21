@@ -31,7 +31,7 @@ angular.module('usermanageService',['commons'])
     }])
     .factory('Watchattr', ['$resource','parseResource',function($resource,parseResource){
         var factories = {};
-        factories.userattrData = $resource("http://118.190.133.203:8899/yqdata/" + "watch_user_attr", parseResource.params, parseResource.actions);
+        factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "watch_user_attr", parseResource.params, parseResource.actions);
         return factories;
     }])
     .factory("WatchuserService",['Watchattr', 'RestService', function(Watchattr, RestService) {
