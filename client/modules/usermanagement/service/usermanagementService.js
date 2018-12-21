@@ -16,7 +16,7 @@ angular.module("usermanagementService", ["commons"])
 //     }]);
 	.factory('Watchattr', ['$resource','parseResource',function($resource,parseResource){
         var factories = {};
-        factories.userattrData = $resource("http://118.190.133.203:8899/yqdata/" + "watch_user_attr", parseResource.params, parseResource.actions);
+        factories.userattrData = $resource(CQ.variable.RESTFUL_URL + "watch_user_attr", parseResource.params, parseResource.actions);
         return factories;
     }])
     .factory("WatchattrService",['Watchattr', 'RestService', function(Watchattr, RestService) {
@@ -28,7 +28,7 @@ angular.module("usermanagementService", ["commons"])
     }])
     .factory('Viewuser', ['$resource','parseResource',function($resource,parseResource){
         var factories = {};
-        factories.userData = $resource("http://118.190.133.203:8899/yqdata/" + "showuserlist", parseResource.params, parseResource.actions);
+        factories.userData = $resource(CQ.variable.RESTFUL_URL + "showuserlist", parseResource.params, parseResource.actions);
         return factories;
     }])
     .factory("ViewuserService",['Viewuser', 'RestService', function(Viewuser, RestService) {
@@ -45,7 +45,7 @@ angular.module("usermanagementService", ["commons"])
             return $http.post(CQ.variable.RESTFUL_URL + "monitor/flush", data);
         };*/
         factories.addUser = function(data) {
-            return $http.post("http://118.190.133.203:8899/yqdata/usersignup", data);
+            return $http.post(CQ.variable.RESTFUL_URL + "usersignup", data);
             //return $http.post("http://118.190.133.203:8100/yqdata/senmassage/addmsg", data);
         };
         return factories;
@@ -54,7 +54,7 @@ angular.module("usermanagementService", ["commons"])
         var factories={};
         factories.updUserAttr = function(data){
             //return $http.post(CQ.variable.RESTFUL_URL + "modifyuserinfo", data);
-            return $http.post("http://118.190.133.203:8200/yqdata/modifyuserinfo", data);
+            return $http.post(CQ.variable.RESTFUL_URL + "modifyuserinfo", data);
         };
         return factories;
     }])

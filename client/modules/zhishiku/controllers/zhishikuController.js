@@ -229,7 +229,7 @@ CQ.mainApp.zhishikuController
         $rootScope.event = $scope.event;
         var data=null;
         $scope.alluser = null;//所有用户
-        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/community.json":"http://118.190.133.203:8899/yqdata/community_detection";
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/community.json":CQ.variable.RESTFUL_URL + "community_detection";
         $http({
             method:"get",
             url:url,
@@ -646,7 +646,7 @@ CQ.mainApp.zhishikuController
         var page_num=10,pages,posts,page=1,siteNames={"MicroBlog":"微博","baidutieba":"百度贴吧"},post_filters={},date_tick=[],
         siteDefaultImg={"新浪微博":"/static/assets/img/weibo.svg","百度贴吧":"/static/assets/img/tieba.svg","微信公众号":"/static/assets/img/weixin1.svg","其他":"/static/assets/img/news2.svg","推特":"/static/assets/img/twitter.svg","论坛":"/static/assets/img/luntan.svg"};
         //页面UI初始化；
-        var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":"http://118.190.133.203:8899/yqdata/event_detail";
+        var url = $scope.event.from_subject.id == 0 ? "http://118.190.133.203:8899/yqdata/event_detail":CQ.variable.RESTFUL_URL+"event_detail";
         $http({
             method:"get",
             url:url,
@@ -976,7 +976,7 @@ CQ.mainApp.zhishikuController
         $scope.event = $stateParams.event;
         $rootScope.event = $scope.event;
         //页面UI初始化；
-        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/allemotion.json":"http://118.190.133.203:8899/yqdata/emotion_analysis";
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/allemotion.json":CQ.variable.RESTFUL_URL + "emotion_analysis";
         $scope.$on('$viewContentLoaded', function() {
             if($rootScope.mainController) {
                 console.log("zhishiku app start!!!");
@@ -1179,7 +1179,7 @@ CQ.mainApp.zhishikuController
         $scope.less=false;
         $scope.expression=true;
         var comm_show_num = 4;
-        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/usercomment.json":"http://118.190.133.203:8899/yqdata/opinion_mining";
+        var url = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/usercomment.json":CQ.variable.RESTFUL_URL+"opinion_mining";
         $http({
             method:"get",
             url:url,
@@ -1223,8 +1223,8 @@ CQ.mainApp.zhishikuController
         $rootScope.event = $scope.event;
         //页面UI初始化；
         console.log($scope.event);
-        var url1 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/da_v.json":"http://118.190.133.203:8899/yqdata/hot_value_evolution";
-        var url2 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/evolu.json":"http://118.190.133.203:8899/yqdata/hot_topic_evolution";
+        var url1 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/da_v.json":CQ.variable.RESTFUL_URL + "/hot_value_evolution";
+        var url2 = $scope.event.from_subject.id == 0 ? "/static/assets/data/zhishiku/evolu.json":CQ.variable.RESTFUL_URL + "/hot_topic_evolution";
         $http({
             method:"get",
             url:url1,
