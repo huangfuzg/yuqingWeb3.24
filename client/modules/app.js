@@ -82,7 +82,7 @@ angular.module('mainApp', [
                 console.log(accountManage.isAuthenticated());
                 if(!accountManage.isAuthenticated())
                 {
-                    accountManage.logout();
+                     accountManage.logout();
                 }
                 if(toState.permission&&!permissions.hasPermission(toState.permission))
                 {
