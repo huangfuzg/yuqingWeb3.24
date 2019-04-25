@@ -54,7 +54,7 @@ angular.module("usermanagementService", ["commons"])
         var factories={};
         factories.updUserAttr = function(data){
             //return $http.post(CQ.variable.RESTFUL_URL + "modifyuserinfo", data);
-            return $http.post(CQ.variable.RESTFUL_URL+"modifyuserinfo", data);
+            return $http.post(CQ.variable.RESTFUL_URL + "modifyuserinfo", data);
         };
         return factories;
     }])

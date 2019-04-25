@@ -678,7 +678,7 @@ CQ.mainApp.systemsettingController
            $scope.baseUrl = CQ.variable.RESTFUL_URL ;
                 //htt:p//118.190.133.203:8100/yqdata/deletetopic
                 var url = $scope.baseUrl+"/template_show";
-                //var url="http://118.190.133.203:8001/yqdata/dataSourceTree";
+                // var url="http://192.168.30.115:8001/yqdata/template_show";
                 // console.log(url)
                 // console.log($scope.topic1.type1,$scope.topic1.type2)
 
@@ -759,7 +759,7 @@ CQ.mainApp.systemsettingController
             var type11=$scope.topic1.type1;
             var type22=$scope.topic1.type2;
 
-            console.log($scope.topicList);
+            // console.log($scope.topicList);
             // console.log($scope.usedmodel);
             $scope.pageData1.forEach(function(d){
                 if(d.topicName==$scope.usedmodel){  //如果模板库中有和返回的usemodel相同的名称
@@ -772,12 +772,22 @@ CQ.mainApp.systemsettingController
                     }
                 }
             });
-            console.log($scope.topic1);
+            // console.log($scope.topic1);
             $scope.topic1.type1=type11;
             $scope.topic1.type2=type22;
             // 这部分其实就是为了将选定模板对应的所有爬取网站选中
+            // console.log($scope.topic1)
+            $scope.allsites.forEach(function(d1)
+            {
+                d1.selected = false;
+                d1.detail_sites.forEach(function(d){
+                d.selected = false;
+                });
+            });
+
+            $scope.allsites1 = $scope.allsites
             $scope.allsites1.forEach(function(d3){
-                        console.log(d3);
+                        // console.log(d3);
                         // d3是网站类别  d1是d3的一个子类,是该网站类别下的具体网站名称
                         d3.selected = false;
                         d3.detail_sites.forEach(function(d1)
@@ -797,13 +807,15 @@ CQ.mainApp.systemsettingController
         // 将mymodel1返回的topic对象与对应的allsite应用到mymodel界面
         $scope.usemodel = function()
         {
+            console.log()
             $("#myModal1").modal('hide');
             $("#myModal").modal('show');
-            $scope.modelName = "添加话题2"
+            $scope.modelName = "添加话题"
             $('#myModal').css({'overflow-y':'scroll'});
             // console.log("hhh");
             $scope.topic=$scope.topic1;
             $scope.allsites=$scope.allsites1;
+            $scope.topic1.type1 = ''
         }
         $scope.onDragComplete = function($data,$event)
         {
@@ -974,7 +986,7 @@ CQ.mainApp.systemsettingController
         //添加话题
         $scope.newTopic = function()
         {
-            console.log($scope.allsites);
+            // console.log($scope.allsites);
             $scope.modelName = "添加话题";
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
             $scope.topic.topicKeywords.push([]);
@@ -982,10 +994,9 @@ CQ.mainApp.systemsettingController
             {
                 d1.selected = false;
                 d1.detail_sites.forEach(function(d){
-                    d.selected = false;
+                d.selected = false;
                 });
             });
-            console.log($scope.topic);
             $scope.topicNameEnable = false;
             $scope.submitUrl  = $scope.baseUrl + "/addtopic";
             $scope.modellist=[];
@@ -997,6 +1008,9 @@ CQ.mainApp.systemsettingController
         {
             //$("#myModal").modal('hide');
             //$('#myModal1').modal('show');
+            $scope.topic1.type1 = ''
+            console.log($scope.topic1.type1)
+
             document.getElementById("type2").style.display="none";
             document.getElementById("type3").style.display="none";
             $scope.topic = {topicName:"",topicKeywords:[],siteLists:[]};
@@ -1078,7 +1092,7 @@ CQ.mainApp.systemsettingController
         //刷新
         $scope.reload = function(d,opretion)
         {
-            if(opretion == "save" && ($scope.modelName == "添加话题"||$scope.modelName == "添加话题2"))
+            if(opretion == "save" && ($scope.modelName == "添加话题"))
             {
                 d.siteLists = d.siteLists || [];
                 d.sitesStr = d.siteLists.map(d=>d.siteName).join(',');
