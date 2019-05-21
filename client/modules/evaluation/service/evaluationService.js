@@ -19,6 +19,7 @@ angular.module('dkService',['commons'])
             return RestService.get(DKFac.getDK_method, params);
         };
         factories.UpdateMethod = function(data) {
+
             return $http.post(CQ.variable.RESTFUL_URL +"strategy_save", data);
         };
         return factories;
@@ -34,7 +35,9 @@ angular.module('dkService',['commons'])
             return RestService.get(PGFac.getPG_data, params);
         };
         factories.UpdatePG = function(data) {
+
             return $http.post(CQ.variable.RESTFUL_URL + "score_save", data);
+
         };
         return factories;
     }])
